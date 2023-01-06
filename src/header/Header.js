@@ -52,14 +52,14 @@ const Header = () => {
                         )}
                     </span>
                 </div>
-                <div
-                    onClick={() => {
-                        setAnnouce(!annouce);
-                        setCourse(false);
-                    }}
-                    className="header_navbar_items header_navbar_items_bell"
-                >
-                    <i className="fa-solid fa-bell"></i>
+                <div className="header_navbar_items header_navbar_items_bell">
+                    <i
+                        onClick={() => {
+                            setAnnouce(!annouce);
+                            setCourse(false);
+                        }}
+                        className="fa-solid fa-bell"
+                    ></i>
                     {annouce && (
                         <div className="header_navbar_items_bell_noti">
                             <div className="header_navbar_items_bell_noti_title">
