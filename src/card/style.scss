@@ -1,0 +1,81 @@
+.course_head_card{
+    width: 100%;
+    height: 9rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    transition: all ease 0.5s;
+    padding:1rem;
+    display: flex;
+    &:hover{
+        background-color: rgba(0,0,0,0.05);
+    }
+    &_img{
+        width: 12rem;
+        height: 100%;
+        & > img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.5rem;
+        }
+    }
+    &_detail{
+        flex:1;
+        height: 100%;
+        margin-left: 1rem;
+        padding-top: 0.2rem;
+        & > h3{
+            color:black;
+            font-size: 1.4rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+        }
+        & > p{
+            color:rgba(0,0,0,0.5);
+            font-size: 1.3rem;
+            margin-top: 0.3rem;
+        }
+        & > h4{
+            color:#F1582C;
+            margin-top: 0.3rem;
+            font-size: 1.4rem;
+        }
+    }
+}
+.annouce_card{
+    width: 100%;
+    min-height: 10rem;
+    display: flex;
+    align-items: center;
+    transition: all ease 0.5s;
+    padding:0.5rem 1rem;
+    border-radius: 1rem;
+    &:hover{
+        background-color: rgba(0,0,0,0.05);
+    }
+    &_img{
+        display: flex;
+        align-items: center;
+        & > img{
+            width: 4rem;
+            height: 4rem;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        margin-right: 2rem;
+    }
+    &_detail{
+        &_content{
+            font-size: 1.5rem;
+        }
+        &_notification{
+            font-size: 1.3rem;
+            margin-top: 0.5rem;
+            color:#FF751F;
+            font-weight: 500;
+        }
+    }
+}

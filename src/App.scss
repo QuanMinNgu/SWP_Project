@@ -1,0 +1,25 @@
+@import './style.module.scss';
+*{
+    margin:0;
+    padding:0;
+    box-sizing: inherit;
+    }
+    .app_container{
+    overflow: hidden;
+    min-height: 100vh;
+    background-color: #EBEBEB;
+    }
+    html{
+    box-sizing: border-box;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    }
+    @media only screen and (max-width:739px){
+    html{   
+        font-size: 50%;
+        box-sizing: border-box;
+    }
+}
+
+
+  
