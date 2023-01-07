@@ -101,7 +101,10 @@ const Login = () => {
                             />
                         </div>
                         <div className="auth_wrap_forgot">
-                            <Link className="auth_wrap_forgot_link" to="/">
+                            <Link
+                                className="auth_wrap_forgot_link"
+                                to="/forgot_password"
+                            >
                                 Quên Mật Khẩu ?
                             </Link>
                         </div>
