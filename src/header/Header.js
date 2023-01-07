@@ -7,7 +7,7 @@ import axios from "axios";
 const Header = () => {
     const [course, setCourse] = useState(false);
     const [annouce, setAnnouce] = useState(false);
-    const [sign, setSign] = useState(true);
+    const [sign, setSign] = useState(false);
 
     useEffect(() => {
         axios
@@ -101,7 +101,7 @@ const Header = () => {
                 </div>
             ) : (
                 <div className="header_navbar">
-                    <Link style={{ textDecoration: "none" }} to="/">
+                    <Link style={{ textDecoration: "none" }} to="/login">
                         <div className="header_navbar_button">Đăng Nhập</div>
                     </Link>
                 </div>

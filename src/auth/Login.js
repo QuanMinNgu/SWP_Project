@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { isFailing, isLoading, isLogin } from "../redux/slice/auth";
+import HomeIcons from "../components/another/HomeIcons";
 const Login = () => {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -153,6 +154,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <HomeIcons />
         </div>
     );
 };
