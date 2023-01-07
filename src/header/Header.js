@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { Link } from "react-router-dom";
 import CourseHeadCard from "../card/CourseHeadCard";
 import AnnouceCard from "../card/AnnouceCard";
+import axios from "axios";
 const Header = () => {
     const [course, setCourse] = useState(false);
     const [annouce, setAnnouce] = useState(false);
     const [sign, setSign] = useState(true);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:9999/OnlineLearning/home", {
+                sql: "QuangMINhNgu",
+                sql2: "QUangnGu",
+            })
+            .then((res) => {
+                console.log(res?.data);
+            });
+    }, []);
 
     return (
         <div className="header">

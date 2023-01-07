@@ -1,6 +1,7 @@
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRouter } from "./routers/route";
+import "./style.css";
 
 function App() {
     return (
