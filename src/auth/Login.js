@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
 import "./style.scss";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { isFailing, isLoading, isLogin } from "../redux/slice/auth";
 const Login = () => {
+    const dispatch = useDispatch();
     useEffect(() => {
         window.google?.accounts?.id?.initialize({
             client_id:
-                "253505384285-41s57dcujofqbpfnp2jdo2e7nt63f8f8.apps.googleusercontent.com",
+                "348299817023-08tbro4o6guo2csu2lv16mai16m4a8ce.apps.googleusercontent.com",
             callback: handleCallbackGoogle,
         });
         window.google?.accounts?.id?.renderButton(
@@ -17,6 +21,55 @@ const Login = () => {
         );
         window.google?.accounts?.id?.prompt();
     }, [window.google?.accounts]);
+
+    useEffect(() => {
+        window.fbAsyncInit = function () {
+            window.FB.init({
+                appId: "630395928843735",
+                cookie: true,
+                xfbml: true,
+                version: "v14.0",
+            });
+
+            window.FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js,
+                fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, "script", "facebook-jssdk");
+    }, []);
+
+    const handleLoginFacebook = () => {
+        window.FB.login(
+            function (response) {
+                console.log(response);
+                // dispatch(isLoading());
+                // const data = axios
+                //     .post("/api/auth/facebook/login", {
+                //         userId: response?.authResponse?.userID,
+                //         token: response?.authResponse?.accessToken,
+                //     })
+                //     .then((res) => {
+                //         toast.success(res?.data?.msg);
+                //         dispatch(isLogin(res?.data));
+                //         navigate("/");
+                //     })
+                //     .catch((err) => {
+                //         toast.error(err?.response?.data?.msg);
+                //         dispatch(isFailing());
+                //     });
+            },
+            { scope: "email" }
+        );
+    };
 
     const handleCallbackGoogle = async (response) => {
         console.log(response);
@@ -90,7 +143,10 @@ const Login = () => {
                         </div>
                         <div className="auth_wrap_other">
                             <div id="loginGoogle"></div>
-                            <div className="auth_wrap_other_fb">
+                            <div
+                                onClick={handleLoginFacebook}
+                                className="auth_wrap_other_fb"
+                            >
                                 Đăng nhập bằng Facebook
                             </div>
                         </div>
