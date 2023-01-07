@@ -14,7 +14,7 @@ const Card = () => {
                     />
                 </Link>
                 <div className="card_img_abs">
-                    <Link style={{ textDecoration: "none" }} to="/">
+                    <Link style={{ textDecoration: "none" }} to="/course/asd">
                         <div className="card_img_abs_wrap">
                             <button>Xem khóa học</button>
                         </div>
@@ -25,7 +25,7 @@ const Card = () => {
                 <Link
                     className="card_detail_title"
                     style={{ textDecoration: "none" }}
-                    to="/"
+                    to="/course/asds"
                 >
                     <div>Lập Trình JavaScript Nâng Cao Nâng C o Nâng C</div>
                 </Link>
