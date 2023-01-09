@@ -14,7 +14,7 @@ const Header = () => {
             <div className="header_brand">
                 <Link className="header_brand_link" to="/">
                     <img
-                        src="https://res.cloudinary.com/sttruyen/image/upload/v1672999350/another/fgg3gugtval0mdtgonie.png"
+                        src="https://res.cloudinary.com/sttruyen/image/upload/v1673249807/another/b6sudrpaizo80snhsq9m.png"
                         alt="brand"
                     />
                 </Link>
