@@ -9,17 +9,6 @@ const Header = () => {
     const [annouce, setAnnouce] = useState(false);
     const [sign, setSign] = useState(false);
 
-    useEffect(() => {
-        axios
-            .get("http://localhost:9999/OnlineLearning/home", {
-                sql: "QuangMINhNgu",
-                sql2: "QUangnGu",
-            })
-            .then((res) => {
-                console.log(res?.data);
-            });
-    }, []);
-
     return (
         <div className="header">
             <div className="header_brand">

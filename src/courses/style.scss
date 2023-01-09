@@ -1,3 +1,39 @@
 .course_detail{
-    
+    padding:0 4rem;
+    margin-top: 2rem;
+    &_name{
+        font-size: 2.5rem;
+    }
+    &_content{
+        margin-top: 2rem;
+        font-size: 1.6rem;
+        color:rgba(0,0,0,0.6);
+    }
+    &_learn{
+        margin-top: 2rem;
+        font-size: 1.7rem;
+        &_items{
+            margin-top: 2rem;
+            display: flex;
+            margin-left: 1rem;
+            flex-wrap: wrap;
+            & > li{
+                width: 50%;
+                font-size: 1.6rem;
+                margin-bottom: 1rem;
+                color:rgba(0,0,0,0.6);
+            }
+        }
+    }
+    &_timeLine{
+        margin-top: 2rem;
+        & > ul{
+            display: flex;
+            list-style: none;
+            & > li{
+                margin-right: 0.5rem;
+                font-size: 1.6rem;
+            }
+        }
+    }
 }
