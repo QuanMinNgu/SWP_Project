@@ -4,6 +4,7 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+import CoursePanel from "./CoursePanel";
 const CourseDetail = () => {
     const [pdfFile, setPDFFile] = useState(null);
     const [viewPdf, setViewPdf] = useState(null);
@@ -59,13 +60,14 @@ const CourseDetail = () => {
                             </li>
                         </ul>
                     </div>
-                    <input
-                        type="file"
-                        onChange={(e) => handleChangeFile(e.target.files[0])}
-                    />
+                    <div className="CoursePanel">
+                        <CoursePanel />
+                        <CoursePanel />
+                        <CoursePanel />
+                    </div>
                 </div>
             </div>
-            <div>
+            {/* <div>
                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
                     {pdfFile && (
                         <Viewer
@@ -74,7 +76,7 @@ const CourseDetail = () => {
                         />
                     )}
                 </Worker>
-            </div>
+            </div> */}
         </div>
     );
 };

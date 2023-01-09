@@ -37,3 +37,42 @@
         }
     }
 }
+.CoursePanel{
+    margin-top: 2rem;
+    padding:0 2rem;
+}
+.CoursePanel_container{
+    width: 100%;
+    height: 5rem;
+    background-color: #F5F5F5;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    padding:0 3rem;
+    align-items: center;
+    box-shadow: 0 0 0.1rem 0.05rem rgba(0,0,0,0.1);
+    cursor: pointer;
+    margin:1rem 0;
+}
+.CoursePanel_head{
+    font-size: 1.7rem;
+    font-weight: 650;
+}
+.CoursePanel_body{
+    font-size: 1.6rem;
+    font-weight: 300;
+}
+.panelCard_container{
+    width: 100%;
+    padding:0 4rem;
+    height: 4.5rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 0.1rem solid rgba(0,0,0,0.05);
+    justify-content: space-between;
+    & > div{
+        font-size: 1.4rem;
+        color:rgba(0,0,0,0.8);
+        font-family: 'Lora', serif;
+    }
+}
