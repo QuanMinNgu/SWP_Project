@@ -28,7 +28,7 @@ const Home = () => {
                         <span>Học</span>
                     </div>
                 </Link>
-                <Link className="home_navbar_items" to="/">
+                <Link className="home_navbar_items" to="/blog">
                     <div>
                         <i className="fa-solid fa-calculator"></i>
                         <span>Blog</span>

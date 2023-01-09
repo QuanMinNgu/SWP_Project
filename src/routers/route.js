@@ -5,6 +5,7 @@ import Register from "../auth/Register";
 import ForgotPassword from "../auth/ForgotPassword";
 import ChangePassword from "../auth/ChangePassword";
 import CourseDetail from "../courses/CourseDetail";
+import Blog from "../blog/Blog";
 export const publicRouter = [
     {
         element: Home,
@@ -14,6 +15,11 @@ export const publicRouter = [
     {
         element: Login,
         path: "/login",
+    },
+    {
+        element: Blog,
+        path: "/blog",
+        layout: DefaultLayout,
     },
     {
         element: Register,
