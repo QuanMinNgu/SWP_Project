@@ -1,5 +1,8 @@
+@import '../style.module.scss';
 .course_detail{
-    padding:0 4rem;
+    @include desktopHigh{
+        padding:0 14rem;
+    }
     margin-top: 2rem;
     &_name{
         font-size: 2.5rem;
@@ -39,7 +42,6 @@
 }
 .CoursePanel{
     margin-top: 2rem;
-    padding:0 2rem;
 }
 .CoursePanel_container{
     width: 100%;
@@ -74,5 +76,49 @@
         font-size: 1.4rem;
         color:rgba(0,0,0,0.8);
         font-family: 'Lora', serif;
+    }
+}
+.course_detail_img{
+    width: 100%;
+    height: 24rem;
+    
+    & > img{
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        border-radius: 2rem;
+    }
+}
+.course_detail_price{
+    width: 100%;
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 1rem;
+    color:#F05123;
+    font-weight: 600;
+}
+.course_detail_button{
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+    & > button{
+        padding:0 4rem;
+        height: 4.5rem;
+        background-color: #F05123;
+        border-radius: 3rem;
+        outline: none;
+        border:none;
+        color:white;
+        font-size: 1.8rem;
+        cursor: pointer;
+    }
+}
+.course_detail_list{
+    margin-top: 3rem;
+    font-size: 1.8rem;
+    text-align: center;
+    list-style: none;
+    & > li{
+        margin-top: 1rem;
     }
 }

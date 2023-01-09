@@ -66,6 +66,35 @@ const CourseDetail = () => {
                         <CoursePanel />
                     </div>
                 </div>
+                <div className="col c-12 m-4 l-4">
+                    <div className="course_detail_img">
+                        <img
+                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
+                            alt="Ảnh"
+                        />
+                    </div>
+                    <div className="course_detail_price">Miễn phí</div>
+                    <div className="course_detail_button">
+                        <button>Đăng Ký Học</button>
+                    </div>
+                    <ul className="course_detail_list">
+                        <li>
+                            <i>Trình độ cơ bản</i>
+                        </li>
+                        <li>
+                            <i>Học mọi lúc, mọi nơi</i>
+                        </li>
+                        <li>
+                            <i>Giá cả phải chăng</i>
+                        </li>
+                        <li>
+                            <i>Uy tín, chất lượng</i>
+                        </li>
+                        <li>
+                            <i>Luôn luôn hướng đến cái tốt đẹp</i>
+                        </li>
+                    </ul>
+                </div>
             </div>
             {/* <div>
                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
