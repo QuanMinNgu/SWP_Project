@@ -3,6 +3,7 @@ import PanelCard from "./PanelCard";
 import "./style.scss";
 const CoursePanel = () => {
     const [panel, setPanel] = useState(false);
+    const [editPanel, setEditPanel] = useState(false);
     return (
         <div className="CoursePanel_wrap">
             <div
@@ -33,6 +34,23 @@ const CoursePanel = () => {
                     <PanelCard />
                 </div>
             )}
+            <div className="CoursePanel_edit">
+                <div
+                    onClick={() => {
+                        setEditPanel(!editPanel);
+                    }}
+                >
+                    <i className="fa-solid fa-ellipsis"></i>
+                    {editPanel && (
+                        <ul className="CoursePanel_editPanel">
+                            <li>Sửa</li>
+                            <li>Xóa</li>
+                            <li>Thêm trước</li>
+                            <li>Thêm sau</li>
+                        </ul>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

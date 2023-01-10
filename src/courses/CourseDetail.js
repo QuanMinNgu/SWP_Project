@@ -5,6 +5,7 @@ import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import CoursePanel from "./CoursePanel";
+import { Link } from "react-router-dom";
 const CourseDetail = () => {
     const [pdfFile, setPDFFile] = useState(null);
     const [viewPdf, setViewPdf] = useState(null);
@@ -79,19 +80,15 @@ const CourseDetail = () => {
                     </div>
                     <ul className="course_detail_list">
                         <li>
-                            <i>Trình độ cơ bản</i>
+                            <i>
+                                Giáo viên:
+                                <Link style={{ marginLeft: "0.5rem" }} to="/">
+                                    Nguyễn Minh Quang
+                                </Link>
+                            </i>
                         </li>
                         <li>
-                            <i>Học mọi lúc, mọi nơi</i>
-                        </li>
-                        <li>
-                            <i>Giá cả phải chăng</i>
-                        </li>
-                        <li>
-                            <i>Uy tín, chất lượng</i>
-                        </li>
-                        <li>
-                            <i>Luôn luôn hướng đến cái tốt đẹp</i>
+                            <i>Tự tin khi học tập</i>
                         </li>
                     </ul>
                 </div>
