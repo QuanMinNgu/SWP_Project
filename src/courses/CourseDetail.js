@@ -5,10 +5,12 @@ import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import CoursePanel from "./CoursePanel";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const CourseDetail = () => {
     const [pdfFile, setPDFFile] = useState(null);
     const [viewPdf, setViewPdf] = useState(null);
+
+    const navigate = useNavigate();
 
     const handleChangeFile = async (e) => {
         const reader = new FileReader();
@@ -76,7 +78,13 @@ const CourseDetail = () => {
                     </div>
                     <div className="course_detail_price">Miễn phí</div>
                     <div className="course_detail_button">
-                        <button>Đăng Ký Học</button>
+                        <button
+                            onClick={() => {
+                                navigate("/learning/asd");
+                            }}
+                        >
+                            Đăng Ký Học
+                        </button>
                     </div>
                     <ul className="course_detail_list">
                         <li>

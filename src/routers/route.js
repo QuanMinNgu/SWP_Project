@@ -6,6 +6,7 @@ import ForgotPassword from "../auth/ForgotPassword";
 import ChangePassword from "../auth/ChangePassword";
 import CourseDetail from "../courses/CourseDetail";
 import Blog from "../blog/Blog";
+import CourseLearn from "../courseLearn/CourseLearn";
 export const publicRouter = [
     {
         element: Home,
@@ -32,6 +33,11 @@ export const publicRouter = [
     {
         element: ChangePassword,
         path: "/change_password",
+    },
+    {
+        element: CourseLearn,
+        path: "/learning/:slug",
+        layout: DefaultLayout,
     },
     {
         element: CourseDetail,
