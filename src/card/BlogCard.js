@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import "./style.scss";
 import "./main.scss";
-import { AiOutlineEllipsis, RxUpdate } from "react-icons/ai";
+import { AiOutlineEllipsis, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { DiAptana } from "react-icons/di";
 const BlogCard = () => {
   const [openNav, setOpenNav] = useState(false);
+  const [react, setReact] = useState(false);
   const handleClickOpen = () => {
     setOpenNav(!openNav);
+  };
+  const handleReact = () => {
+    setReact(!react);
   };
   return (
     <div className="blogCard">
@@ -18,9 +22,19 @@ const BlogCard = () => {
           />
           <h3 className="blogCard_header_name">Nguyen Dinh Hoan</h3>
         </div>
-        <button className="blogCard_header_right" onClick={handleClickOpen}>
-          <AiOutlineEllipsis className="blogCard_header_right_icon"></AiOutlineEllipsis>
-        </button>
+        <div className="blogCard_header_right">
+          <button onClick={handleReact}>
+            {react === false ? (
+              <AiOutlineHeart></AiOutlineHeart>
+            ) : (
+              <AiFillHeart></AiFillHeart>
+            )}
+          </button>
+          <AiOutlineEllipsis
+            className="blogCard_header_right_icon"
+            onClick={handleClickOpen}
+          ></AiOutlineEllipsis>
+        </div>
         {openNav && (
           <div className="blogCard_header_option">
             <ul className="option_list">
