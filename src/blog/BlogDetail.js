@@ -5,9 +5,13 @@ import { addLove, removeLove } from "./slice";
 
 const BlogDetail = () => {
   const btnRef = useRef();
+  const [comment, setComment] = useState(false);
   const love = useSelector((state) => state.blogReducer);
   const dispatch = useDispatch();
   const { react, countReact } = love;
+  const handleNavComment = () => {
+    setComment(!comment);
+  };
   const handleReact = () => {
     if (react === false) {
       dispatch(addLove());
@@ -38,6 +42,7 @@ const BlogDetail = () => {
               <span>{countReact}</span>
             </div>
             <i
+              onClick={handleNavComment}
               style={{
                 marginLeft: "40px",
               }}
@@ -96,23 +101,26 @@ const BlogDetail = () => {
           </p>
         </div>
       </div>
-      <div className="warper_cover">
-        <div className="comment">
-          <div className="comment_header">
-            <h2>No Comment</h2>
-          </div>
-          <div className="comment_content">
-            <img src="https://res.cloudinary.com/sttruyen/image/upload/v1673249807/another/b6sudrpaizo80snhsq9m.png" />
-            <input onChange={handleBtn} placeholder="Write your comment" />
-          </div>
-          <div className="comment_btn">
-            <button className="comment_btn_close">Close</button>
-            <button ref={btnRef} className="comment_btn_up">
-              Comment
-            </button>
+      {comment && (
+        <div className="warper_cover">
+          <div className="comment">
+            <div className="comment_header">
+              <h2>No Comment</h2>
+              <i class="fa-solid fa-xmark" onClick={handleNavComment}></i>
+            </div>
+            <div className="comment_content">
+              <img src="https://res.cloudinary.com/sttruyen/image/upload/v1673249807/another/b6sudrpaizo80snhsq9m.png" />
+              <input onChange={handleBtn} placeholder="Write your comment" />
+            </div>
+            <div className="comment_btn">
+              <button className="comment_btn_close">Close</button>
+              <button ref={btnRef} className="comment_btn_up">
+                Comment
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
