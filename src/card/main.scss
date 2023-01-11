@@ -77,9 +77,8 @@
         cursor: pointer;
         display: flex;
         align-items: center;
-        & > svg {
-          width: 16px;
-          height: 16px;
+        & > i {
+          font-size: 1.6rem;
         }
         & > span {
           margin-left: 12px;

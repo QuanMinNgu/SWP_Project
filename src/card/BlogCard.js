@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./style.scss";
 import "./main.scss";
-import { AiOutlineEllipsis, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { DiAptana } from "react-icons/di";
+import { Link } from "react-router-dom";
 const BlogCard = () => {
   const [openNav, setOpenNav] = useState(false);
   const [react, setReact] = useState(false);
@@ -39,13 +38,13 @@ const BlogCard = () => {
           <div className="blogCard_header_option">
             <ul className="option_list">
               <li className="option_list_item">
-                <DiAptana></DiAptana> <span>Fix them</span>
+                <i className="fa-solid fa-gear"></i> <span>Fix them</span>
               </li>
               <li className="option_list_item">
-                <DiAptana></DiAptana> <span>Fix them</span>
+                <i className="fa-solid fa-gear"></i> <span>Fix them</span>
               </li>
               <li className="option_list_item">
-                <DiAptana></DiAptana> <span>Fix them</span>
+                <i className="fa-solid fa-gear"></i> <span>Fix them</span>
               </li>
             </ul>
           </div>
@@ -54,10 +53,19 @@ const BlogCard = () => {
       <div className="blogCard_body">
         <div className="blogCard_info">
           <div className="blogCard_info_title">
-            <h2>
-              Bỏ túi 21 lệnh Git cơ bản + Cách nhớ, giúp newDev làm chủ Git quản
-              lý tốt mã nguồn!
-            </h2>
+            <Link
+              style={{
+                textDecoration: "none",
+                color: "#292929",
+                fontSize: "1.2rem",
+              }}
+              to="/blog/blogdetail"
+            >
+              <h2>
+                Bỏ túi 21 lệnh Git cơ bản + Cách nhớ, giúp newDev làm chủ Git
+                quản lý tốt mã nguồn!
+              </h2>
+            </Link>
           </div>
           <div className="blogCard_info_content">
             <p>

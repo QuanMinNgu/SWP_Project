@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import BlogCard from "../card/BlogCard";
-import styles from "./style.scss";
+import "./style.scss";
 const Blog = () => {
   return (
     <div className="blog">
