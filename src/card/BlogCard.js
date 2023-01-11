@@ -25,15 +25,15 @@ const BlogCard = () => {
         <div className="blogCard_header_right">
           <button onClick={handleReact}>
             {react === false ? (
-              <AiOutlineHeart></AiOutlineHeart>
+              <i className="fa-regular fa-heart"></i>
             ) : (
-              <AiFillHeart></AiFillHeart>
+              <i className="fa-solid fa-heart"></i>
             )}
           </button>
-          <AiOutlineEllipsis
-            className="blogCard_header_right_icon"
+          <i
+            className="fa-solid fa-ellipsis blogCard_header_right_icon"
             onClick={handleClickOpen}
-          ></AiOutlineEllipsis>
+          ></i>
         </div>
         {openNav && (
           <div className="blogCard_header_option">
