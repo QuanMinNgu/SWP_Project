@@ -6,10 +6,15 @@ import { Worker, Viewer } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import CoursePanel from "./CoursePanel";
 import { Link, useNavigate } from "react-router-dom";
+import Pay from "../payment/Pay";
 import Rating from "../rating/Rating";
 const CourseDetail = () => {
     const [pdfFile, setPDFFile] = useState(null);
     const [viewPdf, setViewPdf] = useState(null);
+
+    const [payment, setPayment] = useState(false);
+
+    const [canLearn, setCanLearn] = useState(false);
 
     const navigate = useNavigate();
 
@@ -79,13 +84,23 @@ const CourseDetail = () => {
                     </div>
                     <div className="course_detail_price">Miễn phí</div>
                     <div className="course_detail_button">
-                        <button
-                            onClick={() => {
-                                navigate("/learning/asd");
-                            }}
-                        >
-                            Đăng Ký Học
-                        </button>
+                        {canLearn ? (
+                            <button
+                                onClick={() => {
+                                    navigate("/learning/asđa");
+                                }}
+                            >
+                                Tiếp tục học
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => {
+                                    setPayment(true);
+                                }}
+                            >
+                                Đăng Ký Học
+                            </button>
+                        )}
                     </div>
                     <ul className="course_detail_list">
                         <li>
@@ -115,6 +130,9 @@ const CourseDetail = () => {
                     )}
                 </Worker>
             </div> */}
+            {payment && (
+                <Pay setPayment={setPayment} setCanLearn={setCanLearn} />
+            )}
         </div>
     );
 };
