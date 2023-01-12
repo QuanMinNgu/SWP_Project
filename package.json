@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@paypal/react-paypal-js": "^7.8.2",
     "@react-pdf-viewer/core": "^3.10.0",
     "@react-pdf-viewer/default-layout": "^3.10.0",
     "@reduxjs/toolkit": "^1.9.1",
