@@ -7,6 +7,7 @@ import ChangePassword from "../auth/ChangePassword";
 import CourseDetail from "../courses/CourseDetail";
 import Blog from "../blog/Blog";
 import CourseLearn from "../courseLearn/CourseLearn";
+import BlogDetail from "../blog/BlogDetail";
 export const publicRouter = [
     {
         element: Home,
@@ -37,10 +38,17 @@ export const publicRouter = [
     {
         element: CourseLearn,
         path: "/learning/:slug",
+        layout: DefaultLayout,
     },
     {
         element: CourseDetail,
         path: "/course/:slug",
+        layout: DefaultLayout,
+    },
+    ,
+    {
+        element: BlogDetail,
+        path: "/blog/:slug",
         layout: DefaultLayout,
     },
 ];

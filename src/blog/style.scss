@@ -1,50 +1,264 @@
-
 .home,
-.blog{
-    width: 100%;
-    padding:0 2rem;
-    margin-top: 2rem;
-    display: flex;
-    &_navbar{
-        &_plus{
-            margin-left:1.3rem;
-            width: 4.6rem;
-            height: 4.6rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.8rem;
-            background-color: #1473E6;
-            border-radius: 50%;
-            font-size: 1.8rem;
-            color:white;
-            cursor: pointer;
-        }
-        &_items{
-            text-decoration: none;
-        }
-        &_items > div{
-            width: 7rem;
-            height: 7rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color:black;
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            &.active{
-                background-color: rgba(0,0,0,0.1);
-            }
-            &:hover{
-                background-color: rgba(0,0,0,0.05);
-            }
-            border-radius: 2rem;
-            & > span{
-                font-size: 1.2rem;
-                margin-top: 0.5rem;
-                font-weight: 600;
-            }
-        }
+.blog {
+  width: 100%;
+  padding: 0 2rem;
+  margin-top: 2rem;
+  display: flex;
+  &_navbar {
+    &_plus {
+      margin-left: 1.3rem;
+      width: 4.6rem;
+      height: 4.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.8rem;
+      background-color: #1473e6;
+      border-radius: 50%;
+      font-size: 1.8rem;
+      color: white;
+      cursor: pointer;
     }
+    &_items {
+      text-decoration: none;
+    }
+    &_items > div {
+      width: 7rem;
+      height: 7rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: black;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      &.active {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+      border-radius: 2rem;
+      & > span {
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+        font-weight: 600;
+      }
+    }
+  }
+}
+.blog_left {
+  width: calc(100% - 9rem);
+  padding: 0 40px;
+}
+.blog_header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &_title {
+    font-size: 2.8rem;
+    color: #242424;
+    font-weight: 900;
+    margin-bottom: 20px;
+  }
+  &_para {
+    font-size: 1.5rem;
+  }
+}
+.blog_body {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.card_wraper {
+  width: calc(50% - 20px);
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+//Blog detail
+
+.blog_detail {
+  display: flex;
+  padding: 0 44px 60px;
+  margin-top: 40px;
+  &_user {
+    width: 20%;
+    margin-left: 8%;
+    &_info > h2 {
+      font-size: 2rem;
+      color: #292929;
+      font-weight: 600;
+      margin-top: 2.4rem;
+      margin-bottom: 1.4rem;
+    }
+    &_react {
+      margin-top: 2.4rem;
+      display: flex;
+      & > i {
+        font-size: 2rem;
+        opacity: 0.5;
+        cursor: pointer;
+      }
+      &_love {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      &_love > i {
+        font-size: 2rem;
+        opacity: 0.5;
+        cursor: pointer;
+      }
+
+      &_love > span {
+        text-align: center;
+        margin-left: 1.2rem;
+        font-size: 1.6rem;
+        color: #757575;
+      }
+      & > i:hover {
+        opacity: 1;
+      }
+    }
+  }
+  &_center {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    &_header {
+      margin-bottom: 26px;
+    }
+    &_header > h2 {
+      color: #222;
+      font-size: 40px;
+      font-weight: 700;
+    }
+    &_info {
+      display: flex;
+      align-items: center;
+    }
+    &_info > img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    &_info_user {
+      margin-left: 18px;
+    }
+    &_info_user > h2 {
+      color: #222;
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+    &_content {
+      margin-top: 30px;
+    }
+    &_content > p {
+      font-size: 1.8rem;
+      line-height: 1.6;
+    }
+  }
+}
+
+.warper_cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.comment {
+  position: absolute;
+  min-width: 720px;
+  min-height: 100vh;
+  right: 0;
+  padding: 0 40px 40px 40px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgb(0 0 0 / 15%) 0px 4px 12px;
+  animation: fadeIn 0.4s ease-in;
+  transform: 0.4s;
+  &_header {
+    margin: 50px 0;
+    display: flex;
+    justify-content: space-between;
+    & > h2 {
+      font-weight: 600;
+      font-size: 1.8rem;
+    }
+    & > i {
+      font-size: 2rem;
+      opacity: 0.5;
+      cursor: pointer;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  &_content {
+    display: flex;
+    & > input {
+      outline: none;
+      flex: 1;
+      border-radius: 12px;
+      border: 2px solid #e8e8e8;
+      padding-left: 10px;
+    }
+  }
+  &_content > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+  &_btn {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    &_up {
+      padding: 10px 16px;
+      background-color: rgb(204, 204, 204);
+      color: #fff;
+      border: none;
+      outline: none;
+      font-size: 1.4rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all 0.2s ease-in-out 0s;
+    }
+    &_close {
+      padding: 10px 16px;
+      color: rgb(136, 136, 136);
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      font-size: 1.4rem;
+      font-weight: 600;
+      border-radius: 20px;
+      opacity: 0.5;
+      margin-right: 20px;
+      &:hover {
+        background: rgb(235, 235, 235);
+        color: rgb(119, 119, 119);
+        cursor: pointer;
+        opacity: 0.8;
+      }
+    }
+  }
+}
+.active {
+  background-color: #f05123;
+}
+@keyframes fadeIn {
+  0% {
+    transform: translateX(700px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
