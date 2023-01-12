@@ -83,6 +83,7 @@
   display: flex;
   padding: 0 44px 60px;
   margin-top: 40px;
+  flex-wrap: wrap;
   &_user {
     width: 20%;
     margin-left: 8%;
@@ -170,87 +171,7 @@
   right: 0;
   background-color: rgba(0, 0, 0, 0.4);
 }
-.comment {
-  position: absolute;
-  min-width: 720px;
-  min-height: 100vh;
-  right: 0;
-  padding: 0 40px 40px 40px;
-  background-color: rgb(255, 255, 255);
-  box-shadow: rgb(0 0 0 / 15%) 0px 4px 12px;
-  animation: fadeIn 0.4s ease-in;
-  transform: 0.4s;
-  &_header {
-    margin: 50px 0;
-    display: flex;
-    justify-content: space-between;
-    & > h2 {
-      font-weight: 600;
-      font-size: 1.8rem;
-    }
-    & > i {
-      font-size: 2rem;
-      opacity: 0.5;
-      cursor: pointer;
-      &:hover {
-        opacity: 1;
-      }
-    }
-  }
-  &_content {
-    display: flex;
-    & > input {
-      outline: none;
-      flex: 1;
-      border-radius: 12px;
-      border: 2px solid #e8e8e8;
-      padding-left: 10px;
-    }
-  }
-  &_content > img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 20px;
-  }
-  &_btn {
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
-    &_up {
-      padding: 10px 16px;
-      background-color: rgb(204, 204, 204);
-      color: #fff;
-      border: none;
-      outline: none;
-      font-size: 1.4rem;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 20px;
-      transition: all 0.2s ease-in-out 0s;
-    }
-    &_close {
-      padding: 10px 16px;
-      color: rgb(136, 136, 136);
-      cursor: pointer;
-      background-color: transparent;
-      border: none;
-      outline: none;
-      font-size: 1.4rem;
-      font-weight: 600;
-      border-radius: 20px;
-      opacity: 0.5;
-      margin-right: 20px;
-      &:hover {
-        background: rgb(235, 235, 235);
-        color: rgb(119, 119, 119);
-        cursor: pointer;
-        opacity: 0.8;
-      }
-    }
-  }
-}
+
 .active {
   background-color: #f05123;
 }
@@ -261,4 +182,7 @@
   100% {
     transform: translateX(0);
   }
+}
+.comment_Container{
+  margin-top: 10rem;
 }
