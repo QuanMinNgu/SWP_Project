@@ -6,6 +6,7 @@ import { Worker, Viewer } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import CoursePanel from "./CoursePanel";
 import { Link, useNavigate } from "react-router-dom";
+import Rating from "../rating/Rating";
 const CourseDetail = () => {
     const [pdfFile, setPDFFile] = useState(null);
     const [viewPdf, setViewPdf] = useState(null);
@@ -100,6 +101,9 @@ const CourseDetail = () => {
                         </li>
                     </ul>
                 </div>
+            </div>
+            <div className="rating_container">
+                <Rating />
             </div>
             {/* <div>
                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
