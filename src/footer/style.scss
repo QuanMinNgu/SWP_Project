@@ -1,0 +1,82 @@
+.footer {
+  display: flex;
+  background-color: #181821;
+  padding: 68px 0 40px;
+  color: #a9b3bb;
+  &_warper {
+    margin: 0 auto;
+    display: flex;
+    min-width: 700px;
+    flex-wrap: wrap;
+  }
+}
+.footer_info {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% / 3);
+  &_header {
+    display: flex;
+
+    align-items: center;
+    & > h2 {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+  }
+  &_body {
+    margin-top: 10px;
+    & > p {
+      font-size: 1.6rem;
+      line-height: 2.2rem;
+      color: #a9b3bb;
+    }
+  }
+}
+.footer_company {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% / 3);
+  align-items: flex-end;
+  &_header > h2 {
+    color: #fff;
+    font-size: 2.2rem;
+    margin: 5px 0;
+  }
+  &_body {
+    margin-top: 10px;
+    & > p {
+      font-size: 1.6rem;
+      line-height: 2.2rem;
+      color: #a9b3bb;
+    }
+  }
+}
+.footer_info_header_img {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+.footer_bottom {
+  display: flex;
+  margin-top: 100px;
+  width: 100%;
+  justify-content: space-between;
+  &_left {
+    font-size: 1.6rem;
+  }
+  &_right {
+    text-decoration: none;
+  }
+  &_right > a > i {
+    font-size: 3rem;
+    padding: 0 10px;
+  }
+}
+.youtube {
+  color: #e74c3c;
+}
+.facebook {
+  color: #4867aa;
+}
