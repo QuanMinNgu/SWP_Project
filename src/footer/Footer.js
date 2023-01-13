@@ -41,14 +41,14 @@ const Footer = () => {
             © 2018 - 2023 F11. The King Of Web Learning
           </div>
           <div className="footer_bottom_right">
-            <a href="https://www.facebook.com/profile.php?id=100015481175598">
+            <a
+              href="https://www.facebook.com/profile.php?id=100015481175598"
+              className="facebook"
+            >
               <i class="fa-brands fa-facebook"></i>
             </a>
             <a href="https://www.youtube.com/" className="youtube">
               <i class="fa-brands fa-youtube "></i>
-            </a>
-            <a>
-              <i class="fa-brands fa-tiktok"></i>
             </a>
           </div>
         </div>

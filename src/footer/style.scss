@@ -69,6 +69,10 @@
   &_right {
     text-decoration: none;
   }
+  &_right > a:hover > i {
+    transition: 0.3s;
+    animation: zoomIn 0.3s ease-in;
+  }
   &_right > a > i {
     font-size: 3rem;
     padding: 0 10px;
@@ -79,4 +83,14 @@
 }
 .facebook {
   color: #4867aa;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
