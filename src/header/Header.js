@@ -7,7 +7,8 @@ import axios from "axios";
 const Header = () => {
     const [course, setCourse] = useState(false);
     const [annouce, setAnnouce] = useState(false);
-    const [sign, setSign] = useState(false);
+    const [sign, setSign] = useState(true);
+    const [account, setAccount] = useState(false);
 
     return (
         <div className="header">
@@ -39,6 +40,7 @@ const Header = () => {
                                 onClick={() => {
                                     setCourse(!course);
                                     setAnnouce(false);
+                                    setAccount(false);
                                 }}
                             >
                                 Khóa học của tôi
@@ -60,6 +62,7 @@ const Header = () => {
                             onClick={() => {
                                 setAnnouce(!annouce);
                                 setCourse(false);
+                                setAccount(false);
                             }}
                             className="fa-solid fa-bell"
                         ></i>
@@ -81,10 +84,85 @@ const Header = () => {
                     <div className="header_navbar_items">
                         <div className="header_navbar_items_img_wrap">
                             <img
+                                onClick={() => {
+                                    setAccount(!account);
+                                    setAnnouce(false);
+                                    setCourse(false);
+                                }}
                                 className="header_navbar_items_img"
                                 src="https://phunugioi.com/wp-content/uploads/2020/02/mau-background-dep.jpg"
                                 alt="Ảnh"
                             />
+                            {account && (
+                                <div className="header_navbar_account">
+                                    <div className="header_navbar_account_infor">
+                                        <div className="header_navbar_account_infor_img">
+                                            <img
+                                                src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                                alt="Ảnh bìa"
+                                            />
+                                        </div>
+                                        <div className="header_navbar_account_infor_name">
+                                            <div>Minh Quang</div>
+                                            <div>
+                                                <i>ID:12213210</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <Link
+                                        style={{ textDecoration: "none" }}
+                                        to="/"
+                                    >
+                                        <div className="header_navbar_account_items">
+                                            Trang cá nhân
+                                        </div>
+                                    </Link>
+                                    <div className="header_navbar_account_items">
+                                        <Link
+                                            style={{ textDecoration: "none" }}
+                                            to="/"
+                                        >
+                                            <div className="header_navbar_account_items_link">
+                                                Viết blog
+                                            </div>
+                                        </Link>
+                                        <Link
+                                            style={{ textDecoration: "none" }}
+                                            to="/"
+                                        >
+                                            <div className="header_navbar_account_items_link no_bottom">
+                                                Bài viết của tôi
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <Link
+                                        style={{ textDecoration: "none" }}
+                                        to="/"
+                                    >
+                                        <div className="header_navbar_account_items">
+                                            Bài viết đã lưu
+                                        </div>
+                                    </Link>
+                                    <div className="header_navbar_account_items">
+                                        <Link
+                                            style={{ textDecoration: "none" }}
+                                            to="/"
+                                        >
+                                            <div className="header_navbar_account_items_link">
+                                                Cài đặt
+                                            </div>
+                                        </Link>
+                                        <Link
+                                            style={{ textDecoration: "none" }}
+                                            to="/"
+                                        >
+                                            <div className="header_navbar_account_items_link no_bottom">
+                                                Đăng xuất
+                                            </div>
+                                        </Link>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

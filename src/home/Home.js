@@ -18,12 +18,6 @@ const Home = () => {
                 </Link>
                 <Link className="home_navbar_items" to="/">
                     <div>
-                        <i className="fa-solid fa-road"></i>
-                        <span>Lộ trình</span>
-                    </div>
-                </Link>
-                <Link className="home_navbar_items" to="/">
-                    <div>
                         <i className="fa-solid fa-lightbulb"></i>
                         <span>Học</span>
                     </div>
