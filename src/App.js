@@ -16,7 +16,7 @@ function App() {
                                 key={index + "routerpriva"}
                                 path={item.path}
                                 element={
-                                    <item.layout>
+                                    <item.layout type={item?.type}>
                                         <Page />
                                     </item.layout>
                                 }

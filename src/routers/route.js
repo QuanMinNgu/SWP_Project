@@ -13,6 +13,7 @@ export const publicRouter = [
         element: Home,
         path: "/",
         layout: DefaultLayout,
+        type: "Home",
     },
     {
         element: Login,
@@ -22,6 +23,7 @@ export const publicRouter = [
         element: Blog,
         path: "/blog",
         layout: DefaultLayout,
+        type: "Blog",
     },
     {
         element: Register,
@@ -43,12 +45,14 @@ export const publicRouter = [
         element: CourseDetail,
         path: "/course/:slug",
         layout: DefaultLayout,
+        type: "Learning",
     },
     ,
     {
         element: BlogDetail,
         path: "/blog/:slug",
         layout: DefaultLayout,
+        type: "Blog",
     },
 ];
 export const privateRouter = [];

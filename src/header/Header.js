@@ -10,8 +10,28 @@ const Header = () => {
     const [sign, setSign] = useState(true);
     const [account, setAccount] = useState(false);
 
+    const [positionY, setPositionY] = useState(0);
+
+    const updatePosition = () => {
+        setPositionY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", updatePosition);
+
     return (
-        <div className="header">
+        <div
+            style={
+                positionY > 50
+                    ? {
+                          position: "fixed",
+                          top: 0,
+                      }
+                    : {
+                          position: "relative",
+                      }
+            }
+            className="header"
+        >
             <div className="header_brand">
                 <Link className="header_brand_link" to="/">
                     <img
