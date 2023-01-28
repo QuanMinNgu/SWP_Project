@@ -2,8 +2,9 @@ import React from "react";
 import "./style.scss";
 import Header from "../../header/Header";
 import Footer from "../../footer/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const DefaultLayout = ({ children, type }) => {
+    const navigate = useNavigate();
     return (
         <div>
             <div className="header_wrap">
@@ -11,7 +12,12 @@ const DefaultLayout = ({ children, type }) => {
             </div>
             <div className="home">
                 <div className="home_navbar">
-                    <div className="home_navbar_plus">
+                    <div
+                        onClick={() => {
+                            navigate("/me/new-post");
+                        }}
+                        className="home_navbar_plus"
+                    >
                         <i className="fa-solid fa-plus"></i>
                     </div>
                     <Link className="home_navbar_items" to="/">

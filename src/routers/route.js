@@ -31,7 +31,7 @@ export const publicRouter = [
         element: BlogWrite,
         path: "/me/new-post",
         layout: DefaultLayout,
-        type: "Home",
+        type: "Blog",
     },
     {
         element: Blog,
