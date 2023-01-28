@@ -8,6 +8,7 @@ import CourseDetail from "../courses/CourseDetail";
 import Blog from "../blog/Blog";
 import CourseLearn from "../courseLearn/CourseLearn";
 import BlogDetail from "../blog/BlogDetail";
+import Profile from "../user/Profile";
 export const publicRouter = [
     {
         element: Home,
