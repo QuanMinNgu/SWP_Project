@@ -131,18 +131,28 @@ const Header = () => {
                                     </div>
                                     <Link
                                         style={{ textDecoration: "none" }}
-                                        to="/"
+                                        to="/me/profile"
                                     >
-                                        <div className="header_navbar_account_items">
+                                        <div
+                                            onClick={() => {
+                                                setAccount(false);
+                                            }}
+                                            className="header_navbar_account_items"
+                                        >
                                             Trang cá nhân
                                         </div>
                                     </Link>
                                     <div className="header_navbar_account_items">
                                         <Link
                                             style={{ textDecoration: "none" }}
-                                            to="/"
+                                            to="/me/new-post"
                                         >
-                                            <div className="header_navbar_account_items_link">
+                                            <div
+                                                onClick={() => {
+                                                    setAccount(false);
+                                                }}
+                                                className="header_navbar_account_items_link"
+                                            >
                                                 Viết blog
                                             </div>
                                         </Link>

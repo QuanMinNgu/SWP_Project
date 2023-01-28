@@ -9,6 +9,7 @@ import Blog from "../blog/Blog";
 import CourseLearn from "../courseLearn/CourseLearn";
 import BlogDetail from "../blog/BlogDetail";
 import Profile from "../user/Profile";
+import BlogWrite from "../blog/BlogWrite";
 export const publicRouter = [
     {
         element: Home,
@@ -19,6 +20,18 @@ export const publicRouter = [
     {
         element: Login,
         path: "/login",
+    },
+    {
+        element: Profile,
+        path: "/me/profile",
+        layout: DefaultLayout,
+        type: "Home",
+    },
+    {
+        element: BlogWrite,
+        path: "/me/new-post",
+        layout: DefaultLayout,
+        type: "Home",
     },
     {
         element: Blog,

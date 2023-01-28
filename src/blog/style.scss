@@ -188,3 +188,11 @@
 .comment_Container{
   margin-top: 10rem;
 }
+.newPost{
+  width: calc(100% - 10rem);
+  margin-left: 10rem;
+  min-height: 100vh;
+}
+.DraftEditor-root {
+  font-size: 24px;
+}
