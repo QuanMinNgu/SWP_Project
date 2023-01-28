@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addLove, removeLove } from "./slice";
@@ -26,6 +26,10 @@ const BlogDetail = () => {
             btnRef.current.className = "comment_btn_up active";
         }
     };
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     return (
         <div className="blog_detail">
             <div className="blog_detail_user">

@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import "./style.scss";
 import { useNavigate, useParams } from "react-router-dom";
 const Setup = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     const { slug } = useParams();
     const navigate = useNavigate();
 
