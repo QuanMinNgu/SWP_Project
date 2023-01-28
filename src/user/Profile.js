@@ -23,6 +23,10 @@ const Profile = () => {
       URL.revokeObjectURL(backGround);
     };
   }, [backGround]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="profile">
       <div

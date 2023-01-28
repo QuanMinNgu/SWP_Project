@@ -2,6 +2,7 @@ import React from "react";
 import "./style.scss";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const Pay = ({ setPayment, setCanLearn }) => {
     const initialOptions = {
         "client-id":
@@ -13,6 +14,7 @@ const Pay = ({ setPayment, setCanLearn }) => {
     const handleApprove = () => {
         setCanLearn(true);
         setPayment(false);
+        toast.success("Cảm ơn bạn đã đăng ký khóa học.");
     };
 
     const navigate = useNavigate();
@@ -46,10 +48,12 @@ const Pay = ({ setPayment, setCanLearn }) => {
                             handleApprove();
                         }}
                         onCancel={() => {
-                            alert("You canceled.");
+                            toast.error("Bạn đã cancel trả tiền khóa học.");
                         }}
                         onError={() => {
-                            alert("Paypal checkout on error.");
+                            toast.error(
+                                "Đã sảy ra lỗi trong quá trình trả tiền, vui lòng kiểm tra lại."
+                            );
                         }}
                     />
                 </PayPalScriptProvider>

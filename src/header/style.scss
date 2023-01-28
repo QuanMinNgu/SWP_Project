@@ -1,13 +1,19 @@
 @import '../style.module.scss';
+.header_navbar_items_course,
+.header_navbar_items_bell_noti{
+    z-index: 50;
+}
 .header{
     width: 100%;
     height: 7rem;
     padding:0 3rem;
     display: flex;
+    background-color: white;
+    z-index: 100;
     justify-content: space-between;
     border-bottom: 0.1rem solid rgba(0,0,0,0.1);
     &_brand{
-        display: none;
+        display: flex;
         align-items: center;
         @include desktop{
             display: flex;
@@ -29,7 +35,7 @@
         }
     }
     &_navbar{
-        display: none;
+        display: flex;
         align-items: center;
         @include desktop{
             display: flex;
@@ -44,6 +50,7 @@
                 border-radius: 50%;
                 &_wrap{
                     cursor: pointer;
+                    position: relative;
                 }
             }
             margin-left:2rem;
@@ -132,7 +139,7 @@
         }
     }
     &_search{
-        display: none;
+        display: flex;
         align-items: center;
         @include desktop{
             display: flex;
@@ -177,16 +184,6 @@
     }
 }
 
-@keyframes courseAppearing{
-    0%{
-        transform: translateY(-1rem);
-        opacity: 0;
-    }
-    100%{
-        transform: translateY(0%);
-        opacity: 1;
-    }
-}
 .header_navbar_button{
     padding:0 2rem;
     height: 3.5rem;
@@ -201,5 +198,77 @@
     font-weight: 500;
     &:hover{
         background-color: rgba(240,81,35,0.8);
+    }
+}
+.header_navbar_account{
+    position: absolute;
+    animation: courseAppearing ease 0.5s;
+    top:130%;
+    right:-0.5rem;
+    min-width: 20rem;
+    min-height: 10rem;
+    background-color: white;
+    box-shadow: 0 0 0.9rem 0.2rem rgba(0,0,0,0.3);
+    z-index: 20;
+    border-radius: 1rem;
+    padding:0 2.5rem;
+    &_infor{
+        display: flex;
+        padding:1.5rem 0;
+        align-items: center;
+        border-bottom: 0.05rem solid rgba(0,0,0,0.08);
+        &_img{
+            width: 5rem;
+            height: 5rem;
+            margin-right: 1.5rem;
+            & > img{
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+            }
+        }
+        &_name{
+            font-size: 1.5rem;
+            & > div:first-child{
+                font-weight: 700;
+                white-space: nowrap;
+            }
+            & > div:nth-child(2){
+                font-size: 1.3rem;
+                margin-top: 0.4rem;
+                color:rgba(0,0,0,0.7);
+                font-weight: 500;
+            }
+        }
+    }
+}
+.header_navbar_account_items{
+    width: 100%;
+    padding:2rem 0;
+    border-bottom: 0.05rem solid rgba(0,0,0,0.08);
+    font-size: 1.5rem;
+    color:rgba(0,0,0,0.7);
+    &:hover{
+        color: #1D2129;
+    }
+    &_link{
+        color:rgba(0,0,0,0.7);
+        margin-bottom: 1.5rem;
+        &:hover{
+            color: #1D2129;
+        }
+    }
+    &_link.no_bottom{
+        margin-bottom:0;
+    }
+}
+@keyframes courseAppearing{
+    0%{
+        transform: translateY(-1rem);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0%);
+        opacity: 1;
     }
 }
