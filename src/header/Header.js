@@ -160,7 +160,12 @@ const Header = () => {
                                             style={{ textDecoration: "none" }}
                                             to="/"
                                         >
-                                            <div className="header_navbar_account_items_link no_bottom">
+                                            <div
+                                                onClick={() => {
+                                                    setAccount(false);
+                                                }}
+                                                className="header_navbar_account_items_link no_bottom"
+                                            >
                                                 Bài viết của tôi
                                             </div>
                                         </Link>
@@ -169,16 +174,26 @@ const Header = () => {
                                         style={{ textDecoration: "none" }}
                                         to="/"
                                     >
-                                        <div className="header_navbar_account_items">
+                                        <div
+                                            onClick={() => {
+                                                setAccount(false);
+                                            }}
+                                            className="header_navbar_account_items"
+                                        >
                                             Bài viết đã lưu
                                         </div>
                                     </Link>
                                     <div className="header_navbar_account_items">
                                         <Link
                                             style={{ textDecoration: "none" }}
-                                            to="/"
+                                            to="/settings/personal"
                                         >
-                                            <div className="header_navbar_account_items_link">
+                                            <div
+                                                onClick={() => {
+                                                    setAccount(false);
+                                                }}
+                                                className="header_navbar_account_items_link"
+                                            >
                                                 Cài đặt
                                             </div>
                                         </Link>
@@ -186,7 +201,12 @@ const Header = () => {
                                             style={{ textDecoration: "none" }}
                                             to="/"
                                         >
-                                            <div className="header_navbar_account_items_link no_bottom">
+                                            <div
+                                                onClick={() => {
+                                                    setAccount(false);
+                                                }}
+                                                className="header_navbar_account_items_link no_bottom"
+                                            >
                                                 Đăng xuất
                                             </div>
                                         </Link>

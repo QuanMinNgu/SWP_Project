@@ -10,6 +10,7 @@ import CourseLearn from "../courseLearn/CourseLearn";
 import BlogDetail from "../blog/BlogDetail";
 import Profile from "../user/Profile";
 import BlogWrite from "../blog/BlogWrite";
+import Setup from "../setup/Setup";
 export const publicRouter = [
     {
         element: Home,
@@ -32,6 +33,12 @@ export const publicRouter = [
         path: "/me/new-post",
         layout: DefaultLayout,
         type: "Blog",
+    },
+    {
+        element: Setup,
+        path: "/settings/:slug",
+        layout: DefaultLayout,
+        type: "Home",
     },
     {
         element: Blog,
