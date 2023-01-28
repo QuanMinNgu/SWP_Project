@@ -61,9 +61,21 @@ const Profile = () => {
         )}
       </div>
       <div className="profile_container">
-        <div className="profile_container_courses">
+        <div className="profile_container_courses_done">
           <div className="profile_container_courses_title">
-            <h3>Các khóa học tham gia</h3>
+            <h3>Các khóa học đã hoàn thành</h3>
+          </div>
+          <div className="profile_container_courses_card">
+            <ProfileCard />
+            <ProfileCard />
+            <ProfileCard />
+            <ProfileCard />
+            <ProfileCard />
+          </div>
+        </div>
+        <div className="profile_container_courses_done">
+          <div className="profile_container_courses_title">
+            <h3>Các khóa học đang học</h3>
           </div>
           <div className="profile_container_courses_card">
             <ProfileCard />
