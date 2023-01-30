@@ -200,3 +200,14 @@
 .comment_container{
     margin-top: 10rem;
 }
+.quizz_time{
+    width: 100%;
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 600;
+    & > span{
+        font-size: 3.2rem;
+        font-weight: 400;
+    }
+}
