@@ -7,6 +7,9 @@ const Quizzlet = () => {
             <QuizzCard />
             <QuizzCard />
             <QuizzCard />
+            <div className="quizz_button">
+                <button title="Bạn muốn nộp bài?">Nộp bài</button>
+            </div>
         </div>
     );
 };

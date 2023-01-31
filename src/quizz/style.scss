@@ -14,7 +14,32 @@
         &_items{
             margin-top: 3rem;
             font-size: 1.8rem;
+            & > input{
+                width: 1.5rem;
+                height: 1.5rem;
+                margin-right: 0.5rem;
+            }
         }
         font-family: 'Playfair Display', serif;
+    }
+}
+.quizz_button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+    margin-bottom: 3rem;
+    & > button{
+        padding:1.5rem 8rem;
+        font-size: 2rem;
+        cursor: pointer;
+        background-color: #FF005E;
+        border:none;
+        color:white;
+        border-radius: 10rem;
+        transition: all ease 0.15s;
+        &:hover{
+            transform: scale(.9);
+        }
     }
 }
