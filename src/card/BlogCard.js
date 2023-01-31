@@ -1,85 +1,44 @@
 import React, { useState } from "react";
 import "./style.scss";
 import "./main.scss";
-import { Link } from "react-router-dom";
+
 const BlogCard = () => {
-  const [openNav, setOpenNav] = useState(false);
-  const [react, setReact] = useState(false);
-  const handleClickOpen = () => {
-    setOpenNav(!openNav);
-  };
-  const handleReact = () => {
-    setReact(!react);
+  const [love, setLove] = useState(false);
+  const handleLove = () => {
+    setLove(!love);
   };
   return (
-    <div className="blogCard">
-      <div className="blogCard_header">
-        <div className="blogCard_header_left">
-          <img
-            src="https://res.cloudinary.com/sttruyen/image/upload/v1673249807/another/b6sudrpaizo80snhsq9m.png"
-            className="blogCard_header_img"
-          />
-          <h3 className="blogCard_header_name">Nguyen Dinh Hoan</h3>
-        </div>
-        <div className="blogCard_header_right">
-          <button onClick={handleReact}>
-            {react === false ? (
-              <i className="fa-regular fa-heart"></i>
-            ) : (
-              <i className="fa-solid fa-heart"></i>
-            )}
-          </button>
-          <i
-            className="fa-solid fa-ellipsis blogCard_header_right_icon"
-            onClick={handleClickOpen}
-          ></i>
-        </div>
-        {openNav && (
-          <div className="blogCard_header_option">
-            <ul className="option_list">
-              <li className="option_list_item">
-                <i className="fa-solid fa-gear"></i> <span>Fix them</span>
-              </li>
-              <li className="option_list_item">
-                <i className="fa-solid fa-gear"></i> <span>Fix them</span>
-              </li>
-              <li className="option_list_item">
-                <i className="fa-solid fa-gear"></i> <span>Fix them</span>
-              </li>
-            </ul>
-          </div>
-        )}
+    <div className="blog_card">
+      <div className="blog_card_header">
+        <img src="https://i.pinimg.com/564x/26/3a/d5/263ad55f3fc6f594d8f1c91d2c396a48.jpg" />
       </div>
-      <div className="blogCard_body">
-        <div className="blogCard_info">
-          <div className="blogCard_info_title">
-            <Link
-              style={{
-                textDecoration: "none",
-                color: "#292929",
-                fontSize: "1.2rem",
-              }}
-              to="/blog/blogdetail"
-            >
-              <h2>
-                Bỏ túi 21 lệnh Git cơ bản + Cách nhớ, giúp newDev làm chủ Git
-                quản lý tốt mã nguồn!
-              </h2>
-            </Link>
+      <div className="blog_card_body">
+        <div className="blog_card_body_top">
+          <div>
+            <img src="https://i.pinimg.com/564x/26/3a/d5/263ad55f3fc6f594d8f1c91d2c396a48.jpg" />
+            <h2>Nguyen Dinh Hoan</h2>
           </div>
-          <div className="blogCard_info_content">
+          <div>
+            <span>Lập trình</span>
+            <div onClick={handleLove}>
+              {love ? (
+                <i class="fa-solid fa-heart"></i>
+              ) : (
+                <i className="fa-regular fa-heart"></i>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="blog_card_body_content">
+          <div className="blog_card_body_content_header">
+            <h3>Thực hành Flexbox</h3>
+          </div>
+          <div className="blog_card_body_content_mid">
             <p>
-              Chắc hẳn nhiều bạn sau khi đã thành công tạo một website từ những
-              kiến thức học được từ khóa học lập trình tại F8 và cảm thấy đó...
+              Hi there, in this article I will guide you guys on how to use
+              CKEditor v5 in React project you can also use this in the...
             </p>
           </div>
-          <div className="blogCard_info_footer">
-            <span>18 ngày trước</span>
-            <span>14 phút trước</span>
-          </div>
-        </div>
-        <div className="blogCard_body_left">
-          <img src="https://res.cloudinary.com/sttruyen/image/upload/v1673249807/another/b6sudrpaizo80snhsq9m.png" />
         </div>
       </div>
     </div>
