@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./style.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CourseLearnCard from "./CourseLearnCard";
 import Comment from "../comment/Comment";
 import Quizzlet from "../quizz/Quizzlet";
@@ -11,11 +11,23 @@ const CourseLearn = () => {
     const [youtube, setYoutube] = useState(false);
     const [times, setTimes] = useState(1800);
 
+    const { search } = useLocation();
+
+    useEffect(() => {
+        const lesson = new URLSearchParams(search).get("lesson") || 0;
+        if (lesson * 1 === 2) {
+            setQuizz(false);
+            setYoutube(true);
+        } else {
+            setQuizz(true);
+            setYoutube(false);
+        }
+    }, [search]);
+
     useEffect(() => {
         if (times < 1) {
             return window.alert("End time man");
         }
-        console.count("Number");
         const timesInterval = setInterval(() => {
             setTimes((prev) => {
                 if (prev < 1) {
@@ -66,16 +78,18 @@ const CourseLearn = () => {
                 <div className="CourseLearn_body_detail_container">
                     <div className="CourseLearn_body_detail">
                         <div>
-                            <div className="quizz_time">
-                                <span>Thời gian còn lại </span>
-                                <i>
-                                    {Math.floor(times / 60) < 10 && "0"}
-                                    {Math.floor(times / 60)} :{" "}
-                                    {times - Math.floor(times / 60) * 60 < 10 &&
-                                        "0"}
-                                    {times - Math.floor(times / 60) * 60}
-                                </i>
-                            </div>
+                            {quizz && (
+                                <div className="quizz_time">
+                                    <span>Thời gian còn lại </span>
+                                    <i>
+                                        {Math.floor(times / 60) < 10 && "0"}
+                                        {Math.floor(times / 60)} :{" "}
+                                        {times - Math.floor(times / 60) * 60 <
+                                            10 && "0"}
+                                        {times - Math.floor(times / 60) * 60}
+                                    </i>
+                                </div>
+                            )}
                             {quizz && <Quizzlet />}
                             {youtube && (
                                 <div className="CourseLearn_body_detail_video">
@@ -123,9 +137,11 @@ const CourseLearn = () => {
                                     </div>
                                 </div>
                             )}
-                            <div className="comment_container">
-                                <Comment />
-                            </div>
+                            {!quizz && (
+                                <div className="comment_container">
+                                    <Comment />
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
