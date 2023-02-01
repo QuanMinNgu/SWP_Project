@@ -1,0 +1,75 @@
+@import '../style.module.scss';
+.searching{
+    width: calc(100% - 9rem);
+    margin-left: 9rem;
+    @include mobile{
+        width: 100%;
+        margin-left: 0;
+    }
+    min-height: 100vh;
+    padding-left:4rem;
+    padding-right: 2rem;
+}
+.searching_head{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    & > button{
+        margin-left: 1rem;
+        padding:0 2rem;
+        height: 4rem;
+        cursor: pointer;
+        border-radius: 3rem;
+        color:white;
+        background-color: #696969;
+        border:0.1rem solid #FF8A08;
+        font-size: 1.7rem;
+        @include mobile{
+            height: 5rem;
+        }
+        &:hover{
+            background-color: #FF8A08;
+            border:0.1rem solid black;
+        }
+    }
+}
+.search{
+    width: 100%;
+    min-height: calc(100vh - 18rem);
+    &_wrap{
+        margin-top: 4rem;
+        &_paginating{
+            margin-top: 3rem;
+        }
+        &_card{
+            margin-top: 3rem;
+        }
+        &_search{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        &_select{
+            width: 17rem;
+            height: 4rem;
+            font-size: 1.5rem;
+            margin-right: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+.searching_title{
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: 900;
+}
+.searching_card{
+    margin-top: 4rem;
+    padding:0 1rem;
+}
+.searching_paginating{
+    margin:4rem 0;
+}

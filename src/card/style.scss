@@ -1,4 +1,4 @@
-
+@import '../style.module.scss';
 .course_head_card{
     width: 100%;
     height: 9rem;
@@ -83,12 +83,18 @@
 .card{
     width: 100%;
     height: 23rem;
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
+    @include middleSmall{
+        height: 30rem;
+    }
     &_img{
         position: relative;
         &_detail{
             width: 100%;
             height: 17rem;
+            @include middleSmall{
+                height: 25rem;
+            }
             object-fit: cover;
             border-radius: 1rem;
             font-family: 'Source Serif Pro', serif;

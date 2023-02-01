@@ -1,3 +1,4 @@
+@import '../../style.module.scss';
 .home_navbar{
     position: fixed;
     top:10rem;
@@ -49,5 +50,10 @@
                 font-weight: 600;
             }
         }
+    }
+}
+@include mobile{
+    .home_navbar{
+        display: none;
     }
 }

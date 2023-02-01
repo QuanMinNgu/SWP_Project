@@ -39,7 +39,7 @@ const Header = () => {
             alt="brand"
           />
         </Link>
-        <span>Học lập trình để đi làm</span>
+        <span className="header_brand_title">Học lập trình để đi làm</span>
       </div>
       <div className="header_search">
         <div className="header_search_container">
@@ -150,7 +150,7 @@ const Header = () => {
                         Viết blog
                       </div>
                     </Link>
-                    <Link style={{ textDecoration: "none" }} to="/me/blog">
+                    <Link style={{ textDecoration: "none" }} to="/">
                       <div
                         onClick={() => {
                           setAccount(false);
@@ -161,7 +161,7 @@ const Header = () => {
                       </div>
                     </Link>
                   </div>
-                  <Link style={{ textDecoration: "none" }} to="/me/markblog">
+                  <Link style={{ textDecoration: "none" }} to="/">
                     <div
                       onClick={() => {
                         setAccount(false);
