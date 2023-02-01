@@ -1,0 +1,37 @@
+.pagination{
+    display: flex;
+    justify-content: center;
+}
+.pagination_items{
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    cursor: pointer;
+    font-weight: 600;
+    margin:0 0.3rem;
+    border-radius: 0.5rem;
+    &:hover{
+        background-color: #FFB74D;
+        color:white;
+        animation: opacity ease 0.4s;
+    }
+    &.active{
+        background-color: #FFB74D;
+        color:white;
+    }
+    &.icons{
+        font-size: 1.4rem;
+        margin-top: 0.2rem;
+    }
+}
+@keyframes opacity{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

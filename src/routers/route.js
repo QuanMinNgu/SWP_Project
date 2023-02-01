@@ -11,6 +11,7 @@ import BlogDetail from "../blog/BlogDetail";
 import Profile from "../user/Profile";
 import BlogWrite from "../blog/BlogWrite";
 import Setup from "../setup/Setup";
+import Searching from "../searching/Searching";
 export const publicRouter = [
     {
         element: Home,
@@ -27,6 +28,12 @@ export const publicRouter = [
         path: "/me/profile",
         layout: DefaultLayout,
         type: "Home",
+    },
+    {
+        element: Searching,
+        path: "/courses/tim-kiem",
+        layout: DefaultLayout,
+        type: "Learning",
     },
     {
         element: BlogWrite,

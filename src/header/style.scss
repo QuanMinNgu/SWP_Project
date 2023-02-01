@@ -32,6 +32,9 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin-left: 1.8rem;
+            @include mobile{
+                display: none;
+            }
         }
     }
     &_navbar{
@@ -139,7 +142,7 @@
         }
     }
     &_search{
-        display: flex;
+        display: none;
         align-items: center;
         @include desktop{
             display: flex;

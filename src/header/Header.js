@@ -39,7 +39,9 @@ const Header = () => {
                         alt="brand"
                     />
                 </Link>
-                <span>Học lập trình để đi làm</span>
+                <span className="header_brand_title">
+                    Học lập trình để đi làm
+                </span>
             </div>
             <div className="header_search">
                 <div className="header_search_container">
