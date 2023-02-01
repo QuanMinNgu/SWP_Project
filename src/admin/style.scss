@@ -1,0 +1,108 @@
+.dashboard{
+    margin-top: -2rem;
+    background-color: #F3F6F9;
+}
+.dashboard_navbar{
+    position: fixed;
+    left:0;
+    width: 25rem;
+    top: 0;
+    bottom:0;
+    min-height: 10rem;
+    background-color: #F3F6F9;
+}
+.dashboard_title{
+    width: 100%;
+    margin-top: 1.5rem;
+    display: flex;
+    padding-left: 2rem;
+    margin-bottom: 3rem;
+    font-size: 2.9rem;
+    color:#009CFF;
+    font-weight: 700;
+}
+.dashboard_account{
+    width: 100%;
+    display: flex;
+    padding-left: 2rem;
+    align-items: center;
+    margin-bottom: 2rem;
+    &_img{
+        & > img{
+            width: 4.5rem;
+            height: 4.5rem;
+            border-radius: 50%;
+        }
+        position: relative;
+        &::after{
+            content:"";
+            position: absolute;
+            bottom:0.3rem;
+            right:0.3rem;
+            width: 1rem;
+            height: 1rem;
+            background-color: #198754;
+            border-radius: 50%;
+            box-shadow: 0 0 0.2rem 0.2rem white;
+        }
+    }
+    &_infor{
+        margin-left: 1rem;
+        overflow: hidden;
+        & > h6{
+            font-size: 1.9rem;
+            color:rgba(0,0,0,0.7);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        & > span{
+            font-size: 1.5rem;
+            color:rgba(0,0,0,0.4);
+        }
+    }
+}
+.dashboard_detail{
+    min-height: 100vh;
+    width: calc(100% - 50rem);
+    background-color: white;
+    margin-left: 26rem;
+}
+.dashboard_navbar_items{
+    width: 90%;
+    height: 6rem;
+    border-radius: 0 3rem 3rem 0;
+    display: flex;
+    align-items: center;
+    padding-left: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: all ease 0.4s;
+    &.active{
+        color:#009CFF;
+        background-color: white;
+        &::after{
+            position: absolute;
+            content:"";
+            left:0;
+            top:0;
+            bottom:0;
+            width: 0.2rem;
+            background-color: #009CFF;
+        } 
+    }
+    &:hover{
+        color:#009CFF;
+        background-color: white;
+        &::after{
+            position: absolute;
+            content:"";
+            left:0;
+            top:0;
+            bottom:0;
+            width: 0.2rem;
+            background-color: #009CFF;
+        }
+    }
+}
