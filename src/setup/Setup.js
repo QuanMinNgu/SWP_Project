@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./style.scss";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 const Setup = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -203,7 +203,63 @@ const Setup = () => {
                     </div>
                 </div>
             )}
-            <div className="setUp_payment"></div>
+            {slug === "payment" && (
+                <div className="setUp_payment">
+                    <div className="setUp_title">
+                        <h2>Hóa đơn</h2>
+                    </div>
+                    <div className="setUp_payment_table">
+                        <div className="setUp_payment_head">
+                            <div className="setUp_payment_head_1">Hóa đơn</div>
+                            <div className="setUp_payment_head_2">Ngày tạo</div>
+                            <div className="setUp_payment_head_3">Số tiền</div>
+                            <div className="setUp_payment_head_4">Nội dung</div>
+                        </div>
+                        <div className="setUp_payment_body">
+                            <div className="setUp_payment_body_1">
+                                <Link
+                                    style={{
+                                        textDecoration: "none",
+                                    }}
+                                    to="/"
+                                >
+                                    1990
+                                </Link>
+                            </div>
+                            <div className="setUp_payment_body_2">
+                                12/09/2002
+                            </div>
+                            <div className="setUp_payment_body_3">$120</div>
+                            <div className="setUp_payment_body_4">
+                                Trả tiền mua khóa học
+                                <Link to="/"> Css, Html</Link>
+                                hoặc các khóa học tượng tự như thế
+                            </div>
+                        </div>
+                        <div className="setUp_payment_body">
+                            <div className="setUp_payment_body_1">
+                                <Link
+                                    style={{
+                                        textDecoration: "none",
+                                    }}
+                                    to="/"
+                                >
+                                    1990
+                                </Link>
+                            </div>
+                            <div className="setUp_payment_body_2">
+                                12/09/2002
+                            </div>
+                            <div className="setUp_payment_body_3">$120</div>
+                            <div className="setUp_payment_body_4">
+                                Trả tiền mua khóa học
+                                <Link to="/"> Css, Html</Link>
+                                hoặc các khóa học tượng tự như thế
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
