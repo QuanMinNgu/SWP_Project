@@ -28,6 +28,13 @@ const Dashboard = () => {
                         slug === "dashboard" ? "active" : ""
                     }`}
                 >
+                    <div
+                        className={`dashboard_icons_container ${
+                            slug === "dashboard" ? "active" : ""
+                        }`}
+                    >
+                        <i className="fa-solid fa-gauge icons_admin"></i>
+                    </div>{" "}
                     Dashboard
                 </div>
                 <div
@@ -38,6 +45,13 @@ const Dashboard = () => {
                         slug === "user_manager" ? "active" : ""
                     }`}
                 >
+                    <div
+                        className={`dashboard_icons_container ${
+                            slug === "user_manager" ? "active" : ""
+                        }`}
+                    >
+                        <i className="fa-solid fa-users"></i>
+                    </div>{" "}
                     User Manager
                 </div>
                 <div
@@ -48,6 +62,13 @@ const Dashboard = () => {
                         slug === "course_manager" ? "active" : ""
                     }`}
                 >
+                    <div
+                        className={`dashboard_icons_container ${
+                            slug === "course_manager" ? "active" : ""
+                        }`}
+                    >
+                        <i className="fa-brands fa-discourse"></i>
+                    </div>{" "}
                     Courses Manager
                 </div>
                 <div
@@ -58,7 +79,28 @@ const Dashboard = () => {
                         slug === "blog_manager" ? "active" : ""
                     }`}
                 >
+                    <div
+                        className={`dashboard_icons_container ${
+                            slug === "blog_manager" ? "active" : ""
+                        }`}
+                    >
+                        <i className="fa-solid fa-blog"></i>
+                    </div>{" "}
                     Blog Manager
+                </div>
+            </div>
+            <div className="dashboard_head">
+                <div className="dashboard_head_account">
+                    <div className="dashboard_head_img">
+                        <img
+                            src="https://phunugioi.com/wp-content/uploads/2020/02/mau-background-dep.jpg"
+                            alt="Ảnh"
+                        />
+                    </div>
+                    <div className="dashboard_head_name">
+                        <span>Minh Quang</span>
+                        <i className="fa-solid fa-chevron-down"></i>
+                    </div>
                 </div>
             </div>
             <div className="dashboard_detail"></div>
