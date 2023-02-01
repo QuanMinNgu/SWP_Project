@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.scss";
 import "./main.scss";
-
+import { Link } from "react-router-dom";
 const BlogCard = () => {
   const [love, setLove] = useState(false);
   const handleLove = () => {
@@ -9,9 +9,11 @@ const BlogCard = () => {
   };
   return (
     <div className="blog_card">
-      <div className="blog_card_header">
-        <img src="https://i.pinimg.com/564x/26/3a/d5/263ad55f3fc6f594d8f1c91d2c396a48.jpg" />
-      </div>
+      <Link to="/blog/abc">
+        <div className="blog_card_header">
+          <img src="https://i.pinimg.com/564x/26/3a/d5/263ad55f3fc6f594d8f1c91d2c396a48.jpg" />
+        </div>
+      </Link>
       <div className="blog_card_body">
         <div className="blog_card_body_top">
           <div>
@@ -30,9 +32,17 @@ const BlogCard = () => {
           </div>
         </div>
         <div className="blog_card_body_content">
-          <div className="blog_card_body_content_header">
-            <h3>Thực hành Flexbox</h3>
-          </div>
+          <Link
+            to="/blog/abc"
+            style={{
+              textDecoration: "none",
+              color: "black",
+            }}
+          >
+            <div className="blog_card_body_content_header">
+              <h3>Thực hành Flexbox</h3>
+            </div>
+          </Link>
           <div className="blog_card_body_content_mid">
             <p>
               Hi there, in this article I will guide you guys on how to use
