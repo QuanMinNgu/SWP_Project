@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import DashboardDetail from "./DashboardDetail";
+import UserManager from "./UserManager";
+import BlogManager from "./BlogManager";
+import SendMail from "./SendMail";
+import CourseManager from "./CourseManager";
 const Dashboard = () => {
     const { slug } = useParams();
     const navigate = useNavigate();
@@ -157,7 +162,13 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className="dashboard_detail"></div>
+            <div className="dashboard_detail">
+                {slug === "dashboard" && <DashboardDetail />}
+                {slug === "user_manager" && <UserManager />}
+                {slug === "blog_manager" && <BlogManager />}
+                {slug === "send_mail" && <SendMail />}
+                {slug === "course_manager" && <CourseManager />}
+            </div>
         </div>
     );
 };
