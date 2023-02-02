@@ -150,7 +150,7 @@ const Header = () => {
                         Viết blog
                       </div>
                     </Link>
-                    <Link style={{ textDecoration: "none" }} to="/">
+                    <Link style={{ textDecoration: "none" }} to="/me/blog">
                       <div
                         onClick={() => {
                           setAccount(false);
@@ -161,7 +161,7 @@ const Header = () => {
                       </div>
                     </Link>
                   </div>
-                  <Link style={{ textDecoration: "none" }} to="/">
+                  <Link style={{ textDecoration: "none" }} to="/me/markblog">
                     <div
                       onClick={() => {
                         setAccount(false);
