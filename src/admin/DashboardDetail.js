@@ -1,6 +1,52 @@
 import React from "react";
 import "./style.scss";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+);
+
 const DashboardDetail = () => {
+    const date = 31;
+    const labels = Array(date)
+        .fill(1)
+        .map((_, index) => index + 1);
+    console.log(labels);
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: "top",
+            },
+            title: {
+                display: true,
+                text: "Incoming of website in month",
+            },
+        },
+    };
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: "Income $",
+                data: [200, 4000, 300, 400, 2000, 100, 500, 20, 40],
+                backgroundColor: "rgba(53, 162, 235, 0.5)",
+            },
+        ],
+    };
     return (
         <div className="dashboard_main">
             <div className="dashboard_statistic">
@@ -50,6 +96,9 @@ const DashboardDetail = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="dashboard_chart">
+                <Bar options={options} data={data} />
             </div>
         </div>
     );
