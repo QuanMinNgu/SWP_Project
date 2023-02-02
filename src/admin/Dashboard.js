@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.scss";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 const Dashboard = () => {
     const { slug } = useParams();
     const navigate = useNavigate();
+
+    const [scrolldown, setScrolldown] = useState(false);
     return (
         <div className="dashboard">
             <div className="dashboard_navbar">
@@ -88,8 +90,28 @@ const Dashboard = () => {
                     </div>{" "}
                     Blog Manager
                 </div>
+                <div
+                    onClick={() => {
+                        navigate(`/admin/send_mail`);
+                    }}
+                    className={`dashboard_navbar_items ${
+                        slug === "send_mail" ? "active" : ""
+                    }`}
+                >
+                    <div
+                        className={`dashboard_icons_container ${
+                            slug === "send_mail" ? "active" : ""
+                        }`}
+                    >
+                        <i className="fa-solid fa-envelope"></i>
+                    </div>{" "}
+                    Send Mail
+                </div>
             </div>
             <div className="dashboard_head">
+                <div className="dashboard_input">
+                    <input type="text" placeholder="Tìm kiếm" />
+                </div>
                 <div className="dashboard_head_account">
                     <div className="dashboard_head_img">
                         <img
@@ -97,9 +119,41 @@ const Dashboard = () => {
                             alt="Ảnh"
                         />
                     </div>
-                    <div className="dashboard_head_name">
+                    <div
+                        onClick={() => {
+                            setScrolldown(!scrolldown);
+                        }}
+                        className="dashboard_head_name"
+                    >
                         <span>Minh Quang</span>
-                        <i className="fa-solid fa-chevron-down"></i>
+                        {!scrolldown ? (
+                            <i className="fa-solid fa-chevron-down"></i>
+                        ) : (
+                            <i className="fa-solid fa-chevron-up"></i>
+                        )}
+                        {scrolldown && (
+                            <div className="dashboard_head_scrolldown">
+                                <Link
+                                    className="dashboard_scrolldown_items"
+                                    to="/me/profile"
+                                >
+                                    <div className="dashboard_scrolldown_items_detail">
+                                        My Profile
+                                    </div>
+                                </Link>
+                                <Link
+                                    className="dashboard_scrolldown_items"
+                                    to="/settings/personal"
+                                >
+                                    <div className="dashboard_scrolldown_items_detail">
+                                        Setting
+                                    </div>
+                                </Link>
+                                <div className="dashboard_scrolldown_items_detail">
+                                    Log Out
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
