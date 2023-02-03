@@ -14,85 +14,92 @@ import Setup from "../setup/Setup";
 import Searching from "../searching/Searching";
 import UserBlog from "../user/userblog/UserBlog";
 import MarkBlog from "../user/markblog/MarkBlogs";
+import Dashboard from "../admin/Dashboard";
+import PrivateLayout from "../components/privateLayout/PrivateLayout";
 export const publicRouter = [
-  {
-    element: Home,
-    path: "/",
-    layout: DefaultLayout,
-    type: "Home",
-  },
-  {
-    element: Login,
-    path: "/login",
-  },
-  {
-    element: Profile,
-    path: "/me/profile",
-    layout: DefaultLayout,
-    type: "Home",
-  },
-  {
-    element: Searching,
-    path: "/courses/tim-kiem",
-    layout: DefaultLayout,
-    type: "Learning",
-  },
-  {
-    element: BlogWrite,
-    path: "/me/new-post",
-    layout: DefaultLayout,
-    type: "Blog",
-  },
-  {
-    element: Setup,
-    path: "/settings/:slug",
-    layout: DefaultLayout,
-    type: "Home",
-  },
-  {
-    element: Blog,
-    path: "/blog",
-    layout: DefaultLayout,
-    type: "Blog",
-  },
-  {
-    element: Register,
-    path: "/register",
-  },
-  {
-    element: ForgotPassword,
-    path: "/forgot_password",
-  },
-  {
-    element: ChangePassword,
-    path: "/change_password",
-  },
-  {
-    element: CourseLearn,
-    path: "/learning/:slug",
-  },
-  {
-    element: CourseDetail,
-    path: "/course/:slug",
-    layout: DefaultLayout,
-    type: "Learning",
-  },
-  ,
-  {
-    element: BlogDetail,
-    path: "/blog/:slug",
-    layout: DefaultLayout,
-    type: "Blog",
-  },
-  {
-    element: UserBlog,
-    path: "/me/blog",
-    layout: DefaultLayout,
-  },
-  {
-    element: MarkBlog,
-    path: "/me/markblog",
-    layout: DefaultLayout,
-  },
+    {
+        element: Home,
+        path: "/",
+        layout: DefaultLayout,
+        type: "Home",
+    },
+    {
+        element: Login,
+        path: "/login",
+    },
+    {
+        element: Profile,
+        path: "/me/profile",
+        layout: DefaultLayout,
+        type: "Home",
+    },
+    {
+        element: Searching,
+        path: "/courses/tim-kiem",
+        layout: DefaultLayout,
+        type: "Learning",
+    },
+    {
+        element: BlogWrite,
+        path: "/me/new-post",
+        layout: DefaultLayout,
+        type: "Blog",
+    },
+    {
+        element: Setup,
+        path: "/settings/:slug",
+        layout: DefaultLayout,
+        type: "Home",
+    },
+    {
+        element: Blog,
+        path: "/blog",
+        layout: DefaultLayout,
+        type: "Blog",
+    },
+    {
+        element: Register,
+        path: "/register",
+    },
+    {
+        element: ForgotPassword,
+        path: "/forgot_password",
+    },
+    {
+        element: ChangePassword,
+        path: "/change_password",
+    },
+    {
+        element: CourseLearn,
+        path: "/learning/:slug",
+    },
+    {
+        element: CourseDetail,
+        path: "/course/:slug",
+        layout: DefaultLayout,
+        type: "Learning",
+    },
+    ,
+    {
+        element: BlogDetail,
+        path: "/blog/:slug",
+        layout: DefaultLayout,
+        type: "Blog",
+    },
+    {
+        element: UserBlog,
+        path: "/me/blog",
+        layout: DefaultLayout,
+    },
+    {
+        element: MarkBlog,
+        path: "/me/markblog",
+        layout: DefaultLayout,
+    },
 ];
-export const privateRouter = [];
+export const adminRouter = [
+    {
+        element: Dashboard,
+        path: "/admin/:slug",
+    },
+];
