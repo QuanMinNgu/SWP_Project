@@ -115,7 +115,7 @@ const Dashboard = () => {
             </div>
             <div className="dashboard_head">
                 <div className="dashboard_input">
-                    <input type="text" placeholder="Tìm kiếm" />
+                    <input type="text" placeholder="Searching" />
                 </div>
                 <div className="dashboard_head_account">
                     <div className="dashboard_head_img">
