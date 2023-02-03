@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.scss";
 const CourseManagerCard = ({ checkAll }) => {
     const cardRef = useRef(null);
+
+    const [bars, setBars] = useState(false);
 
     useEffect(() => {
         if (cardRef.current) {
@@ -40,8 +42,26 @@ const CourseManagerCard = ({ checkAll }) => {
                 <input ref={cardRef} id="checkall" type="checkbox" />
             </th>
             <th className="thead_bars">
-                <div className="thead_bars_icons">
+                <div
+                    onClick={() => {
+                        setBars(!bars);
+                    }}
+                    className="thead_bars_icons"
+                >
                     <i className="fa-solid fa-ellipsis"></i>
+                    {bars && (
+                        <div className="bars_detail">
+                            <div className="bars_detail_items">
+                                <i>Cg Status</i>
+                            </div>
+                            <div className="bars_detail_items">
+                                <i>Cg CExpert</i>
+                            </div>
+                            <div className="bars_detail_items">
+                                <i>Delete</i>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </th>
         </tr>

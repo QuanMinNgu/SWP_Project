@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import "./style.scss";
 import Select from "react-select";
 import CourseManagerCard from "./CourseManagerCard";
 const CourseManager = () => {
     const [checkAll, setCheckAll] = useState(false);
+
+    const [bars, setBars] = useState(false);
     const checkRef = useRef();
     const options = [
         { value: "free", label: "Free" },
@@ -102,7 +104,25 @@ const CourseManager = () => {
                             </th>
                             <th className="thead_bars">
                                 <div className="thead_bars_icons">
-                                    <i className="fa-solid fa-ellipsis"></i>
+                                    <i
+                                        onClick={() => {
+                                            setBars(!bars);
+                                        }}
+                                        className="fa-solid fa-ellipsis"
+                                    ></i>
+                                    {bars && (
+                                        <div className="bars_detail">
+                                            <div className="bars_detail_items">
+                                                <i>Cg Status</i>
+                                            </div>
+                                            <div className="bars_detail_items">
+                                                <i>Cg CExpert</i>
+                                            </div>
+                                            <div className="bars_detail_items">
+                                                <i>Delete</i>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </th>
                         </tr>
