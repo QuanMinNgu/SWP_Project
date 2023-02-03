@@ -302,7 +302,7 @@
     border-bottom: 0.1rem solid rgba(0,0,0,0.3);
 }
 .thead_title{
-    width: 50%;
+    width: 45%;
 }
 .thead_price{
     width: 10%;
@@ -312,7 +312,9 @@
 }
 .thead_bars{
     width: 5%;
-
+}
+.thead_checkbox{
+    width: 5%;
 }
 .thead_status{
     width: 10%;
@@ -380,4 +382,11 @@
     -webkit-line-clamp: 1;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.thead_checkbox{
+    & > input{
+        margin-left: 0.2rem;
+        width: 2rem;
+        height: 2rem;
+    }
 }

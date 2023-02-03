@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./style.scss";
 import Select from "react-select";
-import { Link } from "react-router-dom";
+import CourseManagerCard from "./CourseManagerCard";
 const CourseManager = () => {
+    const [checkAll, setCheckAll] = useState(false);
+    const checkRef = useRef();
     const options = [
         { value: "free", label: "Free" },
         { value: "no-free", label: "Not Free" },
@@ -20,6 +22,14 @@ const CourseManager = () => {
         { value: "vaniasdlla", label: "Newest" },
         { value: "vanilsla", label: "Oldest" },
     ];
+
+    const handleChangeInput = () => {
+        if (checkRef.current?.checked) {
+            setCheckAll(true);
+        } else {
+            setCheckAll(false);
+        }
+    };
 
     const [selectedOption, setSelectedOption] = useState(null);
     return (
@@ -76,80 +86,32 @@ const CourseManager = () => {
                             >
                                 Status
                             </th>
-                            <th className="thead_bars"></th>
+                            <th
+                                style={{ fontWeight: "700" }}
+                                className="thead_checkbox"
+                            >
+                                <label htmlFor="checkall">All</label>
+                                <input
+                                    onChange={() => {
+                                        handleChangeInput();
+                                    }}
+                                    ref={checkRef}
+                                    id="checkall"
+                                    type="checkbox"
+                                />
+                            </th>
+                            <th className="thead_bars">
+                                <div className="thead_bars_icons">
+                                    <i className="fa-solid fa-ellipsis"></i>
+                                </div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="thead_wrap_items">
-                            <th className="thead_title">
-                                Course Name & Detail
-                            </th>
-                            <th className="thead_price">$120</th>
-                            <th className="thead_courseExpert">
-                                <div className="courseExpert_infor">
-                                    <div className="courseExpert_infor_img">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar6.png"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="courseExpert_infor_name">
-                                        <h6>
-                                            <Link
-                                                className="courseExpert_name"
-                                                to="/"
-                                            >
-                                                Minh Quang
-                                            </Link>
-                                        </h6>
-                                        <span>Course Expert</span>
-                                    </div>
-                                </div>
-                            </th>
-                            <th className="thead_status active_status">
-                                Active
-                            </th>
-                            <th className="thead_bars">
-                                <div className="thead_bars_icons">
-                                    <i className="fa-solid fa-ellipsis"></i>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr className="thead_wrap_items">
-                            <th className="thead_title">
-                                Course Name & Detail
-                            </th>
-                            <th className="thead_price">$140</th>
-                            <th className="thead_courseExpert">
-                                <div className="courseExpert_infor">
-                                    <div className="courseExpert_infor_img">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="courseExpert_infor_name">
-                                        <h6>
-                                            <Link
-                                                className="courseExpert_name"
-                                                to="/"
-                                            >
-                                                Quang Minh Nguy
-                                            </Link>
-                                        </h6>
-                                        <span>Course Expert</span>
-                                    </div>
-                                </div>
-                            </th>
-                            <th className="thead_status noactive_status">
-                                Inactive
-                            </th>
-                            <th className="thead_bars">
-                                <div className="thead_bars_icons">
-                                    <i className="fa-solid fa-ellipsis"></i>
-                                </div>
-                            </th>
-                        </tr>
+                        <CourseManagerCard checkAll={checkAll} />
+                        <CourseManagerCard checkAll={checkAll} />
+                        <CourseManagerCard checkAll={checkAll} />
+                        <CourseManagerCard checkAll={checkAll} />
                     </tbody>
                 </table>
             </div>
