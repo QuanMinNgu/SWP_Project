@@ -130,6 +130,7 @@
     position: fixed;
     padding:0 2rem;
     padding-right: 20rem;
+    z-index: 10;
     top:0;
     right:0rem;
     left:32rem;
@@ -422,4 +423,199 @@
         opacity: 1;
         transform: translateX(0rem);
     }
+}
+.thead_card_container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding:0 3rem;
+}
+.thead_img{
+    margin-right: 1rem;
+    & > img{
+        width: 12rem;
+        height: 6rem;
+        object-fit: cover;
+        border-radius: 0.2rem;
+    }
+}
+.thead_card_name{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.thead_card_name-link{
+    color:rgba(0,0,0,0.8);
+    font-size: 1.7rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.5rem;
+}
+.thead_card_price{
+    font-size: 1.5rem;
+    color:rgba(0,0,0,0.5);
+    font-weight: 700;
+}
+.thead_card_oldPrice{
+    text-decoration: line-through;
+    font-size: 1.3rem;
+}
+.thead_card_newPrice{
+    font-size: 1.6rem;
+    margin-left: 0.5rem;
+    color:rgba(255,0,0,0.6);
+}
+.expertCourse{
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.3);
+}
+.expertCourse_container{
+    width: 40%;
+    min-height: 10rem;
+    background-color: white;
+    z-index: 40;
+    box-shadow: 0 0 0.5rem 0.2rem #9AD0F5;
+    border-radius: 2rem;
+    padding:2rem;
+}
+.expertCourse_close{
+    display: flex;
+    justify-content: end;
+}
+.expertCourse_close_icons{
+    width: 3rem;
+    height: 3rem;
+    border: 0.1rem solid rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    border-radius: 50%;
+    padding-bottom: 0.5rem;
+    cursor: pointer;
+    margin-bottom: 3rem;
+}
+.ex_table{
+    width: 100%;
+    border:0.1rem solid rgba(0,0,0,0.3);
+    border-collapse: collapse;
+}
+.ex_thead{
+    width: 100%;
+    height: 4rem;
+    border-bottom: 0.1rem solid rgba(0,0,0,0.3);
+}
+.ex_thead_title{
+    width: 80%;
+    border-right: 0.1rem solid rgba(0,0,0,0.3);
+    font-size: 1.6rem;
+}
+.ex_thead_wrap_items{
+    border-bottom: 0.1rem solid rgba(0,0,0,0.3);
+    height: 10rem;
+}
+.ex_thead_button{
+    & > button{
+        padding:0 1rem;
+        height: 3.5rem;
+        border:none;
+        background-color: #009CFF;
+        color:white;
+        border-radius: 1rem;
+        cursor: pointer;
+        font-size: 1.3rem;
+        &:hover{
+            transform: scale(.9);
+        }
+    }
+}
+.expertCourse_form{
+    width: 100%;
+    height: 60vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.expertCourse_searching{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    & > input{
+        width: 60%;
+        height: 4rem;
+        margin-right: 1rem;
+        padding:0 1.5rem;
+        font-size: 1.6rem;
+        outline: none;
+        border:0.1rem solid #0dcaf0;
+        border-radius: 2rem;
+    }
+}
+.button{
+    padding:0 2rem;
+    border: none;
+    background-color: #009CFF;
+    color:white;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-size: 1.3rem;
+    &:hover{
+        transform: scale(.9);
+    }
+}
+.ex_thead_user{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding:0 2rem;
+}
+.ex_thead_user_img{
+    margin-right: 1rem;
+    & > img{
+        width: 6rem;
+        height: 6rem;
+        border-radius: 0.3rem;
+    }
+}
+.ex_thead_button{
+    width: 20%;
+}
+.ex_thead_user_infor{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.ex_thead_user_infor_name{
+    font-size: 1.9rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ex_thead_user_infor_email{
+    font-size: 1.5rem;
+    color:rgba(0,0,0,0.5);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ex_thead_user_infor_id{
+    color:rgba(0,0,0,0.4);
+    font-size: 1.3rem;
 }

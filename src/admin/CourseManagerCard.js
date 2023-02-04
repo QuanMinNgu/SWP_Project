@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.scss";
-const CourseManagerCard = ({ checkAll }) => {
+const CourseManagerCard = ({ checkAll, setExpert }) => {
     const cardRef = useRef(null);
 
     const [bars, setBars] = useState(false);
@@ -17,7 +17,27 @@ const CourseManagerCard = ({ checkAll }) => {
     }, [checkAll]);
     return (
         <tr className="thead_wrap_items">
-            <th className="thead_title">Course Name & Detail</th>
+            <th className="thead_title">
+                <div className="thead_card_container">
+                    <div className="thead_img">
+                        <img
+                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
+                            alt="Ảnh"
+                        />
+                    </div>
+                    <div className="thead_card_name">
+                        <div>
+                            <Link className="thead_card_name-link" to="/">
+                                Khóa học html,css for begginer
+                            </Link>
+                        </div>
+                        <span className="thead_card_price">
+                            <i className="thead_card_oldPrice">$120</i>
+                            <i className="thead_card_newPrice">$100</i>
+                        </span>
+                    </div>
+                </div>
+            </th>
             <th className="thead_price">$140</th>
             <th className="thead_courseExpert">
                 <div className="courseExpert_infor">
@@ -54,7 +74,12 @@ const CourseManagerCard = ({ checkAll }) => {
                             <div className="bars_detail_items">
                                 <i>Cg Status</i>
                             </div>
-                            <div className="bars_detail_items">
+                            <div
+                                onClick={() => {
+                                    setExpert(true);
+                                }}
+                                className="bars_detail_items"
+                            >
                                 <i>Cg CExpert</i>
                             </div>
                             <div className="bars_detail_items">
