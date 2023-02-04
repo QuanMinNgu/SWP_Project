@@ -5,7 +5,7 @@
 .admin_blog_right {
   display: flex;
   flex-direction: column;
-  width: 65%;
+  width: 70%;
   &_header {
     background-color: #9aedff;
     border-radius: 12px;
@@ -62,6 +62,7 @@
   flex-direction: column;
 }
 .admin_blog_card {
+  position: relative;
   display: flex;
   margin-bottom: 40px;
   &_infor {
@@ -95,5 +96,83 @@
   &_love {
     width: 30%;
     display: flex;
+    justify-content: flex-end;
+    &_detail {
+      font-size: 1.6rem;
+      margin-right: 10px;
+      & > i {
+        margin-right: 10px;
+      }
+    }
+    &_option {
+      font-size: 1.6rem;
+      cursor: pointer;
+      margin-left: 6px;
+    }
+  }
+}
+.option_card {
+  background-color: #f3eae8;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  border-radius: 12px;
+  right: -20%;
+  top: -11px;
+  padding: 10px;
+  cursor: pointer;
+  animation: fadeIn 0.3s ease-in-out;
+  transition: 0.3s ease-in;
+  & > i {
+    font-size: 1.4rem;
+    margin-right: 6px;
+  }
+  & > h2 {
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-left: 6px;
+  }
+}
+@keyframes fadeIn {
+  from {
+    transform: translateY(-10px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.admin_blog_left {
+  width: 25%;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  &_box {
+    padding: 30px;
+    background-color: #ddeff1;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    & > i {
+      font-size: 1.4rem;
+      padding: 14px;
+      background-color: #038dfb;
+      border-radius: 12px;
+      margin-right: 2rem;
+      color: #fff;
+    }
+    &_content {
+      & > h2 {
+        font-weight: 700;
+        font-size: 2.6rem;
+      }
+      & > span {
+        font-size: 1.4rem;
+        font-weight: 500;
+        opacity: 0.6;
+      }
+    }
   }
 }

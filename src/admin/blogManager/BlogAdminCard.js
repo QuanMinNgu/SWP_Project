@@ -1,6 +1,11 @@
+import { useState } from "react";
 import "./main.scss";
 
 const BLogAdminCard = () => {
+  const [option, setOption] = useState(false);
+  const handleClick = () => {
+    setOption(!option);
+  };
   return (
     <div className="admin_blog_card">
       <div className="admin_blog_card_infor">
@@ -20,10 +25,16 @@ const BLogAdminCard = () => {
           <i class="fa-solid fa-heart"></i>
           <span>1000</span>
         </div>
-        <div className="admin_blog_card_love_option">
+        <div className="admin_blog_card_love_option" onClick={handleClick}>
           <i class="fa-solid fa-ellipsis"></i>
         </div>
       </div>
+      {option && (
+        <div className="option_card">
+          <i class="fa-solid fa-trash"></i>
+          <h2>Delete</h2>
+        </div>
+      )}
     </div>
   );
 };
