@@ -1,3 +1,4 @@
+@import "../style.module.scss";
 .home,
 .blog {
   width: 100%;
@@ -50,6 +51,9 @@
 .blog_container {
   margin-left: 8rem;
   width: 100%;
+  @include mobile {
+    margin-left: 0;
+  }
   &_body {
     margin-bottom: 40px;
     &_cards {
@@ -96,6 +100,7 @@
           outline: none;
           font-size: 1.4rem;
           font-weight: 600;
+          width: 70%;
         }
         & > input::placeholder {
           font-size: 1.4rem;
