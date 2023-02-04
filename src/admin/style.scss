@@ -619,3 +619,55 @@
     color:rgba(0,0,0,0.4);
     font-size: 1.3rem;
 }
+.pagination{
+    margin-top: 2rem;
+}
+.s_table{
+    width: 100%;
+    border:0.1rem solid rgba(0,0,0,0.3);
+    border-collapse: collapse;
+}
+.s_thead{
+    height: 5rem;
+    border-bottom: 0.1rem solid rgba(0,0,0,0.3);
+    font-size: 1.6rem;
+}
+.s_tcourse,
+.s_dcourse{
+    width: 30%;
+    border-right: 0.1rem solid rgba(0,0,0,0.3);
+}
+.s_tto,
+.s_dto{
+    border-right: 0.1rem solid rgba(0,0,0,0.3);
+    width: 20%;
+}
+.s_tsale,
+.s_dsale{
+    border-right: 0.1rem solid rgba(0,0,0,0.3);
+    width: 10%;
+}
+.s_tbars,
+.s_dbars{
+    width: 5%;
+}
+.s_tfromdate,
+.s_dfromdate{
+    border-right: 0.1rem solid rgba(0,0,0,0.3);
+    width: 15%;
+}
+.s_ttodate,
+.s_dtodate{
+    border-right: 0.1rem solid rgba(0,0,0,0.3);
+    width: 15%;
+}
+.s_drow{
+    height: 10rem;
+    font-size: 1.5rem;
+    border-bottom: 0.1rem solid rgba(0,0,0,0.3);
+}
+.s_dto_div{
+    color:#009CFF;
+    text-decoration: underline;
+    cursor: pointer;
+}   

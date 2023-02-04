@@ -6,6 +6,7 @@ import UserManager from "./UserManager";
 import BlogManager from "./BlogManager";
 import SendMail from "./SendMail";
 import CourseManager from "./CourseManager";
+import VocherManager from "./VocherManager";
 const Dashboard = () => {
     const { slug } = useParams();
     const navigate = useNavigate();
@@ -97,6 +98,23 @@ const Dashboard = () => {
                 </div>
                 <div
                     onClick={() => {
+                        navigate(`/admin/vocher_manager`);
+                    }}
+                    className={`dashboard_navbar_items ${
+                        slug === "vocher_manager" ? "active" : ""
+                    }`}
+                >
+                    <div
+                        className={`dashboard_icons_container ${
+                            slug === "vocher_manager" ? "active" : ""
+                        }`}
+                    >
+                        <i className="fa-brands fa-adversal"></i>
+                    </div>{" "}
+                    Vocher Manager
+                </div>
+                <div
+                    onClick={() => {
                         navigate(`/admin/send_mail`);
                     }}
                     className={`dashboard_navbar_items ${
@@ -167,6 +185,7 @@ const Dashboard = () => {
                 {slug === "user_manager" && <UserManager />}
                 {slug === "blog_manager" && <BlogManager />}
                 {slug === "send_mail" && <SendMail />}
+                {slug === "vocher_manager" && <VocherManager />}
                 {slug === "course_manager" && <CourseManager />}
             </div>
         </div>

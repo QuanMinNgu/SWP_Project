@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import "./style.scss";
 import Select from "react-select";
 import CourseManagerCard from "./CourseManagerCard";
+import Pagination from "../paginating/Pagination";
 const CourseManager = () => {
     const [checkAll, setCheckAll] = useState(false);
 
@@ -175,6 +176,9 @@ const CourseManager = () => {
                         />
                     </tbody>
                 </table>
+            </div>
+            <div className="pagination">
+                <Pagination />
             </div>
             {expert && (
                 <div className="expertCourse">
