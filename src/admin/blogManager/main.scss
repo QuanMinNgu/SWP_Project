@@ -175,4 +175,31 @@
       }
     }
   }
+  &_type {
+    background-color: #9aedff;
+    padding: 12px;
+    border-radius: 12px;
+    &_title {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      & > h2 {
+        font-size: 2rem;
+      }
+    }
+    &_box {
+      display: flex;
+      flex-direction: column;
+      & > div {
+        padding: 20px;
+        font-size: 1.8rem;
+        cursor: pointer;
+        transition: 0.3s ease-in;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
 }

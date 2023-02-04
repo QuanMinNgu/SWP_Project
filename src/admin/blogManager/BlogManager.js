@@ -72,6 +72,16 @@ const BlogManager = () => {
               <span>Total Bloger</span>
             </div>
           </div>
+          <div className="admin_blog_left_type">
+            <div className="admin_blog_left_type_title">
+              <h2>Type of Blogs</h2>
+            </div>
+            <div className="admin_blog_left_type_box">
+              <div>Software Ennginer</div>
+              <div>Social Learning</div>
+              <div>Hacker</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
