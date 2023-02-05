@@ -19,6 +19,12 @@ const BlogManager = () => {
                   nice to meet you
                 </p>
               </div>
+              <div className="admin_blog_right_header_input">
+                <input type="text" placeholder="Tìm kiếm blog" />
+                <button>
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </div>
             </div>
             <div className="admin_blog_right_header_img">
               <img src="https://i.pinimg.com/564x/39/a3/b3/39a3b3a4b92614132481909a9adc9171.jpg" />
