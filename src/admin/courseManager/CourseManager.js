@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
-import "./style.scss";
+import "../style.scss";
 import Select from "react-select";
 import CourseManagerCard from "./CourseManagerCard";
-import Pagination from "../paginating/Pagination";
+import Pagination from "../../paginating/Pagination";
 const CourseManager = () => {
     const [checkAll, setCheckAll] = useState(false);
 
@@ -83,7 +83,7 @@ const CourseManager = () => {
                                 style={{ fontWeight: "700" }}
                                 className="thead_price"
                             >
-                                Price
+                                Type
                             </th>
                             <th
                                 style={{ fontWeight: "700" }}

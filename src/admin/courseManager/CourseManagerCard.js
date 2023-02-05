@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import "./style.scss";
+import "../style.scss";
 const CourseManagerCard = ({ checkAll, setExpert }) => {
     const cardRef = useRef(null);
 
@@ -38,7 +38,7 @@ const CourseManagerCard = ({ checkAll, setExpert }) => {
                     </div>
                 </div>
             </th>
-            <th className="thead_price">$140</th>
+            <th className="thead_price">SE</th>
             <th className="thead_courseExpert">
                 <div className="courseExpert_infor">
                     <div className="courseExpert_infor_img">

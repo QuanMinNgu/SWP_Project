@@ -5,8 +5,8 @@ import DashboardDetail from "./DashboardDetail";
 import UserManager from "./UserManager";
 import BlogManager from "./blogManager/BlogManager";
 import SendMail from "./SendMail";
-import CourseManager from "./CourseManager";
-import VocherManager from "./VocherManager";
+import CourseManager from "./courseManager/CourseManager";
+import VocherManager from "./vocherManager/VocherManager";
 const Dashboard = () => {
     const { slug } = useParams();
     const navigate = useNavigate();
