@@ -7,6 +7,7 @@ import BlogManager from "./blogManager/BlogManager";
 import SendMail from "./SendMail";
 import CourseManager from "./courseManager/CourseManager";
 import VocherManager from "./vocherManager/VocherManager";
+import CreateCourse from "./courseManager/CreateCourse";
 const Dashboard = () => {
     const { slug } = useParams();
     const navigate = useNavigate();
@@ -187,6 +188,7 @@ const Dashboard = () => {
                 {slug === "send_mail" && <SendMail />}
                 {slug === "vocher_manager" && <VocherManager />}
                 {slug === "course_manager" && <CourseManager />}
+                {slug === "create_course" && <CreateCourse />}
             </div>
         </div>
     );

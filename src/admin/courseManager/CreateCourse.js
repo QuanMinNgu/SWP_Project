@@ -1,196 +1,158 @@
-import React, { useRef, useState } from "react";
-import "../style.scss";
-import Select from "react-select";
-import CourseManagerCard from "./CourseManagerCard";
-import Pagination from "../../paginating/Pagination";
+import React, { useRef, useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 import { useNavigate } from "react-router-dom";
-const CourseManager = () => {
-    const [checkAll, setCheckAll] = useState(false);
-
+import CoursePanel from "../../courses/CoursePanel";
+import "../style.scss";
+const CreateCourse = () => {
     const navigate = useNavigate();
-
-    const [bars, setBars] = useState(false);
-
+    const titleRef = useRef();
+    const contentRef = useRef();
+    const benefitRef = useRef();
+    const [benefit, setBenefit] = useState([]);
+    const [courseExpert, setCourseExpert] = useState("");
     const [expert, setExpert] = useState(false);
-    const checkRef = useRef();
-    const options = [
-        { value: "free", label: "Free" },
-        { value: "no-free", label: "Not Free" },
-    ];
+    const [image, setImage] = useState("");
+    const imageRef = useRef();
 
-    const optionsKind = [
-        { value: "ha-noi", label: "Software" },
-        { value: "strawberry", label: "Financial" },
-        { value: "vanilla", label: "Marketing" },
-    ];
-
-    const optionsSort = [
-        { value: "vanilla", label: "Stars Increased" },
-        { value: "asd", label: "Stars Decreased" },
-        { value: "vaniasdlla", label: "Newest" },
-        { value: "vanilsla", label: "Oldest" },
-    ];
-
-    const handleChangeInput = () => {
-        if (checkRef.current?.checked) {
-            setCheckAll(true);
-        } else {
-            setCheckAll(false);
-        }
+    const handleCreateBenefit = () => {
+        setBenefit([...benefit, benefitRef.current?.value]);
+        benefitRef.current.value = "";
     };
 
     const handleChooseExpert = () => {
         const check = window.confirm(
             "Bạn có muốn chọn Minh Quang thành course expert của khóa học này không?"
         );
+        setCourseExpert({
+            name: "Quang Minh",
+        });
+        setExpert(false);
     };
 
-    const [selectedOption, setSelectedOption] = useState(null);
+    const onDrop = useCallback((acceptedFiles) => {
+        const url = URL.createObjectURL(acceptedFiles[0]);
+        if (image) {
+            URL.revokeObjectURL(image);
+        }
+        imageRef.current = acceptedFiles[0];
+        setImage(url);
+    }, []);
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+    });
+
     return (
         <div className="managerCourse">
-            <div className="managerCourse_navbar">
-                <Select
-                    className="search_wrap_select"
-                    defaultValue={selectedOption}
-                    onChange={setSelectedOption}
-                    options={options}
-                    placeholder="Price"
-                />
-                <Select
-                    className="search_wrap_select"
-                    defaultValue={selectedOption}
-                    onChange={setSelectedOption}
-                    options={optionsKind}
-                    placeholder="Kind"
-                />
-                <Select
-                    className="search_wrap_select"
-                    defaultValue={selectedOption}
-                    onChange={setSelectedOption}
-                    options={optionsSort}
-                    placeholder="Sort"
-                />
-                <button>Tìm Kiếm</button>
-            </div>
-            <div className="createButton">
-                <button
-                    onClick={() => {
-                        navigate("/admin/create_course");
-                    }}
-                >
-                    Create New Course
-                </button>
-            </div>
-            <div className="manageCourse_table">
-                <table className="table">
-                    <thead className="thead">
-                        <tr className="thead_wrap">
-                            <th
-                                style={{ fontWeight: "700" }}
-                                className="thead_title"
+            <div className="row">
+                <div className="col c-12 m-8 l-8">
+                    <div className="course_detail_name">
+                        <h3 ref={titleRef} contentEditable={true}>
+                            Title of Course (can edit)
+                        </h3>
+                    </div>
+                    <div className="course_detail_content">
+                        <p ref={contentRef} contentEditable={true}>
+                            Content of course (can edit)
+                        </p>
+                    </div>
+                    <div className="course_detail_learn">
+                        <h3>What do you get?</h3>
+                        <div className="create_course_input">
+                            <input
+                                ref={benefitRef}
+                                type="text"
+                                placeholder="Enter benefit"
+                            />
+                            <button onClick={handleCreateBenefit}>Send</button>
+                        </div>
+                    </div>
+                    <ul className="course_detail_learn_items">
+                        {benefit?.length === 0 ? (
+                            <li>Example of benefit of this course</li>
+                        ) : (
+                            benefit?.map((item) => (
+                                <li key={item + "benefit"}>{item}</li>
+                            ))
+                        )}
+                    </ul>
+                    <div className="course_detail_learn">
+                        <h3>Nội dung khóa học</h3>
+                    </div>
+                    <div className="course_detail_timeLine">
+                        <ul>
+                            <li>
+                                <b contentEditable={true}>? (can edit)</b>{" "}
+                                chương
+                            </li>
+                            <li>.</li>
+                            <li>
+                                <b contentEditable={true}>? (can edit)</b> bài
+                                học
+                            </li>
+                            <li>.</li>
+                            <li>
+                                Thời lượng{" "}
+                                <b contentEditable={true}>? (can edit)</b>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="CoursePanel">
+                        <CoursePanel />
+                        <CoursePanel />
+                        <CoursePanel />
+                    </div>
+                </div>
+                <div className="col c-12 m-4 l-4">
+                    <div className="course_create_detail_img">
+                        <div className="movie_drop_zone">
+                            <div
+                                className="movie_drop_zone_wrap"
+                                {...getRootProps()}
                             >
-                                Course Name & Detail
-                            </th>
-                            <th
-                                style={{ fontWeight: "700" }}
-                                className="thead_price"
-                            >
-                                Type
-                            </th>
-                            <th
-                                style={{ fontWeight: "700" }}
-                                className="thead_courseExpert"
-                            >
-                                Course Expert
-                            </th>
-                            <th
-                                style={{ fontWeight: "700" }}
-                                className="thead_status"
-                            >
-                                Status
-                            </th>
-                            <th
-                                style={{ fontWeight: "700" }}
-                                className="thead_checkbox"
-                            >
-                                <label htmlFor="checkall">All</label>
-                                <input
-                                    onChange={() => {
-                                        handleChangeInput();
-                                    }}
-                                    ref={checkRef}
-                                    id="checkall"
-                                    type="checkbox"
-                                />
-                            </th>
-                            <th className="thead_bars">
-                                <div className="thead_bars_icons">
-                                    <i
-                                        onClick={() => {
-                                            setBars(!bars);
-                                        }}
-                                        className="fa-solid fa-ellipsis"
-                                    ></i>
-                                    {bars && (
-                                        <div className="bars_detail">
-                                            <div className="bars_detail_items">
-                                                <i>Cg Inactive</i>
-                                            </div>
-                                            <div className="bars_detail_items">
-                                                <i>Cg Active</i>
-                                            </div>
-                                            <div
-                                                onClick={() => {
-                                                    setExpert(true);
-                                                    setBars(false);
-                                                }}
-                                                className="bars_detail_items"
-                                            >
-                                                <i>Cg CExpert</i>
-                                            </div>
-                                            <div className="bars_detail_items">
-                                                <i>Delete</i>
-                                            </div>
-                                        </div>
-                                    )}
+                                <input {...getInputProps()} />
+                                <i className="fa-regular fa-image"></i>
+                                <div className="image_create_container">
+                                    <img src={image} />
                                 </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                    </tbody>
-                </table>
-            </div>
-            <div className="pagination">
-                <Pagination />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="course_detail_price" contentEditable={true}>
+                        Enter Price
+                    </div>
+                    <div className="course_detail_button">
+                        <button>Lưu</button>
+                    </div>
+                    <ul className="course_detail_list">
+                        <li>
+                            <i>
+                                Course Expert:
+                                {courseExpert ? (
+                                    <span
+                                        onClick={() => {
+                                            setExpert(true);
+                                        }}
+                                        className="choose_expert"
+                                    >
+                                        {courseExpert?.name}
+                                    </span>
+                                ) : (
+                                    <span
+                                        onClick={() => {
+                                            setExpert(true);
+                                        }}
+                                        className="choose_expert"
+                                    >
+                                        Choose
+                                    </span>
+                                )}
+                            </i>
+                        </li>
+                        <li>
+                            <i>Tự tin khi học tập</i>
+                        </li>
+                    </ul>
+                </div>
             </div>
             {expert && (
                 <div className="expertCourse">
@@ -391,4 +353,4 @@ const CourseManager = () => {
     );
 };
 
-export default CourseManager;
+export default CreateCourse;

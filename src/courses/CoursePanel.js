@@ -34,7 +34,7 @@ const CoursePanel = () => {
                     <PanelCard />
                 </div>
             )}
-            <div className="CoursePanel_edit">
+            {/* <div className="CoursePanel_edit">
                 <div
                     onClick={() => {
                         setEditPanel(!editPanel);
@@ -50,7 +50,7 @@ const CoursePanel = () => {
                         </ul>
                     )}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
