@@ -1,10 +1,8 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import { useNavigate } from "react-router-dom";
 import CoursePanelEdit from "../../coursePanel/CoursePanelEdit";
 import "../style.scss";
 const CreateCourse = () => {
-    const navigate = useNavigate();
     const titleRef = useRef();
     const contentRef = useRef();
     const benefitRef = useRef();
@@ -16,6 +14,7 @@ const CreateCourse = () => {
     const [lesson, setLesson] = useState([]);
     const imageRef = useRef();
     const lessonRef = useRef();
+    const [addLesson, setAddLesson] = useState(false);
 
     const handleCreateBenefit = () => {
         setBenefit([...benefit, benefitRef.current?.value]);
@@ -51,7 +50,7 @@ const CreateCourse = () => {
         imageRef.current = acceptedFiles[0];
         setImage(url);
     }, []);
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    const { getRootProps, getInputProps } = useDropzone({
         onDrop,
     });
 
@@ -113,8 +112,8 @@ const CreateCourse = () => {
                     <div className="CoursePanel">
                         {lesson?.map((item, index) => (
                             <CoursePanelEdit
+                                setAddLesson={setAddLesson}
                                 lesson={lesson}
-                                setLesson={setLesson}
                                 key={index + "coursePanel"}
                                 item={item}
                                 index={index}
@@ -201,6 +200,47 @@ const CreateCourse = () => {
                     </ul>
                 </div>
             </div>
+            {addLesson && (
+                <div className="lessonCreate">
+                    <div className="lessonCreate_wrap">
+                        <div className="expertCourse_close">
+                            <div
+                                onClick={() => {
+                                    setAddLesson("");
+                                }}
+                                className="expertCourse_close_icons"
+                            >
+                                &times;
+                            </div>
+                        </div>
+                        <div className="lessonCreate_title">Create Lesson</div>
+                        <div className="lessonCreate_type">
+                            <div className="lessonCreate_type_form">
+                                <input
+                                    id="listening"
+                                    type="radio"
+                                    name="lesson"
+                                    defaultChecked
+                                />
+                                <label htmlFor="listening">Listening</label>
+                            </div>
+                            <div className="lessonCreate_type_form">
+                                <input
+                                    id="reading"
+                                    type="radio"
+                                    name="lesson"
+                                />
+                                <label htmlFor="reading">Reading</label>
+                            </div>
+                            <div className="lessonCreate_type_form">
+                                <input id="quiz" type="radio" name="lesson" />
+                                <label htmlFor="quiz">Quiz</label>
+                            </div>
+                        </div>
+                        <div className="lessonCreate_form"></div>
+                    </div>
+                </div>
+            )}
             {expert && (
                 <div className="expertCourse">
                     <div className="expertCourse_container">
