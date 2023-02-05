@@ -16,6 +16,8 @@ const CreateCourse = () => {
     const lessonRef = useRef();
     const [addLesson, setAddLesson] = useState(false);
 
+    const [type, setType] = useState("listening");
+
     const handleCreateBenefit = () => {
         setBenefit([...benefit, benefitRef.current?.value]);
         benefitRef.current.value = "";
@@ -200,47 +202,6 @@ const CreateCourse = () => {
                     </ul>
                 </div>
             </div>
-            {addLesson && (
-                <div className="lessonCreate">
-                    <div className="lessonCreate_wrap">
-                        <div className="expertCourse_close">
-                            <div
-                                onClick={() => {
-                                    setAddLesson("");
-                                }}
-                                className="expertCourse_close_icons"
-                            >
-                                &times;
-                            </div>
-                        </div>
-                        <div className="lessonCreate_title">Create Lesson</div>
-                        <div className="lessonCreate_type">
-                            <div className="lessonCreate_type_form">
-                                <input
-                                    id="listening"
-                                    type="radio"
-                                    name="lesson"
-                                    defaultChecked
-                                />
-                                <label htmlFor="listening">Listening</label>
-                            </div>
-                            <div className="lessonCreate_type_form">
-                                <input
-                                    id="reading"
-                                    type="radio"
-                                    name="lesson"
-                                />
-                                <label htmlFor="reading">Reading</label>
-                            </div>
-                            <div className="lessonCreate_type_form">
-                                <input id="quiz" type="radio" name="lesson" />
-                                <label htmlFor="quiz">Quiz</label>
-                            </div>
-                        </div>
-                        <div className="lessonCreate_form"></div>
-                    </div>
-                </div>
-            )}
             {expert && (
                 <div className="expertCourse">
                     <div className="expertCourse_container">
@@ -434,6 +395,79 @@ const CreateCourse = () => {
                             </table>
                         </div>
                     </div>
+                </div>
+            )}
+            {addLesson && (
+                <div className="lessonCreate">
+                    <div className="lessonCreate_wrap">
+                        <div className="expertCourse_close">
+                            <div
+                                onClick={() => {
+                                    setAddLesson("");
+                                }}
+                                className="expertCourse_close_icons"
+                            >
+                                &times;
+                            </div>
+                        </div>
+                        <div className="lessonCreate_title">Create Lesson</div>
+                        <div className="lessonCreate_type">
+                            <div className="lessonCreate_type_form">
+                                <input
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            setType("listening");
+                                        }
+                                    }}
+                                    id="listening"
+                                    type="radio"
+                                    name="lesson"
+                                    defaultChecked
+                                />
+                                <label htmlFor="listening">Listening</label>
+                            </div>
+                            <div className="lessonCreate_type_form">
+                                <input
+                                    id="reading"
+                                    type="radio"
+                                    name="lesson"
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            setType("reading");
+                                        }
+                                    }}
+                                />
+                                <label htmlFor="reading">Reading</label>
+                            </div>
+                            <div className="lessonCreate_type_form">
+                                <input
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            setType("quiz");
+                                        }
+                                    }}
+                                    id="quiz"
+                                    type="radio"
+                                    name="lesson"
+                                />
+                                <label htmlFor="quiz">Quiz</label>
+                            </div>
+                        </div>
+                        <div className="lessonCreate_form">
+                            {type === "listening" && "Listening"}
+                            {type === "reading" && "reading"}
+                            {type === "quiz" && "quiz"}
+                        </div>
+                    </div>
+                </div>
+            )}
+            {addLesson && type === "reading" && (
+                <div className="uploadfile">
+                    <i
+                        style={{ marginRight: "0.5rem" }}
+                        className="fa-solid fa-upload"
+                    ></i>
+                    Upload File
                 </div>
             )}
         </div>

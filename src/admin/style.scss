@@ -1038,4 +1038,27 @@
     overflow-y: scroll;
     border:0.1rem solid rgba(0,0,0,0.3);
     margin-top: 2rem;
+    padding:1rem;
+    border-radius: 0.5rem;
+}
+.uploadfile{
+    position: fixed;
+    bottom:5rem;
+    right:6rem;
+    width: 13rem;
+    height: 4.5rem;
+    background-color: #F05123;
+    z-index: 40;
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    border-radius: 3rem;
+    font-weight: 600;
+    padding-bottom: 0.3rem;
+    cursor: pointer;
+    &:hover{
+        transform: scale(.9);
+    }
 }
