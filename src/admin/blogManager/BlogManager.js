@@ -55,19 +55,6 @@ const BlogManager = () => {
           <div
             className="admin_blog_left_box"
             style={{
-              background: "#f8b2d4",
-            }}
-          >
-            <i class="fa-solid fa-heart"></i>
-
-            <div className="admin_blog_left_box_content">
-              <h2>1000</h2>
-              <span>Total Love</span>
-            </div>
-          </div>
-          <div
-            className="admin_blog_left_box"
-            style={{
               background: "#10c4d8",
             }}
           >
