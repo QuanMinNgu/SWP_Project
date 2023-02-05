@@ -2,6 +2,9 @@ import React, { useRef, useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import CoursePanelEdit from "../../coursePanel/CoursePanelEdit";
 import "../style.scss";
+import Listening from "./type/Listening";
+import Quiz from "./type/Quiz";
+import Reading from "./type/Reading";
 const CreateCourse = () => {
     const titleRef = useRef();
     const contentRef = useRef();
@@ -404,6 +407,7 @@ const CreateCourse = () => {
                             <div
                                 onClick={() => {
                                     setAddLesson("");
+                                    setType("listening");
                                 }}
                                 className="expertCourse_close_icons"
                             >
@@ -454,20 +458,11 @@ const CreateCourse = () => {
                             </div>
                         </div>
                         <div className="lessonCreate_form">
-                            {type === "listening" && "Listening"}
-                            {type === "reading" && "reading"}
-                            {type === "quiz" && "quiz"}
+                            {type === "listening" && <Listening />}
+                            {type === "reading" && <Reading />}
+                            {type === "quiz" && <Quiz />}
                         </div>
                     </div>
-                </div>
-            )}
-            {addLesson && type === "reading" && (
-                <div className="uploadfile">
-                    <i
-                        style={{ marginRight: "0.5rem" }}
-                        className="fa-solid fa-upload"
-                    ></i>
-                    Upload File
                 </div>
             )}
         </div>
