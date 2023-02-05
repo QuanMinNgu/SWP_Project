@@ -34,23 +34,6 @@ const CoursePanel = () => {
                     <PanelCard />
                 </div>
             )}
-            {/* <div className="CoursePanel_edit">
-                <div
-                    onClick={() => {
-                        setEditPanel(!editPanel);
-                    }}
-                >
-                    <i className="fa-solid fa-ellipsis"></i>
-                    {editPanel && (
-                        <ul className="CoursePanel_editPanel">
-                            <li>Sửa</li>
-                            <li>Xóa</li>
-                            <li>Thêm trước</li>
-                            <li>Thêm sau</li>
-                        </ul>
-                    )}
-                </div>
-            </div> */}
         </div>
     );
 };

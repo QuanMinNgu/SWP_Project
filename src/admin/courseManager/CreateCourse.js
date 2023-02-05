@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useNavigate } from "react-router-dom";
-import CoursePanel from "../../courses/CoursePanel";
+import CoursePanelEdit from "../../coursePanel/CoursePanelEdit";
 import "../style.scss";
 const CreateCourse = () => {
     const navigate = useNavigate();
@@ -12,7 +12,10 @@ const CreateCourse = () => {
     const [courseExpert, setCourseExpert] = useState("");
     const [expert, setExpert] = useState(false);
     const [image, setImage] = useState("");
+    const [inputForm, setInputForm] = useState(false);
+    const [lesson, setLesson] = useState([]);
     const imageRef = useRef();
+    const lessonRef = useRef();
 
     const handleCreateBenefit = () => {
         setBenefit([...benefit, benefitRef.current?.value]);
@@ -27,6 +30,17 @@ const CreateCourse = () => {
             name: "Quang Minh",
         });
         setExpert(false);
+    };
+
+    const handleCreateLesson = () => {
+        setLesson([
+            ...lesson,
+            {
+                lessonTitle: lessonRef.current.value,
+                numLesson: [],
+            },
+        ]);
+        lessonRef.current.value = "";
     };
 
     const onDrop = useCallback((acceptedFiles) => {
@@ -97,9 +111,42 @@ const CreateCourse = () => {
                         </ul>
                     </div>
                     <div className="CoursePanel">
-                        <CoursePanel />
-                        <CoursePanel />
-                        <CoursePanel />
+                        {lesson?.map((item, index) => (
+                            <CoursePanelEdit
+                                lesson={lesson}
+                                setLesson={setLesson}
+                                key={index + "coursePanel"}
+                                item={item}
+                                index={index}
+                            />
+                        ))}
+                        {inputForm && (
+                            <div className="CoursePanel_wrap">
+                                <div className="CoursePanel_create_input">
+                                    <input
+                                        ref={lessonRef}
+                                        type="text"
+                                        placeholder="Enter title"
+                                    />
+                                    <button onClick={handleCreateLesson}>
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                        <div className="CoursePanel_wrap">
+                            <div className="CoursePanel_create_container">
+                                <div
+                                    onClick={() => {
+                                        setInputForm(!inputForm);
+                                    }}
+                                    title="Add more"
+                                    className="plus"
+                                >
+                                    +
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="col c-12 m-4 l-4">
@@ -121,7 +168,7 @@ const CreateCourse = () => {
                         Enter Price
                     </div>
                     <div className="course_detail_button">
-                        <button>Lưu</button>
+                        <button>Save</button>
                     </div>
                     <ul className="course_detail_list">
                         <li>
