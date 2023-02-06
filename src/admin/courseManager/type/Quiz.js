@@ -4,9 +4,12 @@ const Quiz = () => {
     const [bars, setBars] = useState(false);
     const [edit, setEdit] = useState(false);
     const [answer, setAnswer] = useState(false);
+    const [editAnswer, setEditAnswer] = useState(false);
+    const [editContentAnswer, setEditContentAnswer] = useState({});
     const editRef = useRef(null);
     const contentRef = useRef(null);
     const answerRef = useRef(null);
+    const contentAnswerRef = useRef(null);
     const [editQuesion, setEditQuestion] = useState({});
     const [quesions, setQuesions] = useState([]);
     const handleCreateQuestion = () => {
@@ -43,12 +46,8 @@ const Quiz = () => {
         if (!editRef.current.value) {
             return toast.error("Please, enter value.");
         }
-        const newArr = quesions.map((item, index) => {
-            if (index === editQuesion?.in) {
-                return { ...item, title: editRef.current.value };
-            }
-            return item;
-        });
+        const newArr = quesions;
+        newArr[editQuesion?.in].title = editRef.current.value;
         setQuesions(newArr);
         setEdit(false);
     };
@@ -69,6 +68,35 @@ const Quiz = () => {
         });
         setQuesions([...newArr]);
         setAnswer(false);
+    };
+    const handleEditAnswer = ({ childId, parentId }) => {
+        setEditContentAnswer({
+            title: quesions[parentId].answers[childId]?.title,
+            childId: childId,
+            parentId: parentId,
+        });
+        setEditAnswer(true);
+    };
+    const handleRemoveAnswer = ({ childId, parentId }) => {
+        const check = window.confirm(
+            "Do you really wanna delete this question?"
+        );
+        if (check) {
+            quesions[parentId].answers.splice(childId, 1);
+            setQuesions([...quesions]);
+        }
+    };
+
+    const handleUpdateAnswer = () => {
+        if (!contentAnswerRef.current.value) {
+            return toast.error("Please, enter value.");
+        }
+        const newArr = quesions;
+        newArr[editContentAnswer.parentId].answers[
+            editContentAnswer.childId
+        ].title = contentAnswerRef.current.value;
+        setQuesions([...newArr]);
+        setEditAnswer(false);
     };
     return (
         <div>
@@ -97,7 +125,7 @@ const Quiz = () => {
                             }}
                             className="button button_update"
                         >
-                            Edit
+                            Edit Question
                         </button>
                         <button
                             onClick={() => handleRemoveQuestion(index)}
@@ -108,7 +136,7 @@ const Quiz = () => {
                                 marginLeft: "1rem",
                             }}
                         >
-                            Delete
+                            Delete Question
                         </button>
                     </div>
                     <div className="answers">
@@ -126,6 +154,36 @@ const Quiz = () => {
                                 >
                                     {infor?.title}
                                 </label>
+                                <button
+                                    onClick={() =>
+                                        handleEditAnswer({
+                                            parentId: index,
+                                            childId: ind,
+                                        })
+                                    }
+                                    style={{
+                                        height: "3rem",
+                                        marginLeft: "1rem",
+                                    }}
+                                    className="button"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        handleRemoveAnswer({
+                                            parentId: index,
+                                            childId: ind,
+                                        })
+                                    }
+                                    className="button button_delete"
+                                    style={{
+                                        height: "3rem",
+                                        marginLeft: "1rem",
+                                    }}
+                                >
+                                    Delete
+                                </button>
                             </div>
                         ))}
                     </div>
@@ -253,6 +311,49 @@ const Quiz = () => {
                             <button
                                 onClick={() => {
                                     setAnswer(false);
+                                }}
+                                style={{ marginLeft: "1rem" }}
+                                className="button cancel_button"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {editAnswer && (
+                <div className="lessonCreate_input_form">
+                    <div className="lessonCreate_input_form_wrap">
+                        <div className="expertCourse_close">
+                            <div
+                                onClick={() => {
+                                    setEditAnswer(false);
+                                    setEditContentAnswer({});
+                                }}
+                                className="expertCourse_close_icons"
+                            >
+                                &times;
+                            </div>
+                        </div>
+                        <div className="lessonCreate_textarea">
+                            <textarea
+                                defaultValue={editContentAnswer?.title}
+                                ref={contentAnswerRef}
+                                placeholder="Enter quesion"
+                            />
+                        </div>
+                        <div className="lessonCreate_button_form">
+                            <button
+                                onClick={handleUpdateAnswer}
+                                style={{ height: "4rem" }}
+                                className="button"
+                            >
+                                Update Answer
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setEditAnswer(false);
+                                    setEditContentAnswer({});
                                 }}
                                 style={{ marginLeft: "1rem" }}
                                 className="button cancel_button"
