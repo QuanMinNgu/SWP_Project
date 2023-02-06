@@ -34,6 +34,7 @@ const Register = () => {
         try {
             const data = await axios.post("/api/auth/register", {
                 ...user,
+                type: "normal",
             });
             toast.success(data?.data?.msg);
             dispatch(isSuccess());
@@ -86,31 +87,73 @@ const Register = () => {
     }, []);
 
     const handleLoginFacebook = () => {
-        window.FB.login(
-            function (response) {
-                console.log(response);
-                // dispatch(isLoading());
-                // const data = axios
-                //     .post("/api/auth/facebook/login", {
-                //         userId: response?.authResponse?.userID,
-                //         token: response?.authResponse?.accessToken,
-                //     })
-                //     .then((res) => {
-                //         toast.success(res?.data?.msg);
-                //         dispatch(isLogin(res?.data));
-                //         navigate("/");
-                //     })
-                //     .catch((err) => {
-                //         toast.error(err?.response?.data?.msg);
-                //         dispatch(isFailing());
-                //     });
-            },
-            { scope: "email" }
+        window.FB.login(function (response) {
+            const url = `https://graph.facebook.com/${response.authResponse.userID}?fields=id,name,email,picture&access_token=${response.authResponse.accessToken}`;
+            const data = axios
+                .get(url)
+                .then((res) => {
+                    handleRegisterByFacebook(res?.data);
+                })
+                .catch((err) => {
+                    dispatch(isFailing());
+                    toast.error(err?.response?.data?.msg);
+                });
+        });
+    };
+
+    function parseJwt(token) {
+        var base64Url = token.split(".")[1];
+        var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        var jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split("")
+                .map(function (c) {
+                    return (
+                        "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
+                    );
+                })
+                .join("")
         );
+
+        return JSON.parse(jsonPayload);
+    }
+    const handleRegisterByFacebook = async (e) => {
+        dispatch(isLoading());
+        try {
+            const data = await axios.post("/api/auth/register", {
+                email: e.email,
+                name: e.name,
+                type: "facebook",
+                image: e.picture.data.url,
+                id: e.id,
+            });
+            toast.success(data?.data?.msg);
+            dispatch(isSuccess());
+            navigate("/login");
+        } catch (err) {
+            dispatch(isFailing());
+            toast.error(err?.response?.data?.msg);
+        }
     };
 
     const handleCallbackGoogle = async (response) => {
-        console.log(response);
+        const user = parseJwt(response.credential);
+        dispatch(isLoading());
+        try {
+            const data = await axios.post("/api/auth/register", {
+                email: user.email,
+                name: user.name,
+                type: "google",
+                image: user.picture,
+                id: user.sub,
+            });
+            toast.success(data?.data?.msg);
+            dispatch(isSuccess());
+            navigate("/login");
+        } catch (err) {
+            dispatch(isFailing());
+            toast.error(err?.response?.data?.msg);
+        }
     };
     return (
         <div className="auth">
