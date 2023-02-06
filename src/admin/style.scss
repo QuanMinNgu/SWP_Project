@@ -1062,7 +1062,8 @@
         transform: scale(.9);
     }
 }
-.uploadFile_wrap{
+.uploadFile_wrap,
+.lessonCreate_input_form{
     position: fixed;
     z-index: 50;
     top:0;
@@ -1170,4 +1171,83 @@
 }
 .save_button:hover{
     transform: scale(.9);
+}
+.lessonCreate_input_form{
+    z-index: 70;
+}
+.lessonCreate_input_form_wrap{
+    width: 50%;
+    min-height: 10rem;
+    background-color: white;
+    box-shadow: 0 0 0.2rem 0.4rem #0dcaf0;
+    border-radius: 1rem;
+    padding:1rem;
+}
+.lessonCreate_textarea{
+    width: 100%;
+    & > textarea{
+        width: 100%;
+        min-height: 10rem;
+        padding:1rem;
+        outline: none;
+        border-radius: 0.3rem;
+        font-size: 1.6rem;
+        resize: vertical;
+    }
+}
+.lessonCreate_button_form{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+.cancel_button{
+    background-color: rgba(0,0,0,0.3);
+}
+.createQuesion{
+    position: fixed;
+    top:12rem;
+    left:28%;
+    width: 18rem;
+    height: 4.5rem;
+    background-color: #0dcaf0;
+    z-index: 40;
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    border-radius: 3rem;
+    font-weight: 600;
+    padding-bottom: 0.3rem;
+    cursor: pointer;
+    &:hover{
+        transform: scale(.9);
+    }
+}
+.question{
+    margin-bottom: 2rem;
+}
+.question_title{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+.button_delete{
+    background-color: red;
+}
+.button_update{
+    background-color: #FF8A08;
+}
+.answer_item{
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    & > input{
+        width: 2rem;
+        height: 2rem;
+        margin-right: 0.5rem;
+    }
+    margin:1rem 0;
+}
+.button_container{
+    margin-top: -1rem;
 }
