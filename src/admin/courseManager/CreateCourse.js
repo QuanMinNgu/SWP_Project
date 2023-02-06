@@ -1,10 +1,12 @@
 import React, { useRef, useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import { toast } from "react-toastify";
 import CoursePanelEdit from "../../coursePanel/CoursePanelEdit";
 import "../style.scss";
 import Listening from "./type/Listening";
 import Quiz from "./type/Quiz";
 import Reading from "./type/Reading";
+import Select from "react-select";
 const CreateCourse = () => {
     const titleRef = useRef();
     const contentRef = useRef();
@@ -22,6 +24,9 @@ const CreateCourse = () => {
     const [type, setType] = useState("listening");
 
     const handleCreateBenefit = () => {
+        if (!benefitRef.current.value) {
+            return toast.error("Please, enter information.");
+        }
         setBenefit([...benefit, benefitRef.current?.value]);
         benefitRef.current.value = "";
     };
@@ -47,6 +52,17 @@ const CreateCourse = () => {
         lessonRef.current.value = "";
     };
 
+    const handleEditList = (e) => {};
+    const handleDeleteList = (e) => {
+        benefit.splice(e, 1);
+        setBenefit([...benefit]);
+    };
+    const optionsKind = [
+        { value: "ha-noi", label: "Software" },
+        { value: "strawberry", label: "Financial" },
+        { value: "vanilla", label: "Marketing" },
+    ];
+
     const onDrop = useCallback((acceptedFiles) => {
         const url = URL.createObjectURL(acceptedFiles[0]);
         if (image) {
@@ -55,9 +71,11 @@ const CreateCourse = () => {
         imageRef.current = acceptedFiles[0];
         setImage(url);
     }, []);
+
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
     });
+    const [selectedOption, setSelectedOption] = useState(null);
 
     return (
         <div className="managerCourse">
@@ -74,7 +92,7 @@ const CreateCourse = () => {
                         </p>
                     </div>
                     <div className="course_detail_learn">
-                        <h3>What do you get?</h3>
+                        <h3>The benefits of this course:</h3>
                         <div className="create_course_input">
                             <input
                                 ref={benefitRef}
@@ -86,15 +104,40 @@ const CreateCourse = () => {
                     </div>
                     <ul className="course_detail_learn_items">
                         {benefit?.length === 0 ? (
-                            <li>Example of benefit of this course</li>
+                            <li className="benefitList">
+                                Example of benefit of this course
+                            </li>
                         ) : (
-                            benefit?.map((item) => (
-                                <li key={item + "benefit"}>{item}</li>
+                            benefit?.map((item, index) => (
+                                <li
+                                    className="benefitList"
+                                    key={item + "benefit"}
+                                >
+                                    {item}
+                                    <div className="benefit_button">
+                                        <button
+                                            onClick={() =>
+                                                handleEditList(index)
+                                            }
+                                            className="edit_button"
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                handleDeleteList(index)
+                                            }
+                                            className="delete_button"
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                </li>
                             ))
                         )}
                     </ul>
                     <div className="course_detail_learn">
-                        <h3>Nội dung khóa học</h3>
+                        <h3>Content of this course</h3>
                     </div>
                     <div className="course_detail_timeLine">
                         <ul>
@@ -172,7 +215,21 @@ const CreateCourse = () => {
                         Enter Price
                     </div>
                     <div className="course_detail_button">
-                        <button>Save</button>
+                        <button
+                            title="Save this course"
+                            className="save_button"
+                        >
+                            Save
+                        </button>
+                    </div>
+                    <div className="type_select">
+                        <Select
+                            className="search_wrap_select"
+                            defaultValue={selectedOption}
+                            onChange={setSelectedOption}
+                            options={optionsKind}
+                            placeholder="Kind"
+                        />
                     </div>
                     <ul className="course_detail_list">
                         <li>
