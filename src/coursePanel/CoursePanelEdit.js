@@ -1,8 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
-const CoursePanelEdit = ({ item, index, lesson, setLesson }) => {
+const CoursePanelEdit = ({ item, index, lesson, setAddLesson }) => {
     const [panel, setPanel] = useState(false);
-    const [panelInput, setPanelInput] = useState(false);
 
     return (
         <div className="CoursePanel_wrap">
@@ -34,7 +33,7 @@ const CoursePanelEdit = ({ item, index, lesson, setLesson }) => {
                     <div className="panelCard_create_container">
                         <div
                             onClick={() => {
-                                setPanelInput(!panelInput);
+                                setAddLesson("index-" + index);
                             }}
                             title="Add more"
                             className="plus_panel"

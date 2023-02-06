@@ -985,3 +985,269 @@
         transform: translateY(0rem);
     }
 }
+.lessonCreate{
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lessonCreate_wrap{
+    width: 80%;
+    height: 95vh;
+    background-color: white;
+    box-shadow: 0 0 0.4rem 0.1rem #0dcaf0;
+    border-radius: 2rem;
+    padding:2rem;
+}
+.lessonCreate_title{
+    text-align: center;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-top: -2rem;
+}
+.lessonCreate_type{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    align-items: center;
+}
+.lessonCreate_type_form{
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+    & > input{
+        width: 2rem;
+        height: 2rem;
+    }
+    & > label{
+        font-size: 1.4rem;
+        margin-left: 0.3rem;
+        cursor: pointer;
+    }
+}
+.lessonCreate_form{
+    width: 100%;
+    height: 70vh;
+    overflow-y: scroll;
+    border:0.1rem solid rgba(0,0,0,0.3);
+    margin-top: 2rem;
+    padding:1rem;
+    border-radius: 0.5rem;
+}
+.uploadfile{
+    position: fixed;
+    top:12rem;
+    right:20%;
+    width: 13rem;
+    height: 4.5rem;
+    background-color: #F05123;
+    z-index: 40;
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    border-radius: 3rem;
+    font-weight: 600;
+    padding-bottom: 0.3rem;
+    cursor: pointer;
+    &:hover{
+        transform: scale(.9);
+    }
+}
+.uploadFile_wrap,
+.lessonCreate_input_form{
+    position: fixed;
+    z-index: 50;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.uploadFile_container{
+    width: 35%;
+    min-height: 10rem;
+    background-color: white;
+    box-shadow: 0 0 0.2rem 0.2rem #0dcaf0;
+    border-radius: 2rem;
+    padding:2rem;
+}
+.uploadFile_input{
+    display: flex;
+    justify-content: center;
+}
+.uploadFile_input_form{
+    margin-top: 5rem;
+    & > textarea{
+        width: 100%;
+        min-height: 7rem;
+        padding:0.5rem;
+        outline: none;
+    }
+}
+
+.listening_link{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    & > input{
+        width: 50%;
+        height: 4rem;
+        padding:0 1rem;
+        font-size: 1.4rem;
+        outline: none;
+        border-radius: 0.4rem;
+        margin-right: 0.5rem;
+    }
+}
+.youtube_check{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+.youtube_link{
+    width: 45rem;
+    height: 25rem;
+    border: 0.1rem solid rgba(0,0,0,0.3);
+}
+.lesson_content_title{
+    margin:1rem 0;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.lesson_create_button{
+    position: fixed;
+    top:12rem;
+    right:30%;
+}
+.button_create{
+    padding:0 3.5rem;
+    height: 4.5rem;
+    border-radius: 3rem;
+    background-color: #F05123;
+    color:white;
+    border:none;
+    cursor: pointer;
+    font-size: 1.8rem;
+    &:hover{
+        transform: scale(.9);
+    }
+}
+.content_edit,
+.lesson_content{
+    position: relative;
+}
+.benefit_button{
+    display: flex;
+    margin-top: 0.2rem;
+}
+
+.edit_button,
+.delete_button{
+    padding:0 1rem;
+    height: 2.3rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+.type_select{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: -2rem;
+    padding-left: 1.3rem;
+}
+.save_button:hover{
+    transform: scale(.9);
+}
+.lessonCreate_input_form{
+    z-index: 70;
+}
+.lessonCreate_input_form_wrap{
+    width: 50%;
+    min-height: 10rem;
+    background-color: white;
+    box-shadow: 0 0 0.2rem 0.4rem #0dcaf0;
+    border-radius: 1rem;
+    padding:1rem;
+}
+.lessonCreate_textarea{
+    width: 100%;
+    & > textarea{
+        width: 100%;
+        min-height: 10rem;
+        padding:1rem;
+        outline: none;
+        border-radius: 0.3rem;
+        font-size: 1.6rem;
+        resize: vertical;
+    }
+}
+.lessonCreate_button_form{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+.cancel_button{
+    background-color: rgba(0,0,0,0.3);
+}
+.createQuesion{
+    position: fixed;
+    top:12rem;
+    left:28%;
+    width: 18rem;
+    height: 4.5rem;
+    background-color: #0dcaf0;
+    z-index: 40;
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    border-radius: 3rem;
+    font-weight: 600;
+    padding-bottom: 0.3rem;
+    cursor: pointer;
+    &:hover{
+        transform: scale(.9);
+    }
+}
+.question{
+    margin-bottom: 2rem;
+}
+.question_title{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+.button_delete{
+    background-color: red;
+}
+.button_update{
+    background-color: #FF8A08;
+}
+.answer_item{
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    & > input{
+        width: 2rem;
+        height: 2rem;
+        margin-right: 0.5rem;
+    }
+    margin:1rem 0;
+}
+.button_container{
+    margin-top: -1rem;
+}
