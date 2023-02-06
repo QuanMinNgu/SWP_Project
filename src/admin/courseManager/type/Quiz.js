@@ -364,6 +364,9 @@ const Quiz = () => {
                     </div>
                 </div>
             )}
+            <div className="lesson_create_button">
+                <button className="button_create">Create</button>
+            </div>
         </div>
     );
 };
