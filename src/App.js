@@ -4,9 +4,12 @@ import { adminRouter, publicRouter } from "./routers/route";
 import "./style.css";
 import { ToastContainer } from "react-toastify";
 import { createContext, useState } from "react";
+import { useSelector } from "react-redux";
+import Loading from "./loading/Loading";
 export const UserContext = createContext();
 function App() {
     const [store, setStore] = useState({ rule: "admin" });
+    const auth = useSelector((state) => state.auth);
     return (
         <UserContext.Provider value={{ store, setStore }}>
             <Router>
@@ -58,6 +61,7 @@ function App() {
                         autoClose={1500}
                         style={{ fontSize: "1.5rem" }}
                     />
+                    {auth.loading && <Loading />}
                 </div>
             </Router>
         </UserContext.Provider>

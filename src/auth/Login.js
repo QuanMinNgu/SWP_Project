@@ -1,12 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "./style.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { isFailing, isLoading, isLogin } from "../redux/slice/auth";
 import HomeIcons from "../components/another/HomeIcons";
+import { toast } from "react-toastify";
 const Login = () => {
     const dispatch = useDispatch();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const navigate = useNavigate();
+    const handleLogin = async () => {
+        const user = {
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value,
+        };
+        if (!user.email || !user.password) {
+            return toast.error("Vui lòng điền hết thông tin.");
+        }
+        if (user.password.length < 8) {
+            return toast.error("Mật khẩu không chính xác.");
+        }
+        dispatch(isLoading());
+        try {
+            const data = await axios.post("/api/auth/login", {
+                ...user,
+            });
+            toast.success(data?.data?.msg);
+            dispatch(isLogin(data?.data));
+            navigate("/");
+        } catch (err) {
+            dispatch(isFailing());
+            toast.error(err?.response?.data?.msg);
+        }
+    };
     useEffect(() => {
         window.google?.accounts?.id?.initialize({
             client_id:
@@ -86,6 +114,7 @@ const Login = () => {
                         <div className="auth_wrap_input">
                             <label>Email:</label>
                             <input
+                                ref={emailRef}
                                 name="email"
                                 type="text"
                                 placeholder="Nhập Email"
@@ -94,6 +123,7 @@ const Login = () => {
                         <div className="auth_wrap_input">
                             <label>Mật Khẩu:</label>
                             <input
+                                ref={passwordRef}
                                 id="passwordRef"
                                 name="password"
                                 type="password"
@@ -132,7 +162,7 @@ const Login = () => {
                             />
                         </div>
                         <div className="auth_wrap_button">
-                            <button>Đăng Nhập</button>
+                            <button onClick={handleLogin}>Đăng Nhập</button>
                         </div>
                         <div className="auth_wrap_register">
                             <span>

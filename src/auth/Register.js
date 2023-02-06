@@ -1,12 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "./style.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { isFailing, isLoading, isLogin } from "../redux/slice/auth";
+import { isFailing, isLoading, isLogin, isSuccess } from "../redux/slice/auth";
 import HomeIcons from "../components/another/HomeIcons";
+import { toast } from "react-toastify";
 const Register = () => {
     const dispatch = useDispatch();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const rePasswordRef = useRef();
+    const nameRef = useRef();
+    const navigate = useNavigate();
+
+    const handleRegister = async () => {
+        const user = {
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value,
+            name: nameRef.current?.value,
+            rePassword: rePasswordRef.current?.value,
+        };
+        if (!user.email || !user.password || !user.name || !user.rePassword) {
+            return toast.error("Vui lòng điề hết thông tin.");
+        }
+        if (user.password.length < 8) {
+            return toast.error("Mật khẩu cần lớn hơn 8 ký tự.");
+        }
+        if (user.password !== user.rePassword) {
+            return toast.error("Mật khẩu không khớp.");
+        }
+        dispatch(isLoading());
+        try {
+            const data = await axios.post("/api/auth/register", {
+                ...user,
+            });
+            toast.success(data?.data?.msg);
+            dispatch(isSuccess());
+            navigate("/login");
+        } catch (err) {
+            dispatch(isFailing());
+            toast.error(err?.response?.data?.msg);
+        }
+    };
+
     useEffect(() => {
         window.google?.accounts?.id?.initialize({
             client_id:
@@ -86,6 +123,7 @@ const Register = () => {
                         <div className="auth_wrap_input">
                             <label>Tên Hiển Thị:</label>
                             <input
+                                ref={nameRef}
                                 name="name"
                                 type="text"
                                 placeholder="Nhập tên hiển thị"
@@ -94,6 +132,7 @@ const Register = () => {
                         <div className="auth_wrap_input">
                             <label>Email:</label>
                             <input
+                                ref={emailRef}
                                 name="email"
                                 type="text"
                                 placeholder="Nhập Email"
@@ -102,6 +141,7 @@ const Register = () => {
                         <div className="auth_wrap_input">
                             <label>Mật Khẩu:</label>
                             <input
+                                ref={passwordRef}
                                 id="passwordRef"
                                 name="password"
                                 type="password"
@@ -111,6 +151,7 @@ const Register = () => {
                         <div className="auth_wrap_input">
                             <label>Nhập Lại Mật Khẩu:</label>
                             <input
+                                ref={rePasswordRef}
                                 id="repasswordRef"
                                 name="repassword"
                                 type="password"
@@ -155,7 +196,7 @@ const Register = () => {
                             />
                         </div>
                         <div className="auth_wrap_button">
-                            <button>Đăng Ký</button>
+                            <button onClick={handleRegister}>Đăng Ký</button>
                         </div>
                         <div className="auth_wrap_register">
                             <span>
