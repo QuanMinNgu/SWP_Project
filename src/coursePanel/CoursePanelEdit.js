@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const CoursePanelEdit = ({ item, index, lesson, setAddLesson }) => {
     const [panel, setPanel] = useState(false);
@@ -57,11 +57,21 @@ const CoursePanelEdit = ({ item, index, lesson, setAddLesson }) => {
                                     color: "#F05123",
                                     marginRight: "0.5rem",
                                 }}
-                                className="fa-solid fa-circle-play"
+                                className={
+                                    item?.type === "quiz"
+                                        ? "fa-solid fa-circle-question"
+                                        : item?.type === "listening"
+                                        ? "fa-solid fa-circle-play"
+                                        : "fa-solid fa-book"
+                                }
                             ></i>
                             {ind + 1}. {item?.title}
                         </div>
-                        <div>11:35</div>
+                        <div>
+                            {item?.type === "quiz"
+                                ? item?.value?.length
+                                : "11:35"}
+                        </div>
                     </div>
                 ))}
         </div>

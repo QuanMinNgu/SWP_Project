@@ -1076,7 +1076,7 @@
     justify-content: center;
 }
 .uploadFile_container{
-    width: 35%;
+    width: 45%;
     min-height: 10rem;
     background-color: white;
     box-shadow: 0 0 0.2rem 0.2rem #0dcaf0;
@@ -1091,7 +1091,7 @@
     margin-top: 5rem;
     & > textarea{
         width: 100%;
-        min-height: 7rem;
+        min-height: 10rem;
         padding:0.5rem;
         outline: none;
     }
@@ -1250,4 +1250,51 @@
 }
 .button_container{
     margin-top: -1rem;
+}
+.previousLink{
+    position: fixed;
+    top:12rem;
+    left:28%;
+    width: 19rem;
+    height: 4.5rem;
+    background-color: #0dcaf0;
+    z-index: 40;
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    border-radius: 3rem;
+    font-weight: 600;
+    padding-bottom: 0.3rem;
+    cursor: pointer;
+    &:hover{
+        transform: scale(.9);
+    }
+}
+.previousLink_form{
+    z-index: 100;
+}
+.previousLink_wrap{
+    width: 70%;
+    min-height: 10rem;
+    background-color: white;
+    box-shadow: 0 0 0.2rem 0.2rem #0dcaf0;
+    border-radius: 2rem;
+    padding:2rem;
+}
+.previousLink_list{
+    width: 100%;
+    height: 50vh;
+    overflow-y: scroll;
+    border: 0.1rem solid rgba(0,0,0,0.1);
+    padding:0.5rem;
+    padding-left: 2rem;
+    & > ul > li{
+        font-size: 1.5rem;
+        margin:0.5rem 0;
+    }
+    & > ul{
+        list-style: decimal;
+    }
 }

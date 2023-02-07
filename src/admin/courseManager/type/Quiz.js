@@ -1,15 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-const Quiz = () => {
+const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
     const [bars, setBars] = useState(false);
     const [edit, setEdit] = useState(false);
     const [answer, setAnswer] = useState(false);
     const [editAnswer, setEditAnswer] = useState(false);
+    const [create, setCreate] = useState(false);
+
     const [editContentAnswer, setEditContentAnswer] = useState({});
+
+    const titleRef = useRef(null);
     const editRef = useRef(null);
     const contentRef = useRef(null);
     const answerRef = useRef(null);
     const contentAnswerRef = useRef(null);
+
     const [editQuesion, setEditQuestion] = useState({});
     const [quesions, setQuesions] = useState([]);
     const handleCreateQuestion = () => {
@@ -21,6 +26,7 @@ const Quiz = () => {
             {
                 title: contentRef.current.value,
                 answers: [],
+                correctAnswer: 0,
             },
         ]);
         contentRef.current.value = "";
@@ -98,6 +104,33 @@ const Quiz = () => {
         setQuesions([...newArr]);
         setEditAnswer(false);
     };
+
+    const handleChangeAnswer = (e, { parentid, childId }) => {
+        if (e.target.checked) {
+            const arr = quesions;
+            arr[parentid].correctAnswer = childId;
+            setQuesions([...arr]);
+        }
+    };
+
+    const handleCreateQuiz = () => {
+        if (!titleRef.current.value) {
+            return toast.error("Please enter value.");
+        }
+        console.log(lesson);
+        const arr = lesson;
+        const inde = addLesson.split("-")[1] * 1;
+        arr[inde].numLesson.push({
+            title: titleRef.current.value,
+            type: "quiz",
+            value: [...quesions],
+        });
+        setLesson([...arr]);
+        setCreate(false);
+        setAddLesson("");
+        setType("listening");
+    };
+
     return (
         <div>
             {quesions?.map((item, index) => (
@@ -143,6 +176,12 @@ const Quiz = () => {
                         {item?.answers?.map((infor, ind) => (
                             <div className="answer_item">
                                 <input
+                                    onChange={(e) =>
+                                        handleChangeAnswer(e, {
+                                            parentid: index,
+                                            childId: ind,
+                                        })
+                                    }
                                     id={item?.title + index + ind + "answer"}
                                     type="radio"
                                     name={item?.title + index + "answer"}
@@ -365,8 +404,55 @@ const Quiz = () => {
                 </div>
             )}
             <div className="lesson_create_button">
-                <button className="button_create">Create</button>
+                <button
+                    onClick={() => {
+                        setCreate(true);
+                    }}
+                    className="button_create"
+                >
+                    Create
+                </button>
             </div>
+            {create && (
+                <div className="lessonCreate_input_form">
+                    <div className="lessonCreate_input_form_wrap">
+                        <div className="expertCourse_close">
+                            <div
+                                onClick={() => {
+                                    setCreate(false);
+                                }}
+                                className="expertCourse_close_icons"
+                            >
+                                &times;
+                            </div>
+                        </div>
+                        <div className="lessonCreate_textarea">
+                            <textarea
+                                ref={titleRef}
+                                placeholder="Enter title of this quiz"
+                            />
+                        </div>
+                        <div className="lessonCreate_button_form">
+                            <button
+                                onClick={handleCreateQuiz}
+                                style={{ height: "4rem" }}
+                                className="button"
+                            >
+                                Create Quiz
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setCreate(false);
+                                }}
+                                style={{ marginLeft: "1rem" }}
+                                className="button cancel_button"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
