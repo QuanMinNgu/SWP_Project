@@ -474,50 +474,115 @@ const CreateCourse = () => {
                         <div className="lessonCreate_title">Create Lesson</div>
                         <div className="lessonCreate_type">
                             <div className="lessonCreate_type_form">
-                                <input
-                                    onChange={(e) => {
-                                        if (e.target.checked) {
-                                            setType("listening");
-                                        }
-                                    }}
-                                    id="listening"
-                                    type="radio"
-                                    name="lesson"
-                                    defaultChecked
-                                />
+                                {type === "listening" ? (
+                                    <input
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setType("listening");
+                                            }
+                                        }}
+                                        id="listening"
+                                        type="radio"
+                                        name="lesson"
+                                        defaultChecked
+                                    />
+                                ) : (
+                                    <input
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setType("listening");
+                                            }
+                                        }}
+                                        id="listening"
+                                        type="radio"
+                                        name="lesson"
+                                    />
+                                )}
                                 <label htmlFor="listening">Listening</label>
                             </div>
                             <div className="lessonCreate_type_form">
-                                <input
-                                    id="reading"
-                                    type="radio"
-                                    name="lesson"
-                                    onChange={(e) => {
-                                        if (e.target.checked) {
-                                            setType("reading");
-                                        }
-                                    }}
-                                />
+                                {type === "reading" ? (
+                                    <input
+                                        id="reading"
+                                        type="radio"
+                                        name="lesson"
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setType("reading");
+                                            }
+                                        }}
+                                        defaultChecked
+                                    />
+                                ) : (
+                                    <input
+                                        id="reading"
+                                        type="radio"
+                                        name="lesson"
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setType("reading");
+                                            }
+                                        }}
+                                    />
+                                )}
                                 <label htmlFor="reading">Reading</label>
                             </div>
                             <div className="lessonCreate_type_form">
-                                <input
-                                    onChange={(e) => {
-                                        if (e.target.checked) {
-                                            setType("quiz");
-                                        }
-                                    }}
-                                    id="quiz"
-                                    type="radio"
-                                    name="lesson"
-                                />
+                                {type === "quiz" ? (
+                                    <input
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setType("quiz");
+                                            }
+                                        }}
+                                        id="quiz"
+                                        type="radio"
+                                        name="lesson"
+                                        defaultChecked
+                                    />
+                                ) : (
+                                    <input
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setType("quiz");
+                                            }
+                                        }}
+                                        id="quiz"
+                                        type="radio"
+                                        name="lesson"
+                                    />
+                                )}
                                 <label htmlFor="quiz">Quiz</label>
                             </div>
                         </div>
                         <div className="lessonCreate_form">
-                            {type === "listening" && <Listening />}
-                            {type === "reading" && <Reading />}
-                            {type === "quiz" && <Quiz />}
+                            {type === "listening" && (
+                                <Listening
+                                    setLesson={setLesson}
+                                    lesson={lesson}
+                                    addLesson={addLesson}
+                                    setAddLesson={setAddLesson}
+                                    setType={setType}
+                                />
+                            )}
+                            {type === "reading" && (
+                                <Reading
+                                    setLesson={setLesson}
+                                    lesson={lesson}
+                                    addLesson={addLesson}
+                                    setAddLesson={setAddLesson}
+                                    setType={setType}
+                                />
+                            )}
+                            {type === "quiz" && (
+                                <Quiz
+                                    setLesson={setLesson}
+                                    lesson={lesson}
+                                    addLesson={addLesson}
+                                    setAddLesson={setAddLesson}
+                                    setType={setType}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
