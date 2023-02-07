@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
 import { toast } from "react-toastify";
-const Reading = ({ urlFileRef }) => {
+const Reading = ({ setUrlArray, urlArray, urlArrayRef }) => {
     const [uploadFile, setUploadFile] = useState(false);
 
     const [oldUrl, setOldUrl] = useState("");
@@ -24,8 +24,9 @@ const Reading = ({ urlFileRef }) => {
             function (error, result) {
                 if (!error && result && result.event === "success") {
                     const newUrl = "https://" + result.info.url.split("://")[1];
-                    urlFileRef.push(newUrl);
                     setOldUrl(newUrl);
+                    setUrlArray([...urlArray, newUrl]);
+                    urlArrayRef.push(newUrl);
                 }
             }
         );

@@ -3,10 +3,6 @@ import React, { useEffect, useState } from "react";
 const CoursePanelEdit = ({ item, index, lesson, setAddLesson }) => {
     const [panel, setPanel] = useState(false);
 
-    useEffect(() => {
-        console.log(lesson);
-    }, [lesson]);
-
     return (
         <div className="CoursePanel_wrap">
             <div

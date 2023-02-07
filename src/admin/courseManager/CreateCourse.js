@@ -16,12 +16,14 @@ const CreateCourse = () => {
     const [expert, setExpert] = useState(false);
     const [image, setImage] = useState("");
     const [inputForm, setInputForm] = useState(false);
+    const [previousLink, setPreviousLink] = useState(false);
     const [lesson, setLesson] = useState([]);
     const imageRef = useRef();
     const lessonRef = useRef();
     const [addLesson, setAddLesson] = useState(false);
 
-    const urlFileRef = useRef("");
+    const [urlArray, setUrlArray] = useState([]);
+    const urlArrayRef = useRef([]);
 
     const [type, setType] = useState("listening");
 
@@ -574,7 +576,9 @@ const CreateCourse = () => {
                                     addLesson={addLesson}
                                     setAddLesson={setAddLesson}
                                     setType={setType}
-                                    urlFileRef={urlFileRef.current}
+                                    urlArray={urlArray}
+                                    setUrlArray={setUrlArray}
+                                    urlArrayRef={urlArrayRef.current}
                                 />
                             )}
                             {type === "quiz" && (
@@ -589,8 +593,40 @@ const CreateCourse = () => {
                         </div>
                     </div>
                     {type === "reading" && (
-                        <div className="previousLink">
+                        <div
+                            onClick={() => {
+                                setPreviousLink(true);
+                            }}
+                            className="previousLink"
+                        >
                             Previous Upload File Link
+                        </div>
+                    )}
+                    {type === "reading" && previousLink && (
+                        <div className="lessonCreate previousLink_form">
+                            <div className="previousLink_wrap">
+                                <div className="expertCourse_close">
+                                    <div
+                                        onClick={() => {
+                                            setPreviousLink(false);
+                                        }}
+                                        className="expertCourse_close_icons"
+                                    >
+                                        &times;
+                                    </div>
+                                </div>
+                                <div className="previousLink_list">
+                                    <ul>
+                                        {urlArrayRef.current?.map(
+                                            (item, index) => (
+                                                <li key={index + "listArray"}>
+                                                    <a href="#">{item}</a>
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>
