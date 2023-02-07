@@ -1,13 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
-const Reading = () => {
+import { toast } from "react-toastify";
+const Reading = ({ urlFileRef }) => {
     const [uploadFile, setUploadFile] = useState(false);
+
+    const [oldUrl, setOldUrl] = useState("");
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const handleChange = (data) => {
         setEditorState(data);
     };
+
+    const cloudinaryRef = useRef();
+    const widgetRef = useRef();
+    useEffect(() => {
+        cloudinaryRef.current = window.cloudinary;
+        widgetRef.current = cloudinaryRef.current.createUploadWidget(
+            {
+                cloudName: "sttruyen",
+                uploadPreset: "xmqhuwyw",
+            },
+            function (error, result) {
+                if (!error && result && result.event === "success") {
+                    const newUrl = "https://" + result.info.url.split("://")[1];
+                    urlFileRef.push(newUrl);
+                    setOldUrl(newUrl);
+                }
+            }
+        );
+    }, []);
+
     return (
         <div className="content_edit">
             <Editor
@@ -40,6 +63,7 @@ const Reading = () => {
                             <div
                                 onClick={() => {
                                     setUploadFile(false);
+                                    widgetRef.current.close();
                                 }}
                                 className="expertCourse_close_icons"
                             >
@@ -47,10 +71,25 @@ const Reading = () => {
                             </div>
                         </div>
                         <div className="uploadFile_input">
-                            <input type="file" />
+                            <button
+                                style={{ height: "4rem" }}
+                                className="button"
+                                onClick={() => {
+                                    toast.success(
+                                        "Please,waiting for some second."
+                                    );
+                                    widgetRef.current.open();
+                                }}
+                            >
+                                Upload (pdf not support)
+                            </button>
                         </div>
                         <div className="uploadFile_input_form">
-                            <textarea placeholder="After upload file you will get a link in here!" />
+                            <textarea
+                                style={{ resize: "vertical" }}
+                                defaultValue={oldUrl}
+                                placeholder="After upload file you will get a link in here!"
+                            />
                         </div>
                     </div>
                 </div>

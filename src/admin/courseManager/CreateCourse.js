@@ -21,6 +21,8 @@ const CreateCourse = () => {
     const lessonRef = useRef();
     const [addLesson, setAddLesson] = useState(false);
 
+    const urlFileRef = useRef("");
+
     const [type, setType] = useState("listening");
 
     const handleCreateBenefit = () => {
@@ -572,6 +574,7 @@ const CreateCourse = () => {
                                     addLesson={addLesson}
                                     setAddLesson={setAddLesson}
                                     setType={setType}
+                                    urlFileRef={urlFileRef.current}
                                 />
                             )}
                             {type === "quiz" && (
@@ -585,6 +588,11 @@ const CreateCourse = () => {
                             )}
                         </div>
                     </div>
+                    {type === "reading" && (
+                        <div className="previousLink">
+                            Previous Upload File Link
+                        </div>
+                    )}
                 </div>
             )}
         </div>
