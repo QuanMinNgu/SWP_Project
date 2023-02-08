@@ -96,6 +96,7 @@ const CreateCourse = () => {
             num: coun,
             time: tim,
         });
+        // console.log(lesson);
     }, [lesson]);
 
     const { getRootProps, getInputProps } = useDropzone({
@@ -224,6 +225,7 @@ const CreateCourse = () => {
                     <div className="CoursePanel">
                         {lesson?.map((item, index) => (
                             <CoursePanelEdit
+                                setLesson={setLesson}
                                 setAddLesson={setAddLesson}
                                 lesson={lesson}
                                 key={index + "coursePanel"}

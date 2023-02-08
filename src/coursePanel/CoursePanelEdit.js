@@ -1,7 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
+import { toast } from "react-toastify";
 
-const CoursePanelEdit = ({ item, index, lesson, setAddLesson }) => {
+const CoursePanelEdit = ({ item, index, lesson, setAddLesson, setLesson }) => {
     const [panel, setPanel] = useState(false);
+    const [edit, setEdit] = useState(false);
+    const contentRef = useRef();
+
+    const handleDeletePakage = (e) => {
+        const check = window.confirm("Do you really wanna delete this pakage?");
+        if (check) {
+            const ar = lesson;
+            ar.splice(e, 1);
+            setLesson([...ar]);
+        }
+    };
+
+    const handleUpdatePackageContent = () => {
+        if (!contentRef.current.value) {
+            return toast.error("Please enter input value.");
+        }
+        const ar = lesson;
+        ar[index].lessonTitle = contentRef.current.value;
+        setLesson([...ar]);
+        setEdit(false);
+    };
 
     return (
         <div className="CoursePanel_wrap">
@@ -27,6 +49,51 @@ const CoursePanelEdit = ({ item, index, lesson, setAddLesson }) => {
                 <div className="CoursePanel_body">
                     {item?.numLesson?.length} bài học
                 </div>
+                <div className="CoursePanel_edit_button_wrap">
+                    <button
+                        onClick={() => setEdit(true)}
+                        style={{ height: "3rem", marginRight: "1rem" }}
+                        className="button button_update"
+                    >
+                        Edit
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleDeletePakage(index);
+                        }}
+                        style={{ height: "3rem" }}
+                        className="button button_delete"
+                    >
+                        Delete
+                    </button>
+                </div>
+                {edit && (
+                    <div className="CoursePanel_edit_form_input">
+                        <input
+                            ref={contentRef}
+                            type="text"
+                            placeholder="Enter title"
+                        />
+                        <div>
+                            <button
+                                onClick={handleUpdatePackageContent}
+                                style={{ height: "3.3rem" }}
+                                className="button"
+                            >
+                                Update
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setEdit(false);
+                                }}
+                                style={{ height: "3.3rem", marginLeft: "1rem" }}
+                                className="button button_cancel"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
             {panel && (
                 <div className="panelCard_container">
@@ -86,6 +153,20 @@ const CoursePanelEdit = ({ item, index, lesson, setAddLesson }) => {
                                       Math.floor(item?.time / 60) * 60
                                   }`
                                 : "Reading"}
+                        </div>
+                        <div className="PanelCard_edit_button_wrap">
+                            <button
+                                style={{ height: "3rem", marginRight: "1rem" }}
+                                className="button button_update"
+                            >
+                                Edit
+                            </button>
+                            <button
+                                style={{ height: "3rem" }}
+                                className="button button_delete"
+                            >
+                                Delete
+                            </button>
                         </div>
                     </div>
                 ))}
