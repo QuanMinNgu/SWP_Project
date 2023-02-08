@@ -119,13 +119,22 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
             return toast.error("Please enter value.");
         }
         const arr = lesson;
-        const inde = addLesson.split("-")[1] * 1;
-        arr[inde].numLesson.push({
-            title: titleRef.current.value,
-            type: "quiz",
-            value: [...quesions],
-            contentQuiz: contentQuizRef.current.value,
-        });
+        const inde = addLesson.index;
+        if (addLesson.type === "create") {
+            arr[inde].numLesson.push({
+                title: titleRef.current.value,
+                type: "quiz",
+                value: [...quesions],
+                contentQuiz: contentQuizRef.current.value,
+            });
+        } else {
+            arr[inde].numLesson.splice(addLesson?.childId, 0, {
+                title: titleRef.current.value,
+                type: "quiz",
+                value: [...quesions],
+                contentQuiz: contentQuizRef.current.value,
+            });
+        }
         setLesson([...arr]);
         setCreate(false);
         setAddLesson("");

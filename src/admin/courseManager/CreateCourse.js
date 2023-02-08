@@ -96,7 +96,6 @@ const CreateCourse = () => {
             num: coun,
             time: tim,
         });
-        // console.log(lesson);
     }, [lesson]);
 
     const { getRootProps, getInputProps } = useDropzone({

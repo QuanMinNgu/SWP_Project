@@ -35,14 +35,24 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
             return toast.error("Please enter value.");
         }
         const arr = lesson;
-        const inde = addLesson.split("-")[1] * 1;
-        arr[inde].numLesson.push({
-            title: titleRef.current.value,
-            type: "listening",
-            value: content,
-            link: url,
-            time: playerRef.current.getDuration(),
-        });
+        const inde = addLesson.index;
+        if (addLesson.type === "create") {
+            arr[inde].numLesson.push({
+                title: titleRef.current.value,
+                type: "listening",
+                value: content,
+                link: url,
+                time: playerRef.current.getDuration(),
+            });
+        } else {
+            arr[inde].numLesson.splice(addLesson?.childId, 0, {
+                title: titleRef.current.value,
+                type: "listening",
+                value: content,
+                link: url,
+                time: playerRef.current.getDuration(),
+            });
+        }
         setLesson([...arr]);
         setCreate(false);
         setAddLesson("");

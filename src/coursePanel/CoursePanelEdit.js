@@ -191,7 +191,10 @@ const CoursePanelEdit = ({
                     <div className="panelCard_create_container">
                         <div
                             onClick={() => {
-                                setAddLesson("index-" + index);
+                                setAddLesson({
+                                    index: index,
+                                    type: "create",
+                                });
                             }}
                             title="Add more"
                             className="plus_panel"
@@ -247,12 +250,26 @@ const CoursePanelEdit = ({
                         </div>
                         <div className="PanelCard_edit_button_wrap">
                             <button
+                                onClick={() => {
+                                    setAddLesson({
+                                        index: index,
+                                        childId: ind,
+                                        type: "prev",
+                                    });
+                                }}
                                 style={{ height: "3rem", marginRight: "1rem" }}
                                 className="button"
                             >
                                 Prev
                             </button>
                             <button
+                                onClick={() => {
+                                    setAddLesson({
+                                        index: index,
+                                        childId: ind + 1,
+                                        type: "next",
+                                    });
+                                }}
                                 style={{ height: "3rem", marginRight: "1rem" }}
                                 className="button"
                             >

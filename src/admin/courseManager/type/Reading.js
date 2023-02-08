@@ -54,12 +54,20 @@ const Reading = ({
             return toast.error("Please enter value.");
         }
         const arr = lesson;
-        const inde = addLesson.split("-")[1] * 1;
-        arr[inde].numLesson.push({
-            title: titleRef.current.value,
-            type: "reading",
-            value: content,
-        });
+        const inde = addLesson.index;
+        if (addLesson.type === "create") {
+            arr[inde].numLesson.push({
+                title: titleRef.current.value,
+                type: "reading",
+                value: content,
+            });
+        } else {
+            arr[inde].numLesson.splice(addLesson?.childId, 0, {
+                title: titleRef.current.value,
+                type: "reading",
+                value: content,
+            });
+        }
         setLesson([...arr]);
         setCreate(false);
         setAddLesson("");
