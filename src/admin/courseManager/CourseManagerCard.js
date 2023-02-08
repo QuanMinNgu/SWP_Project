@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../style.scss";
 const CourseManagerCard = ({ checkAll, setExpert }) => {
     const cardRef = useRef(null);
 
     const [bars, setBars] = useState(false);
+
+    const nagivate = useNavigate();
 
     useEffect(() => {
         if (cardRef.current) {
@@ -81,6 +83,14 @@ const CourseManagerCard = ({ checkAll, setExpert }) => {
                                 className="bars_detail_items"
                             >
                                 <i>Cg CExpert</i>
+                            </div>
+                            <div
+                                onClick={() => {
+                                    nagivate("/admin/update_course?id=asd");
+                                }}
+                                className="bars_detail_items"
+                            >
+                                <i>Update</i>
                             </div>
                             <div className="bars_detail_items">
                                 <i>Delete</i>
