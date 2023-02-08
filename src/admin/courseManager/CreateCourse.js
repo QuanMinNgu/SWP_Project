@@ -7,6 +7,7 @@ import Listening from "./type/Listening";
 import Quiz from "./type/Quiz";
 import Reading from "./type/Reading";
 import Select from "react-select";
+import axios from "axios";
 const CreateCourse = () => {
     const titleRef = useRef();
     const contentRef = useRef();
@@ -98,6 +99,19 @@ const CreateCourse = () => {
         });
     }, [lesson]);
 
+    useEffect(() => {
+        console.log(lesson);
+    }, [lesson]);
+
+    const handleCreateNewCourse = async () => {
+        try {
+            const data = await axios.post("/api/course/create", {
+                ...lesson,
+            });
+            console.log(data?.data);
+        } catch (err) {}
+    };
+
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
     });
@@ -114,7 +128,7 @@ const CreateCourse = () => {
                     </div>
                     <div className="course_detail_content">
                         <p ref={contentRef} contentEditable={true}>
-                            Content of course (can edit)
+                            Description of course (can edit)
                         </p>
                     </div>
                     <div className="course_detail_learn">
@@ -292,6 +306,7 @@ const CreateCourse = () => {
                     </div>
                     <div className="course_detail_button">
                         <button
+                            onClick={handleCreateNewCourse}
                             title="Save this course"
                             className="save_button"
                         >
