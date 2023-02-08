@@ -16,6 +16,7 @@ import UserBlog from "../user/userblog/UserBlog";
 import MarkBlog from "../user/markblog/MarkBlogs";
 import Dashboard from "../admin/Dashboard";
 import PrivateLayout from "../components/privateLayout/PrivateLayout";
+import SaleDashboard from "../saler/SaleDashboard";
 export const publicRouter = [
     {
         element: Home,
@@ -103,3 +104,12 @@ export const adminRouter = [
         path: "/admin/:slug",
     },
 ];
+
+export const saleRouter = [
+    {
+        element: SaleDashboard,
+        path: "/sale/:slug",
+    },
+];
+
+export const courseExpertRouter = [{}];
