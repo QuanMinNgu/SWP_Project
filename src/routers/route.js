@@ -17,6 +17,7 @@ import MarkBlog from "../user/markblog/MarkBlogs";
 import Dashboard from "../admin/Dashboard";
 import PrivateLayout from "../components/privateLayout/PrivateLayout";
 import SaleDashboard from "../saler/SaleDashboard";
+import CourseExpertDashboard from "../courseExpert/CourseExpertDashboard";
 export const publicRouter = [
     {
         element: Home,
@@ -112,4 +113,9 @@ export const saleRouter = [
     },
 ];
 
-export const courseExpertRouter = [{}];
+export const courseExpertRouter = [
+    {
+        element: CourseExpertDashboard,
+        path: "/course_expert/:slug",
+    },
+];

@@ -23,6 +23,10 @@ const UpdateCourse = () => {
     const lessonRef = useRef();
     const [addLesson, setAddLesson] = useState(false);
 
+    const [course, setCourse] = useState({
+        title: "Test",
+    });
+
     const [urlArray, setUrlArray] = useState([]);
 
     const [numberOfLesson, setNumberOfLesson] = useState({
@@ -122,7 +126,7 @@ const UpdateCourse = () => {
                 <div className="col c-12 m-8 l-8">
                     <div className="course_detail_name">
                         <h3 ref={titleRef} contentEditable={true}>
-                            Title of Course (can edit)
+                            {course?.title}
                         </h3>
                     </div>
                     <div className="course_detail_content">

@@ -1,6 +1,11 @@
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { adminRouter, publicRouter, saleRouter } from "./routers/route";
+import {
+    adminRouter,
+    courseExpertRouter,
+    publicRouter,
+    saleRouter,
+} from "./routers/route";
 import "./style.css";
 import { ToastContainer } from "react-toastify";
 import { createContext, useState } from "react";
@@ -8,7 +13,7 @@ import { useSelector } from "react-redux";
 import Loading from "./loading/Loading";
 export const UserContext = createContext();
 function App() {
-    const [store, setStore] = useState({ rule: "admin" });
+    const [store, setStore] = useState({ rule: "courseExpert" });
     const auth = useSelector((state) => state.auth);
     return (
         <UserContext.Provider value={{ store, setStore }}>
@@ -62,6 +67,27 @@ function App() {
                                 return item.layout ? (
                                     <Route
                                         key={index + "saleRouter"}
+                                        path={item.path}
+                                        element={
+                                            <item.layout type={item?.type}>
+                                                <Page />
+                                            </item.layout>
+                                        }
+                                    />
+                                ) : (
+                                    <Route
+                                        key={item?.path + index}
+                                        path={item?.path}
+                                        element={<Page />}
+                                    />
+                                );
+                            })}
+                        {store.rule === "courseExpert" &&
+                            courseExpertRouter.map((item, index) => {
+                                const Page = item.element;
+                                return item.layout ? (
+                                    <Route
+                                        key={index + "courseExpert"}
                                         path={item.path}
                                         element={
                                             <item.layout type={item?.type}>
