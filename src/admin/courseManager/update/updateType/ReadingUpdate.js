@@ -17,6 +17,7 @@ const ReadingUpdate = ({
     lesson,
     index,
     addLesson,
+    setUpdateLesson,
     data,
 }) => {
     const [uploadFile, setUploadFile] = useState(false);
@@ -68,14 +69,14 @@ const ReadingUpdate = ({
             return toast.error("Please enter value.");
         }
         const arr = lesson;
-        const inde = addLesson.split("-")[1] * 1;
-        arr[inde].numLesson.push({
+        arr[index].numLesson[addLesson] = {
             title: titleRef.current.value,
             type: "reading",
             value: content,
-        });
+        };
         setLesson([...arr]);
         setCreate(false);
+        setUpdateLesson(false);
     };
 
     return (

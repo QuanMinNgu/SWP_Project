@@ -233,6 +233,9 @@ const CreateCourse = () => {
                     <div className="CoursePanel">
                         {lesson?.map((item, index) => (
                             <CoursePanelEdit
+                                setUrlArray={setUrlArray}
+                                urlArray={urlArray}
+                                urlArrayRef={urlArrayRef.current}
                                 setLesson={setLesson}
                                 setAddLesson={setAddLesson}
                                 lesson={lesson}

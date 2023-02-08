@@ -3,7 +3,15 @@ import "./style.scss";
 import ListeningUpdate from "./updateType/ListeningUpdate";
 import ReadingUpdate from "./updateType/ReadingUpdate";
 import QuizUpdate from "./updateType/QuizUpdate";
-const UpdateLesson = ({ setUpdateLesson, item, lesson, setLesson }) => {
+const UpdateLesson = ({
+    setUpdateLesson,
+    item,
+    lesson,
+    setLesson,
+    setUrlArray,
+    urlArray,
+    urlArrayRef,
+}) => {
     const [previousLink, setPreviousLink] = useState(false);
     const [type, setType] = useState(item?.type || "listening");
 
@@ -134,6 +142,9 @@ const UpdateLesson = ({ setUpdateLesson, item, lesson, setLesson }) => {
                             addLesson={item?.ind}
                             setLesson={setLesson}
                             lesson={lesson}
+                            setUrlArray={setUrlArray}
+                            urlArray={urlArray}
+                            urlArrayRef={urlArrayRef}
                         />
                     )}
                     {type === "quiz" && (
@@ -173,9 +184,11 @@ const UpdateLesson = ({ setUpdateLesson, item, lesson, setLesson }) => {
                         </div>
                         <div className="previousLink_list">
                             <ul>
-                                <li>
-                                    <a href="#">oki</a>
-                                </li>
+                                {urlArrayRef?.map((item, index) => (
+                                    <li key={index + "listArray"}>
+                                        <a href="#">{item}</a>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>

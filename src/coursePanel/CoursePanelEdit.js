@@ -2,7 +2,16 @@ import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import UpdateLesson from "../admin/courseManager/update/UpdateLesson";
 
-const CoursePanelEdit = ({ item, index, lesson, setAddLesson, setLesson }) => {
+const CoursePanelEdit = ({
+    item,
+    index,
+    lesson,
+    setAddLesson,
+    setLesson,
+    setUrlArray,
+    urlArray,
+    urlArrayRef,
+}) => {
     const [panel, setPanel] = useState(false);
     const [edit, setEdit] = useState(false);
     const contentRef = useRef();
@@ -193,6 +202,9 @@ const CoursePanelEdit = ({ item, index, lesson, setAddLesson, setLesson }) => {
                                 item={updateLesson}
                                 setLesson={setLesson}
                                 lesson={lesson}
+                                setUrlArray={setUrlArray}
+                                urlArray={urlArray}
+                                urlArrayRef={urlArrayRef}
                             />
                         )}
                     </div>
