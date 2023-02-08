@@ -23,6 +23,11 @@ const CreateCourse = () => {
     const [addLesson, setAddLesson] = useState(false);
 
     const [urlArray, setUrlArray] = useState([]);
+
+    const [numberOfLesson, setNumberOfLesson] = useState({
+        num: 0,
+        time: 0,
+    });
     const urlArrayRef = useRef([]);
 
     const [type, setType] = useState("listening");
@@ -75,6 +80,23 @@ const CreateCourse = () => {
         imageRef.current = acceptedFiles[0];
         setImage(url);
     }, []);
+
+    useEffect(() => {
+        let coun = 0;
+        let tim = 0;
+        lesson?.forEach((item) => {
+            coun += item?.numLesson?.length;
+            item?.numLesson?.forEach((item) => {
+                if (item?.type === "listening") {
+                    tim += item?.time;
+                }
+            });
+        });
+        setNumberOfLesson({
+            num: coun,
+            time: tim,
+        });
+    }, [lesson]);
 
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
@@ -146,24 +168,74 @@ const CreateCourse = () => {
                     <div className="course_detail_timeLine">
                         <ul>
                             <li>
-                                <b contentEditable={true}>? (can edit)</b>{" "}
-                                chương
+                                <b>{lesson?.length}</b> Pakages
                             </li>
                             <li>.</li>
                             <li>
-                                <b contentEditable={true}>? (can edit)</b> bài
-                                học
+                                <b>{numberOfLesson?.num}</b> Lessons
                             </li>
                             <li>.</li>
                             <li>
-                                Thời lượng{" "}
-                                <b contentEditable={true}>? (can edit)</b>
+                                Times{" "}
+                                <b>{`${
+                                    Math.floor(numberOfLesson?.time / 3600) < 10
+                                        ? "0"
+                                        : ""
+                                }${Math.floor(numberOfLesson?.time / 3600)} :
+                                
+                                ${
+                                    Math.floor(numberOfLesson?.time / 3600) > 0
+                                        ? `${
+                                              Math.floor(
+                                                  numberOfLesson?.time / 60
+                                              ) -
+                                                  Math.floor(
+                                                      numberOfLesson?.time /
+                                                          3600
+                                                  ) *
+                                                      60 <
+                                              10
+                                                  ? "0"
+                                                  : ""
+                                          }${
+                                              Math.floor(
+                                                  numberOfLesson?.time / 60
+                                              ) -
+                                              Math.floor(
+                                                  numberOfLesson?.time / 3600
+                                              ) *
+                                                  60
+                                          }`
+                                        : `${
+                                              Math.floor(
+                                                  numberOfLesson?.time / 60
+                                              ) < 10
+                                                  ? "0"
+                                                  : ""
+                                          }${Math.floor(
+                                              numberOfLesson?.time / 60
+                                          )}`
+                                } : ${
+                                    Math.floor(numberOfLesson?.time) -
+                                        Math.floor(numberOfLesson?.time / 60) *
+                                            60 <
+                                    10
+                                        ? "0"
+                                        : ""
+                                }${
+                                    Math.floor(numberOfLesson?.time) -
+                                    Math.floor(numberOfLesson?.time / 60) * 60
+                                }`}</b>
                             </li>
                         </ul>
                     </div>
                     <div className="CoursePanel">
                         {lesson?.map((item, index) => (
                             <CoursePanelEdit
+                                setUrlArray={setUrlArray}
+                                urlArray={urlArray}
+                                urlArrayRef={urlArrayRef.current}
+                                setLesson={setLesson}
                                 setAddLesson={setAddLesson}
                                 lesson={lesson}
                                 key={index + "coursePanel"}

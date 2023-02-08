@@ -1,20 +1,45 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+import {
+    EditorState,
+    convertToRaw,
+    ContentState,
+    convertFromHTML,
+} from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import ReactPlayer from "react-player/lazy";
-const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
+import "../style.scss";
+const ListeningUpdate = ({
+    lesson,
+    setLesson,
+    addLesson,
+    data,
+    index,
+    setUpdateLesson,
+}) => {
     const [url, setUrl] = useState("");
     const urlRef = useRef();
 
     const playerRef = useRef(null);
 
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const [editorState, setEditorState] = useState(
+        EditorState.createWithContent(
+            ContentState.createFromBlockArray(
+                convertFromHTML(
+                    Array.isArray(data?.value) ? "<p></p>" : data?.value
+                )
+            )
+        )
+    );
 
     const [create, setCreate] = useState(false);
     const titleRef = useRef();
     const [content, setContent] = useState("");
+
+    useEffect(() => {
+        setContent(data?.value);
+    }, [data]);
 
     useEffect(() => {
         setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
@@ -31,40 +56,28 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
     };
 
     const handleCreateListening = () => {
-        if (!content || !url) {
+        if (!content) {
             return toast.error("Please enter value.");
         }
         const arr = lesson;
-        const inde = addLesson.index;
-        if (addLesson.type === "create") {
-            arr[inde].numLesson.push({
-                title: titleRef.current.value,
-                type: "listening",
-                value: content,
-                link: url,
-                time: playerRef.current.getDuration(),
-            });
-        } else {
-            arr[inde].numLesson.splice(addLesson?.childId, 0, {
-                title: titleRef.current.value,
-                type: "listening",
-                value: content,
-                link: url,
-                time: playerRef.current.getDuration(),
-            });
-        }
+        arr[index].numLesson[addLesson] = {
+            title: titleRef.current.value,
+            type: "listening",
+            value: content,
+            link: url || data?.link,
+            time: playerRef.current.getDuration(),
+        };
         setLesson([...arr]);
         setCreate(false);
-        setAddLesson("");
-        setType("listening");
+        setUpdateLesson(false);
     };
-
     return (
         <div className="listening">
             <div className="listening_link">
                 <input
                     ref={urlRef}
                     type="text"
+                    defaultValue={data?.link}
                     placeholder="Add link youtube in here!"
                 />
                 <button onClick={handleCheckYoutube} className="button">
@@ -77,7 +90,7 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
                         ref={playerRef}
                         width="100%"
                         height="100%"
-                        url={url}
+                        url={url || data?.link}
                     />
                 </div>
             </div>
@@ -110,6 +123,7 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
                         </div>
                         <div className="lessonCreate_textarea">
                             <textarea
+                                defaultValue={data?.title}
                                 ref={titleRef}
                                 placeholder="Enter title of this quiz"
                             />
@@ -120,7 +134,7 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
                                 style={{ height: "4rem" }}
                                 className="button"
                             >
-                                Create Listening
+                                Updating Listening
                             </button>
                             <button
                                 onClick={() => {
@@ -142,11 +156,11 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
                     }}
                     className="button_create"
                 >
-                    Create
+                    Update
                 </button>
             </div>
         </div>
     );
 };
 
-export default Listening;
+export default ListeningUpdate;

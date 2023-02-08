@@ -1,17 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+import {
+    EditorState,
+    convertToRaw,
+    ContentState,
+    convertFromHTML,
+} from "draft-js";
 import { toast } from "react-toastify";
 import draftToHtml from "draftjs-to-html";
-const Reading = ({
+import "../style.scss";
+const ReadingUpdate = ({
     setUrlArray,
     urlArray,
     urlArrayRef,
     setLesson,
     lesson,
-    setAddLesson,
+    index,
     addLesson,
-    setType,
+    setUpdateLesson,
+    data,
 }) => {
     const [uploadFile, setUploadFile] = useState(false);
 
@@ -19,7 +26,15 @@ const Reading = ({
     const [content, setContent] = useState("");
     const [create, setCreate] = useState(false);
     const titleRef = useRef();
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const [editorState, setEditorState] = useState(
+        EditorState.createWithContent(
+            ContentState.createFromBlockArray(
+                convertFromHTML(
+                    Array.isArray(data?.value) ? "<p></p>" : data?.value
+                )
+            )
+        )
+    );
 
     const handleChange = (data) => {
         setEditorState(data);
@@ -54,24 +69,14 @@ const Reading = ({
             return toast.error("Please enter value.");
         }
         const arr = lesson;
-        const inde = addLesson.index;
-        if (addLesson.type === "create") {
-            arr[inde].numLesson.push({
-                title: titleRef.current.value,
-                type: "reading",
-                value: content,
-            });
-        } else {
-            arr[inde].numLesson.splice(addLesson?.childId, 0, {
-                title: titleRef.current.value,
-                type: "reading",
-                value: content,
-            });
-        }
+        arr[index].numLesson[addLesson] = {
+            title: titleRef.current.value,
+            type: "reading",
+            value: content,
+        };
         setLesson([...arr]);
         setCreate(false);
-        setAddLesson("");
-        setType("listening");
+        setUpdateLesson(false);
     };
 
     return (
@@ -152,6 +157,7 @@ const Reading = ({
                         </div>
                         <div className="lessonCreate_textarea">
                             <textarea
+                                defaultValue={data?.title}
                                 ref={titleRef}
                                 placeholder="Enter title of this quiz"
                             />
@@ -182,11 +188,11 @@ const Reading = ({
                     onClick={() => setCreate(true)}
                     className="button_create"
                 >
-                    Create
+                    Update
                 </button>
             </div>
         </div>
     );
 };
 
-export default Reading;
+export default ReadingUpdate;

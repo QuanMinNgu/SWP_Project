@@ -1,6 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
+import "../style.scss";
+const QuizUpdate = ({
+    lesson,
+    setLesson,
+    addLesson,
+    data,
+    setUpdateLesson,
+    index,
+}) => {
     const [bars, setBars] = useState(false);
     const [edit, setEdit] = useState(false);
     const [answer, setAnswer] = useState(false);
@@ -15,6 +23,10 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
     const answerRef = useRef(null);
     const contentAnswerRef = useRef(null);
     const contentQuizRef = useRef();
+
+    useEffect(() => {
+        setQuesions([...data?.value]);
+    }, [data]);
 
     const [editQuesion, setEditQuestion] = useState({});
     const [quesions, setQuesions] = useState([]);
@@ -119,26 +131,15 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
             return toast.error("Please enter value.");
         }
         const arr = lesson;
-        const inde = addLesson.index;
-        if (addLesson.type === "create") {
-            arr[inde].numLesson.push({
-                title: titleRef.current.value,
-                type: "quiz",
-                value: [...quesions],
-                contentQuiz: contentQuizRef.current.value,
-            });
-        } else {
-            arr[inde].numLesson.splice(addLesson?.childId, 0, {
-                title: titleRef.current.value,
-                type: "quiz",
-                value: [...quesions],
-                contentQuiz: contentQuizRef.current.value,
-            });
-        }
+        arr[index].numLesson[addLesson] = {
+            title: titleRef.current.value,
+            type: "quiz",
+            value: [...quesions],
+            contentQuiz: contentQuizRef.current.value,
+        };
         setLesson([...arr]);
         setCreate(false);
-        setAddLesson("");
-        setType("listening");
+        setUpdateLesson(false);
     };
 
     return (
@@ -192,13 +193,28 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                                             childId: ind,
                                         })
                                     }
-                                    id={item?.title + index + ind + "answer"}
+                                    id={
+                                        "updateCorrect" +
+                                        item?.title +
+                                        index +
+                                        ind +
+                                        "answerUpdate"
+                                    }
                                     type="radio"
-                                    name={item?.title + index + "answer"}
+                                    name={item?.title + index + "answerUpdate"}
+                                    defaultChecked={
+                                        item?.correctAnswer === ind
+                                            ? true
+                                            : false
+                                    }
                                 />
                                 <label
                                     htmlFor={
-                                        item?.title + index + ind + "answer"
+                                        "updateCorrect" +
+                                        item?.title +
+                                        index +
+                                        ind +
+                                        "answerUpdate"
                                     }
                                 >
                                     {infor?.title}
@@ -420,7 +436,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                     }}
                     className="button_create"
                 >
-                    Create
+                    Update
                 </button>
             </div>
             {create && (
@@ -438,6 +454,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                         </div>
                         <div className="lessonCreate_textarea">
                             <textarea
+                                defaultValue={data?.title}
                                 style={{
                                     minHeight: "8rem",
                                     marginBottom: "3rem",
@@ -448,6 +465,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                         </div>
                         <div className="lessonCreate_textarea">
                             <textarea
+                                defaultValue={data?.contentQuiz}
                                 ref={contentQuizRef}
                                 placeholder="Enter content of this quiz"
                             />
@@ -458,7 +476,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                                 style={{ height: "4rem" }}
                                 className="button"
                             >
-                                Create Quiz
+                                Update Quiz
                             </button>
                             <button
                                 onClick={() => {
@@ -477,4 +495,4 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
     );
 };
 
-export default Quiz;
+export default QuizUpdate;
