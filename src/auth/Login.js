@@ -13,10 +13,10 @@ const Login = () => {
     const navigate = useNavigate();
     const handleLogin = async () => {
         const user = {
-            email: emailRef.current?.value,
+            gmail: emailRef.current?.value,
             password: passwordRef.current?.value,
         };
-        if (!user.email || !user.password) {
+        if (!user.gmail || !user.password) {
             return toast.error("Vui lòng điền hết thông tin.");
         }
         if (user.password.length < 8) {
@@ -114,7 +114,7 @@ const Login = () => {
         dispatch(isLoading());
         try {
             const data = await axios.post("/api/auth/login", {
-                email: e.email,
+                gmail: e.email,
                 id: e.id,
                 type: "facebook",
             });
@@ -132,7 +132,7 @@ const Login = () => {
         dispatch(isLoading());
         try {
             const data = await axios.post("/api/auth/login", {
-                email: user.email,
+                gmail: user.email,
                 id: user.sub,
                 type: "google",
             });

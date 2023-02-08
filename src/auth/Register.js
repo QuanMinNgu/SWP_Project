@@ -16,12 +16,12 @@ const Register = () => {
 
     const handleRegister = async () => {
         const user = {
-            email: emailRef.current?.value,
+            gmail: emailRef.current?.value,
             password: passwordRef.current?.value,
             name: nameRef.current?.value,
             rePassword: rePasswordRef.current?.value,
         };
-        if (!user.email || !user.password || !user.name || !user.rePassword) {
+        if (!user.gmail || !user.password || !user.name || !user.rePassword) {
             return toast.error("Vui lòng điề hết thông tin.");
         }
         if (user.password.length < 8) {
@@ -121,7 +121,7 @@ const Register = () => {
         dispatch(isLoading());
         try {
             const data = await axios.post("/api/auth/register", {
-                email: e.email,
+                gmail: e.email,
                 name: e.name,
                 type: "facebook",
                 image: e.picture.data.url,
@@ -141,7 +141,7 @@ const Register = () => {
         dispatch(isLoading());
         try {
             const data = await axios.post("/api/auth/register", {
-                email: user.email,
+                gmail: user.email,
                 name: user.name,
                 type: "google",
                 image: user.picture,
