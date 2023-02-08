@@ -1,7 +1,7 @@
 @import "../style.module.scss";
 .blog_card {
   width: calc((100% / 3) - 24px);
-  @include mobile {
+  @include middleSmall {
     width: calc(100% - 24px);
   }
   border-radius: 2rem;
