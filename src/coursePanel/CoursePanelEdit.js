@@ -1,10 +1,12 @@
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
+import UpdateLesson from "../admin/courseManager/update/UpdateLesson";
 
 const CoursePanelEdit = ({ item, index, lesson, setAddLesson, setLesson }) => {
     const [panel, setPanel] = useState(false);
     const [edit, setEdit] = useState(false);
     const contentRef = useRef();
+    const [updateLesson, setUpdateLesson] = useState(false);
 
     const handleDeletePakage = (e) => {
         const check = window.confirm("Do you really wanna delete this pakage?");
@@ -23,6 +25,15 @@ const CoursePanelEdit = ({ item, index, lesson, setAddLesson, setLesson }) => {
         ar[index].lessonTitle = contentRef.current.value;
         setLesson([...ar]);
         setEdit(false);
+    };
+
+    const handleDeleteLesson = (e) => {
+        const check = window.confirm("Do you really wanna delete this lesson?");
+        if (check) {
+            const ar = lesson;
+            ar[index].numLesson.splice(e, 1);
+            setLesson([...ar]);
+        }
     };
 
     return (
@@ -156,18 +167,30 @@ const CoursePanelEdit = ({ item, index, lesson, setAddLesson, setLesson }) => {
                         </div>
                         <div className="PanelCard_edit_button_wrap">
                             <button
+                                onClick={() => {
+                                    setUpdateLesson({
+                                        item: item,
+                                    });
+                                }}
                                 style={{ height: "3rem", marginRight: "1rem" }}
                                 className="button button_update"
                             >
                                 Edit
                             </button>
                             <button
+                                onClick={() => handleDeleteLesson(ind)}
                                 style={{ height: "3rem" }}
                                 className="button button_delete"
                             >
                                 Delete
                             </button>
                         </div>
+                        {updateLesson && (
+                            <UpdateLesson
+                                setUpdateLesson={setUpdateLesson}
+                                item={updateLesson}
+                            />
+                        )}
                     </div>
                 ))}
         </div>

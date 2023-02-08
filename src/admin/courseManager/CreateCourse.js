@@ -169,15 +169,15 @@ const CreateCourse = () => {
                     <div className="course_detail_timeLine">
                         <ul>
                             <li>
-                                <b>{lesson?.length}</b> chương
+                                <b>{lesson?.length}</b> Pakages
                             </li>
                             <li>.</li>
                             <li>
-                                <b>{numberOfLesson?.num}</b> bài học
+                                <b>{numberOfLesson?.num}</b> Lessons
                             </li>
                             <li>.</li>
                             <li>
-                                Thời lượng{" "}
+                                Times{" "}
                                 <b>{`${
                                     Math.floor(numberOfLesson?.time / 3600) < 10
                                         ? "0"
@@ -207,7 +207,15 @@ const CreateCourse = () => {
                                               ) *
                                                   60
                                           }`
-                                        : Math.floor(numberOfLesson?.time / 60)
+                                        : `${
+                                              Math.floor(
+                                                  numberOfLesson?.time / 60
+                                              ) < 10
+                                                  ? "0"
+                                                  : ""
+                                          }${Math.floor(
+                                              numberOfLesson?.time / 60
+                                          )}`
                                 } : ${
                                     Math.floor(numberOfLesson?.time) -
                                         Math.floor(numberOfLesson?.time / 60) *
