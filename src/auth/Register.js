@@ -35,6 +35,7 @@ const Register = () => {
             const data = await axios.post("/api/auth/register", {
                 ...user,
                 type: "normal",
+                image: "https://res.cloudinary.com/sttruyen/image/upload/v1675845680/stphim/wmo0be0li80asrfw4uhw.jpg",
             });
             toast.success(data?.data?.msg);
             dispatch(isSuccess());
