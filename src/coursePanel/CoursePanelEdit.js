@@ -15,7 +15,9 @@ const CoursePanelEdit = ({
     const [panel, setPanel] = useState(false);
     const [edit, setEdit] = useState(false);
     const contentRef = useRef();
+    const contentNewPakageRef = useRef();
     const [updateLesson, setUpdateLesson] = useState(false);
+    const [addMorePakage, setAddMorePakage] = useState(false);
 
     const handleDeletePakage = (e) => {
         const check = window.confirm("Do you really wanna delete this pakage?");
@@ -45,6 +47,29 @@ const CoursePanelEdit = ({
         }
     };
 
+    const handleCreateNewPakage = () => {
+        if (!contentNewPakageRef.current.value) {
+            return toast.error("Please enter value.");
+        }
+        if (addMorePakage === "prev") {
+            const ar = lesson;
+            ar.splice(index, 0, {
+                lessonTitle: contentNewPakageRef.current.value,
+                numLesson: [],
+            });
+            setLesson([...ar]);
+            setAddMorePakage(false);
+        } else if (addMorePakage === "next") {
+            const ar = lesson;
+            ar.splice(index + 1, 0, {
+                lessonTitle: contentNewPakageRef.current.value,
+                numLesson: [],
+            });
+            setLesson([...ar]);
+            setAddMorePakage(false);
+        }
+    };
+
     return (
         <div className="CoursePanel_wrap">
             <div
@@ -71,6 +96,24 @@ const CoursePanelEdit = ({
                 </div>
                 <div className="CoursePanel_edit_button_wrap">
                     <button
+                        onClick={() => {
+                            setAddMorePakage("prev");
+                        }}
+                        style={{ height: "3rem", marginRight: "1rem" }}
+                        className="button"
+                    >
+                        Prev
+                    </button>
+                    <button
+                        onClick={() => {
+                            setAddMorePakage("next");
+                        }}
+                        style={{ height: "3rem", marginRight: "1rem" }}
+                        className="button"
+                    >
+                        Next
+                    </button>
+                    <button
                         onClick={() => setEdit(true)}
                         style={{ height: "3rem", marginRight: "1rem" }}
                         className="button button_update"
@@ -93,6 +136,7 @@ const CoursePanelEdit = ({
                             ref={contentRef}
                             type="text"
                             placeholder="Enter title"
+                            defaultValue={item?.lessonTitle}
                         />
                         <div>
                             <button
@@ -105,6 +149,33 @@ const CoursePanelEdit = ({
                             <button
                                 onClick={() => {
                                     setEdit(false);
+                                }}
+                                style={{ height: "3.3rem", marginLeft: "1rem" }}
+                                className="button button_cancel"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                )}
+                {addMorePakage && (
+                    <div className="CoursePanel_edit_form_input">
+                        <input
+                            ref={contentNewPakageRef}
+                            type="text"
+                            placeholder={`Enter title of ${addMorePakage} pakage`}
+                        />
+                        <div>
+                            <button
+                                onClick={handleCreateNewPakage}
+                                style={{ height: "3.3rem" }}
+                                className="button"
+                            >
+                                Update {addMorePakage}
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setAddMorePakage(false);
                                 }}
                                 style={{ height: "3.3rem", marginLeft: "1rem" }}
                                 className="button button_cancel"
@@ -175,6 +246,18 @@ const CoursePanelEdit = ({
                                 : "Reading"}
                         </div>
                         <div className="PanelCard_edit_button_wrap">
+                            <button
+                                style={{ height: "3rem", marginRight: "1rem" }}
+                                className="button"
+                            >
+                                Prev
+                            </button>
+                            <button
+                                style={{ height: "3rem", marginRight: "1rem" }}
+                                className="button"
+                            >
+                                Next
+                            </button>
                             <button
                                 onClick={() => {
                                     setUpdateLesson({
