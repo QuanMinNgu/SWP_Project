@@ -1,24 +1,63 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
-const Listening = () => {
+import draftToHtml from "draftjs-to-html";
+import ReactPlayer from "react-player/lazy";
+const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
     const [url, setUrl] = useState("");
     const urlRef = useRef();
 
+    const playerRef = useRef(null);
+
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+    const [create, setCreate] = useState(false);
+    const titleRef = useRef();
+    const [content, setContent] = useState("");
+
+    useEffect(() => {
+        setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    }, [editorState]);
 
     const handleCheckYoutube = () => {
         if (!urlRef.current.value) {
             return toast.error("Please enter link!");
         }
-        const u =
-            "https://www.youtube.com/embed/" +
-            urlRef.current.value.split("v=")[1];
-        setUrl(u);
+        setUrl(urlRef.current.value);
     };
     const handleChange = (data) => {
         setEditorState(data);
+    };
+
+    const handleCreateListening = () => {
+        if (!content || !url) {
+            return toast.error("Please enter value.");
+        }
+        const arr = lesson;
+        const inde = addLesson.split("-")[1] * 1;
+        arr[inde].numLesson.push({
+            title: titleRef.current.value,
+            type: "listening",
+            value: content,
+            link: url,
+            time: `${
+                Math.floor(playerRef.current.getDuration() / 60) < 10 ? "0" : ""
+            }${Math.floor(playerRef.current.getDuration() / 60)} : ${
+                Math.floor(playerRef.current.getDuration()) -
+                    Math.floor(playerRef.current.getDuration() / 60) * 60 <
+                10
+                    ? "0"
+                    : ""
+            }${
+                Math.floor(playerRef.current.getDuration()) -
+                Math.floor(playerRef.current.getDuration() / 60) * 60
+            }`,
+        });
+        setLesson([...arr]);
+        setCreate(false);
+        setAddLesson("");
+        setType("listening");
     };
 
     return (
@@ -35,15 +74,12 @@ const Listening = () => {
             </div>
             <div className="youtube_check">
                 <div className="youtube_link">
-                    <iframe
+                    <ReactPlayer
+                        ref={playerRef}
                         width="100%"
                         height="100%"
-                        src={url}
-                        title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen
-                    ></iframe>
+                        url={url}
+                    />
                 </div>
             </div>
             <div className="lesson_content_title">Content</div>
@@ -60,8 +96,55 @@ const Listening = () => {
                     <div className="newPost_content_title">Content in here</div>
                 )}
             </div>
+            {create && (
+                <div className="lessonCreate_input_form">
+                    <div className="lessonCreate_input_form_wrap">
+                        <div className="expertCourse_close">
+                            <div
+                                onClick={() => {
+                                    setCreate(false);
+                                }}
+                                className="expertCourse_close_icons"
+                            >
+                                &times;
+                            </div>
+                        </div>
+                        <div className="lessonCreate_textarea">
+                            <textarea
+                                ref={titleRef}
+                                placeholder="Enter title of this quiz"
+                            />
+                        </div>
+                        <div className="lessonCreate_button_form">
+                            <button
+                                onClick={handleCreateListening}
+                                style={{ height: "4rem" }}
+                                className="button"
+                            >
+                                Create Listening
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setCreate(false);
+                                }}
+                                style={{ marginLeft: "1rem" }}
+                                className="button cancel_button"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className="lesson_create_button">
-                <button className="button_create">Create</button>
+                <button
+                    onClick={() => {
+                        setCreate(true);
+                    }}
+                    className="button_create"
+                >
+                    Create
+                </button>
             </div>
         </div>
     );

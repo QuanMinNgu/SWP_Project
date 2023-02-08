@@ -70,7 +70,9 @@ const CoursePanelEdit = ({ item, index, lesson, setAddLesson }) => {
                         <div>
                             {item?.type === "quiz"
                                 ? item?.value?.length
-                                : "11:35"}
+                                : item?.type === "listening"
+                                ? item?.time
+                                : "Reading"}
                         </div>
                     </div>
                 ))}

@@ -2,15 +2,32 @@ import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
 import { toast } from "react-toastify";
-const Reading = ({ setUrlArray, urlArray, urlArrayRef }) => {
+import draftToHtml from "draftjs-to-html";
+const Reading = ({
+    setUrlArray,
+    urlArray,
+    urlArrayRef,
+    setLesson,
+    lesson,
+    setAddLesson,
+    addLesson,
+    setType,
+}) => {
     const [uploadFile, setUploadFile] = useState(false);
 
     const [oldUrl, setOldUrl] = useState("");
+    const [content, setContent] = useState("");
+    const [create, setCreate] = useState(false);
+    const titleRef = useRef();
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const handleChange = (data) => {
         setEditorState(data);
     };
+
+    useEffect(() => {
+        setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    }, [editorState]);
 
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
@@ -31,6 +48,23 @@ const Reading = ({ setUrlArray, urlArray, urlArrayRef }) => {
             }
         );
     }, []);
+
+    const handleCreateReading = () => {
+        if (!content) {
+            return toast.error("Please enter value.");
+        }
+        const arr = lesson;
+        const inde = addLesson.split("-")[1] * 1;
+        arr[inde].numLesson.push({
+            title: titleRef.current.value,
+            type: "reading",
+            value: content,
+        });
+        setLesson([...arr]);
+        setCreate(false);
+        setAddLesson("");
+        setType("listening");
+    };
 
     return (
         <div className="content_edit">
@@ -95,8 +129,53 @@ const Reading = ({ setUrlArray, urlArray, urlArrayRef }) => {
                     </div>
                 </div>
             )}
+            {create && (
+                <div className="lessonCreate_input_form">
+                    <div className="lessonCreate_input_form_wrap">
+                        <div className="expertCourse_close">
+                            <div
+                                onClick={() => {
+                                    setCreate(false);
+                                }}
+                                className="expertCourse_close_icons"
+                            >
+                                &times;
+                            </div>
+                        </div>
+                        <div className="lessonCreate_textarea">
+                            <textarea
+                                ref={titleRef}
+                                placeholder="Enter title of this quiz"
+                            />
+                        </div>
+                        <div className="lessonCreate_button_form">
+                            <button
+                                onClick={handleCreateReading}
+                                style={{ height: "4rem" }}
+                                className="button"
+                            >
+                                Create Reading
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setCreate(false);
+                                }}
+                                style={{ marginLeft: "1rem" }}
+                                className="button cancel_button"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className="lesson_create_button">
-                <button className="button_create">Create</button>
+                <button
+                    onClick={() => setCreate(true)}
+                    className="button_create"
+                >
+                    Create
+                </button>
             </div>
         </div>
     );

@@ -14,6 +14,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
     const contentRef = useRef(null);
     const answerRef = useRef(null);
     const contentAnswerRef = useRef(null);
+    const contentQuizRef = useRef();
 
     const [editQuesion, setEditQuestion] = useState({});
     const [quesions, setQuesions] = useState([]);
@@ -117,13 +118,13 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
         if (!titleRef.current.value) {
             return toast.error("Please enter value.");
         }
-        console.log(lesson);
         const arr = lesson;
         const inde = addLesson.split("-")[1] * 1;
         arr[inde].numLesson.push({
             title: titleRef.current.value,
             type: "quiz",
             value: [...quesions],
+            contentQuiz: contentQuizRef.current.value,
         });
         setLesson([...arr]);
         setCreate(false);
@@ -428,8 +429,18 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                         </div>
                         <div className="lessonCreate_textarea">
                             <textarea
+                                style={{
+                                    minHeight: "8rem",
+                                    marginBottom: "3rem",
+                                }}
                                 ref={titleRef}
                                 placeholder="Enter title of this quiz"
+                            />
+                        </div>
+                        <div className="lessonCreate_textarea">
+                            <textarea
+                                ref={contentQuizRef}
+                                placeholder="Enter content of this quiz"
                             />
                         </div>
                         <div className="lessonCreate_button_form">
