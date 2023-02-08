@@ -15,7 +15,7 @@ const ReadingUpdate = ({
     urlArrayRef,
     setLesson,
     lesson,
-    setAddLesson,
+    index,
     addLesson,
     data,
 }) => {
@@ -76,7 +76,6 @@ const ReadingUpdate = ({
         });
         setLesson([...arr]);
         setCreate(false);
-        setAddLesson("");
     };
 
     return (

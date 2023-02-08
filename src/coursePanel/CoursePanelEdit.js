@@ -170,6 +170,8 @@ const CoursePanelEdit = ({ item, index, lesson, setAddLesson, setLesson }) => {
                                 onClick={() => {
                                     setUpdateLesson({
                                         item: item,
+                                        index: index,
+                                        ind: ind,
                                     });
                                 }}
                                 style={{ height: "3rem", marginRight: "1rem" }}
@@ -189,6 +191,8 @@ const CoursePanelEdit = ({ item, index, lesson, setAddLesson, setLesson }) => {
                             <UpdateLesson
                                 setUpdateLesson={setUpdateLesson}
                                 item={updateLesson}
+                                setLesson={setLesson}
+                                lesson={lesson}
                             />
                         )}
                     </div>

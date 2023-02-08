@@ -3,7 +3,7 @@ import "./style.scss";
 import ListeningUpdate from "./updateType/ListeningUpdate";
 import ReadingUpdate from "./updateType/ReadingUpdate";
 import QuizUpdate from "./updateType/QuizUpdate";
-const UpdateLesson = ({ setUpdateLesson, item }) => {
+const UpdateLesson = ({ setUpdateLesson, item, lesson, setLesson }) => {
     const [previousLink, setPreviousLink] = useState(false);
     const [type, setType] = useState(item?.type || "listening");
 
@@ -117,10 +117,35 @@ const UpdateLesson = ({ setUpdateLesson, item }) => {
                 </div>
                 <div className="lessonCreate_form">
                     {type === "listening" && (
-                        <ListeningUpdate data={item?.item} />
+                        <ListeningUpdate
+                            setUpdateLesson={setUpdateLesson}
+                            data={item?.item}
+                            index={item?.index}
+                            addLesson={item?.ind}
+                            setLesson={setLesson}
+                            lesson={lesson}
+                        />
                     )}
-                    {type === "reading" && <ReadingUpdate data={item?.item} />}
-                    {type === "quiz" && <QuizUpdate data={item?.item} />}
+                    {type === "reading" && (
+                        <ReadingUpdate
+                            setUpdateLesson={setUpdateLesson}
+                            data={item?.item}
+                            index={item?.index}
+                            addLesson={item?.ind}
+                            setLesson={setLesson}
+                            lesson={lesson}
+                        />
+                    )}
+                    {type === "quiz" && (
+                        <QuizUpdate
+                            setUpdateLesson={setUpdateLesson}
+                            data={item?.item}
+                            index={item?.index}
+                            addLesson={item?.ind}
+                            setLesson={setLesson}
+                            lesson={lesson}
+                        />
+                    )}
                 </div>
             </div>
             {type === "reading" && (

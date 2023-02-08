@@ -14,8 +14,9 @@ const ListeningUpdate = ({
     lesson,
     setLesson,
     addLesson,
-    setAddLesson,
     data,
+    index,
+    setUpdateLesson,
 }) => {
     const [url, setUrl] = useState("");
     const urlRef = useRef();
@@ -37,7 +38,7 @@ const ListeningUpdate = ({
     const [content, setContent] = useState("");
 
     useEffect(() => {
-        console.log(data);
+        setContent(data?.value);
     }, [data]);
 
     useEffect(() => {
@@ -55,21 +56,20 @@ const ListeningUpdate = ({
     };
 
     const handleCreateListening = () => {
-        if (!content || !url) {
+        if (!content) {
             return toast.error("Please enter value.");
         }
         const arr = lesson;
-        const inde = addLesson.split("-")[1] * 1;
-        arr[inde].numLesson.push({
+        arr[index].numLesson[addLesson] = {
             title: titleRef.current.value,
             type: "listening",
             value: content,
-            link: url,
+            link: url || data?.link,
             time: playerRef.current.getDuration(),
-        });
+        };
         setLesson([...arr]);
         setCreate(false);
-        setAddLesson("");
+        setUpdateLesson(false);
     };
     return (
         <div className="listening">
@@ -134,7 +134,7 @@ const ListeningUpdate = ({
                                 style={{ height: "4rem" }}
                                 className="button"
                             >
-                                Create Listening
+                                Updating Listening
                             </button>
                             <button
                                 onClick={() => {

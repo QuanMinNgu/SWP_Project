@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import "../style.scss";
-const QuizUpdate = ({ setLesson, lesson, addLesson, setAddLesson, data }) => {
+const QuizUpdate = ({
+    lesson,
+    setLesson,
+    addLesson,
+    data,
+    setUpdateLesson,
+    index,
+}) => {
     const [bars, setBars] = useState(false);
     const [edit, setEdit] = useState(false);
     const [answer, setAnswer] = useState(false);
@@ -124,16 +131,15 @@ const QuizUpdate = ({ setLesson, lesson, addLesson, setAddLesson, data }) => {
             return toast.error("Please enter value.");
         }
         const arr = lesson;
-        const inde = addLesson.split("-")[1] * 1;
-        arr[inde].numLesson.push({
+        arr[index].numLesson[addLesson] = {
             title: titleRef.current.value,
             type: "quiz",
             value: [...quesions],
             contentQuiz: contentQuizRef.current.value,
-        });
+        };
         setLesson([...arr]);
         setCreate(false);
-        setAddLesson("");
+        setUpdateLesson(false);
     };
 
     return (
@@ -448,6 +454,7 @@ const QuizUpdate = ({ setLesson, lesson, addLesson, setAddLesson, data }) => {
                         </div>
                         <div className="lessonCreate_textarea">
                             <textarea
+                                defaultValue={data?.title}
                                 style={{
                                     minHeight: "8rem",
                                     marginBottom: "3rem",
@@ -458,6 +465,7 @@ const QuizUpdate = ({ setLesson, lesson, addLesson, setAddLesson, data }) => {
                         </div>
                         <div className="lessonCreate_textarea">
                             <textarea
+                                defaultValue={data?.contentQuiz}
                                 ref={contentQuizRef}
                                 placeholder="Enter content of this quiz"
                             />
@@ -468,7 +476,7 @@ const QuizUpdate = ({ setLesson, lesson, addLesson, setAddLesson, data }) => {
                                 style={{ height: "4rem" }}
                                 className="button"
                             >
-                                Create Quiz
+                                Update Quiz
                             </button>
                             <button
                                 onClick={() => {
