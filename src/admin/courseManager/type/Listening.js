@@ -41,18 +41,7 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
             type: "listening",
             value: content,
             link: url,
-            time: `${
-                Math.floor(playerRef.current.getDuration() / 60) < 10 ? "0" : ""
-            }${Math.floor(playerRef.current.getDuration() / 60)} : ${
-                Math.floor(playerRef.current.getDuration()) -
-                    Math.floor(playerRef.current.getDuration() / 60) * 60 <
-                10
-                    ? "0"
-                    : ""
-            }${
-                Math.floor(playerRef.current.getDuration()) -
-                Math.floor(playerRef.current.getDuration() / 60) * 60
-            }`,
+            time: playerRef.current.getDuration(),
         });
         setLesson([...arr]);
         setCreate(false);

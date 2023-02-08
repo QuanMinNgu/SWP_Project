@@ -71,7 +71,20 @@ const CoursePanelEdit = ({ item, index, lesson, setAddLesson }) => {
                             {item?.type === "quiz"
                                 ? item?.value?.length
                                 : item?.type === "listening"
-                                ? item?.time
+                                ? `${
+                                      Math.floor(item?.time / 60) < 10
+                                          ? "0"
+                                          : ""
+                                  }${Math.floor(item?.time / 60)} : ${
+                                      Math.floor(item?.time) -
+                                          Math.floor(item?.time / 60) * 60 <
+                                      10
+                                          ? "0"
+                                          : ""
+                                  }${
+                                      Math.floor(item?.time) -
+                                      Math.floor(item?.time / 60) * 60
+                                  }`
                                 : "Reading"}
                         </div>
                     </div>
