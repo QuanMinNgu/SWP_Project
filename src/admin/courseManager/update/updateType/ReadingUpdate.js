@@ -188,7 +188,7 @@ const ReadingUpdate = ({
                     onClick={() => setCreate(true)}
                     className="button_create"
                 >
-                    Create
+                    Update
                 </button>
             </div>
         </div>

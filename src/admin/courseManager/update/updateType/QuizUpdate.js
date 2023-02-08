@@ -180,39 +180,35 @@ const QuizUpdate = ({ setLesson, lesson, addLesson, setAddLesson, data }) => {
                     <div className="answers">
                         {item?.answers?.map((infor, ind) => (
                             <div className="answer_item">
-                                {item?.correctAnswer === ind ? (
-                                    <input
-                                        onChange={(e) =>
-                                            handleChangeAnswer(e, {
-                                                parentid: index,
-                                                childId: ind,
-                                            })
-                                        }
-                                        id={
-                                            item?.title + index + ind + "answer"
-                                        }
-                                        type="radio"
-                                        name={item?.title + index + "answer"}
-                                        defaultChecked
-                                    />
-                                ) : (
-                                    <input
-                                        onChange={(e) =>
-                                            handleChangeAnswer(e, {
-                                                parentid: index,
-                                                childId: ind,
-                                            })
-                                        }
-                                        id={
-                                            item?.title + index + ind + "answer"
-                                        }
-                                        type="radio"
-                                        name={item?.title + index + "answer"}
-                                    />
-                                )}
+                                <input
+                                    onChange={(e) =>
+                                        handleChangeAnswer(e, {
+                                            parentid: index,
+                                            childId: ind,
+                                        })
+                                    }
+                                    id={
+                                        "updateCorrect" +
+                                        item?.title +
+                                        index +
+                                        ind +
+                                        "answerUpdate"
+                                    }
+                                    type="radio"
+                                    name={item?.title + index + "answerUpdate"}
+                                    defaultChecked={
+                                        item?.correctAnswer === ind
+                                            ? true
+                                            : false
+                                    }
+                                />
                                 <label
                                     htmlFor={
-                                        item?.title + index + ind + "answer"
+                                        "updateCorrect" +
+                                        item?.title +
+                                        index +
+                                        ind +
+                                        "answerUpdate"
                                     }
                                 >
                                     {infor?.title}
@@ -434,7 +430,7 @@ const QuizUpdate = ({ setLesson, lesson, addLesson, setAddLesson, data }) => {
                     }}
                     className="button_create"
                 >
-                    Create
+                    Update
                 </button>
             </div>
             {create && (
