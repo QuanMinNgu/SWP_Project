@@ -5,6 +5,8 @@ const Quizzlet = () => {
     const [quiz, setQuiz] = useState(false);
 
     const [times, setTimes] = useState(1800);
+    const [percent, setPercent] = useState(86 * 3.6);
+    const [result, setResult] = useState(false);
 
     useEffect(() => {
         if (quiz) {
@@ -24,6 +26,10 @@ const Quizzlet = () => {
             };
         }
     }, [times, quiz]);
+
+    const style = {
+        background: `conic-gradient(#F05123 ${percent}deg,transparent 0deg)`,
+    };
     return (
         <div className="quizz">
             {!quiz ? (
@@ -87,7 +93,7 @@ const Quizzlet = () => {
                             <div className="quiz_abs_card_button_save">
                                 <button
                                     onClick={() => {
-                                        setQuiz(false);
+                                        setResult(true);
                                     }}
                                     style={{
                                         padding: "0 9rem",
@@ -102,6 +108,69 @@ const Quizzlet = () => {
                             </div>
                         </div>
                     </div>
+                    {result && (
+                        <div className="quiz_result">
+                            <div className="quiz_result_form">
+                                <div className="expertCourse_close">
+                                    <div
+                                        onClick={() => {
+                                            setResult(false);
+                                            setQuiz(false);
+                                        }}
+                                        className="expertCourse_close_icons"
+                                    >
+                                        &times;
+                                    </div>
+                                </div>
+                                <div className="quiz_result_item_container">
+                                    <div className="quiz_result_item">
+                                        <div
+                                            style={style}
+                                            className="circle_result"
+                                        >
+                                            <div className="number">86%</div>
+                                        </div>
+                                    </div>
+                                    <div className="quiz_result_result">
+                                        <div className="quiz_result_item_card">
+                                            <span>
+                                                <i>Total Questions</i>:{" "}
+                                                <b>10</b>
+                                            </span>
+                                        </div>
+                                        <div className="quiz_result_item_card">
+                                            <span>
+                                                <i>Correct Answers</i>: <b>8</b>
+                                            </span>
+                                        </div>
+                                        <div className="quiz_result_item_card">
+                                            <span>
+                                                <i>Result</i>:{" "}
+                                                <b className="result_color">
+                                                    You get pass
+                                                </b>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="resultButton">
+                                    <button
+                                        onClick={() => {
+                                            setResult(false);
+                                            setQuiz(false);
+                                        }}
+                                        style={{
+                                            height: "4rem",
+                                            padding: "0 4rem",
+                                        }}
+                                        className="button button_update"
+                                    >
+                                        Ok
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
