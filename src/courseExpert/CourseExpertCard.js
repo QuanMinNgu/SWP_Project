@@ -38,7 +38,7 @@ const CourseExpertCard = () => {
                     </div>
                     <div className="courseExpert_infor_name">
                         <h6>
-                            <Link className="courseExpert_name" to="/">
+                            <Link className="courseExpert_name" to="?">
                                 Quang Minh Nguyen
                             </Link>
                         </h6>
