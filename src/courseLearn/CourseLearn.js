@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { Link, useLocation } from "react-router-dom";
 import CourseLearnCard from "./CourseLearnCard";
@@ -9,7 +9,6 @@ const CourseLearn = () => {
 
     const [quizz, setQuizz] = useState(true);
     const [youtube, setYoutube] = useState(false);
-    const [times, setTimes] = useState(1800);
 
     const { search } = useLocation();
 
@@ -23,23 +22,6 @@ const CourseLearn = () => {
             setYoutube(false);
         }
     }, [search]);
-
-    useEffect(() => {
-        if (times < 1) {
-            return window.alert("End time man");
-        }
-        const timesInterval = setInterval(() => {
-            setTimes((prev) => {
-                if (prev < 1) {
-                    return prev;
-                }
-                return prev - 1;
-            });
-        }, 1000);
-        return () => {
-            clearInterval(timesInterval);
-        };
-    }, [times]);
 
     const style = {
         background: `conic-gradient(#F05123 ${percent}deg,transparent 0deg)`,
@@ -78,18 +60,6 @@ const CourseLearn = () => {
                 <div className="CourseLearn_body_detail_container">
                     <div className="CourseLearn_body_detail">
                         <div>
-                            {quizz && (
-                                <div className="quizz_time">
-                                    <span>Thời gian còn lại </span>
-                                    <i>
-                                        {Math.floor(times / 60) < 10 && "0"}
-                                        {Math.floor(times / 60)} :{" "}
-                                        {times - Math.floor(times / 60) * 60 <
-                                            10 && "0"}
-                                        {times - Math.floor(times / 60) * 60}
-                                    </i>
-                                </div>
-                            )}
                             {quizz && <Quizzlet />}
                             {youtube && (
                                 <div className="CourseLearn_body_detail_video">

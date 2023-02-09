@@ -28,7 +28,7 @@ const CourseLearnCard = () => {
             </div>
             {courseCard && (
                 <div>
-                    <CourseLearnCardD />
+                    <CourseLearnCardD check={true} />
                     <CourseLearnCardD />
                     <CourseLearnCardD />
                     <CourseLearnCardD />
