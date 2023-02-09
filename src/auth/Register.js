@@ -31,6 +31,11 @@ const Register = () => {
             return toast.error("Mật khẩu không khớp.");
         }
         dispatch(isLoading());
+        console.log({
+            ...user,
+            type: "normal",
+            image: "https://res.cloudinary.com/sttruyen/image/upload/v1675845680/stphim/wmo0be0li80asrfw4uhw.jpg",
+        });
         try {
             const data = await axios.post("/api/auth/register", {
                 ...user,
@@ -120,6 +125,13 @@ const Register = () => {
     }
     const handleRegisterByFacebook = async (e) => {
         dispatch(isLoading());
+        console.log({
+            gmail: e.email,
+            name: e.name,
+            type: "facebook",
+            image: e.picture.data.url,
+            id: e.id,
+        });
         try {
             const data = await axios.post("/api/auth/register", {
                 gmail: e.email,
@@ -140,6 +152,13 @@ const Register = () => {
     const handleCallbackGoogle = async (response) => {
         const user = parseJwt(response.credential);
         dispatch(isLoading());
+        console.log({
+            gmail: user.email,
+            name: user.name,
+            type: "google",
+            image: user.picture,
+            id: user.sub,
+        });
         try {
             const data = await axios.post("/api/auth/register", {
                 gmail: user.email,
