@@ -27,6 +27,7 @@ const Login = () => {
             const data = await axios.post("/api/auth/login", {
                 ...user,
             });
+            console.log(user);
             toast.success(data?.data?.msg);
             dispatch(isLogin(data?.data));
             navigate("/");
