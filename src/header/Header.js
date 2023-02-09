@@ -34,10 +34,7 @@ const Header = () => {
                     <div className="header_search_icons">
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </div>
-                    <input
-                        type="text"
-                        placeholder="Tìm kiếm khóa học, video, bài viết."
-                    />
+                    <input type="text" placeholder="courses search..." />
                 </div>
             </div>
             {sign ? (
@@ -51,7 +48,7 @@ const Header = () => {
                                     setAccount(false);
                                 }}
                             >
-                                Khóa học của tôi
+                                My Courses
                             </button>
                             {course && (
                                 <div className="header_navbar_items_course">

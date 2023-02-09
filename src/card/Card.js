@@ -16,7 +16,7 @@ const Card = () => {
                 <div className="card_img_abs">
                     <Link style={{ textDecoration: "none" }} to="/course/asd">
                         <div className="card_img_abs_wrap">
-                            <button>Xem khóa học</button>
+                            <button>View the course</button>
                         </div>
                     </Link>
                 </div>

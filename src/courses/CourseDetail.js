@@ -1,32 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
-import "@react-pdf-viewer/core/lib/styles/index.css";
-import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-import { Worker, Viewer } from "@react-pdf-viewer/core";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import CoursePanel from "./CoursePanel";
 import { Link, useNavigate } from "react-router-dom";
 import Pay from "../payment/Pay";
 import Rating from "../rating/Rating";
 const CourseDetail = () => {
-    const [pdfFile, setPDFFile] = useState(null);
-    const [viewPdf, setViewPdf] = useState(null);
-
     const [payment, setPayment] = useState(false);
 
     const [canLearn, setCanLearn] = useState(false);
 
     const navigate = useNavigate();
-
-    const handleChangeFile = async (e) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(e);
-        reader.onload = async (e) => {
-            console.log(e.target.result);
-            setPDFFile(e.target.result);
-        };
-    };
-    const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -47,7 +30,7 @@ const CourseDetail = () => {
                         </span>
                     </div>
                     <div className="course_detail_learn">
-                        <h3>Bạn sẽ học được gì?</h3>
+                        <h3>The benefits of this course:</h3>
                     </div>
                     <ul className="course_detail_learn_items">
                         <li>Biết cách xây dựng website Responsive</li>
@@ -56,20 +39,20 @@ const CourseDetail = () => {
                         <li>Tự hiểu được Grid layout trong bootstrap</li>
                     </ul>
                     <div className="course_detail_learn">
-                        <h3>Nội dung khóa học</h3>
+                        <h3>Content of this course</h3>
                     </div>
                     <div className="course_detail_timeLine">
                         <ul>
                             <li>
-                                <b>7</b> chương
+                                <b>7</b> Pakages
                             </li>
                             <li>.</li>
                             <li>
-                                <b>37</b> bài học
+                                <b>37</b> Lessons
                             </li>
                             <li>.</li>
                             <li>
-                                Thời lượng <b>06 giờ 45 phút</b>
+                                Times <b>06h : 45m : 00s</b>
                             </li>
                         </ul>
                     </div>
@@ -94,7 +77,7 @@ const CourseDetail = () => {
                                     navigate("/learning/asđa");
                                 }}
                             >
-                                Tiếp tục học
+                                Start learning
                             </button>
                         ) : (
                             <button
@@ -102,7 +85,7 @@ const CourseDetail = () => {
                                     setPayment(true);
                                 }}
                             >
-                                Đăng Ký Học
+                                Enroll to course
                             </button>
                         )}
                     </div>
@@ -124,16 +107,6 @@ const CourseDetail = () => {
             <div className="rating_container">
                 <Rating />
             </div>
-            {/* <div>
-                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
-                    {pdfFile && (
-                        <Viewer
-                            fileUrl={pdfFile}
-                            plugins={[defaultLayoutPluginInstance]}
-                        />
-                    )}
-                </Worker>
-            </div> */}
             {payment && (
                 <Pay setPayment={setPayment} setCanLearn={setCanLearn} />
             )}

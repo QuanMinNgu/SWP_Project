@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
 import Card from "../card/Card";
 import Pagination from "../paginating/Pagination";
@@ -30,11 +30,15 @@ const Searching = () => {
         { value: "vanilla", label: "Cũ Nhất" },
     ];
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const [selectedOption, setSelectedOption] = useState(null);
     return (
         <div className="searching">
             <div className="searching_title">
-                <h1>Tìm kiếm khóa học</h1>
+                <h1>Course Search</h1>
             </div>
             <div className="searching_head">
                 <Select
@@ -58,7 +62,7 @@ const Searching = () => {
                     options={optionsSort}
                     placeholder="Sắp xếp"
                 />
-                <button>Tìm Kiếm</button>
+                <button>Search</button>
             </div>
             <div className="searching_card">
                 <div className="row">

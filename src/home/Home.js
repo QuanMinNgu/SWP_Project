@@ -15,7 +15,7 @@ const Home = () => {
             <div className="home_sp_wrap">
                 <div className="home_sp_list">
                     <div className="home_sp_list_title">
-                        <h1>Khóa học mới</h1>
+                        <h1>New courses</h1>
                     </div>
                     <div className="home_sp_list_card">
                         <div className="row">
@@ -40,16 +40,15 @@ const Home = () => {
                         <Link
                             className="home_sp_watch_link"
                             style={{ textDecoration: "none" }}
-                            to="/"
+                            to="/courses/tim-kiem"
                         >
-                            Xem tất cả{" "}
-                            <i className="fa-solid fa-angle-right"></i>
+                            See all <i className="fa-solid fa-angle-right"></i>
                         </Link>
                     </div>
                 </div>
                 <div className="home_sp_list">
                     <div className="home_sp_list_title">
-                        <h1>Khóa học nổi bật</h1>
+                        <h1>Featured courses</h1>
                     </div>
                     <div className="home_sp_list_card">
                         <div className="row">
@@ -83,16 +82,15 @@ const Home = () => {
                         <Link
                             className="home_sp_watch_link"
                             style={{ textDecoration: "none" }}
-                            to="/"
+                            to="/courses/tim-kiem"
                         >
-                            Xem tất cả{" "}
-                            <i className="fa-solid fa-angle-right"></i>
+                            See all <i className="fa-solid fa-angle-right"></i>
                         </Link>
                     </div>
                 </div>
                 <div className="home_sp_list">
                     <div className="home_sp_list_title">
-                        <h1>Khóa học miễn phí</h1>
+                        <h1>Free courses</h1>
                     </div>
                     <div className="home_sp_list_card">
                         <div className="row">
@@ -126,10 +124,9 @@ const Home = () => {
                         <Link
                             className="home_sp_watch_link"
                             style={{ textDecoration: "none" }}
-                            to="/"
+                            to="/courses/tim-kiem"
                         >
-                            Xem tất cả{" "}
-                            <i className="fa-solid fa-angle-right"></i>
+                            See all <i className="fa-solid fa-angle-right"></i>
                         </Link>
                     </div>
                 </div>

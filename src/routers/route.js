@@ -18,6 +18,7 @@ import Dashboard from "../admin/Dashboard";
 import PrivateLayout from "../components/privateLayout/PrivateLayout";
 import SaleDashboard from "../saler/SaleDashboard";
 import CourseExpertDashboard from "../courseExpert/CourseExpertDashboard";
+import ViewPdf from "../viewPdf/ViewPdf";
 export const publicRouter = [
     {
         element: Home,
@@ -52,6 +53,10 @@ export const publicRouter = [
         path: "/settings/:slug",
         layout: DefaultLayout,
         type: "Home",
+    },
+    {
+        element: ViewPdf,
+        path: "/bdfview",
     },
     {
         element: Blog,
