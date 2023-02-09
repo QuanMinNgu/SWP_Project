@@ -23,11 +23,11 @@ const Login = () => {
             return toast.error("Mật khẩu không chính xác.");
         }
         dispatch(isLoading());
+        console.log(user);
         try {
             const data = await axios.post("/api/auth/login", {
                 ...user,
             });
-            console.log(user);
             toast.success(data?.data?.msg);
             dispatch(isLogin(data?.data));
             navigate("/");
