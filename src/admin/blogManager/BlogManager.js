@@ -19,6 +19,12 @@ const BlogManager = () => {
                   nice to meet you
                 </p>
               </div>
+              <div className="admin_blog_right_header_input">
+                <input type="text" placeholder="Tìm kiếm blog" />
+                <button>
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </div>
             </div>
             <div className="admin_blog_right_header_img">
               <img src="https://i.pinimg.com/564x/39/a3/b3/39a3b3a4b92614132481909a9adc9171.jpg" />
@@ -44,19 +50,6 @@ const BlogManager = () => {
             <div className="admin_blog_left_box_content">
               <h2>1000</h2>
               <span>Total Blog</span>
-            </div>
-          </div>
-          <div
-            className="admin_blog_left_box"
-            style={{
-              background: "#f8b2d4",
-            }}
-          >
-            <i class="fa-solid fa-heart"></i>
-
-            <div className="admin_blog_left_box_content">
-              <h2>1000</h2>
-              <span>Total Love</span>
             </div>
           </div>
           <div

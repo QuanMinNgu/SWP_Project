@@ -90,7 +90,7 @@ const CreateCourse = () => {
             item?.numLesson?.forEach((item) => {
                 if (item?.type === "listening") {
                     tim += item?.time;
-                }
+                }   
             });
         });
         setNumberOfLesson({

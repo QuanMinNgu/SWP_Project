@@ -1,8 +1,8 @@
-import "./style.scss";
+import React, { useState } from "react";
+import "../userblog/style.scss";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-const UserBlogCard = () => {
-  const [option, setOption] = useState(false);
+function MarkBlogCard() {
+  const [react, setReact] = useState(false);
   return (
     <div className="user_card">
       <Link to="/blog/:slug">
@@ -15,17 +15,15 @@ const UserBlogCard = () => {
           <h3>My Blog Card</h3>
           <div className="user_card_body_top_option">
             <span>Software</span>
-            <i
-              class="fa-solid fa-ellipsis"
-              onClick={() => setOption(!option)}
-            ></i>
+            {react ? (
+              <i
+                class="fa-regular fa-heart"
+                onClick={() => setReact(!react)}
+              ></i>
+            ) : (
+              <i class="fa-solid fa-heart" onClick={() => setReact(!react)}></i>
+            )}
           </div>
-          {option && (
-            <div className="option_card_blog">
-              <h3>Edit</h3>
-              <h3>Update</h3>
-            </div>
-          )}
         </div>
         <div className="user_card_body_content">
           <p>
@@ -37,5 +35,6 @@ const UserBlogCard = () => {
       </div>
     </div>
   );
-};
-export default UserBlogCard;
+}
+
+export default MarkBlogCard;

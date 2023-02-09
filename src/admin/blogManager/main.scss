@@ -35,6 +35,43 @@
     border-radius: 12px;
   }
 }
+.admin_blog_right_header_input {
+  margin-top: 20px;
+  height: 40px;
+  background-color: #fff;
+  display: flex;
+  border-radius: 2rem;
+  & > input {
+    height: 100%;
+    flex: 1;
+    border: none;
+    padding: 20px;
+    background-color: transparent;
+    outline: none;
+    font-size: 1.4rem;
+    font-weight: 600;
+    width: 70%;
+  }
+  & > input::placeholder {
+    font-size: 1.4rem;
+    font-weight: 540;
+  }
+
+  & > button {
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    align-items: center;
+    width: 40px;
+    font-size: 1.6rem;
+    border-radius: 50%;
+    cursor: pointer;
+    &:hover {
+      background-color: #ff605e;
+      transition: 0.3s ease-in-out;
+    }
+  }
+}
 .admin_blog_right_header_title {
   margin-bottom: 10px;
   & > h2 {
