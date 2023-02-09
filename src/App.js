@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import Loading from "./loading/Loading";
 export const UserContext = createContext();
 function App() {
-    const [store, setStore] = useState({ rule: "courseExpert" });
+    const [store, setStore] = useState({ rule: "admin" });
     const auth = useSelector((state) => state.auth);
     return (
         <UserContext.Provider value={{ store, setStore }}>
