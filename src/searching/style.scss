@@ -1,56 +1,57 @@
-@import '../style.module.scss';
-.searching{
+@import "../style.module.scss";
+.searching {
     width: calc(100% - 9rem);
     margin-left: 9rem;
-    @include mobile{
+    margin-top: 8rem;
+    @include mobile {
         width: 100%;
         margin-left: 0;
     }
     min-height: 100vh;
-    padding-left:4rem;
+    padding-left: 4rem;
     padding-right: 2rem;
 }
-.searching_head{
+.searching_head {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 3rem;
-    & > button{
+    & > button {
         margin-left: 1rem;
-        padding:0 2rem;
+        padding: 0 2rem;
         height: 4rem;
         cursor: pointer;
         border-radius: 3rem;
-        color:white;
+        color: white;
         background-color: #696969;
-        border:0.1rem solid #FF8A08;
+        border: 0.1rem solid #ff8a08;
         font-size: 1.7rem;
-        @include mobile{
+        @include mobile {
             height: 5rem;
         }
-        &:hover{
-            background-color: #FF8A08;
-            border:0.1rem solid black;
+        &:hover {
+            background-color: #ff8a08;
+            border: 0.1rem solid black;
         }
     }
 }
-.search{
+.search {
     width: 100%;
     min-height: calc(100vh - 18rem);
-    &_wrap{
+    &_wrap {
         margin-top: 4rem;
-        &_paginating{
+        &_paginating {
             margin-top: 3rem;
         }
-        &_card{
+        &_card {
             margin-top: 3rem;
         }
-        &_search{
+        &_search {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
         }
-        &_select{
+        &_select {
             width: 17rem;
             height: 4rem;
             font-size: 1.5rem;
@@ -60,16 +61,16 @@
     }
 }
 
-.searching_title{
+.searching_title {
     text-align: center;
     font-size: 1.4rem;
     margin-bottom: 1rem;
     font-weight: 900;
 }
-.searching_card{
+.searching_card {
     margin-top: 4rem;
-    padding:0 1rem;
+    padding: 0 1rem;
 }
-.searching_paginating{
-    margin:4rem 0;
+.searching_paginating {
+    margin: 4rem 0;
 }

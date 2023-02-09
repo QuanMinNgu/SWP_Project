@@ -1,96 +1,96 @@
-@import '../style.module.scss';
+@import "../style.module.scss";
 .header_navbar_items_course,
-.header_navbar_items_bell_noti{
+.header_navbar_items_bell_noti {
     z-index: 50;
 }
-.header{
+.header {
     width: 100%;
     height: 7rem;
-    padding:0 3rem;
+    padding: 0 3rem;
     display: flex;
     background-color: white;
     z-index: 100;
     justify-content: space-between;
-    border-bottom: 0.1rem solid rgba(0,0,0,0.1);
-    &_brand{
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+    &_brand {
         display: flex;
         align-items: center;
-        @include desktop{
+        @include desktop {
             display: flex;
         }
-        @include desktopHigh{
+        @include desktopHigh {
             display: flex;
         }
-        &_link{
-            & > img{
+        &_link {
+            & > img {
                 width: 4rem;
                 height: 4rem;
                 border-radius: 0.5rem;
             }
         }
-        & > span{
+        & > span {
             font-size: 1.5rem;
             font-weight: 700;
             margin-left: 1.8rem;
-            @include mobile{
+            @include mobile {
                 display: none;
             }
         }
     }
-    &_navbar{
+    &_navbar {
         display: flex;
         align-items: center;
-        @include desktop{
+        @include desktop {
             display: flex;
         }
-        @include desktopHigh{
+        @include desktopHigh {
             display: flex;
         }
-        &_items{
-            &_img{
+        &_items {
+            &_img {
                 width: 3rem;
                 height: 3rem;
                 border-radius: 50%;
-                &_wrap{
+                &_wrap {
                     cursor: pointer;
                     position: relative;
                 }
             }
-            margin-left:2rem;
-            &_bell{
+            margin-left: 2rem;
+            &_bell {
                 font-size: 1.9rem;
-                color:rgba(0,0,0,0.5);
+                color: rgba(0, 0, 0, 0.5);
                 cursor: pointer;
                 margin-bottom: 0.2rem;
                 position: relative;
-                &:hover{
-                    color:rgba(0,0,0,0.7);
+                &:hover {
+                    color: rgba(0, 0, 0, 0.7);
                 }
-                &_noti{
+                &_noti {
                     position: absolute;
-                    top:150%;
-                    right:-0.5rem;
+                    top: 150%;
+                    right: -0.5rem;
                     width: 40rem;
                     min-height: 10rem;
-                    box-shadow: 0 0 0.5rem 0.2rem rgba(0,0,0,0.1);
+                    box-shadow: 0 0 0.5rem 0.2rem rgba(0, 0, 0, 0.1);
                     border-radius: 1rem;
                     background-color: white;
-                    padding:0.5rem;
+                    padding: 0.5rem;
                     animation: courseAppearing ease 0.5s;
-                    &_title{
+                    &_title {
                         width: 100%;
                         display: flex;
-                        padding:0 1.5rem;
+                        padding: 0 1.5rem;
                         justify-content: space-between;
-                        height:4.5rem;
+                        height: 4.5rem;
                         align-items: center;
                         margin-bottom: 0.5rem;
-                        & > h6{
+                        & > h6 {
                             font-size: 1.7rem;
-                            color:rgba(0,0,0,0.8);
+                            color: rgba(0, 0, 0, 0.8);
                             cursor: default;
                         }
-                        & > div{
+                        & > div {
                             width: 3rem;
                             height: 3rem;
                             display: flex;
@@ -98,43 +98,43 @@
                             justify-content: center;
                             font-size: 1.7rem;
                             border-radius: 50%;
-                            &:hover{
-                                background-color: rgba(0,0,0,0.1);
+                            &:hover {
+                                background-color: rgba(0, 0, 0, 0.1);
                             }
                         }
                     }
                 }
             }
-            &_title{
+            &_title {
                 margin-right: 1rem;
                 position: relative;
-                & > button{
+                & > button {
                     background-color: transparent;
-                    border:none;
+                    border: none;
                     outline: none;
                     cursor: pointer;
                     font-size: 1.5rem;
                     font-weight: 600;
                 }
-                @include mobile{
+                @include mobile {
                     display: none;
                 }
             }
-            &_course{
+            &_course {
                 position: absolute;
-                top:250%;
-                right:-1rem;
+                top: 250%;
+                right: -1rem;
                 width: 38rem;
                 min-height: 5rem;
-                box-shadow: 0 0 0.5rem 0.2rem rgba(0,0,0,0.2);
+                box-shadow: 0 0 0.5rem 0.2rem rgba(0, 0, 0, 0.2);
                 background-color: white;
                 border-radius: 1rem;
-                padding:0 1rem;
+                padding: 0 1rem;
                 animation: courseAppearing ease 0.5s;
-                &_title{
+                &_title {
                     font-size: 2.2rem;
                     font-weight: 500;
-                    color:#1D2129;
+                    color: #1d2129;
                     height: 4.5rem;
                     display: flex;
                     align-items: center;
@@ -144,136 +144,136 @@
             }
         }
     }
-    &_search{
+    &_search {
         display: none;
         align-items: center;
-        @include desktop{
+        @include desktop {
             display: flex;
         }
-        @include desktopHigh{
+        @include desktopHigh {
             display: flex;
         }
-        &_container{
+        &_container {
             width: 40rem;
             height: 4rem;
             border-radius: 2rem;
             display: flex;
             align-items: center;
-            border: 0.1rem solid rgba(0,0,0,0.15);
+            border: 0.1rem solid rgba(0, 0, 0, 0.15);
             overflow: hidden;
-            & > input{
-                border:none;
+            & > input {
+                border: none;
                 outline: none;
                 width: 90%;
                 height: 100%;
                 font-size: 1.4rem;
-                padding:0 0.5rem;
-                font-family: 'Playfair Display', serif;
+                padding: 0 0.5rem;
+                font-family: "Playfair Display", serif;
                 font-weight: 700;
-                &::placeholder{
-                    color:rgba(0,0,0,0.5);
+                &::placeholder {
+                    color: rgba(0, 0, 0, 0.5);
                     letter-spacing: 0.03rem;
                 }
             }
         }
-        &_icons{
+        &_icons {
             width: 10%;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.7rem;
-            color:rgba(0,0,0,0.6);
+            color: rgba(0, 0, 0, 0.6);
             cursor: pointer;
             padding-left: 1rem;
         }
     }
 }
 
-.header_navbar_button{
-    padding:0 2rem;
+.header_navbar_button {
+    padding: 0 2rem;
     height: 3.5rem;
-    background-color: #F05123;
+    background-color: #f05123;
     display: flex;
     align-items: center;
     justify-content: center;
-    color:white;
+    color: white;
     font-size: 1.6rem;
     border-radius: 2rem;
     padding-bottom: 0.19rem;
     font-weight: 500;
-    &:hover{
-        background-color: rgba(240,81,35,0.8);
+    &:hover {
+        background-color: rgba(240, 81, 35, 0.8);
     }
 }
-.header_navbar_account{
+.header_navbar_account {
     position: absolute;
     animation: courseAppearing ease 0.5s;
-    top:130%;
-    right:-0.5rem;
+    top: 130%;
+    right: -0.5rem;
     min-width: 20rem;
     min-height: 10rem;
     background-color: white;
-    box-shadow: 0 0 0.9rem 0.2rem rgba(0,0,0,0.3);
+    box-shadow: 0 0 0.9rem 0.2rem rgba(0, 0, 0, 0.3);
     z-index: 20;
     border-radius: 1rem;
-    padding:0 2.5rem;
-    &_infor{
+    padding: 0 2.5rem;
+    &_infor {
         display: flex;
-        padding:1.5rem 0;
+        padding: 1.5rem 0;
         align-items: center;
-        border-bottom: 0.05rem solid rgba(0,0,0,0.08);
-        &_img{
+        border-bottom: 0.05rem solid rgba(0, 0, 0, 0.08);
+        &_img {
             width: 5rem;
             height: 5rem;
             margin-right: 1.5rem;
-            & > img{
+            & > img {
                 width: 100%;
                 height: 100%;
                 border-radius: 50%;
             }
         }
-        &_name{
+        &_name {
             font-size: 1.5rem;
-            & > div:first-child{
+            & > div:first-child {
                 font-weight: 700;
                 white-space: nowrap;
             }
-            & > div:nth-child(2){
+            & > div:nth-child(2) {
                 font-size: 1.3rem;
                 margin-top: 0.4rem;
-                color:rgba(0,0,0,0.7);
+                color: rgba(0, 0, 0, 0.7);
                 font-weight: 500;
             }
         }
     }
 }
-.header_navbar_account_items{
+.header_navbar_account_items {
     width: 100%;
-    padding:2rem 0;
-    border-bottom: 0.05rem solid rgba(0,0,0,0.08);
+    padding: 2rem 0;
+    border-bottom: 0.05rem solid rgba(0, 0, 0, 0.08);
     font-size: 1.5rem;
-    color:rgba(0,0,0,0.7);
-    &:hover{
-        color: #1D2129;
+    color: rgba(0, 0, 0, 0.7);
+    &:hover {
+        color: #1d2129;
     }
-    &_link{
-        color:rgba(0,0,0,0.7);
+    &_link {
+        color: rgba(0, 0, 0, 0.7);
         margin-bottom: 1.5rem;
-        &:hover{
-            color: #1D2129;
+        &:hover {
+            color: #1d2129;
         }
     }
-    &_link.no_bottom{
-        margin-bottom:0;
+    &_link.no_bottom {
+        margin-bottom: 0;
     }
 }
-@keyframes courseAppearing{
-    0%{
+@keyframes courseAppearing {
+    0% {
         transform: translateY(-1rem);
         opacity: 0;
     }
-    100%{
+    100% {
         transform: translateY(0%);
         opacity: 1;
     }
