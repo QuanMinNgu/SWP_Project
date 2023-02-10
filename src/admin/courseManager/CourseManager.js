@@ -4,14 +4,20 @@ import Select from "react-select";
 import CourseManagerCard from "./CourseManagerCard";
 import Pagination from "../../paginating/Pagination";
 import { useNavigate } from "react-router-dom";
+import TypeCourseCard from "./TypeCourseCard";
 const CourseManager = () => {
     const [checkAll, setCheckAll] = useState(false);
+
+    const [create, setCreate] = useState(false);
+
+    const titleRef = useRef();
 
     const navigate = useNavigate();
 
     const [bars, setBars] = useState(false);
 
     const [expert, setExpert] = useState(false);
+    const [typeCourse, setTypeCourse] = useState(false);
     const checkRef = useRef();
     const options = [
         { value: "free", label: "Free" },
@@ -44,6 +50,8 @@ const CourseManager = () => {
             "Bạn có muốn chọn Minh Quang thành course expert của khóa học này không?"
         );
     };
+
+    const handleCreateNewType = () => {};
 
     const [selectedOption, setSelectedOption] = useState(null);
     return (
@@ -79,6 +87,15 @@ const CourseManager = () => {
                     }}
                 >
                     Create New Course
+                </button>
+                <button
+                    onClick={() => {
+                        setTypeCourse(true);
+                    }}
+                    style={{ marginLeft: "1rem" }}
+                    className="button"
+                >
+                    Types Course Manager
                 </button>
             </div>
             <div className="manageCourse_table">
@@ -389,6 +406,116 @@ const CourseManager = () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
+            )}
+            {typeCourse && (
+                <div
+                    onClick={() => {
+                        setTypeCourse(false);
+                    }}
+                    className="user_manager_information"
+                ></div>
+            )}
+            {typeCourse && (
+                <div className="type_course_manager">
+                    <div className="expertCourse_close">
+                        <div
+                            onClick={() => {
+                                setTypeCourse(false);
+                            }}
+                            className="expertCourse_close_icons"
+                        >
+                            &times;
+                        </div>
+                    </div>
+                    <div className="expertCourse_type_title">
+                        Types of Course Manager
+                    </div>
+                    <div className="expertCourse_type_button">
+                        <button
+                            onClick={() => {
+                                setCreate(true);
+                            }}
+                            style={{ height: "4rem" }}
+                            className="button"
+                        >
+                            Create new type
+                        </button>
+                    </div>
+                    <div className="expertCourse_type_course_remain">
+                        <div className="expertCourse_type_Card_container">
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <TypeCourseCard />
+                            <div className="expertCourse_type_remain_card">
+                                Software
+                            </div>
+                        </div>
+                    </div>
+                    {create && (
+                        <div className="edit_type_course">
+                            <div className="edit_type_course_form">
+                                <div className="expertCourse_close">
+                                    <div
+                                        onClick={() => {
+                                            setCreate(false);
+                                        }}
+                                        style={{ color: "black" }}
+                                        className="expertCourse_close_icons"
+                                    >
+                                        &times;
+                                    </div>
+                                </div>
+                                <textarea
+                                    ref={titleRef}
+                                    className="textArea_type"
+                                    type="text"
+                                    placeholder="Enter title of new type"
+                                />
+                                <div className="button_type_container">
+                                    <button
+                                        onClick={handleCreateNewType}
+                                        style={{ height: "4rem" }}
+                                        className="button"
+                                    >
+                                        Create New Type
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setCreate(false);
+                                        }}
+                                        style={{
+                                            height: "4rem",
+                                            marginLeft: "0.5rem",
+                                        }}
+                                        className="button button_cancel"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
