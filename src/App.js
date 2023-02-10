@@ -8,15 +8,16 @@ import {
 } from "./routers/route";
 import "./style.css";
 import { ToastContainer } from "react-toastify";
-import { createContext, useState } from "react";
+import { createContext, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Loading from "./loading/Loading";
 export const UserContext = createContext();
 function App() {
     const [store, setStore] = useState({ rule: "admin" });
+    const cacheRef = useRef({});
     const auth = useSelector((state) => state.auth);
     return (
-        <UserContext.Provider value={{ store, setStore }}>
+        <UserContext.Provider value={{ store, setStore, cache: cacheRef }}>
             <Router>
                 <div className="App">
                     <Routes>
