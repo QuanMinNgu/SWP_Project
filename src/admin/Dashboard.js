@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./style.scss";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import DashboardDetail from "./DashboardDetail";
-import UserManager from "./UserManager";
+import UserManager from "./userManager/UserManager";
 import BlogManager from "./blogManager/BlogManager";
 import SendMail from "./SendMail";
 import CourseManager from "./courseManager/CourseManager";

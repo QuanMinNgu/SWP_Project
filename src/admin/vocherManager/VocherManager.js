@@ -83,325 +83,323 @@ const VocherManager = () => {
                 <Pagination />
             </div>
             {vocher && (
-                <div className="expertCourse">
-                    <div className="vocher_to">
-                        <div className="expertCourse_close">
-                            <div
-                                onClick={() => {
-                                    setVocher("");
-                                }}
-                                className="expertCourse_close_icons"
-                            >
-                                &times;
+                <div
+                    onClick={() => {
+                        setVocher("");
+                    }}
+                    className="user_manager_information"
+                ></div>
+            )}
+            {vocher && (
+                <div className="vocher_to">
+                    <div className="expertCourse_close">
+                        <div
+                            onClick={() => {
+                                setVocher("");
+                            }}
+                            className="expertCourse_close_icons"
+                        >
+                            &times;
+                        </div>
+                    </div>
+                    <div className="vocher_to_for">
+                        <div className="vocher_to_user">
+                            <div className="vocher_to_for_title">For User</div>
+                            <div className="vocher_to_form">
+                                <div className="vocher_to_user_card">
+                                    <div className="vocher_to_user_img">
+                                        <img
+                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                            alt="Ảnh"
+                                        />
+                                    </div>
+                                    <div className="vocher_to_user_infor">
+                                        <div className="vocher_to_user_infor_name">
+                                            Minh Quang
+                                        </div>
+                                        <i className="vocher_to_user_infor_email">
+                                            quangminhnguyen265@gmail.com
+                                        </i>
+                                        <i className="vocher_to_user_infor_id">
+                                            ID:1231232
+                                        </i>
+                                    </div>
+                                </div>
+                                <div className="vocher_to_user_card">
+                                    <div className="vocher_to_user_img">
+                                        <img
+                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                            alt="Ảnh"
+                                        />
+                                    </div>
+                                    <div className="vocher_to_user_infor">
+                                        <div className="vocher_to_user_infor_name">
+                                            Minh Quang
+                                        </div>
+                                        <i className="vocher_to_user_infor_email">
+                                            quangminhnguyen265@gmail.com
+                                        </i>
+                                        <i className="vocher_to_user_infor_id">
+                                            ID:1231232
+                                        </i>
+                                    </div>
+                                </div>
+                                <div className="vocher_to_user_card">
+                                    <div className="vocher_to_user_img">
+                                        <img
+                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                            alt="Ảnh"
+                                        />
+                                    </div>
+                                    <div className="vocher_to_user_infor">
+                                        <div className="vocher_to_user_infor_name">
+                                            Minh Quang
+                                        </div>
+                                        <i className="vocher_to_user_infor_email">
+                                            quangminhnguyen265@gmail.com
+                                        </i>
+                                        <i className="vocher_to_user_infor_id">
+                                            ID:1231232
+                                        </i>
+                                    </div>
+                                </div>
+                                <div className="vocher_to_user_card">
+                                    <div className="vocher_to_user_img">
+                                        <img
+                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                            alt="Ảnh"
+                                        />
+                                    </div>
+                                    <div className="vocher_to_user_infor">
+                                        <div className="vocher_to_user_infor_name">
+                                            Minh Quang
+                                        </div>
+                                        <i className="vocher_to_user_infor_email">
+                                            quangminhnguyen265@gmail.com
+                                        </i>
+                                        <i className="vocher_to_user_infor_id">
+                                            ID:1231232
+                                        </i>
+                                    </div>
+                                </div>
+                                <div className="vocher_to_user_card">
+                                    <div className="vocher_to_user_img">
+                                        <img
+                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                            alt="Ảnh"
+                                        />
+                                    </div>
+                                    <div className="vocher_to_user_infor">
+                                        <div className="vocher_to_user_infor_name">
+                                            Minh Quang
+                                        </div>
+                                        <i className="vocher_to_user_infor_email">
+                                            quangminhnguyen265@gmail.com
+                                        </i>
+                                        <i className="vocher_to_user_infor_id">
+                                            ID:1231232
+                                        </i>
+                                    </div>
+                                </div>
+                                <div className="vocher_to_user_card">
+                                    <div className="vocher_to_user_img">
+                                        <img
+                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                            alt="Ảnh"
+                                        />
+                                    </div>
+                                    <div className="vocher_to_user_infor">
+                                        <div className="vocher_to_user_infor_name">
+                                            Minh Quang
+                                        </div>
+                                        <i className="vocher_to_user_infor_email">
+                                            quangminhnguyen265@gmail.com
+                                        </i>
+                                        <i className="vocher_to_user_infor_id">
+                                            ID:1231232
+                                        </i>
+                                    </div>
+                                </div>
+                                <div className="vocher_to_user_card">
+                                    <div className="vocher_to_user_img">
+                                        <img
+                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                            alt="Ảnh"
+                                        />
+                                    </div>
+                                    <div className="vocher_to_user_infor">
+                                        <div className="vocher_to_user_infor_name">
+                                            Minh Quang
+                                        </div>
+                                        <i className="vocher_to_user_infor_email">
+                                            quangminhnguyen265@gmail.com
+                                        </i>
+                                        <i className="vocher_to_user_infor_id">
+                                            ID:1231232
+                                        </i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="vocher_to_for">
-                            <div className="vocher_to_user">
-                                <div className="vocher_to_for_title">
-                                    For User
-                                </div>
-                                <div className="vocher_to_form">
-                                    <div className="vocher_to_user_card">
-                                        <div className="vocher_to_user_img">
-                                            <img
-                                                src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                alt="Ảnh"
-                                            />
-                                        </div>
-                                        <div className="vocher_to_user_infor">
-                                            <div className="vocher_to_user_infor_name">
-                                                Minh Quang
-                                            </div>
-                                            <i className="vocher_to_user_infor_email">
-                                                quangminhnguyen265@gmail.com
-                                            </i>
-                                            <i className="vocher_to_user_infor_id">
-                                                ID:1231232
-                                            </i>
-                                        </div>
-                                    </div>
-                                    <div className="vocher_to_user_card">
-                                        <div className="vocher_to_user_img">
-                                            <img
-                                                src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                alt="Ảnh"
-                                            />
-                                        </div>
-                                        <div className="vocher_to_user_infor">
-                                            <div className="vocher_to_user_infor_name">
-                                                Minh Quang
-                                            </div>
-                                            <i className="vocher_to_user_infor_email">
-                                                quangminhnguyen265@gmail.com
-                                            </i>
-                                            <i className="vocher_to_user_infor_id">
-                                                ID:1231232
-                                            </i>
-                                        </div>
-                                    </div>
-                                    <div className="vocher_to_user_card">
-                                        <div className="vocher_to_user_img">
-                                            <img
-                                                src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                alt="Ảnh"
-                                            />
-                                        </div>
-                                        <div className="vocher_to_user_infor">
-                                            <div className="vocher_to_user_infor_name">
-                                                Minh Quang
-                                            </div>
-                                            <i className="vocher_to_user_infor_email">
-                                                quangminhnguyen265@gmail.com
-                                            </i>
-                                            <i className="vocher_to_user_infor_id">
-                                                ID:1231232
-                                            </i>
-                                        </div>
-                                    </div>
-                                    <div className="vocher_to_user_card">
-                                        <div className="vocher_to_user_img">
-                                            <img
-                                                src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                alt="Ảnh"
-                                            />
-                                        </div>
-                                        <div className="vocher_to_user_infor">
-                                            <div className="vocher_to_user_infor_name">
-                                                Minh Quang
-                                            </div>
-                                            <i className="vocher_to_user_infor_email">
-                                                quangminhnguyen265@gmail.com
-                                            </i>
-                                            <i className="vocher_to_user_infor_id">
-                                                ID:1231232
-                                            </i>
-                                        </div>
-                                    </div>
-                                    <div className="vocher_to_user_card">
-                                        <div className="vocher_to_user_img">
-                                            <img
-                                                src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                alt="Ảnh"
-                                            />
-                                        </div>
-                                        <div className="vocher_to_user_infor">
-                                            <div className="vocher_to_user_infor_name">
-                                                Minh Quang
-                                            </div>
-                                            <i className="vocher_to_user_infor_email">
-                                                quangminhnguyen265@gmail.com
-                                            </i>
-                                            <i className="vocher_to_user_infor_id">
-                                                ID:1231232
-                                            </i>
-                                        </div>
-                                    </div>
-                                    <div className="vocher_to_user_card">
-                                        <div className="vocher_to_user_img">
-                                            <img
-                                                src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                alt="Ảnh"
-                                            />
-                                        </div>
-                                        <div className="vocher_to_user_infor">
-                                            <div className="vocher_to_user_infor_name">
-                                                Minh Quang
-                                            </div>
-                                            <i className="vocher_to_user_infor_email">
-                                                quangminhnguyen265@gmail.com
-                                            </i>
-                                            <i className="vocher_to_user_infor_id">
-                                                ID:1231232
-                                            </i>
-                                        </div>
-                                    </div>
-                                    <div className="vocher_to_user_card">
-                                        <div className="vocher_to_user_img">
-                                            <img
-                                                src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                alt="Ảnh"
-                                            />
-                                        </div>
-                                        <div className="vocher_to_user_infor">
-                                            <div className="vocher_to_user_infor_name">
-                                                Minh Quang
-                                            </div>
-                                            <i className="vocher_to_user_infor_email">
-                                                quangminhnguyen265@gmail.com
-                                            </i>
-                                            <i className="vocher_to_user_infor_id">
-                                                ID:1231232
-                                            </i>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div className="vocher_to_course">
+                            <div className="vocher_to_for_title">
+                                For Courses
                             </div>
-                            <div className="vocher_to_course">
-                                <div className="vocher_to_for_title">
-                                    For Courses
+                            <div className="vocher_to_form">
+                                <div className="vocher_to_card">
+                                    <div className="thead_img">
+                                        <img
+                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
+                                            alt="Ảnh"
+                                        />
+                                    </div>
+                                    <div className="thead_card_name">
+                                        <div>
+                                            <Link
+                                                className="thead_card_name-link"
+                                                to="/"
+                                            >
+                                                Khóa học html,css for begginer
+                                            </Link>
+                                        </div>
+                                        <span className="thead_card_price">
+                                            <i className="thead_card_oldPrice">
+                                                $120
+                                            </i>
+                                            <i className="thead_card_newPrice">
+                                                $100
+                                            </i>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className="vocher_to_form">
-                                    <div className="vocher_to_card">
-                                        <div className="thead_img">
-                                            <img
-                                                src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                                alt="Ảnh"
-                                            />
-                                        </div>
-                                        <div className="thead_card_name">
-                                            <div>
-                                                <Link
-                                                    className="thead_card_name-link"
-                                                    to="/"
-                                                >
-                                                    Khóa học html,css for
-                                                    begginer
-                                                </Link>
-                                            </div>
-                                            <span className="thead_card_price">
-                                                <i className="thead_card_oldPrice">
-                                                    $120
-                                                </i>
-                                                <i className="thead_card_newPrice">
-                                                    $100
-                                                </i>
-                                            </span>
-                                        </div>
+                                <div className="vocher_to_card">
+                                    <div className="thead_img">
+                                        <img
+                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
+                                            alt="Ảnh"
+                                        />
                                     </div>
-                                    <div className="vocher_to_card">
-                                        <div className="thead_img">
-                                            <img
-                                                src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                                alt="Ảnh"
-                                            />
+                                    <div className="thead_card_name">
+                                        <div>
+                                            <Link
+                                                className="thead_card_name-link"
+                                                to="/"
+                                            >
+                                                Khóa học html,css for begginer
+                                            </Link>
                                         </div>
-                                        <div className="thead_card_name">
-                                            <div>
-                                                <Link
-                                                    className="thead_card_name-link"
-                                                    to="/"
-                                                >
-                                                    Khóa học html,css for
-                                                    begginer
-                                                </Link>
-                                            </div>
-                                            <span className="thead_card_price">
-                                                <i className="thead_card_oldPrice">
-                                                    $120
-                                                </i>
-                                                <i className="thead_card_newPrice">
-                                                    $100
-                                                </i>
-                                            </span>
-                                        </div>
+                                        <span className="thead_card_price">
+                                            <i className="thead_card_oldPrice">
+                                                $120
+                                            </i>
+                                            <i className="thead_card_newPrice">
+                                                $100
+                                            </i>
+                                        </span>
                                     </div>
-                                    <div className="vocher_to_card">
-                                        <div className="thead_img">
-                                            <img
-                                                src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                                alt="Ảnh"
-                                            />
-                                        </div>
-                                        <div className="thead_card_name">
-                                            <div>
-                                                <Link
-                                                    className="thead_card_name-link"
-                                                    to="/"
-                                                >
-                                                    Khóa học html,css for
-                                                    begginer
-                                                </Link>
-                                            </div>
-                                            <span className="thead_card_price">
-                                                <i className="thead_card_oldPrice">
-                                                    $120
-                                                </i>
-                                                <i className="thead_card_newPrice">
-                                                    $100
-                                                </i>
-                                            </span>
-                                        </div>
+                                </div>
+                                <div className="vocher_to_card">
+                                    <div className="thead_img">
+                                        <img
+                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
+                                            alt="Ảnh"
+                                        />
                                     </div>
-                                    <div className="vocher_to_card">
-                                        <div className="thead_img">
-                                            <img
-                                                src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                                alt="Ảnh"
-                                            />
+                                    <div className="thead_card_name">
+                                        <div>
+                                            <Link
+                                                className="thead_card_name-link"
+                                                to="/"
+                                            >
+                                                Khóa học html,css for begginer
+                                            </Link>
                                         </div>
-                                        <div className="thead_card_name">
-                                            <div>
-                                                <Link
-                                                    className="thead_card_name-link"
-                                                    to="/"
-                                                >
-                                                    Khóa học html,css for
-                                                    begginer
-                                                </Link>
-                                            </div>
-                                            <span className="thead_card_price">
-                                                <i className="thead_card_oldPrice">
-                                                    $120
-                                                </i>
-                                                <i className="thead_card_newPrice">
-                                                    $100
-                                                </i>
-                                            </span>
-                                        </div>
+                                        <span className="thead_card_price">
+                                            <i className="thead_card_oldPrice">
+                                                $120
+                                            </i>
+                                            <i className="thead_card_newPrice">
+                                                $100
+                                            </i>
+                                        </span>
                                     </div>
-                                    <div className="vocher_to_card">
-                                        <div className="thead_img">
-                                            <img
-                                                src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                                alt="Ảnh"
-                                            />
-                                        </div>
-                                        <div className="thead_card_name">
-                                            <div>
-                                                <Link
-                                                    className="thead_card_name-link"
-                                                    to="/"
-                                                >
-                                                    Khóa học html,css for
-                                                    begginer
-                                                </Link>
-                                            </div>
-                                            <span className="thead_card_price">
-                                                <i className="thead_card_oldPrice">
-                                                    $120
-                                                </i>
-                                                <i className="thead_card_newPrice">
-                                                    $100
-                                                </i>
-                                            </span>
-                                        </div>
+                                </div>
+                                <div className="vocher_to_card">
+                                    <div className="thead_img">
+                                        <img
+                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
+                                            alt="Ảnh"
+                                        />
                                     </div>
-                                    <div className="vocher_to_card">
-                                        <div className="thead_img">
-                                            <img
-                                                src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                                alt="Ảnh"
-                                            />
+                                    <div className="thead_card_name">
+                                        <div>
+                                            <Link
+                                                className="thead_card_name-link"
+                                                to="/"
+                                            >
+                                                Khóa học html,css for begginer
+                                            </Link>
                                         </div>
-                                        <div className="thead_card_name">
-                                            <div>
-                                                <Link
-                                                    className="thead_card_name-link"
-                                                    to="/"
-                                                >
-                                                    Khóa học html,css for
-                                                    begginer
-                                                </Link>
-                                            </div>
-                                            <span className="thead_card_price">
-                                                <i className="thead_card_oldPrice">
-                                                    $120
-                                                </i>
-                                                <i className="thead_card_newPrice">
-                                                    $100
-                                                </i>
-                                            </span>
+                                        <span className="thead_card_price">
+                                            <i className="thead_card_oldPrice">
+                                                $120
+                                            </i>
+                                            <i className="thead_card_newPrice">
+                                                $100
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="vocher_to_card">
+                                    <div className="thead_img">
+                                        <img
+                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
+                                            alt="Ảnh"
+                                        />
+                                    </div>
+                                    <div className="thead_card_name">
+                                        <div>
+                                            <Link
+                                                className="thead_card_name-link"
+                                                to="/"
+                                            >
+                                                Khóa học html,css for begginer
+                                            </Link>
                                         </div>
+                                        <span className="thead_card_price">
+                                            <i className="thead_card_oldPrice">
+                                                $120
+                                            </i>
+                                            <i className="thead_card_newPrice">
+                                                $100
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="vocher_to_card">
+                                    <div className="thead_img">
+                                        <img
+                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
+                                            alt="Ảnh"
+                                        />
+                                    </div>
+                                    <div className="thead_card_name">
+                                        <div>
+                                            <Link
+                                                className="thead_card_name-link"
+                                                to="/"
+                                            >
+                                                Khóa học html,css for begginer
+                                            </Link>
+                                        </div>
+                                        <span className="thead_card_price">
+                                            <i className="thead_card_oldPrice">
+                                                $120
+                                            </i>
+                                            <i className="thead_card_newPrice">
+                                                $100
+                                            </i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

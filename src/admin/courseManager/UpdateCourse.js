@@ -343,197 +343,201 @@ const UpdateCourse = () => {
                 </div>
             </div>
             {expert && (
-                <div className="expertCourse">
-                    <div className="expertCourse_container">
-                        <div className="expertCourse_close">
-                            <div
-                                onClick={() => {
-                                    setExpert(false);
-                                }}
-                                className="expertCourse_close_icons"
-                            >
-                                &times;
-                            </div>
+                <div
+                    onClick={() => {
+                        setExpert(false);
+                    }}
+                    className="user_manager_information"
+                ></div>
+            )}
+            {expert && (
+                <div className="expertCourse_container">
+                    <div className="expertCourse_close">
+                        <div
+                            onClick={() => {
+                                setExpert(false);
+                            }}
+                            className="expertCourse_close_icons"
+                        >
+                            &times;
                         </div>
-                        <div className="expertCourse_searching">
-                            <input
-                                type="text"
-                                placeholder="Searching by id, name or email"
-                            />
-                            <button className="button">Search</button>
-                        </div>
-                        <div className="expertCourse_form">
-                            <table className="ex_table">
-                                <thead className="ex_thead">
-                                    <tr className="ex_thead_wrap">
-                                        <th className="ex_thead_title">User</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr className="ex_thead_wrap_items">
-                                        <th className="ex_thead_title">
-                                            <div className="ex_thead_user">
-                                                <div className="ex_thead_user_img">
-                                                    <img
-                                                        src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                        alt="Ảnh"
-                                                    />
-                                                </div>
-                                                <div className="ex_thead_user_infor">
-                                                    <div className="ex_thead_user_infor_name">
-                                                        Minh Quang
-                                                    </div>
-                                                    <i className="ex_thead_user_infor_email">
-                                                        quangminhnguyen265@gmail.com
-                                                    </i>
-                                                    <i className="ex_thead_user_infor_id">
-                                                        ID:1231232
-                                                    </i>
-                                                </div>
+                    </div>
+                    <div className="expertCourse_searching">
+                        <input
+                            type="text"
+                            placeholder="Searching by id, name or email"
+                        />
+                        <button className="button">Search</button>
+                    </div>
+                    <div className="expertCourse_form">
+                        <table className="ex_table">
+                            <thead className="ex_thead">
+                                <tr className="ex_thead_wrap">
+                                    <th className="ex_thead_title">User</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr className="ex_thead_wrap_items">
+                                    <th className="ex_thead_title">
+                                        <div className="ex_thead_user">
+                                            <div className="ex_thead_user_img">
+                                                <img
+                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                                    alt="Ảnh"
+                                                />
                                             </div>
-                                        </th>
-                                        <th className="ex_thead_button">
-                                            <button>Choose</button>
-                                        </th>
-                                    </tr>
-                                    <tr className="ex_thead_wrap_items">
-                                        <th className="ex_thead_title">
-                                            <div className="ex_thead_user">
-                                                <div className="ex_thead_user_img">
-                                                    <img
-                                                        src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                        alt="Ảnh"
-                                                    />
+                                            <div className="ex_thead_user_infor">
+                                                <div className="ex_thead_user_infor_name">
+                                                    Minh Quang
                                                 </div>
-                                                <div className="ex_thead_user_infor">
-                                                    <div className="ex_thead_user_infor_name">
-                                                        Minh Quang
-                                                    </div>
-                                                    <i className="ex_thead_user_infor_email">
-                                                        quangminhnguyen265@gmail.com
-                                                    </i>
-                                                    <i className="ex_thead_user_infor_id">
-                                                        ID:1231232
-                                                    </i>
-                                                </div>
+                                                <i className="ex_thead_user_infor_email">
+                                                    quangminhnguyen265@gmail.com
+                                                </i>
+                                                <i className="ex_thead_user_infor_id">
+                                                    ID:1231232
+                                                </i>
                                             </div>
-                                        </th>
-                                        <th className="ex_thead_button">
-                                            <button
-                                                onClick={handleChooseExpert}
-                                            >
-                                                Choose
-                                            </button>
-                                        </th>
-                                    </tr>
-                                    <tr className="ex_thead_wrap_items">
-                                        <th className="ex_thead_title">
-                                            <div className="ex_thead_user">
-                                                <div className="ex_thead_user_img">
-                                                    <img
-                                                        src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                        alt="Ảnh"
-                                                    />
-                                                </div>
-                                                <div className="ex_thead_user_infor">
-                                                    <div className="ex_thead_user_infor_name">
-                                                        Minh Quang
-                                                    </div>
-                                                    <i className="ex_thead_user_infor_email">
-                                                        quangminhnguyen265@gmail.com
-                                                    </i>
-                                                    <i className="ex_thead_user_infor_id">
-                                                        ID:1231232
-                                                    </i>
-                                                </div>
+                                        </div>
+                                    </th>
+                                    <th className="ex_thead_button">
+                                        <button>Choose</button>
+                                    </th>
+                                </tr>
+                                <tr className="ex_thead_wrap_items">
+                                    <th className="ex_thead_title">
+                                        <div className="ex_thead_user">
+                                            <div className="ex_thead_user_img">
+                                                <img
+                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                                    alt="Ảnh"
+                                                />
                                             </div>
-                                        </th>
-                                        <th className="ex_thead_button">
-                                            <button>Choose</button>
-                                        </th>
-                                    </tr>
-                                    <tr className="ex_thead_wrap_items">
-                                        <th className="ex_thead_title">
-                                            <div className="ex_thead_user">
-                                                <div className="ex_thead_user_img">
-                                                    <img
-                                                        src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                        alt="Ảnh"
-                                                    />
+                                            <div className="ex_thead_user_infor">
+                                                <div className="ex_thead_user_infor_name">
+                                                    Minh Quang
                                                 </div>
-                                                <div className="ex_thead_user_infor">
-                                                    <div className="ex_thead_user_infor_name">
-                                                        Minh Quang
-                                                    </div>
-                                                    <i className="ex_thead_user_infor_email">
-                                                        quangminhnguyen265@gmail.com
-                                                    </i>
-                                                    <i className="ex_thead_user_infor_id">
-                                                        ID:1231232
-                                                    </i>
-                                                </div>
+                                                <i className="ex_thead_user_infor_email">
+                                                    quangminhnguyen265@gmail.com
+                                                </i>
+                                                <i className="ex_thead_user_infor_id">
+                                                    ID:1231232
+                                                </i>
                                             </div>
-                                        </th>
-                                        <th className="ex_thead_button">
-                                            <button>Choose</button>
-                                        </th>
-                                    </tr>
-                                    <tr className="ex_thead_wrap_items">
-                                        <th className="ex_thead_title">
-                                            <div className="ex_thead_user">
-                                                <div className="ex_thead_user_img">
-                                                    <img
-                                                        src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                        alt="Ảnh"
-                                                    />
-                                                </div>
-                                                <div className="ex_thead_user_infor">
-                                                    <div className="ex_thead_user_infor_name">
-                                                        Minh Quang
-                                                    </div>
-                                                    <i className="ex_thead_user_infor_email">
-                                                        quangminhnguyen265@gmail.com
-                                                    </i>
-                                                    <i className="ex_thead_user_infor_id">
-                                                        ID:1231232
-                                                    </i>
-                                                </div>
+                                        </div>
+                                    </th>
+                                    <th className="ex_thead_button">
+                                        <button onClick={handleChooseExpert}>
+                                            Choose
+                                        </button>
+                                    </th>
+                                </tr>
+                                <tr className="ex_thead_wrap_items">
+                                    <th className="ex_thead_title">
+                                        <div className="ex_thead_user">
+                                            <div className="ex_thead_user_img">
+                                                <img
+                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                                    alt="Ảnh"
+                                                />
                                             </div>
-                                        </th>
-                                        <th className="ex_thead_button">
-                                            <button>Choose</button>
-                                        </th>
-                                    </tr>
-                                    <tr className="ex_thead_wrap_items">
-                                        <th className="ex_thead_title">
-                                            <div className="ex_thead_user">
-                                                <div className="ex_thead_user_img">
-                                                    <img
-                                                        src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                        alt="Ảnh"
-                                                    />
+                                            <div className="ex_thead_user_infor">
+                                                <div className="ex_thead_user_infor_name">
+                                                    Minh Quang
                                                 </div>
-                                                <div className="ex_thead_user_infor">
-                                                    <div className="ex_thead_user_infor_name">
-                                                        Minh Quang
-                                                    </div>
-                                                    <i className="ex_thead_user_infor_email">
-                                                        quangminhnguyen265@gmail.com
-                                                    </i>
-                                                    <i className="ex_thead_user_infor_id">
-                                                        ID:1231232
-                                                    </i>
-                                                </div>
+                                                <i className="ex_thead_user_infor_email">
+                                                    quangminhnguyen265@gmail.com
+                                                </i>
+                                                <i className="ex_thead_user_infor_id">
+                                                    ID:1231232
+                                                </i>
                                             </div>
-                                        </th>
-                                        <th className="ex_thead_button">
-                                            <button>Choose</button>
-                                        </th>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                        </div>
+                                    </th>
+                                    <th className="ex_thead_button">
+                                        <button>Choose</button>
+                                    </th>
+                                </tr>
+                                <tr className="ex_thead_wrap_items">
+                                    <th className="ex_thead_title">
+                                        <div className="ex_thead_user">
+                                            <div className="ex_thead_user_img">
+                                                <img
+                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                                    alt="Ảnh"
+                                                />
+                                            </div>
+                                            <div className="ex_thead_user_infor">
+                                                <div className="ex_thead_user_infor_name">
+                                                    Minh Quang
+                                                </div>
+                                                <i className="ex_thead_user_infor_email">
+                                                    quangminhnguyen265@gmail.com
+                                                </i>
+                                                <i className="ex_thead_user_infor_id">
+                                                    ID:1231232
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th className="ex_thead_button">
+                                        <button>Choose</button>
+                                    </th>
+                                </tr>
+                                <tr className="ex_thead_wrap_items">
+                                    <th className="ex_thead_title">
+                                        <div className="ex_thead_user">
+                                            <div className="ex_thead_user_img">
+                                                <img
+                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                                    alt="Ảnh"
+                                                />
+                                            </div>
+                                            <div className="ex_thead_user_infor">
+                                                <div className="ex_thead_user_infor_name">
+                                                    Minh Quang
+                                                </div>
+                                                <i className="ex_thead_user_infor_email">
+                                                    quangminhnguyen265@gmail.com
+                                                </i>
+                                                <i className="ex_thead_user_infor_id">
+                                                    ID:1231232
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th className="ex_thead_button">
+                                        <button>Choose</button>
+                                    </th>
+                                </tr>
+                                <tr className="ex_thead_wrap_items">
+                                    <th className="ex_thead_title">
+                                        <div className="ex_thead_user">
+                                            <div className="ex_thead_user_img">
+                                                <img
+                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
+                                                    alt="Ảnh"
+                                                />
+                                            </div>
+                                            <div className="ex_thead_user_infor">
+                                                <div className="ex_thead_user_infor_name">
+                                                    Minh Quang
+                                                </div>
+                                                <i className="ex_thead_user_infor_email">
+                                                    quangminhnguyen265@gmail.com
+                                                </i>
+                                                <i className="ex_thead_user_infor_id">
+                                                    ID:1231232
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th className="ex_thead_button">
+                                        <button>Choose</button>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             )}
