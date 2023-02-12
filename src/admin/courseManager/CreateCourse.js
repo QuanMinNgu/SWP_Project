@@ -189,11 +189,25 @@ const CreateCourse = () => {
         benefit.forEach((item) => {
             contentArr += item + "--?--";
         });
+
+        let urlImage = "";
+        const formData = new FormData();
+        formData.append("file", imageRef.current);
+        formData.append("upload_preset", "sttruyenxyz");
+        try {
+            const res = await axios.post(
+                "https://api.cloudinary.com/v1_1/sttruyen/image/upload",
+                formData
+            );
+            urlImage = "https:" + res.data.url.split(":")[1];
+        } catch (err) {
+            return;
+        }
         const product = {
             title: titleRef.current.innerHTML,
             content: contentArr,
             lessons: lesson,
-            image: imageRef.current,
+            image: urlImage,
             courseExpert: courseExpert?.id,
             kind: selectedOption?.value,
             price: priceRef.current.innerHTML * 1,
