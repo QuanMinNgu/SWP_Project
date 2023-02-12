@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../style.scss";
 import Select from "react-select";
-import { Link } from "react-router-dom";
 import Pagination from "../../paginating/Pagination";
 import UserManagerCard from "./UserManagerCard";
+import { UserContext } from "../../App";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
+import { toast } from "react-toastify";
 const UserManager = () => {
     const options = [
         { value: "free", label: "Free" },
@@ -23,7 +27,38 @@ const UserManager = () => {
         { value: "vanilsla", label: "Oldest" },
     ];
 
-    const [vocher, setVocher] = useState("");
+    const auth = useSelector((state) => state.auth);
+    const { cache } = useContext(UserContext);
+
+    const [users, setUsers] = useState([]);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        let here = true;
+        const url = `/api/account?limit=20&token=${auth.user?.accessToken}`;
+        if (cache.current[url]) {
+            return setUsers(cache.current[url]);
+        }
+        dispatch(isLoading());
+        axios
+            .get(url)
+            .then((res) => {
+                if (!here) {
+                    return dispatch(isSuccess());
+                }
+                setUsers(res?.data?.users);
+                dispatch(isSuccess());
+            })
+            .catch((err) => {
+                if (here) {
+                    toast.error(err?.response?.data?.msg);
+                }
+                dispatch(isFailing());
+            });
+        return () => {
+            here = false;
+        };
+    }, []);
 
     const [selectedOption, setSelectedOption] = useState(null);
     return (
@@ -63,11 +98,9 @@ const UserManager = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <UserManagerCard />
-                        <UserManagerCard />
-                        <UserManagerCard />
-                        <UserManagerCard />
-                        <UserManagerCard />
+                        {users?.map((item) => (
+                            <UserManagerCard key={item?.gmail} item={item} />
+                        ))}
                     </tbody>
                 </table>
             </div>

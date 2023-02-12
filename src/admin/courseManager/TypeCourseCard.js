@@ -35,6 +35,10 @@ const TypeCourseCard = ({ item }) => {
             return toast.error("Vui lòng điền thông tin.");
         }
         dispatch(isLoading());
+        console.log({
+            token: auth.user?.accessToken,
+            title: titleRef.current.value,
+        });
         try {
             const data = await axios.post(
                 `/api/type_course/update?id=${item?.id}`,

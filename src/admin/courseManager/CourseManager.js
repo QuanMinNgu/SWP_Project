@@ -66,7 +66,7 @@ const CourseManager = () => {
             .get(url)
             .then((res) => {
                 if (!here) {
-                    return;
+                    return dispatch(isSuccess());
                 }
                 setCourse(res?.data?.courses);
                 cache.current[url] = res?.data?.courses;
