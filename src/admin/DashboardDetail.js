@@ -24,7 +24,6 @@ const DashboardDetail = () => {
     const labels = Array(date)
         .fill(1)
         .map((_, index) => index + 1);
-    console.log(labels);
     const options = {
         responsive: true,
         plugins: {

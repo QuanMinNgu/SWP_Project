@@ -1,4 +1,10 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
+import React, {
+    useRef,
+    useState,
+    useCallback,
+    useEffect,
+    useContext,
+} from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import CoursePanelEdit from "../../coursePanel/CoursePanelEdit";
@@ -8,6 +14,9 @@ import Quiz from "./type/Quiz";
 import Reading from "./type/Reading";
 import Select from "react-select";
 import axios from "axios";
+import { UserContext } from "../../App";
+import { useDispatch, useSelector } from "react-redux";
+import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 const CreateCourse = () => {
     const titleRef = useRef();
     const contentRef = useRef();
@@ -21,7 +30,84 @@ const CreateCourse = () => {
     const [lesson, setLesson] = useState([]);
     const imageRef = useRef();
     const lessonRef = useRef();
+    const priceRef = useRef();
     const [addLesson, setAddLesson] = useState(false);
+
+    const { cache } = useContext(UserContext);
+
+    const [selectedOption, setSelectedOption] = useState(null);
+
+    const dispatch = useDispatch();
+
+    const [types, setTypes] = useState([]);
+
+    let optionsKind = [
+        { value: "ha-noi", label: "Software" },
+        { value: "strawberry", label: "Financial" },
+        { value: "vanilla", label: "Marketing" },
+    ];
+
+    useEffect(() => {
+        if (types) {
+            optionsKind = types?.map((item) => {
+                return {
+                    value: item?.id,
+                    label: item?.title,
+                };
+            });
+        }
+    }, [types]);
+    const [courseExperts, setCourseExperts] = useState([]);
+
+    useEffect(() => {
+        let here = true;
+        const url = "/api/type_course";
+        if (cache.current[url]) {
+            return setTypes(cache.current[url]);
+        }
+        dispatch(isLoading());
+        axios
+            .get(url)
+            .then((res) => {
+                if (!here) {
+                    return;
+                }
+                setTypes(res?.data?.types);
+                cache.current[url] = res?.data?.types;
+                dispatch(isSuccess());
+            })
+            .catch((err) => {
+                dispatch(isFailing());
+            });
+        return () => {
+            here = false;
+        };
+    }, []);
+
+    useEffect(() => {
+        let here = true;
+        const url = "/api/account/course_expert";
+        if (cache.current[url]) {
+            return setCourseExperts(cache.current[url]);
+        }
+        dispatch(isLoading());
+        axios
+            .get(url)
+            .then((res) => {
+                if (!here) {
+                    return dispatch(isSuccess());
+                }
+                setCourseExperts(res?.data?.types);
+                cache.current[url] = res?.data?.types;
+                dispatch(isSuccess());
+            })
+            .catch((err) => {
+                dispatch(isFailing());
+            });
+        return () => {
+            here = false;
+        };
+    }, []);
 
     const [urlArray, setUrlArray] = useState([]);
 
@@ -41,14 +127,16 @@ const CreateCourse = () => {
         benefitRef.current.value = "";
     };
 
-    const handleChooseExpert = () => {
+    const handleChooseExpert = (item) => {
         const check = window.confirm(
             "Bạn có muốn chọn Minh Quang thành course expert của khóa học này không?"
         );
-        setCourseExpert({
-            name: "Quang Minh",
-        });
-        setExpert(false);
+        if (check) {
+            setCourseExpert({
+                ...item,
+            });
+            setExpert(false);
+        }
     };
 
     const handleCreateLesson = () => {
@@ -67,11 +155,6 @@ const CreateCourse = () => {
         benefit.splice(e, 1);
         setBenefit([...benefit]);
     };
-    const optionsKind = [
-        { value: "ha-noi", label: "Software" },
-        { value: "strawberry", label: "Financial" },
-        { value: "vanilla", label: "Marketing" },
-    ];
 
     const onDrop = useCallback((acceptedFiles) => {
         const url = URL.createObjectURL(acceptedFiles[0]);
@@ -99,23 +182,41 @@ const CreateCourse = () => {
         });
     }, [lesson]);
 
-    useEffect(() => {
-        console.log(lesson);
-    }, [lesson]);
+    const auth = useSelector((state) => state.auth);
 
     const handleCreateNewCourse = async () => {
+        let contentArr = contentRef.current.innerHTML + "--?--";
+        benefit.forEach((item) => {
+            contentArr += item + "--?--";
+        });
+        const product = {
+            title: titleRef.current.innerHTML,
+            content: contentArr,
+            lessons: lesson,
+            image: imageRef.current,
+            courseExpert: courseExpert?.id,
+            kind: selectedOption?.value,
+            price: priceRef.current.innerHTML * 1,
+        };
+
+        console.log(product);
+        dispatch(isLoading());
         try {
             const data = await axios.post("/api/course/create", {
-                ...lesson,
+                ...product,
+                token: auth.user?.accessToken,
             });
-            console.log(data?.data);
-        } catch (err) {}
+            dispatch(isSuccess());
+            toast.success(data?.data?.msg);
+        } catch (err) {
+            toast.error(err?.response?.data?.msg);
+            dispatch(isFailing());
+        }
     };
 
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
     });
-    const [selectedOption, setSelectedOption] = useState(null);
 
     return (
         <div className="managerCourse">
@@ -142,7 +243,7 @@ const CreateCourse = () => {
                             <button onClick={handleCreateBenefit}>Send</button>
                         </div>
                     </div>
-                    <ul className="course_detail_learn_items">
+                    <ul id="benefit" className="course_detail_learn_items">
                         {benefit?.length === 0 ? (
                             <li className="benefitList">
                                 Example of benefit of this course
@@ -301,7 +402,11 @@ const CreateCourse = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="course_detail_price" contentEditable={true}>
+                    <div
+                        className="course_detail_price"
+                        ref={priceRef}
+                        contentEditable={true}
+                    >
                         Enter Price
                     </div>
                     <div className="course_detail_button">
@@ -389,164 +494,43 @@ const CreateCourse = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className="ex_thead_wrap_items">
-                                    <th className="ex_thead_title">
-                                        <div className="ex_thead_user">
-                                            <div className="ex_thead_user_img">
-                                                <img
-                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                    alt="Ảnh"
-                                                />
-                                            </div>
-                                            <div className="ex_thead_user_infor">
-                                                <div className="ex_thead_user_infor_name">
-                                                    Minh Quang
+                                {courseExperts?.map((item) => (
+                                    <tr
+                                        key={item?.id + "courseExperts"}
+                                        className="ex_thead_wrap_items"
+                                    >
+                                        <th className="ex_thead_title">
+                                            <div className="ex_thead_user">
+                                                <div className="ex_thead_user_img">
+                                                    <img
+                                                        src={item?.image}
+                                                        alt="Ảnh"
+                                                    />
                                                 </div>
-                                                <i className="ex_thead_user_infor_email">
-                                                    quangminhnguyen265@gmail.com
-                                                </i>
-                                                <i className="ex_thead_user_infor_id">
-                                                    ID:1231232
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th className="ex_thead_button">
-                                        <button>Choose</button>
-                                    </th>
-                                </tr>
-                                <tr className="ex_thead_wrap_items">
-                                    <th className="ex_thead_title">
-                                        <div className="ex_thead_user">
-                                            <div className="ex_thead_user_img">
-                                                <img
-                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                    alt="Ảnh"
-                                                />
-                                            </div>
-                                            <div className="ex_thead_user_infor">
-                                                <div className="ex_thead_user_infor_name">
-                                                    Minh Quang
+                                                <div className="ex_thead_user_infor">
+                                                    <div className="ex_thead_user_infor_name">
+                                                        {item?.name}
+                                                    </div>
+                                                    <i className="ex_thead_user_infor_email">
+                                                        {item?.gmail}
+                                                    </i>
+                                                    <i className="ex_thead_user_infor_id">
+                                                        ID:{item?.id}
+                                                    </i>
                                                 </div>
-                                                <i className="ex_thead_user_infor_email">
-                                                    quangminhnguyen265@gmail.com
-                                                </i>
-                                                <i className="ex_thead_user_infor_id">
-                                                    ID:1231232
-                                                </i>
                                             </div>
-                                        </div>
-                                    </th>
-                                    <th className="ex_thead_button">
-                                        <button onClick={handleChooseExpert}>
-                                            Choose
-                                        </button>
-                                    </th>
-                                </tr>
-                                <tr className="ex_thead_wrap_items">
-                                    <th className="ex_thead_title">
-                                        <div className="ex_thead_user">
-                                            <div className="ex_thead_user_img">
-                                                <img
-                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                    alt="Ảnh"
-                                                />
-                                            </div>
-                                            <div className="ex_thead_user_infor">
-                                                <div className="ex_thead_user_infor_name">
-                                                    Minh Quang
-                                                </div>
-                                                <i className="ex_thead_user_infor_email">
-                                                    quangminhnguyen265@gmail.com
-                                                </i>
-                                                <i className="ex_thead_user_infor_id">
-                                                    ID:1231232
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th className="ex_thead_button">
-                                        <button>Choose</button>
-                                    </th>
-                                </tr>
-                                <tr className="ex_thead_wrap_items">
-                                    <th className="ex_thead_title">
-                                        <div className="ex_thead_user">
-                                            <div className="ex_thead_user_img">
-                                                <img
-                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                    alt="Ảnh"
-                                                />
-                                            </div>
-                                            <div className="ex_thead_user_infor">
-                                                <div className="ex_thead_user_infor_name">
-                                                    Minh Quang
-                                                </div>
-                                                <i className="ex_thead_user_infor_email">
-                                                    quangminhnguyen265@gmail.com
-                                                </i>
-                                                <i className="ex_thead_user_infor_id">
-                                                    ID:1231232
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th className="ex_thead_button">
-                                        <button>Choose</button>
-                                    </th>
-                                </tr>
-                                <tr className="ex_thead_wrap_items">
-                                    <th className="ex_thead_title">
-                                        <div className="ex_thead_user">
-                                            <div className="ex_thead_user_img">
-                                                <img
-                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                    alt="Ảnh"
-                                                />
-                                            </div>
-                                            <div className="ex_thead_user_infor">
-                                                <div className="ex_thead_user_infor_name">
-                                                    Minh Quang
-                                                </div>
-                                                <i className="ex_thead_user_infor_email">
-                                                    quangminhnguyen265@gmail.com
-                                                </i>
-                                                <i className="ex_thead_user_infor_id">
-                                                    ID:1231232
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th className="ex_thead_button">
-                                        <button>Choose</button>
-                                    </th>
-                                </tr>
-                                <tr className="ex_thead_wrap_items">
-                                    <th className="ex_thead_title">
-                                        <div className="ex_thead_user">
-                                            <div className="ex_thead_user_img">
-                                                <img
-                                                    src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                                    alt="Ảnh"
-                                                />
-                                            </div>
-                                            <div className="ex_thead_user_infor">
-                                                <div className="ex_thead_user_infor_name">
-                                                    Minh Quang
-                                                </div>
-                                                <i className="ex_thead_user_infor_email">
-                                                    quangminhnguyen265@gmail.com
-                                                </i>
-                                                <i className="ex_thead_user_infor_id">
-                                                    ID:1231232
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th className="ex_thead_button">
-                                        <button>Choose</button>
-                                    </th>
-                                </tr>
+                                        </th>
+                                        <th className="ex_thead_button">
+                                            <button
+                                                onClick={() =>
+                                                    handleChooseExpert(item)
+                                                }
+                                            >
+                                                Choose
+                                            </button>
+                                        </th>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>

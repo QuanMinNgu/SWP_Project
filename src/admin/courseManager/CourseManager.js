@@ -17,6 +17,7 @@ const CourseManager = () => {
     const { cache } = useContext(UserContext);
 
     const [courses, setCourse] = useState([]);
+
     const [types, setTypes] = useState([]);
 
     const auth = useSelector((state) => state.auth);
@@ -84,7 +85,7 @@ const CourseManager = () => {
         let here = true;
         const url = "/api/type_course";
         if (cache.current[url]) {
-            return setCourse(cache.current[url]);
+            return setTypes(cache.current[url]);
         }
         dispatch(isLoading());
         axios
@@ -93,7 +94,7 @@ const CourseManager = () => {
                 if (!here) {
                     return;
                 }
-                setCourse(res?.data?.types);
+                setTypes(res?.data?.types);
                 cache.current[url] = res?.data?.types;
                 dispatch(isSuccess());
             })

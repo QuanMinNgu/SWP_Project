@@ -46,7 +46,7 @@ const UserManagerCard = ({ setUserInfor, item }) => {
                         <h6>
                             <div className="user_maner_name">{item?.name}</div>
                         </h6>
-                        <i className="user_email_infor_email">{item?.email}</i>
+                        <i className="user_email_infor_email">{item?.gmail}</i>
                         <span>
                             <i>ID:{item?.id}</i>
                         </span>
