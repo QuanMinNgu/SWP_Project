@@ -1,17 +1,58 @@
+import axios from "axios";
 import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 
-const TypeCourseCard = () => {
-    const handleDeleteType = () => {
+const TypeCourseCard = ({ item }) => {
+    const dispatch = useDispatch();
+    const auth = useSelector((state) => state.auth);
+    const handleDeleteType = async () => {
         const check = window.confirm("Do you wanna delete this type?");
+        if (check) {
+            dispatch(isLoading());
+            try {
+                const data = await axios.post(
+                    `/api/type_course/delete?id=${item?.id}`,
+                    {
+                        token: auth.user?.accessToken,
+                    }
+                );
+                dispatch(isSuccess());
+                toast.success(data?.data?.msg);
+            } catch (err) {
+                dispatch(isFailing());
+                return toast.error(err?.response?.data?.msg);
+            }
+        }
     };
 
     const [edit, setEdit] = useState(false);
 
     const titleRef = useRef();
-    const handleUpdateNewType = () => {};
+    const handleUpdateNewType = async () => {
+        if (!titleRef.current.value) {
+            return toast.error("Vui lòng điền thông tin.");
+        }
+        dispatch(isLoading());
+        try {
+            const data = await axios.post(
+                `/api/type_course/update?id=${item?.id}`,
+                {
+                    token: auth.user?.accessToken,
+                    title: titleRef.current.value,
+                }
+            );
+            dispatch(isSuccess());
+            toast.success(data?.data?.msg);
+        } catch (err) {
+            dispatch(isFailing());
+            return toast.error(err?.response?.data?.msg);
+        }
+    };
     return (
         <div className="expertCourse_type_remain_card">
-            Software
+            {item?.title}
             <div className="expertCourse_type_remain_card_abs">
                 <button
                     onClick={() => {
@@ -46,6 +87,7 @@ const TypeCourseCard = () => {
                         </div>
                         <textarea
                             ref={titleRef}
+                            defaultValue={item?.title}
                             className="textArea_type"
                             type="text"
                             placeholder="Enter title of type"

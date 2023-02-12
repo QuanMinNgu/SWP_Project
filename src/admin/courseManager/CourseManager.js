@@ -121,12 +121,12 @@ const CourseManager = () => {
             title: titleRef.current.value,
         });
         try {
-            const data = await axios.post("/api/type_course/create/", {
+            const data = await axios.post("/api/type_course/create", {
                 token: auth.user?.accessToken,
                 title: titleRef.current.value,
             });
             dispatch(isSuccess());
-            toast.success(data?.data?.msg);
+            setTypes(data?.data?.types);
         } catch (err) {
             dispatch(isFailing());
             return toast.error(err?.response?.data?.msg);
@@ -524,32 +524,9 @@ const CourseManager = () => {
                     </div>
                     <div className="expertCourse_type_course_remain">
                         <div className="expertCourse_type_Card_container">
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <div className="expertCourse_type_remain_card">
-                                Software
-                            </div>
+                            {types?.map((item) => (
+                                <TypeCourseCard key={item?.id} item={item} />
+                            ))}
                         </div>
                     </div>
                     {create && (
