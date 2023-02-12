@@ -255,34 +255,14 @@ const CourseManager = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
+                        {courses?.map((item) => (
+                            <CourseManagerCard
+                                key={item?.id}
+                                item={item}
+                                checkAll={checkAll}
+                                setExpert={setExpert}
+                            />
+                        ))}
                     </tbody>
                 </table>
             </div>
