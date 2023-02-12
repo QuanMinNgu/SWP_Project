@@ -108,6 +108,14 @@ const CourseDetail = () => {
                 <Rating />
             </div>
             {payment && (
+                <div
+                    onClick={() => {
+                        setPayment(false);
+                    }}
+                    className="coursePaymentAbs"
+                ></div>
+            )}
+            {payment && (
                 <Pay setPayment={setPayment} setCanLearn={setCanLearn} />
             )}
         </div>
