@@ -184,24 +184,33 @@ const CreateCourse = () => {
 
     const auth = useSelector((state) => state.auth);
 
+    const lessonLengthRef = useRef();
+    const numOfLessonRef = useRef();
+    const timeOfLessonRef = useRef();
+
     const handleCreateNewCourse = async () => {
         let contentArr = contentRef.current.innerHTML + "--?--";
         benefit.forEach((item) => {
             contentArr += item + "--?--";
         });
+        contentArr += lessonLengthRef.current.innerHTML + "--?--";
+        contentArr += numOfLessonRef.current.innerHTML + "--?--";
+        contentArr += numberOfLesson?.time;
 
         let urlImage = "";
-        const formData = new FormData();
-        formData.append("file", imageRef.current);
-        formData.append("upload_preset", "sttruyenxyz");
-        try {
-            const res = await axios.post(
-                "https://api.cloudinary.com/v1_1/sttruyen/image/upload",
-                formData
-            );
-            urlImage = "https:" + res.data.url.split(":")[1];
-        } catch (err) {
-            return;
+        if (imageRef.current) {
+            const formData = new FormData();
+            formData.append("file", imageRef.current);
+            formData.append("upload_preset", "sttruyenxyz");
+            try {
+                const res = await axios.post(
+                    "https://api.cloudinary.com/v1_1/sttruyen/image/upload",
+                    formData
+                );
+                urlImage = "https:" + res.data.url.split(":")[1];
+            } catch (err) {
+                return;
+            }
         }
         const product = {
             title: titleRef.current.innerHTML,
@@ -297,16 +306,20 @@ const CreateCourse = () => {
                     <div className="course_detail_timeLine">
                         <ul>
                             <li>
-                                <b>{lesson?.length}</b> Pakages
+                                <b ref={lessonLengthRef}>{lesson?.length}</b>{" "}
+                                Pakages
                             </li>
                             <li>.</li>
                             <li>
-                                <b>{numberOfLesson?.num}</b> Lessons
+                                <b ref={numOfLessonRef}>
+                                    {numberOfLesson?.num}
+                                </b>{" "}
+                                Lessons
                             </li>
                             <li>.</li>
                             <li>
                                 Times{" "}
-                                <b>{`${
+                                <b ref={timeOfLessonRef}>{`${
                                     Math.floor(numberOfLesson?.time / 3600) < 10
                                         ? "0"
                                         : ""
