@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function VoucherCard() {
+  const [option, setOption] = useState(false);
+  const navigate = useNavigate();
+  const handleEditVoucher = () => {
+    navigate("/sale/edit_voucher");
+  };
   return (
     <tr className="s_trow">
       <th className="v_stt fn">1</th>
@@ -13,6 +19,15 @@ function VoucherCard() {
       </th>
       <th className="v_time fn">12/2/2023</th>
       <th className="v_time fn">12/2/2023</th>
+      <th className="v_option">
+        <i class="fa-solid fa-ellipsis" onClick={() => setOption(!option)}></i>
+        {option && (
+          <div className="v_option_select">
+            <div onClick={handleEditVoucher}>Edit</div>
+            <div>Delete</div>
+          </div>
+        )}
+      </th>
     </tr>
   );
 }

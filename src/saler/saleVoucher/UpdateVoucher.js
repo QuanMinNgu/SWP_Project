@@ -4,8 +4,11 @@ import CourseTypeVoucher from "./CourseTypeVoucher";
 import CourseVoucher from "./CourseVoucher";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
-function CreateVoucher() {
+function UpdateVoucher() {
+  let { slug } = useParams();
+  console.log(slug);
   const valueRef = useRef();
   const [image, setImage] = useState("");
   const startRef = useRef();
@@ -134,4 +137,4 @@ function CreateVoucher() {
   );
 }
 
-export default CreateVoucher;
+export default UpdateVoucher;

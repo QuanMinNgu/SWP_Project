@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CreateVoucher from "./saleVoucher/CreateVoucher";
 import SaleVoucher from "./saleVoucher/SaleVoucher";
+import UpdateVoucher from "./saleVoucher/UpdateVoucher";
 
 import "./style.scss";
 const SaleDashboard = () => {
@@ -90,6 +91,7 @@ const SaleDashboard = () => {
       <div className="dashboard_detail">
         {slug === "vocher_manager" && <SaleVoucher />}
         {slug === "create_voucher" && <CreateVoucher />}
+        {slug === "edit_voucher" && <UpdateVoucher />}
       </div>
     </div>
   );

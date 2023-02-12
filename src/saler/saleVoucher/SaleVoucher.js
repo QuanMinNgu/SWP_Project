@@ -61,6 +61,7 @@ function SaleVoucher() {
               <th className="v_type">Type</th>
               <th className="v_time">From</th>
               <th className="v_time">To</th>
+              <th className="v_time"></th>
             </tr>
           </thead>
           <tbody>
