@@ -5,7 +5,7 @@ function VoucherCard() {
   const [option, setOption] = useState(false);
   const navigate = useNavigate();
   const handleEditVoucher = () => {
-    navigate("/sale/edit_voucher");
+    navigate("/sale/edit_voucher?id=asd");
   };
   return (
     <tr className="s_trow">
