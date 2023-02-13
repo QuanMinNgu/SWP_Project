@@ -39,7 +39,7 @@ const CourseDetail = () => {
                         <li>Tự hiểu được Grid layout trong bootstrap</li>
                     </ul>
                     <div className="course_detail_learn">
-                        <h3>Content of this course</h3>
+                        <h3>Nội dung của khóa học</h3>
                     </div>
                     <div className="course_detail_timeLine">
                         <ul>
@@ -48,11 +48,11 @@ const CourseDetail = () => {
                             </li>
                             <li>.</li>
                             <li>
-                                <b>37</b> Lessons
+                                <b>37</b> bài học
                             </li>
                             <li>.</li>
                             <li>
-                                Times <b>06h : 45m : 00s</b>
+                                Thời lượng <b>06h : 45m : 00s</b>
                             </li>
                         </ul>
                     </div>
@@ -77,7 +77,7 @@ const CourseDetail = () => {
                                     navigate("/learning/asđa");
                                 }}
                             >
-                                Start learning
+                                Bắt đầu học
                             </button>
                         ) : (
                             <button
@@ -85,7 +85,7 @@ const CourseDetail = () => {
                                     setPayment(true);
                                 }}
                             >
-                                Enroll to course
+                                Đăng ký khóa học
                             </button>
                         )}
                     </div>

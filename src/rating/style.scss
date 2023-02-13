@@ -372,8 +372,3 @@
 .detail_body_infor_content_input {
     font-size: 1.8rem;
 }
-.detail_body_infor_content_2 {
-    @include mobile {
-        margin-top: 5rem;
-    }
-}

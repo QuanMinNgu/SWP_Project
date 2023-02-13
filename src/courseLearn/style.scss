@@ -87,6 +87,12 @@
         @include mobile {
             width: 100%;
         }
+        @include middleSmall {
+            width: 100%;
+        }
+        @include tablet {
+            width: 100%;
+        }
         border-right: 0.01rem solid rgba(0, 0, 0, 0.1);
         & > div {
             width: 100%;
@@ -99,6 +105,12 @@
             @include mobile {
                 height: 23rem;
             }
+            @include middleSmall {
+                height: 37rem;
+            }
+            @include tablet {
+                height: 40rem;
+            }
         }
     }
     &_content {
@@ -106,6 +118,16 @@
         position: fixed;
         z-index: 10;
         @include mobile {
+            display: none;
+            width: 0;
+            z-index: 0;
+        }
+        @include middleSmall {
+            display: none;
+            width: 0;
+            z-index: 0;
+        }
+        @include tablet {
             display: none;
             width: 0;
             z-index: 0;
@@ -251,6 +273,17 @@
     z-index: 160;
     background-color: white;
     box-shadow: 0 0 1rem 0.2rem #0dcaf0;
+    display: none;
+    @include mobile {
+        display: block;
+    }
+    @include middleSmall {
+        display: block;
+    }
+    @include tablet {
+        display: block;
+        left: 50%;
+    }
 }
 .courseLearn_mobile_a {
     animation: appearingBarsMobile ease 0.7s forwards;
@@ -299,7 +332,7 @@
     width: 6rem;
     height: 6rem;
     background-color: #ff8a08;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
@@ -308,6 +341,15 @@
     padding-bottom: 1rem;
     z-index: 140;
     animation: opacityBars ease 0.7s 0.3s;
+    @include mobile {
+        display: flex;
+    }
+    @include middleSmall {
+        display: flex;
+    }
+    @include tablet {
+        display: flex;
+    }
 }
 @keyframes opacityBars {
     0% {
