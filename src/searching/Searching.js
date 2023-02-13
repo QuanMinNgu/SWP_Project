@@ -62,7 +62,9 @@ const Searching = () => {
                     options={optionsSort}
                     placeholder="Sắp xếp"
                 />
-                <button>Search</button>
+                <div className="button_container_searching">
+                    <button>Search</button>
+                </div>
             </div>
             <div className="searching_card">
                 <div className="row">
