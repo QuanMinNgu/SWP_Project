@@ -5,7 +5,7 @@ const MarkBlog = () => {
   return (
     <div className="user_blog">
       <div className="user_blog_header">
-        <h1>Bài viết yêu thích</h1>
+        <h1>Favorite Posts</h1>
         <p>Nơi lưu trữ blog của bạn</p>
       </div>
       <div className="user_blog_body">
