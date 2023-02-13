@@ -226,11 +226,40 @@ const CreateCourse = () => {
         dispatch(isLoading());
         try {
             const data = await axios.post("/api/course/create", {
-                ...product,
+                title: titleRef.current.innerHTML,
+                content: contentArr,
+                courseExpert: courseExpert?.id,
+                kind: selectedOption?.value,
+                price: priceRef.current.innerHTML * 1,
                 token: auth.user?.accessToken,
             });
             dispatch(isSuccess());
             toast.success(data?.data?.msg);
+            handleCreatePakages(data?.data?.id);
+        } catch (err) {
+            toast.error(err?.response?.data?.msg);
+            dispatch(isFailing());
+        }
+    };
+
+    useEffect(() => {
+        console.log(lesson);
+    }, [lesson]);
+
+    const handleCreatePakages = async (id) => {
+        dispatch(isLoading());
+        console.log(lesson);
+        try {
+            const data = await axios.post(
+                `/api/course/update_pakage?id=${id}`,
+                {
+                    lessons: lesson,
+                    token: auth.user?.accessToken,
+                }
+            );
+            dispatch(isSuccess());
+            toast.success(data?.data?.msg);
+            handleCreatePakages(data?.data?.id);
         } catch (err) {
             toast.error(err?.response?.data?.msg);
             dispatch(isFailing());
