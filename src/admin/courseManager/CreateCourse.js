@@ -223,7 +223,14 @@ const CreateCourse = () => {
             price: priceRef.current.innerHTML * 1,
         };
 
-        console.log(product);
+        console.log({
+            title: title,
+            content: contentArr,
+            courseExpert: courseExpert?.id,
+            kind: selectedOption?.value,
+            price: priceRef.current.innerHTML * 1,
+            token: auth.user?.accessToken,
+        });
         dispatch(isLoading());
         try {
             const data = await axios.post("/api/course/create", {
