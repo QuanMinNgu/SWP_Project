@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import CourseLearnCard from "./CourseLearnCard";
 import Comment from "../comment/Comment";
 import Quizzlet from "../quizz/Quizzlet";
+import ReactPlayer from "react-player";
 const CourseLearn = () => {
     const [percent, setPercent] = useState(86 * 3.6);
 
@@ -63,15 +64,11 @@ const CourseLearn = () => {
                             {quizz && <Quizzlet />}
                             {youtube && (
                                 <div className="CourseLearn_body_detail_video">
-                                    <iframe
+                                    <ReactPlayer
                                         width="100%"
                                         height="100%"
-                                        src="https://www.youtube.com/embed/Ocm9fxC1YAY"
-                                        title="YouTube video player"
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        allowFullScreen
-                                    ></iframe>
+                                        url="https://www.youtube.com/watch?v=uqccg55tgHc"
+                                    />
                                 </div>
                             )}
                             {!quizz && (
