@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.scss";
 import {
     Chart as ChartJS,
@@ -10,6 +10,11 @@ import {
     Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { UserContext } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
+import axios from "axios";
+import { toast } from "react-toastify";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -20,11 +25,42 @@ ChartJS.register(
 );
 
 const DashboardDetail = () => {
+    const [dashboard, setDashboard] = useState({});
+
+    const dispatch = useDispatch();
+
+    const auth = useSelector((state) => state.auth);
+    const { cache } = useContext(UserContext);
+
+    useEffect(() => {
+        let here = true;
+        const url = `/api/dashboard?token=${auth.user?.accessToken}`;
+        if (cache.current[url]) {
+            return setDashboard(cache.current[url]);
+        }
+        dispatch(isLoading());
+        axios
+            .get(url)
+            .then((res) => {
+                if (!here) {
+                    return dispatch(isSuccess());
+                }
+                setDashboard(res?.data);
+                cache.current[url] = res?.data;
+                dispatch(isSuccess());
+            })
+            .catch((err) => {
+                dispatch(isFailing());
+                toast.error(err?.response?.data?.msg);
+            });
+        return () => {
+            here = false;
+        };
+    }, []);
     const date = 31;
     const labels = Array(date)
         .fill(1)
         .map((_, index) => index + 1);
-    console.log(labels);
     const options = {
         responsive: true,
         plugins: {
@@ -42,7 +78,9 @@ const DashboardDetail = () => {
         datasets: [
             {
                 label: "Income $",
-                data: [200, 4000, 300, 400, 2000, 100, 500, 20, 40],
+                data: dashboard?.incomeInMonth || [
+                    200, 4000, 300, 400, 2000, 100, 500, 20, 40,
+                ],
                 backgroundColor: "rgba(53, 162, 235, 0.5)",
             },
         ],
@@ -58,7 +96,7 @@ const DashboardDetail = () => {
                             </div>
                             <div className="dashboard_statistic_items_infor">
                                 <p>Total Account</p>
-                                <h6>1200</h6>
+                                <h6>{dashboard?.totalAccount || 0}</h6>
                             </div>
                         </div>
                     </div>
@@ -69,7 +107,7 @@ const DashboardDetail = () => {
                             </div>
                             <div className="dashboard_statistic_items_infor">
                                 <p>Total Income</p>
-                                <h6>$ 120.000</h6>
+                                <h6>$ {dashboard?.totalIncome || 0}</h6>
                             </div>
                         </div>
                     </div>
@@ -80,7 +118,7 @@ const DashboardDetail = () => {
                             </div>
                             <div className="dashboard_statistic_items_infor">
                                 <p>Total Courses</p>
-                                <h6>120</h6>
+                                <h6>{dashboard?.totalCourse || 0}</h6>
                             </div>
                         </div>
                     </div>
@@ -91,7 +129,7 @@ const DashboardDetail = () => {
                             </div>
                             <div className="dashboard_statistic_items_infor">
                                 <p>Total Blog</p>
-                                <h6>120</h6>
+                                <h6>{dashboard?.totalBlog || 0}</h6>
                             </div>
                         </div>
                     </div>
@@ -107,7 +145,7 @@ const DashboardDetail = () => {
                                 className="dashboard_statistic_items_infor"
                             >
                                 <p>Total Salers / Marketings</p>
-                                <h6>1200</h6>
+                                <h6>{dashboard?.totalSaler || 0}</h6>
                             </div>
                         </div>
                     </div>
@@ -118,7 +156,9 @@ const DashboardDetail = () => {
                             </div>
                             <div className="dashboard_statistic_items_infor">
                                 <p>New Accounts in Month</p>
-                                <h6>120</h6>
+                                <h6>
+                                    {dashboard?.totalNewAccountInMonth || 0}
+                                </h6>
                             </div>
                         </div>
                     </div>
@@ -132,7 +172,7 @@ const DashboardDetail = () => {
                                 className="dashboard_statistic_items_infor"
                             >
                                 <p>Total Courses Expert</p>
-                                <h6>120</h6>
+                                <h6>{dashboard?.totalCourseExpert || 0}</h6>
                             </div>
                         </div>
                     </div>

@@ -23,6 +23,9 @@
             flex-wrap: wrap;
             & > li {
                 width: 50%;
+                @include mobile {
+                    width: 100%;
+                }
                 font-size: 1.6rem;
                 margin-bottom: 1rem;
                 color: rgba(0, 0, 0, 0.6);

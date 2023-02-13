@@ -19,6 +19,7 @@ import PrivateLayout from "../components/privateLayout/PrivateLayout";
 import SaleDashboard from "../saler/SaleDashboard";
 import CourseExpertDashboard from "../courseExpert/CourseExpertDashboard";
 import ViewPdf from "../viewPdf/ViewPdf";
+import ActiveAccount from "../auth/ActiveAccount";
 export const publicRouter = [
     {
         element: Home,
@@ -67,6 +68,10 @@ export const publicRouter = [
     {
         element: Register,
         path: "/register",
+    },
+    {
+        element: ActiveAccount,
+        path: "/account/active/:slug",
     },
     {
         element: ForgotPassword,

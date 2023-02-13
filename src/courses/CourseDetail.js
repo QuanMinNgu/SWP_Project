@@ -30,7 +30,7 @@ const CourseDetail = () => {
                         </span>
                     </div>
                     <div className="course_detail_learn">
-                        <h3>The benefits of this course:</h3>
+                        <h3>Bạn sẽ nhận được gì từ khóa học?</h3>
                     </div>
                     <ul className="course_detail_learn_items">
                         <li>Biết cách xây dựng website Responsive</li>
@@ -107,6 +107,14 @@ const CourseDetail = () => {
             <div className="rating_container">
                 <Rating />
             </div>
+            {payment && (
+                <div
+                    onClick={() => {
+                        setPayment(false);
+                    }}
+                    className="coursePaymentAbs"
+                ></div>
+            )}
             {payment && (
                 <Pay setPayment={setPayment} setCanLearn={setCanLearn} />
             )}

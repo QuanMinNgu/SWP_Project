@@ -1,19 +1,30 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "../style.scss";
 import Select from "react-select";
 import CourseManagerCard from "./CourseManagerCard";
 import Pagination from "../../paginating/Pagination";
 import { useNavigate } from "react-router-dom";
 import TypeCourseCard from "./TypeCourseCard";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
+import axios from "axios";
+import { UserContext } from "../../App";
 const CourseManager = () => {
-    const [checkAll, setCheckAll] = useState(false);
-
-    const [create, setCreate] = useState(false);
-
-    const titleRef = useRef();
-
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
+    const { cache } = useContext(UserContext);
+
+    const [courses, setCourse] = useState([]);
+
+    const [types, setTypes] = useState([]);
+
+    const auth = useSelector((state) => state.auth);
+
+    const [checkAll, setCheckAll] = useState(false);
+    const [create, setCreate] = useState(false);
+    const titleRef = useRef();
     const [bars, setBars] = useState(false);
 
     const [expert, setExpert] = useState(false);
@@ -45,13 +56,85 @@ const CourseManager = () => {
         }
     };
 
-    const handleChooseExpert = () => {
+    useEffect(() => {
+        let here = true;
+        const url = "/api/course/tim-kiem?limit=20";
+        if (cache.current[url]) {
+            return setCourse(cache.current[url]);
+        }
+        dispatch(isLoading());
+        axios
+            .get(url)
+            .then((res) => {
+                if (!here) {
+                    return dispatch(isSuccess());
+                }
+                setCourse(res?.data?.courses);
+                cache.current[url] = res?.data?.courses;
+                dispatch(isSuccess());
+            })
+            .catch((err) => {
+                dispatch(isFailing());
+                toast.error("Sorry, We get something wrong in server.");
+            });
+        return () => {
+            here = false;
+        };
+    }, []);
+    useEffect(() => {
+        let here = true;
+        const url = "/api/type_course";
+        if (cache.current[url]) {
+            return setTypes(cache.current[url]);
+        }
+        dispatch(isLoading());
+        axios
+            .get(url)
+            .then((res) => {
+                if (!here) {
+                    return;
+                }
+                setTypes(res?.data?.types);
+                cache.current[url] = res?.data?.types;
+                dispatch(isSuccess());
+            })
+            .catch((err) => {
+                dispatch(isFailing());
+            });
+        return () => {
+            here = false;
+        };
+    }, []);
+
+    const handleChooseExpert = async () => {
         const check = window.confirm(
             "Bạn có muốn chọn Minh Quang thành course expert của khóa học này không?"
         );
     };
 
-    const handleCreateNewType = () => {};
+    const handleCreateNewType = async () => {
+        if (!titleRef.current.value) {
+            return toast.error("Please,enter value.");
+        }
+        dispatch(isLoading());
+        console.log({
+            token: auth.user?.accessToken,
+            courseTypeName: titleRef.current.value,
+        });
+        try {
+            const data = await axios.post("/api/type_course/create", {
+                token: auth.user?.accessToken,
+                courseTypeName: titleRef.current.value,
+            });
+            dispatch(isSuccess());
+            setTypes(data?.data?.types);
+            toast.success(data?.data?.msg);
+            titleRef.current.value = "";
+        } catch (err) {
+            dispatch(isFailing());
+            return toast.error(err?.response?.data?.msg);
+        }
+    };
 
     const [selectedOption, setSelectedOption] = useState(null);
     return (
@@ -175,34 +258,14 @@ const CourseManager = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
-                        <CourseManagerCard
-                            checkAll={checkAll}
-                            setExpert={setExpert}
-                        />
+                        {courses?.map((item) => (
+                            <CourseManagerCard
+                                key={item?.id}
+                                item={item}
+                                checkAll={checkAll}
+                                setExpert={setExpert}
+                            />
+                        ))}
                     </tbody>
                 </table>
             </div>
@@ -444,32 +507,9 @@ const CourseManager = () => {
                     </div>
                     <div className="expertCourse_type_course_remain">
                         <div className="expertCourse_type_Card_container">
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <TypeCourseCard />
-                            <div className="expertCourse_type_remain_card">
-                                Software
-                            </div>
+                            {types?.map((item) => (
+                                <TypeCourseCard key={item?.id} item={item} />
+                            ))}
                         </div>
                     </div>
                     {create && (
