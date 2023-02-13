@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import CourseHeadCard from "../card/CourseHeadCard";
 import AnnouceCard from "../card/AnnouceCard";
 import { useSelector } from "react-redux";
+import HeaderMobile from "./HeaderMobile";
 const Header = () => {
     const [course, setCourse] = useState(false);
     const [annouce, setAnnouce] = useState(false);
@@ -20,6 +21,7 @@ const Header = () => {
             className="header"
         >
             <div className="header_brand">
+                <HeaderMobile />
                 <Link className="header_brand_link" to="/">
                     <img
                         src="https://res.cloudinary.com/sttruyen/image/upload/v1673249807/another/b6sudrpaizo80snhsq9m.png"
@@ -38,7 +40,7 @@ const Header = () => {
                     <input type="text" placeholder="courses search..." />
                 </div>
             </div>
-            {auth.user?.accessToken ? (
+            {!auth.user?.accessToken ? (
                 <div className="header_navbar">
                     <div className="header_navbar_items">
                         <span className="header_navbar_items_title">

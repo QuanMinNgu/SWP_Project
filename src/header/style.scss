@@ -22,6 +22,9 @@
             display: flex;
         }
         &_link {
+            @include mobile {
+                display: none;
+            }
             & > img {
                 width: 4rem;
                 height: 4rem;
@@ -277,4 +280,90 @@
         transform: translateY(0%);
         opacity: 1;
     }
+}
+.header_mobile {
+    display: none;
+    @include mobile {
+        display: flex;
+    }
+}
+.header_mobile_icons {
+    font-size: 3rem;
+}
+.header_mobile_abs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 30%;
+    bottom: 0;
+    background-color: white;
+    box-shadow: 0 0 0.9rem 0.2rem #0dcaf0;
+    z-index: 200;
+    border-radius: 0 1rem 1rem 0;
+}
+.header_mobile_abs_a {
+    animation: h_appearing ease 0.5s forwards;
+}
+.header_mobile_abs_d {
+    animation: h_disappearing ease 0.5s forwards;
+}
+
+@keyframes h_appearing {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+@keyframes h_disappearing {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-110%);
+    }
+}
+.header_mobile_close_icons {
+    display: flex;
+    justify-content: flex-end;
+}
+.header_mobile_close_icons_wrap {
+    width: 4rem;
+    height: 4rem;
+    border: 0.1rem solid rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    font-size: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 0.7rem;
+    margin-bottom: 2rem;
+    margin-top: 1.3rem;
+    margin-right: 1rem;
+}
+.header_mobile_abs_p {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 199;
+}
+.items_head {
+    border-top: 0.1rem solid rgba(0, 0, 0, 0.3);
+}
+.header_mobile_items {
+    width: 100%;
+    height: 6.5rem;
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    font-size: 2.5rem;
+    color: black;
+    font-weight: 500;
+}
+.header_mobile_link {
+    text-decoration: none;
 }
