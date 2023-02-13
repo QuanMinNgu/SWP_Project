@@ -128,6 +128,7 @@ const CourseManager = () => {
             });
             dispatch(isSuccess());
             setTypes(data?.data?.types);
+            titleRef.current.value = "";
         } catch (err) {
             dispatch(isFailing());
             return toast.error(err?.response?.data?.msg);
