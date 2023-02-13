@@ -37,14 +37,14 @@ const TypeCourseCard = ({ item }) => {
         dispatch(isLoading());
         console.log({
             token: auth.user?.accessToken,
-            title: titleRef.current.value,
+            courseTypeName: titleRef.current.value,
         });
         try {
             const data = await axios.post(
                 `/api/type_course/update?id=${item?.id}`,
                 {
                     token: auth.user?.accessToken,
-                    title: titleRef.current.value,
+                    courseTypeName: titleRef.current.value,
                 }
             );
             dispatch(isSuccess());
@@ -56,7 +56,7 @@ const TypeCourseCard = ({ item }) => {
     };
     return (
         <div className="expertCourse_type_remain_card">
-            {item?.title}
+            {item?.courseTypeName}
             <div className="expertCourse_type_remain_card_abs">
                 <button
                     onClick={() => {
@@ -91,7 +91,7 @@ const TypeCourseCard = ({ item }) => {
                         </div>
                         <textarea
                             ref={titleRef}
-                            defaultValue={item?.title}
+                            defaultValue={item?.courseTypeName}
                             className="textArea_type"
                             type="text"
                             placeholder="Enter title of type"
