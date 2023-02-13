@@ -18,8 +18,6 @@ import { UserContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 const CreateCourse = () => {
-    const titleRef = useRef();
-    const contentRef = useRef();
     const benefitRef = useRef();
     const [benefit, setBenefit] = useState([]);
     const [courseExpert, setCourseExpert] = useState("");
@@ -36,6 +34,9 @@ const CreateCourse = () => {
     const { cache } = useContext(UserContext);
 
     const [selectedOption, setSelectedOption] = useState(null);
+
+    const [title, setTitle] = useState("");
+    const [contentSmall, setContentSmall] = useState("");
 
     const dispatch = useDispatch();
 
@@ -189,7 +190,7 @@ const CreateCourse = () => {
     const timeOfLessonRef = useRef();
 
     const handleCreateNewCourse = async () => {
-        let contentArr = contentRef.current.innerHTML + "--?--";
+        let contentArr = contentSmall + "--?--";
         benefit.forEach((item) => {
             contentArr += item + "--?--";
         });
@@ -213,7 +214,7 @@ const CreateCourse = () => {
             }
         }
         const product = {
-            title: titleRef.current.innerHTML,
+            title: title,
             content: contentArr,
             lessons: lesson,
             image: urlImage,
@@ -226,7 +227,7 @@ const CreateCourse = () => {
         dispatch(isLoading());
         try {
             const data = await axios.post("/api/course/create", {
-                title: titleRef.current.innerHTML,
+                title: title,
                 content: contentArr,
                 courseExpert: courseExpert?.id,
                 kind: selectedOption?.value,
@@ -274,15 +275,31 @@ const CreateCourse = () => {
         <div className="managerCourse">
             <div className="row">
                 <div className="col c-12 m-8 l-8">
-                    <div className="course_detail_name">
-                        <h3 ref={titleRef} contentEditable={true}>
-                            Title of Course (can edit)
-                        </h3>
+                    <div className="newPost_title">
+                        <div
+                            className="newPost_title_edit"
+                            contentEditable={true}
+                            onInput={(e) => {
+                                setTitle(e.target.innerHTML);
+                            }}
+                        ></div>
+                        {!title && (
+                            <div className="newPost_title_content">Tiêu đề</div>
+                        )}
                     </div>
-                    <div className="course_detail_content">
-                        <p ref={contentRef} contentEditable={true}>
-                            Description of course (can edit)
-                        </p>
+                    <div className="newPost_title">
+                        <div
+                            className="newPost_title_edit_meta"
+                            contentEditable={true}
+                            onInput={(e) => {
+                                setContentSmall(e.target.innerHTML);
+                            }}
+                        ></div>
+                        {!contentSmall && (
+                            <div className="newPost_title_content_meta">
+                                Nội dung
+                            </div>
+                        )}
                     </div>
                     <div className="course_detail_learn">
                         <h3>The benefits of this course:</h3>
