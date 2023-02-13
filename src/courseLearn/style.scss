@@ -242,3 +242,94 @@
         font-weight: 400;
     }
 }
+.courseLearn_mobile {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 30%;
+    bottom: 0;
+    z-index: 160;
+    background-color: white;
+    box-shadow: 0 0 1rem 0.2rem #0dcaf0;
+}
+.courseLearn_mobile_a {
+    animation: appearingBarsMobile ease 0.7s forwards;
+}
+.courseLearn_mobile_d {
+    animation: disappearingBarsMobile ease 0.7s forwards;
+}
+.courseLearn_close {
+    display: flex;
+    justify-content: flex-end;
+}
+.courseLearn_close_icons {
+    margin-top: 1.4rem;
+    margin-right: 1rem;
+    width: 4rem;
+    height: 4rem;
+    border: 0.1rem solid rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 4rem;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+.courseLearn_mobile_card {
+    width: 100%;
+    height: calc(100vh - 9rem);
+    overflow-y: scroll;
+}
+.courseLearn_mobile_card::-webkit-scrollbar {
+    display: hidden;
+}
+.courseLearn_mobile_abs {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 149;
+}
+.coursLearn_mobile_bars {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 6rem;
+    height: 6rem;
+    background-color: #ff8a08;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 5rem;
+    color: white;
+    padding-bottom: 1rem;
+    z-index: 140;
+    animation: opacityBars ease 0.7s 0.3s;
+}
+@keyframes opacityBars {
+    0% {
+        transform: translateX(10rem);
+    }
+    100% {
+        transform: translateX(0rem);
+    }
+}
+@keyframes appearingBarsMobile {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+@keyframes disappearingBarsMobile {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(110%);
+    }
+}
