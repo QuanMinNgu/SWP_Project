@@ -4,15 +4,15 @@ function CourseTypeVoucher({ chooseCourse, setChooseCourse }) {
   const arr = [
     {
       id: 1,
-      name: "Dinh Hoan",
+      name: "Software",
     },
     {
       id: 2,
-      name: "Vuong",
+      name: "Life",
     },
     {
       id: 3,
-      name: "Dinh",
+      name: "Soft Skill",
     },
   ];
   const options = arr.map((item) => {

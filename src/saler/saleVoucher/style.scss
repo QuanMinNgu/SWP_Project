@@ -102,9 +102,13 @@
   &_header {
     display: flex;
     flex-direction: column;
-    & > h3 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+    position: relative;
+
+    &_title {
+      height: 4rem;
+      outline: none;
+      font-size: 3.5rem;
+      font-weight: 800;
     }
     &_des {
       margin-top: 2rem;
@@ -328,4 +332,14 @@
 .voucher_bottom {
   display: flex;
   justify-content: center;
+}
+.title_voucher {
+  position: absolute;
+  top: 0;
+  z-index: 5;
+  left: 0;
+  font-size: 3.5rem;
+  outline: none;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.4);
 }
