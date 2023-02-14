@@ -4,6 +4,7 @@ import CoursePanel from "./CoursePanel";
 import { Link, useNavigate } from "react-router-dom";
 import Pay from "../payment/Pay";
 import Rating from "../rating/Rating";
+import VocherTemplate from "../voucher/VoucherTemplate";
 const CourseDetail = () => {
     const [payment, setPayment] = useState(false);
 
@@ -102,6 +103,7 @@ const CourseDetail = () => {
                             <i>Tự tin khi học tập</i>
                         </li>
                     </ul>
+                    <VocherTemplate />
                 </div>
             </div>
             <div className="rating_container">
