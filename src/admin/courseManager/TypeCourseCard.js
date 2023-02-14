@@ -13,7 +13,7 @@ const TypeCourseCard = ({ item }) => {
             dispatch(isLoading());
             try {
                 const data = await axios.post(
-                    `/api/type_course/delete?id=${item?.id}`,
+                    `/api/type_course/delete?id=${item?.courseTypeID}`,
                     {
                         token: auth.user?.accessToken,
                     }
@@ -41,7 +41,7 @@ const TypeCourseCard = ({ item }) => {
         });
         try {
             const data = await axios.post(
-                `/api/type_course/update?id=${item?.id}`,
+                `/api/type_course/update?id=${item?.courseTypeID}`,
                 {
                     token: auth.user?.accessToken,
                     courseTypeName: titleRef.current.value,
