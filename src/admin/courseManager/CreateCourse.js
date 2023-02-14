@@ -37,6 +37,7 @@ const CreateCourse = () => {
 
     const [title, setTitle] = useState("");
     const [contentSmall, setContentSmall] = useState("");
+    const [newPrice, setNewPrice] = useState("");
 
     const dispatch = useDispatch();
 
@@ -189,7 +190,12 @@ const CreateCourse = () => {
     const numOfLessonRef = useRef();
     const timeOfLessonRef = useRef();
 
+    const idRef = useRef(null);
+
     const handleCreateNewCourse = async () => {
+        if (!title || !contentSmall || !newPrice) {
+            return toast.error("Vui lòng điền hết thông tin");
+        }
         let contentArr = contentSmall + "--?--";
         benefit.forEach((item) => {
             contentArr += item + "--?--";
@@ -213,22 +219,13 @@ const CreateCourse = () => {
                 return;
             }
         }
-        const product = {
-            title: title,
-            content: contentArr,
-            lessons: lesson,
-            image: urlImage,
-            courseExpert: courseExpert?.id,
-            kind: selectedOption?.value,
-            price: priceRef.current.innerHTML * 1,
-        };
 
         console.log({
             title: title,
             content: contentArr,
             courseExpert: courseExpert?.id,
             kind: selectedOption?.value,
-            price: priceRef.current.innerHTML * 1,
+            price: newPrice * 1,
             token: auth.user?.accessToken,
         });
         dispatch(isLoading());
@@ -238,39 +235,38 @@ const CreateCourse = () => {
                 content: contentArr,
                 courseExpert: courseExpert?.id,
                 kind: selectedOption?.value,
-                price: priceRef.current.innerHTML * 1,
+                price: newPrice * 1,
                 token: auth.user?.accessToken,
             });
             dispatch(isSuccess());
             toast.success(data?.data?.msg);
-            handleCreatePakages(data?.data?.id);
+            idRef.current = data?.data?.id;
         } catch (err) {
             toast.error(err?.response?.data?.msg);
             dispatch(isFailing());
         }
     };
 
-    useEffect(() => {
-        console.log(lesson);
-    }, [lesson]);
-
-    const handleCreatePakages = async (id) => {
-        dispatch(isLoading());
-        console.log(lesson);
-        try {
-            const data = await axios.post(
-                `/api/course/update_pakage?id=${id}`,
-                {
-                    lessons: lesson,
-                    token: auth.user?.accessToken,
-                }
-            );
-            dispatch(isSuccess());
-            toast.success(data?.data?.msg);
-            handleCreatePakages(data?.data?.id);
-        } catch (err) {
-            toast.error(err?.response?.data?.msg);
-            dispatch(isFailing());
+    const handleCreatePakageForACourse = async () => {
+        if (idRef.current) {
+            dispatch(isLoading());
+            console.log(lesson);
+            try {
+                const data = await axios.post(
+                    `/api/course/update_pakage?id=${idRef.current}`,
+                    {
+                        lessons: lesson,
+                        token: auth.user?.accessToken,
+                    }
+                );
+                dispatch(isSuccess());
+                toast.success(data?.data?.msg);
+            } catch (err) {
+                toast.error(err?.response?.data?.msg);
+                dispatch(isFailing());
+            }
+        } else {
+            return toast.error("Vui lòng Save khóa học trước.");
         }
     };
 
@@ -483,11 +479,29 @@ const CreateCourse = () => {
                         </div>
                     </div>
                     <div
-                        className="course_detail_price"
-                        ref={priceRef}
-                        contentEditable={true}
+                        style={{ marginLeft: "6rem" }}
+                        className="newPost_title"
                     >
-                        Enter Price
+                        <div
+                            style={{
+                                color: "#F05123",
+                            }}
+                            className="newPost_title_edit"
+                            contentEditable={true}
+                            onInput={(e) => {
+                                setNewPrice(e.target.innerHTML);
+                            }}
+                        ></div>
+                        {!newPrice && (
+                            <div
+                                style={{
+                                    color: "#F05123",
+                                }}
+                                className="newPost_title_content"
+                            >
+                                Enter Price
+                            </div>
+                        )}
                     </div>
                     <div className="course_detail_button">
                         <button
@@ -496,6 +510,13 @@ const CreateCourse = () => {
                             className="save_button"
                         >
                             Save
+                        </button>
+                        <button
+                            className="save_button"
+                            style={{ marginLeft: "0.5rem" }}
+                            onClick={handleCreatePakageForACourse}
+                        >
+                            Save Package
                         </button>
                     </div>
                     <div className="type_select">
