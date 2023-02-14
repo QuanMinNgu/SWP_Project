@@ -4,6 +4,9 @@
   @include middleSmall {
     width: calc(100% - 24px);
   }
+  @include mobile {
+    width: calc(100% - 24px);
+  }
   border-radius: 2rem;
   flex-shrink: 0;
   margin-left: 24px;

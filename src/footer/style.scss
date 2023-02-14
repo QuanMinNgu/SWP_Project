@@ -10,6 +10,9 @@
     display: flex;
     min-width: 700px;
     flex-wrap: wrap;
+    @include mobile {
+      min-width: 0;
+    }
   }
 }
 .footer_info {
@@ -17,6 +20,9 @@
   flex-direction: column;
   width: calc(100% / 3);
   @include middleSmall {
+    width: 100%;
+  }
+  @include mobile {
     width: 100%;
   }
   &_header {
@@ -49,6 +55,12 @@
     margin-top: 3rem;
     justify-content: center;
   }
+  @include mobile {
+    width: 100%;
+    align-items: flex-start;
+    margin-top: 3rem;
+    justify-content: center;
+  }
   &_header > h2 {
     color: #fff;
     font-size: 2.2rem;
@@ -74,10 +86,16 @@
   margin-top: 100px;
   width: 100%;
   justify-content: space-between;
+  @include mobile {
+    flex-wrap: wrap;
+  }
 
   &_left {
     font-size: 1.6rem;
     @include middleSmall {
+      width: 100%;
+    }
+    @include mobile {
       width: 100%;
     }
   }
@@ -85,6 +103,12 @@
     text-decoration: none;
     @include middleSmall {
       width: 100%;
+    }
+    @include mobile {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      margin-top: 2rem;
     }
   }
   &_right > a:hover > i {

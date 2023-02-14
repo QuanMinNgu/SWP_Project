@@ -1,9 +1,30 @@
-import React, { useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import BlogCard from "../card/BlogCard";
+import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import "./style.scss";
 const Blog = () => {
+  const dispatch = useDispatch();
+  const [listBLog, setListBlog] = useState([]);
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+  useEffect(() => {
+    const axiosGetAllBlog = async () => {
+      dispatch(isLoading());
+      try {
+        const res = await axios.get("/api/blog");
+        setListBlog(res?.data?.blogs);
+        console.log(res?.data?.blogs);
+        dispatch(isSuccess());
+      } catch (err) {
+        dispatch(isFailing());
+        return toast.error(err?.response?.date?.msg);
+      }
+    };
+    axiosGetAllBlog();
   }, []);
   return (
     <div className="blog_container">
@@ -23,12 +44,9 @@ const Blog = () => {
       </div>
       <div className="blog_container_body">
         <div className="blog_container_body_cards">
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
+          {listBLog?.map((item, index) => {
+            return <BlogCard item={item} key={index} />;
+          })}
         </div>
       </div>
     </div>
