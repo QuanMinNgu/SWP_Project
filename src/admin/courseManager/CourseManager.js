@@ -129,6 +129,7 @@ const CourseManager = () => {
             dispatch(isSuccess());
             setTypes(data?.data?.types);
             toast.success(data?.data?.msg);
+            console.log(data?.data?.types);
             titleRef.current.value = "";
         } catch (err) {
             dispatch(isFailing());
