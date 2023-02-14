@@ -93,7 +93,7 @@ const UserManager = () => {
                         <tr className="s_trow">
                             <th className="u_tstt">STT</th>
                             <th className="u_tuser">User</th>
-                            <th className="u_trule">Rule</th>
+                            <th className="u_trule">Role</th>
                             <th className="u_tbars"></th>
                         </tr>
                     </thead>

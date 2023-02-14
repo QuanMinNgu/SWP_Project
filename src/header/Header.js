@@ -51,7 +51,7 @@ const Header = () => {
                                     setAccount(false);
                                 }}
                             >
-                                My Courses
+                                Khóa học của tôi
                             </button>
                             {course && (
                                 <div className="header_navbar_items_course">
