@@ -11,6 +11,8 @@ const CourseLearn = () => {
     const [quizz, setQuizz] = useState(true);
     const [youtube, setYoutube] = useState(false);
 
+    const [bars, setbars] = useState(false);
+
     const { search } = useLocation();
 
     useEffect(() => {
@@ -128,6 +130,47 @@ const CourseLearn = () => {
                     </div>
                 </div>
             </div>
+            {bars && (
+                <div
+                    onClick={() => {
+                        setbars(false);
+                    }}
+                    className="courseLearn_mobile_abs"
+                ></div>
+            )}
+            <div
+                className={`courseLearn_mobile ${
+                    bars ? "courseLearn_mobile_a" : "courseLearn_mobile_d"
+                }`}
+            >
+                <div className="courseLearn_close">
+                    <div
+                        onClick={() => {
+                            setbars(false);
+                        }}
+                        className="courseLearn_close_icons"
+                    >
+                        {" "}
+                        &times;
+                    </div>
+                </div>
+                <div className="courseLearn_mobile_card">
+                    <CourseLearnCard />
+                    <CourseLearnCard />
+                    <CourseLearnCard />
+                    <CourseLearnCard />
+                </div>
+            </div>
+            {!bars && (
+                <div
+                    onClick={() => {
+                        setbars(true);
+                    }}
+                    className="coursLearn_mobile_bars"
+                >
+                    +
+                </div>
+            )}
         </div>
     );
 };

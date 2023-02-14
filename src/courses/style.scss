@@ -92,9 +92,15 @@
 
     & > img {
         object-fit: cover;
+        @include mobile {
+            margin-top: 2rem;
+        }
         width: 100%;
         height: 100%;
         border-radius: 2rem;
+    }
+    @include mobile {
+        margin-bottom: 2.4rem;
     }
 }
 .course_detail_price {
@@ -175,6 +181,6 @@
 .rating_container {
     margin-top: 10rem;
     border-top: 0.5rem solid rgba(0, 0, 0, 0.2);
-    border-radius: 10rem;
+    border-radius: 3rem;
     padding-top: 5rem;
 }

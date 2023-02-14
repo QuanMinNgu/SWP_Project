@@ -18,8 +18,6 @@ import { UserContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 const CreateCourse = () => {
-    const titleRef = useRef();
-    const contentRef = useRef();
     const benefitRef = useRef();
     const [benefit, setBenefit] = useState([]);
     const [courseExpert, setCourseExpert] = useState("");
@@ -36,6 +34,10 @@ const CreateCourse = () => {
     const { cache } = useContext(UserContext);
 
     const [selectedOption, setSelectedOption] = useState(null);
+
+    const [title, setTitle] = useState("");
+    const [contentSmall, setContentSmall] = useState("");
+    const [newPrice, setNewPrice] = useState("");
 
     const dispatch = useDispatch();
 
@@ -188,8 +190,13 @@ const CreateCourse = () => {
     const numOfLessonRef = useRef();
     const timeOfLessonRef = useRef();
 
+    const idRef = useRef(null);
+
     const handleCreateNewCourse = async () => {
-        let contentArr = contentRef.current.innerHTML + "--?--";
+        if (!title || !contentSmall || !newPrice) {
+            return toast.error("Vui lòng điền hết thông tin");
+        }
+        let contentArr = contentSmall + "--?--";
         benefit.forEach((item) => {
             contentArr += item + "--?--";
         });
@@ -212,28 +219,54 @@ const CreateCourse = () => {
                 return;
             }
         }
-        const product = {
-            title: titleRef.current.innerHTML,
+
+        console.log({
+            title: title,
             content: contentArr,
-            lessons: lesson,
-            image: urlImage,
             courseExpert: courseExpert?.id,
             kind: selectedOption?.value,
-            price: priceRef.current.innerHTML * 1,
-        };
-
-        console.log(product);
+            price: newPrice * 1,
+            token: auth.user?.accessToken,
+        });
         dispatch(isLoading());
         try {
             const data = await axios.post("/api/course/create", {
-                ...product,
+                title: title,
+                content: contentArr,
+                courseExpert: courseExpert?.id,
+                kind: selectedOption?.value,
+                price: newPrice * 1,
                 token: auth.user?.accessToken,
             });
             dispatch(isSuccess());
             toast.success(data?.data?.msg);
+            idRef.current = data?.data?.id;
         } catch (err) {
             toast.error(err?.response?.data?.msg);
             dispatch(isFailing());
+        }
+    };
+
+    const handleCreatePakageForACourse = async () => {
+        if (idRef.current) {
+            dispatch(isLoading());
+            console.log(lesson);
+            try {
+                const data = await axios.post(
+                    `/api/course/update_pakage?id=${idRef.current}`,
+                    {
+                        lessons: lesson,
+                        token: auth.user?.accessToken,
+                    }
+                );
+                dispatch(isSuccess());
+                toast.success(data?.data?.msg);
+            } catch (err) {
+                toast.error(err?.response?.data?.msg);
+                dispatch(isFailing());
+            }
+        } else {
+            return toast.error("Vui lòng Save khóa học trước.");
         }
     };
 
@@ -245,15 +278,31 @@ const CreateCourse = () => {
         <div className="managerCourse">
             <div className="row">
                 <div className="col c-12 m-8 l-8">
-                    <div className="course_detail_name">
-                        <h3 ref={titleRef} contentEditable={true}>
-                            Title of Course (can edit)
-                        </h3>
+                    <div className="newPost_title">
+                        <div
+                            className="newPost_title_edit"
+                            contentEditable={true}
+                            onInput={(e) => {
+                                setTitle(e.target.innerHTML);
+                            }}
+                        ></div>
+                        {!title && (
+                            <div className="newPost_title_content">Tiêu đề</div>
+                        )}
                     </div>
-                    <div className="course_detail_content">
-                        <p ref={contentRef} contentEditable={true}>
-                            Description of course (can edit)
-                        </p>
+                    <div className="newPost_title">
+                        <div
+                            className="newPost_title_edit_meta"
+                            contentEditable={true}
+                            onInput={(e) => {
+                                setContentSmall(e.target.innerHTML);
+                            }}
+                        ></div>
+                        {!contentSmall && (
+                            <div className="newPost_title_content_meta">
+                                Nội dung
+                            </div>
+                        )}
                     </div>
                     <div className="course_detail_learn">
                         <h3>The benefits of this course:</h3>
@@ -430,11 +479,29 @@ const CreateCourse = () => {
                         </div>
                     </div>
                     <div
-                        className="course_detail_price"
-                        ref={priceRef}
-                        contentEditable={true}
+                        style={{ marginLeft: "6rem" }}
+                        className="newPost_title"
                     >
-                        Enter Price
+                        <div
+                            style={{
+                                color: "#F05123",
+                            }}
+                            className="newPost_title_edit"
+                            contentEditable={true}
+                            onInput={(e) => {
+                                setNewPrice(e.target.innerHTML);
+                            }}
+                        ></div>
+                        {!newPrice && (
+                            <div
+                                style={{
+                                    color: "#F05123",
+                                }}
+                                className="newPost_title_content"
+                            >
+                                Enter Price
+                            </div>
+                        )}
                     </div>
                     <div className="course_detail_button">
                         <button
@@ -443,6 +510,13 @@ const CreateCourse = () => {
                             className="save_button"
                         >
                             Save
+                        </button>
+                        <button
+                            className="save_button"
+                            style={{ marginLeft: "0.5rem" }}
+                            onClick={handleCreatePakageForACourse}
+                        >
+                            Save Package
                         </button>
                     </div>
                     <div className="type_select">

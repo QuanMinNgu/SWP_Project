@@ -37,7 +37,7 @@ const Header = () => {
                     <div className="header_search_icons">
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </div>
-                    <input type="text" placeholder="courses search..." />
+                    <input type="text" placeholder="Tìm kiếm khóa học..." />
                 </div>
             </div>
             {!auth.user?.accessToken ? (
@@ -51,7 +51,7 @@ const Header = () => {
                                     setAccount(false);
                                 }}
                             >
-                                My Courses
+                                Khóa học của tôi
                             </button>
                             {course && (
                                 <div className="header_navbar_items_course">

@@ -68,52 +68,52 @@ const Searching = () => {
             </div>
             <div className="searching_card">
                 <div className="row">
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
-                    <div className="col c-12 m-4 l-3">
+                    <div className="col c-12 m-6 l-3">
                         <Card />
                     </div>
                 </div>

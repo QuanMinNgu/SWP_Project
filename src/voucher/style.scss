@@ -1,33 +1,33 @@
 .voucher_template_warper {
-  height: 500px;
-  width: 500px;
+    height: 500px;
+    width: 500px;
 }
 .voucher_template {
-  font-family: "Itim";
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ef5353;
-  border-radius: 1rem;
-  &_top {
-    margin: 2rem 0;
-    & > h2 {
-      font-size: 3.6rem;
-    }
-  }
-  &_body {
+    font-family: "Itim", cursive;
     display: flex;
-    flex-wrap: wrap;
-    width: 80%;
-  }
+    flex-direction: column;
+    align-items: center;
+    background-color: #ef5353;
+    border-radius: 1rem;
+    &_top {
+        margin: 2rem 0;
+        & > h2 {
+            font-size: 3.6rem;
+        }
+    }
+    &_body {
+        display: flex;
+        flex-wrap: wrap;
+        width: 80%;
+    }
 }
 .v_name {
-  width: 100%;
-  margin-bottom: 2rem;
-  font-size: 2.6rem;
+    width: 100%;
+    margin-bottom: 2rem;
+    font-size: 2.6rem;
 }
 .t_time {
-  font-size: 2.6rem;
-  margin-bottom: 2rem;
-  width: 50%;
+    font-size: 2.6rem;
+    margin-bottom: 2rem;
+    width: 50%;
 }

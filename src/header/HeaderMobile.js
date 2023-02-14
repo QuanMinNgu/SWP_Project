@@ -36,6 +36,14 @@ const HeaderMobile = () => {
                         &times;
                     </div>
                 </div>
+                <div className="header_mobile_search">
+                    <div className="header_mobile_search_wrap">
+                        <div className="header_search_icons">
+                            <i className="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <input type="text" placeholder="Tìm kiếm khóa học..." />
+                    </div>
+                </div>
                 <Link className="header_mobile_link" to="/">
                     <div
                         onClick={() => {

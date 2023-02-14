@@ -9,11 +9,17 @@
     display: flex;
     justify-content: space-between;
     padding-right: 2rem;
+    @include mobile {
+        padding-right: 0.5rem;
+    }
     &_Navbar {
         display: flex;
         &_icons {
             width: 5.5rem;
             height: 100%;
+            @include mobile {
+                width: 4rem;
+            }
             display: flex;
             align-items: center;
             justify-content: center;
@@ -30,6 +36,9 @@
                 align-items: center;
                 margin: 0 1rem;
                 margin-right: 2rem;
+                @include mobile {
+                    margin-right: 1rem;
+                }
             }
             width: 3.2rem;
             height: 3.2rem;
@@ -78,6 +87,12 @@
         @include mobile {
             width: 100%;
         }
+        @include middleSmall {
+            width: 100%;
+        }
+        @include tablet {
+            width: 100%;
+        }
         border-right: 0.01rem solid rgba(0, 0, 0, 0.1);
         & > div {
             width: 100%;
@@ -90,6 +105,12 @@
             @include mobile {
                 height: 23rem;
             }
+            @include middleSmall {
+                height: 37rem;
+            }
+            @include tablet {
+                height: 40rem;
+            }
         }
     }
     &_content {
@@ -97,6 +118,16 @@
         position: fixed;
         z-index: 10;
         @include mobile {
+            display: none;
+            width: 0;
+            z-index: 0;
+        }
+        @include middleSmall {
+            display: none;
+            width: 0;
+            z-index: 0;
+        }
+        @include tablet {
             display: none;
             width: 0;
             z-index: 0;
@@ -231,5 +262,116 @@
     & > span {
         font-size: 3.2rem;
         font-weight: 400;
+    }
+}
+.courseLearn_mobile {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 30%;
+    bottom: 0;
+    z-index: 160;
+    background-color: white;
+    box-shadow: 0 0 1rem 0.2rem #0dcaf0;
+    display: none;
+    @include mobile {
+        display: block;
+    }
+    @include middleSmall {
+        display: block;
+    }
+    @include tablet {
+        display: block;
+        left: 50%;
+    }
+}
+.courseLearn_mobile_a {
+    animation: appearingBarsMobile ease 0.7s forwards;
+}
+.courseLearn_mobile_d {
+    animation: disappearingBarsMobile ease 0.7s forwards;
+}
+.courseLearn_close {
+    display: flex;
+    justify-content: flex-end;
+}
+.courseLearn_close_icons {
+    margin-top: 1.4rem;
+    margin-right: 1rem;
+    width: 4rem;
+    height: 4rem;
+    border: 0.1rem solid rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 4rem;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+.courseLearn_mobile_card {
+    width: 100%;
+    height: calc(100vh - 9rem);
+    overflow-y: scroll;
+}
+.courseLearn_mobile_card::-webkit-scrollbar {
+    display: hidden;
+}
+.courseLearn_mobile_abs {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 149;
+}
+.coursLearn_mobile_bars {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 6rem;
+    height: 6rem;
+    background-color: #ff8a08;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 5rem;
+    color: white;
+    padding-bottom: 1rem;
+    z-index: 140;
+    animation: opacityBars ease 0.7s 0.3s;
+    @include mobile {
+        display: flex;
+    }
+    @include middleSmall {
+        display: flex;
+    }
+    @include tablet {
+        display: flex;
+    }
+}
+@keyframes opacityBars {
+    0% {
+        transform: translateX(10rem);
+    }
+    100% {
+        transform: translateX(0rem);
+    }
+}
+@keyframes appearingBarsMobile {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+@keyframes disappearingBarsMobile {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(110%);
     }
 }

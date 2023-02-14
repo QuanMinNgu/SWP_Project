@@ -15,23 +15,23 @@ const Home = () => {
             <div className="home_sp_wrap">
                 <div className="home_sp_list">
                     <div className="home_sp_list_title">
-                        <h1>New courses</h1>
+                        <h1>Khóa học mới</h1>
                     </div>
                     <div className="home_sp_list_card">
                         <div className="row">
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
                         </div>
@@ -42,38 +42,39 @@ const Home = () => {
                             style={{ textDecoration: "none" }}
                             to="/courses/tim-kiem"
                         >
-                            See all <i className="fa-solid fa-angle-right"></i>
+                            Xem tất cả{" "}
+                            <i className="fa-solid fa-angle-right"></i>
                         </Link>
                     </div>
                 </div>
                 <div className="home_sp_list">
                     <div className="home_sp_list_title">
-                        <h1>Featured courses</h1>
+                        <h1>Khóa học nổi bật</h1>
                     </div>
                     <div className="home_sp_list_card">
                         <div className="row">
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
                         </div>
@@ -84,38 +85,39 @@ const Home = () => {
                             style={{ textDecoration: "none" }}
                             to="/courses/tim-kiem"
                         >
-                            See all <i className="fa-solid fa-angle-right"></i>
+                            Xem tất cả{" "}
+                            <i className="fa-solid fa-angle-right"></i>
                         </Link>
                     </div>
                 </div>
                 <div className="home_sp_list">
                     <div className="home_sp_list_title">
-                        <h1>Free courses</h1>
+                        <h1>Khóa học miễn phí</h1>
                     </div>
                     <div className="home_sp_list_card">
                         <div className="row">
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
-                            <div className="col c-12 m-4 l-3">
+                            <div className="col c-12 m-6 l-3">
                                 <Card />
                             </div>
                         </div>
@@ -126,7 +128,8 @@ const Home = () => {
                             style={{ textDecoration: "none" }}
                             to="/courses/tim-kiem"
                         >
-                            See all <i className="fa-solid fa-angle-right"></i>
+                            Xem tất cả{" "}
+                            <i className="fa-solid fa-angle-right"></i>
                         </Link>
                     </div>
                 </div>

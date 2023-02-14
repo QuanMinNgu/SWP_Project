@@ -25,6 +25,12 @@
             @include mobile {
                 display: none;
             }
+            @include middleSmall {
+                display: none;
+            }
+            @include tablet {
+                display: none;
+            }
             & > img {
                 width: 4rem;
                 height: 4rem;
@@ -38,17 +44,18 @@
             @include mobile {
                 display: none;
             }
+            @include middleSmall {
+                display: none;
+            }
+            @include tablet {
+                display: none;
+            }
         }
     }
     &_navbar {
         display: flex;
         align-items: center;
-        @include desktop {
-            display: flex;
-        }
-        @include desktopHigh {
-            display: flex;
-        }
+
         &_items {
             &_img {
                 width: 3rem;
@@ -286,6 +293,12 @@
     @include mobile {
         display: flex;
     }
+    @include middleSmall {
+        display: flex;
+    }
+    @include tablet {
+        display: flex;
+    }
 }
 .header_mobile_icons {
     font-size: 3rem;
@@ -300,6 +313,12 @@
     box-shadow: 0 0 0.9rem 0.2rem #0dcaf0;
     z-index: 200;
     border-radius: 0 1rem 1rem 0;
+    @include middleSmall {
+        right: 50%;
+    }
+    @include tablet {
+        right: 50%;
+    }
 }
 .header_mobile_abs_a {
     animation: h_appearing ease 0.5s forwards;
@@ -366,4 +385,25 @@
 }
 .header_mobile_link {
     text-decoration: none;
+}
+.header_mobile_search {
+    width: 100%;
+    display: flex;
+    margin-bottom: 3rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+.header_mobile_search_wrap {
+    display: flex;
+    align-items: center;
+    & > input {
+        width: 80%;
+        height: 4rem;
+        outline: none;
+        border: none;
+        margin-left: 0.5rem;
+    }
+    width: 80%;
+    border: 0.1rem solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
 }

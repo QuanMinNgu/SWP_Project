@@ -10,21 +10,21 @@ const UserManagerCard = ({ setUserInfor, item }) => {
     const dispatch = useDispatch();
     const auth = useSelector((state) => state.auth);
 
-    const handleChangeRule = async (rule) => {
-        if (rule === item?.rule) {
+    const handleChangeRule = async (role) => {
+        if (role === item?.role) {
             return;
         }
         dispatch(isLoading());
         console.log({
             token: auth.user?.accessToken,
-            rule: rule,
+            role: role,
         });
         try {
             const data = await axios.post(
-                `/api/account/change_rule?id=${item?.id}`,
+                `/api/account/change_role?id=${item?.id}`,
                 {
                     token: auth.user?.accessToken,
-                    rule: rule,
+                    role: role,
                 }
             );
             toast.success(data?.data?.msg);
@@ -53,7 +53,7 @@ const UserManagerCard = ({ setUserInfor, item }) => {
                     </div>
                 </div>
             </th>
-            <th className="u_drule">{item?.rule}</th>
+            <th className="u_drule">{item?.role}</th>
             <th className="u_dbars">
                 <div
                     onClick={() => {
