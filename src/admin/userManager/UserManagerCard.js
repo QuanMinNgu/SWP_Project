@@ -21,7 +21,7 @@ const UserManagerCard = ({ setUserInfor, item }) => {
         });
         try {
             const data = await axios.post(
-                `/api/account/change_role?id=${item?.id}`,
+                `/api/account/change_role/id=${item?.id}`,
                 {
                     token: auth.user?.accessToken,
                     role: role,
