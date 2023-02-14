@@ -419,6 +419,13 @@ const CreateCourse = () => {
                                 }`}</b>
                             </li>
                         </ul>
+                        <button
+                            style={{ height: "4rem" }}
+                            className="button button_update"
+                            onClick={handleCreatePakageForACourse}
+                        >
+                            Save Package
+                        </button>
                     </div>
                     <div className="CoursePanel">
                         {lesson?.map((item, index) => (
@@ -510,13 +517,6 @@ const CreateCourse = () => {
                             className="save_button"
                         >
                             Save
-                        </button>
-                        <button
-                            className="save_button"
-                            style={{ marginLeft: "0.5rem" }}
-                            onClick={handleCreatePakageForACourse}
-                        >
-                            Save Package
                         </button>
                     </div>
                     <div className="type_select">
