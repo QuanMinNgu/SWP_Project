@@ -44,7 +44,7 @@ const Blog = () => {
       </div>
       <div className="blog_container_body">
         <div className="blog_container_body_cards">
-          {listBLog.map((item, index) => {
+          {listBLog?.map((item, index) => {
             return <BlogCard item={item} key={index} />;
           })}
         </div>
