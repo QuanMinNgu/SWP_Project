@@ -31,7 +31,7 @@ const BlogWrite = () => {
   }, [editorState]);
 
   const handleCreateNewBlog = async () => {
-    if (!title || !meta || !content) {
+    if (!title || !meta || !content || !select) {
       return toast.error("Vui lòng điền hết thông tin.");
     }
     dispatch(isLoading());
@@ -70,6 +70,7 @@ const BlogWrite = () => {
         return toast.error(err?.response?.data?.msg);
       }
     };
+    fetchGetAllType();
   }, []);
   const options = type?.map((item) => {
     return {
