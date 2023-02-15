@@ -59,13 +59,31 @@ const Reading = ({
             arr[inde].numLesson.push({
                 title: titleRef.current.value,
                 type: "reading",
-                value: content,
+                value: [
+                    {
+                        title: content,
+                        answers: null,
+                        correctAnswer: null,
+                    },
+                ],
+                link: null,
+                time: 0,
+                contentQuiz: null,
             });
         } else {
             arr[inde].numLesson.splice(addLesson?.childId, 0, {
                 title: titleRef.current.value,
                 type: "reading",
-                value: content,
+                value: [
+                    {
+                        title: content,
+                        answers: null,
+                        correctAnswer: null,
+                    },
+                ],
+                link: null,
+                time: 0,
+                contentQuiz: null,
             });
         }
         setLesson([...arr]);

@@ -28,7 +28,6 @@ const CreateCourse = () => {
     const [lesson, setLesson] = useState([]);
     const imageRef = useRef();
     const lessonRef = useRef();
-    const priceRef = useRef();
     const [addLesson, setAddLesson] = useState(false);
 
     const { cache } = useContext(UserContext);
@@ -60,6 +59,10 @@ const CreateCourse = () => {
         }
     }, [types]);
     const [courseExperts, setCourseExperts] = useState([]);
+
+    useEffect(() => {
+        console.log(lesson);
+    }, [lesson]);
 
     useEffect(() => {
         let here = true;
@@ -324,7 +327,7 @@ const CreateCourse = () => {
                             benefit?.map((item, index) => (
                                 <li
                                     className="benefitList"
-                                    key={item + "benefit"}
+                                    key={item + "benefit" + index}
                                 >
                                     {item}
                                     <div className="benefit_button">

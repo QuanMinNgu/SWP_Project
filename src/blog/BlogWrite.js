@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.scss";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
@@ -7,9 +7,55 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { isSuccess, isLoading, isFailing } from ".././redux/slice/auth";
 import axios from "axios";
+import Select from "react-select";
+import { UserContext } from "../App";
 const BlogWrite = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const [selectedOption, setSelectedOption] = useState(null);
+    const { cache } = useContext(UserContext);
+    const [types, setTypes] = useState([]);
 
+    let optionsKind = [
+        { value: "ha-noi", label: "Software" },
+        { value: "strawberry", label: "Financial" },
+        { value: "vanilla", label: "Marketing" },
+    ];
+
+    useEffect(() => {
+        if (types) {
+            optionsKind = types?.map((item) => {
+                return {
+                    value: item?.id,
+                    label: item?.title,
+                };
+            });
+        }
+    }, [types]);
+
+    useEffect(() => {
+        let here = true;
+        const url = "/api/type_course";
+        if (cache.current[url]) {
+            return setTypes(cache.current[url]);
+        }
+        dispatch(isLoading());
+        axios
+            .get(url)
+            .then((res) => {
+                if (!here) {
+                    return;
+                }
+                setTypes(res?.data?.types);
+                cache.current[url] = res?.data?.types;
+                dispatch(isSuccess());
+            })
+            .catch((err) => {
+                dispatch(isFailing());
+            });
+        return () => {
+            here = false;
+        };
+    }, []);
     const [title, setTitle] = useState("");
     const [meta, setMeta] = useState("");
     const [content, setContent] = useState("");
@@ -37,6 +83,7 @@ const BlogWrite = () => {
             title: title,
             meta: meta,
             content: content,
+            courseTypeID: selectedOption.value,
         });
         try {
             const data = await axios.post("/api/blog/create", {
@@ -44,6 +91,7 @@ const BlogWrite = () => {
                 title: title,
                 meta: meta,
                 content: content,
+                courseTypeID: selectedOption.value,
             });
             toast.success(data?.data?.msg);
             dispatch(isSuccess());
@@ -66,6 +114,15 @@ const BlogWrite = () => {
                 {!title && <div className="newPost_title_content">Tiêu đề</div>}
             </div>
             <div className="newPost_title">
+                <div>
+                    <Select
+                        className="search_wrap_select"
+                        defaultValue={selectedOption}
+                        onChange={setSelectedOption}
+                        options={optionsKind}
+                        placeholder="Kind"
+                    />
+                </div>
                 <div
                     className="newPost_title_edit_meta"
                     contentEditable={true}
@@ -74,9 +131,7 @@ const BlogWrite = () => {
                     }}
                 ></div>
                 {!meta && (
-                    <div className="newPost_title_content_meta">
-                        Nội dung nhỏ
-                    </div>
+                    <div className="newPost_title_content_meta_ref">Meta</div>
                 )}
             </div>
             <div className="newPost_content">
