@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { isSuccess, isLoading, isFailing } from ".././redux/slice/auth";
 import axios from "axios";
+import Select from "react-select";
+
 const BlogWrite = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
+  const [type, setType] = useState([]);
   const [title, setTitle] = useState("");
   const [meta, setMeta] = useState("");
   const [content, setContent] = useState("");
+  const [select, setSelect] = useState("");
   const handleChange = (data) => {
     setEditorState(data);
   };
@@ -36,6 +39,7 @@ const BlogWrite = () => {
       token: auth.user?.accessToken,
       title: title,
       meta: meta,
+      courseTypeID: select,
       content: content,
     });
     try {
@@ -43,6 +47,7 @@ const BlogWrite = () => {
         token: auth.user?.accessToken,
         blogName: title,
         blogMeta: meta,
+        courseTypeID: select,
         content: content,
       });
       toast.success(data?.data?.msg);
@@ -52,7 +57,26 @@ const BlogWrite = () => {
       dispatch(isFailing());
     }
   };
-
+  useEffect(() => {
+    const fetchGetAllType = async () => {
+      dispatch(isLoading());
+      try {
+        const res = await axios.get("/api/type_course");
+        console.log(res?.data?.types);
+        setType(res?.data?.types);
+        dispatch(isSuccess());
+      } catch (err) {
+        dispatch(isFailing());
+        return toast.error(err?.response?.data?.msg);
+      }
+    };
+  }, []);
+  const options = type?.map((item) => {
+    return {
+      value: item?.id,
+      label: item?.courseTypeName,
+    };
+  });
   return (
     <div className="newPost">
       <div className="newPost_title">
@@ -76,6 +100,12 @@ const BlogWrite = () => {
         {!meta && (
           <div className="newPost_title_content_meta">Nội dung nhỏ</div>
         )}
+      </div>
+      <div className="newPost_select">
+        <Select
+          options={options}
+          onChange={(choice) => setSelect(choice.value)}
+        />
       </div>
       <div className="newPost_content">
         <Editor
