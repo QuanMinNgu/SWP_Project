@@ -87,9 +87,6 @@ const CourseManager = () => {
     useEffect(() => {
         let here = true;
         const url = "/api/type_course";
-        if (cache.current[url]) {
-            return setTypes(cache.current[url]);
-        }
         dispatch(isLoading());
         axios
             .get(url)
