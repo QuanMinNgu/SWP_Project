@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./style.scss";
 import { Link } from "react-router-dom";
 import CourseHeadCard from "../card/CourseHeadCard";
 import AnnouceCard from "../card/AnnouceCard";
 import { useSelector } from "react-redux";
 import HeaderMobile from "./HeaderMobile";
+import { UserContext } from "../App";
 const Header = () => {
     const [course, setCourse] = useState(false);
     const [annouce, setAnnouce] = useState(false);
     const [account, setAccount] = useState(false);
 
     const auth = useSelector((state) => state.auth);
+
+    const { store } = useContext(UserContext);
 
     return (
         <div
@@ -117,6 +120,51 @@ const Header = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    {store?.rule === "admin" && (
+                                        <Link
+                                            style={{ textDecoration: "none" }}
+                                            to="/admin/dashboard"
+                                        >
+                                            <div
+                                                onClick={() => {
+                                                    setAccount(false);
+                                                }}
+                                                className="header_navbar_account_items"
+                                            >
+                                                Dashboard
+                                            </div>
+                                        </Link>
+                                    )}
+                                    {store?.rule === "sale" && (
+                                        <Link
+                                            style={{ textDecoration: "none" }}
+                                            to="/sale/vocher_manager"
+                                        >
+                                            <div
+                                                onClick={() => {
+                                                    setAccount(false);
+                                                }}
+                                                className="header_navbar_account_items"
+                                            >
+                                                Dashboard
+                                            </div>
+                                        </Link>
+                                    )}
+                                    {store?.rule === "courseExpert" && (
+                                        <Link
+                                            style={{ textDecoration: "none" }}
+                                            to="/course_expert/dashboard"
+                                        >
+                                            <div
+                                                onClick={() => {
+                                                    setAccount(false);
+                                                }}
+                                                className="header_navbar_account_items"
+                                            >
+                                                Dashboard
+                                            </div>
+                                        </Link>
+                                    )}
                                     <Link
                                         style={{ textDecoration: "none" }}
                                         to="/me/profile"
