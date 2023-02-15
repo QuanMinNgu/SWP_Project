@@ -81,6 +81,9 @@ const CourseManager = () => {
             here = false;
         };
     }, []);
+
+    const [typeUpdate, setTypeUpdate] = useState(false);
+
     useEffect(() => {
         let here = true;
         const url = "/api/type_course";
@@ -105,7 +108,7 @@ const CourseManager = () => {
         return () => {
             here = false;
         };
-    }, []);
+    }, [typeUpdate]);
 
     const handleChooseExpert = async () => {
         const check = window.confirm(
@@ -131,6 +134,7 @@ const CourseManager = () => {
             setTypes(data?.data?.types);
             toast.success(data?.data?.msg);
             titleRef.current.value = "";
+            setTypeUpdate(!typeUpdate);
         } catch (err) {
             dispatch(isFailing());
             return toast.error(err?.response?.data?.msg);
@@ -509,7 +513,12 @@ const CourseManager = () => {
                     <div className="expertCourse_type_course_remain">
                         <div className="expertCourse_type_Card_container">
                             {types?.map((item) => (
-                                <TypeCourseCard key={item?.id} item={item} />
+                                <TypeCourseCard
+                                    key={item?.id}
+                                    item={item}
+                                    setTypeUpdate={setTypeUpdate}
+                                    typeUpdate={typeUpdate}
+                                />
                             ))}
                         </div>
                     </div>

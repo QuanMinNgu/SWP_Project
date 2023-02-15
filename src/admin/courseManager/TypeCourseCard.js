@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 
-const TypeCourseCard = ({ item }) => {
+const TypeCourseCard = ({ item, setTypeUpdate, typeUpdate }) => {
     const dispatch = useDispatch();
     const auth = useSelector((state) => state.auth);
     const handleDeleteType = async () => {
@@ -20,6 +20,7 @@ const TypeCourseCard = ({ item }) => {
                 );
                 dispatch(isSuccess());
                 toast.success(data?.data?.msg);
+                setTypeUpdate(!typeUpdate);
             } catch (err) {
                 dispatch(isFailing());
                 return toast.error(err?.response?.data?.msg);
@@ -49,6 +50,7 @@ const TypeCourseCard = ({ item }) => {
             );
             dispatch(isSuccess());
             toast.success(data?.data?.msg);
+            setTypeUpdate(!typeUpdate);
         } catch (err) {
             dispatch(isFailing());
             return toast.error(err?.response?.data?.msg);
