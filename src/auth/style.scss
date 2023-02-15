@@ -1,129 +1,129 @@
-.auth{
+.auth {
     width: 100%;
-    min-height:100vh;
-    background-image: url("https://res.cloudinary.com/sttruyen/image/upload/v1669036421/Sttruyen/IGEQ_aoejzw.gif");
+    min-height: 100vh;
+    background-image: url("https://res.cloudinary.com/sttruyen/image/upload/v1676454388/stlearning/jrhusdag31joi5nuxw2g.jpg");
     background-repeat: no-repeat;
     background-size: 100%;
-    &_container{
+    &_container {
         display: flex;
         justify-content: center;
         width: 100%;
         min-height: 100vh;
         align-items: center;
     }
-    &_wrap{
+    &_wrap {
         width: 50%;
         min-height: 10rem;
-        border:0.1rem solid white;
+        border: 0.1rem solid rgba(0, 0, 0, 0.8);
         border-radius: 5rem;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        box-shadow: 0 0 0.5rem 0.2rem rgba(0,0,0,0.6);
-        padding:1rem;
-        &_title{
+        box-shadow: 0 0 0.5rem 0.2rem rgba(0, 0, 0, 0.6);
+        padding: 1rem;
+        &_title {
             width: 100%;
             text-align: center;
             margin-top: 0.5rem;
             font-size: 2rem;
             text-transform: uppercase;
-            color:white;
+            color: rgba(0, 0, 0, 0.8);
         }
-        &_input{
+        &_input {
             width: 80%;
             display: flex;
             flex-wrap: wrap;
             margin-top: 2rem;
-            & > label{
+            & > label {
                 width: 100%;
                 font-size: 1.7rem;
-                color:white;
+                color: rgba(0, 0, 0, 0.8);
                 margin-bottom: 1rem;
                 margin-left: 0.8rem;
                 font-weight: 800;
             }
-            & > input{
+            & > input {
                 width: 100%;
                 height: 6rem;
                 border-radius: 5rem;
-                padding:0 1.3rem;
+                padding: 0 1.3rem;
                 outline: none;
                 font-size: 1.7rem;
                 background-color: transparent;
-                color:white;
-                &::placeholder{
-                    color:white;
+                color: rgba(0, 0, 0, 0.8);
+                &::placeholder {
+                    color: rgba(0, 0, 0, 0.8);
                 }
             }
         }
-        &_forgot{
+        &_forgot {
             width: 100%;
             text-align: center;
             margin-top: 2rem;
-            &_link{
-                color:red;
+            &_link {
+                color: red;
                 font-size: 1.5rem;
             }
         }
-        &_appear{
+        &_appear {
             margin-top: 1.5rem;
             display: flex;
             align-items: center;
-            & > label{
+            & > label {
                 font-size: 1.7rem;
-                color:rgba(0,0,0,0.8);
+                color: rgba(0, 0, 0, 0.8);
                 margin-right: 1rem;
             }
-            & > input{
+            & > input {
                 width: 2rem;
                 height: 2rem;
             }
         }
-        &_button{
+        &_button {
             width: 100%;
             display: flex;
             justify-content: center;
             margin-top: 2rem;
-            & > button{
+            & > button {
                 width: 15rem;
                 height: 4.8rem;
-                background-color: #FF8A08;
-                border:none;
-                color:white;
+                background-color: #ff8a08;
+                border: none;
+                color: rgba(0, 0, 0, 0.8);
                 border-radius: 4rem;
                 font-size: 1.7rem;
                 cursor: pointer;
                 transition: all ease 0.1s;
-                &:hover{
+                &:hover {
                     transform: scale(1.1);
                 }
             }
         }
-        &_register{
+        &_register {
             margin-top: 1rem;
-            color:white;
+            color: rgba(0, 0, 0, 0.8);
             font-size: 1.5rem;
-            &_link{
-                color:white;
+            &_link {
+                color: rgba(0, 0, 0, 0.8);
             }
         }
-        &_other{
+        &_other {
             width: 100%;
             margin-top: 3rem;
-            padding:0 2rem;
+            padding: 0 2rem;
             margin-bottom: 1rem;
             display: flex;
             justify-content: center;
-            
-            &_fb{
-                background-color: #0E8DF2;
+
+            &_fb {
+                background-color: #0e8df2;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color:white;
+                color: rgba(0, 0, 0, 0.8);
                 font-size: 1.5rem;
                 border-radius: 0.5rem;
-                padding:0 1rem;
+                padding: 0 1rem;
                 margin-left: 1rem;
                 height: 3.35rem;
                 cursor: pointer;
