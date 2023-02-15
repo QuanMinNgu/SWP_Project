@@ -45,15 +45,15 @@ const CourseDetail = () => {
                     <div className="course_detail_timeLine">
                         <ul>
                             <li>
-                                <b>7</b> Pakages
+                                <b>7</b> Topics
                             </li>
                             <li>.</li>
                             <li>
-                                <b>37</b> bài học
+                                <b>37</b> Lessons
                             </li>
                             <li>.</li>
                             <li>
-                                Thời lượng <b>06h : 45m : 00s</b>
+                                Times <b>06h : 45m : 00s</b>
                             </li>
                         </ul>
                     </div>

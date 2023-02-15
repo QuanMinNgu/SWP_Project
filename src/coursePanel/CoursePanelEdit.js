@@ -229,24 +229,18 @@ const CoursePanelEdit = ({
                             {ind + 1}. {item?.title}
                         </div>
                         <div>
-                            {item?.type === "quiz"
-                                ? item?.value?.length
-                                : item?.type === "listening"
-                                ? `${
-                                      Math.floor(item?.time / 60) < 10
-                                          ? "0"
-                                          : ""
-                                  }${Math.floor(item?.time / 60)} : ${
-                                      Math.floor(item?.time) -
-                                          Math.floor(item?.time / 60) * 60 <
-                                      10
-                                          ? "0"
-                                          : ""
-                                  }${
-                                      Math.floor(item?.time) -
-                                      Math.floor(item?.time / 60) * 60
-                                  }`
-                                : "Reading"}
+                            {`${
+                                Math.floor(item?.time / 60) < 10 ? "0" : ""
+                            }${Math.floor(item?.time / 60)} : ${
+                                Math.floor(item?.time) -
+                                    Math.floor(item?.time / 60) * 60 <
+                                10
+                                    ? "0"
+                                    : ""
+                            }${
+                                Math.floor(item?.time) -
+                                Math.floor(item?.time / 60) * 60
+                            }`}
                         </div>
                         <div className="PanelCard_edit_button_wrap">
                             <button

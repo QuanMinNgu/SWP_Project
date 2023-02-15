@@ -14,7 +14,7 @@ import Loading from "./loading/Loading";
 import { isSuccess } from "./redux/slice/auth";
 export const UserContext = createContext();
 function App() {
-    const [store, setStore] = useState({ rule: "courseExpert" });
+    const [store, setStore] = useState({ rule: "admin" });
 
     const dispatch = useDispatch();
     useEffect(() => {

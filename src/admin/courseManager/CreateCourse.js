@@ -144,6 +144,10 @@ const CreateCourse = () => {
         }
     };
 
+    useEffect(() => {
+        console.log(lesson);
+    }, [lesson]);
+
     const handleCreateLesson = () => {
         setLesson([
             ...lesson,
@@ -176,9 +180,7 @@ const CreateCourse = () => {
         lesson?.forEach((item) => {
             coun += item?.numLesson?.length;
             item?.numLesson?.forEach((item) => {
-                if (item?.type === "listening") {
-                    tim += item?.time;
-                }
+                tim += item?.time * 1;
             });
         });
         setNumberOfLesson({

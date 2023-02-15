@@ -14,6 +14,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
     const contentRef = useRef(null);
     const answerRef = useRef(null);
     const contentAnswerRef = useRef(null);
+    const timesRef = useRef();
     const contentQuizRef = useRef();
 
     const [editQuesion, setEditQuestion] = useState({});
@@ -112,7 +113,11 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
     };
 
     const handleCreateQuiz = () => {
-        if (!titleRef.current.value) {
+        if (
+            !titleRef.current.value ||
+            !contentQuizRef.current.value ||
+            !timesRef.current.value
+        ) {
             return toast.error("Please enter value.");
         }
         const arr = lesson;
@@ -124,7 +129,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                 value: [...quesions],
                 contentQuiz: contentQuizRef.current.value,
                 link: null,
-                time: 0,
+                time: timesRef.current.value * 1,
             });
         } else {
             arr[inde].numLesson.splice(addLesson?.childId, 0, {
@@ -133,7 +138,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                 value: [...quesions],
                 contentQuiz: contentQuizRef.current.value,
                 link: null,
-                time: 0,
+                time: timesRef.current.value * 1,
             });
         }
         setLesson([...arr]);
@@ -447,6 +452,13 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                             <textarea
                                 ref={contentQuizRef}
                                 placeholder="Enter content of this quiz"
+                            />
+                        </div>
+                        <div className="lessonCreate_input">
+                            <input
+                                ref={timesRef}
+                                type="number"
+                                placeholder="Enter times of quiz (second)"
                             />
                         </div>
                         <div className="lessonCreate_button_form">
