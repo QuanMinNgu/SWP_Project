@@ -119,12 +119,12 @@ const CourseManager = () => {
 		}
 		dispatch(isLoading());
 		console.log({
-			token: auth.user?.accessToken,
+			token: auth.user?.token,
 			courseTypeName: titleRef.current.value,
 		});
 		try {
 			const data = await axios.post("/api/type_course/create", {
-				token: auth.user?.accessToken,
+				token: auth.user?.token,
 				courseTypeName: titleRef.current.value,
 			});
 			dispatch(isSuccess());
