@@ -22,29 +22,20 @@ export const UserContext = createContext();
 function App() {
 	const [store, setStore] = useState({ rule: "user" });
 
-	const navigate = useNavigate();
-
 	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(isSuccess());
-	}, []);
-	const cacheRef = useRef({});
 	const auth = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		if (auth.user?.token) {
 			const decoded = jwt_decode(auth.user?.token);
-			console.log(decoded);
 			setStore({ rule: decoded.rule });
-			if (decoded.rule === "[ROLE_ADMIN]") {
-				return navigate("/admin/dashboard");
-			} else if (decoded.rule === "[ROLE_COURSE_EXPERT]") {
-				return navigate("/course_expert/dashboard");
-			} else if (decoded.rule === "[ROLE_SALE]") {
-				return navigate("/sale/vocher_manager");
-			}
 		}
 	}, [auth.user?.token]);
+	useEffect(() => {
+		dispatch(isSuccess());
+	}, []);
+	const cacheRef = useRef({});
+
 	return (
 		<UserContext.Provider value={{ store, setStore, cache: cacheRef }}>
 			<Router>
@@ -70,7 +61,7 @@ function App() {
 								/>
 							);
 						})}
-						{store.rule === "[ROLE_ADMIN]" &&
+						{store.rule === "ROLE_ADMIN" &&
 							adminRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
@@ -91,7 +82,7 @@ function App() {
 									/>
 								);
 							})}
-						{store.rule === "[ROLE_SALE]" &&
+						{store.rule === "ROLE_SALE" &&
 							saleRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
@@ -112,7 +103,7 @@ function App() {
 									/>
 								);
 							})}
-						{store.rule === "[ROLE_COURSE_EXPERT]" &&
+						{store.rule === "ROLE_COURSE_EXPERT" &&
 							courseExpertRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
