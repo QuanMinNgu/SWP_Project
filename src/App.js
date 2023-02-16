@@ -28,7 +28,7 @@ function App() {
 	useEffect(() => {
 		if (auth.user?.token) {
 			const decoded = jwt_decode(auth.user?.token);
-			setStore({ rule: decoded.rule });
+			setStore({ rule: decoded.sub });
 			console.log(decoded);
 		}
 	}, [auth.user?.token]);
