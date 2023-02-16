@@ -119,7 +119,7 @@ const Header = () => {
 											</div>
 										</div>
 									</div>
-									{store?.rule === "admin" && (
+									{store?.rule === "[ROLE_ADMIN]" && (
 										<Link
 											style={{ textDecoration: "none" }}
 											to="/admin/dashboard"
@@ -134,7 +134,7 @@ const Header = () => {
 											</div>
 										</Link>
 									)}
-									{store?.rule === "sale" && (
+									{store?.rule === "[ROLE_SALE]" && (
 										<Link
 											style={{ textDecoration: "none" }}
 											to="/sale/vocher_manager"
@@ -149,7 +149,7 @@ const Header = () => {
 											</div>
 										</Link>
 									)}
-									{store?.rule === "courseExpert" && (
+									{store?.rule === "[ROLE_COURSE_EXPERT]" && (
 										<Link
 											style={{ textDecoration: "none" }}
 											to="/course_expert/dashboard"

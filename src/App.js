@@ -1,5 +1,10 @@
 import "./App.scss";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	useNavigate,
+} from "react-router-dom";
 import {
 	adminRouter,
 	courseExpertRouter,
@@ -17,6 +22,8 @@ export const UserContext = createContext();
 function App() {
 	const [store, setStore] = useState({ rule: "user" });
 
+	const navigate = useNavigate();
+
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(isSuccess());
@@ -29,6 +36,13 @@ function App() {
 			const decoded = jwt_decode(auth.user?.token);
 			console.log(decoded);
 			setStore({ rule: decoded.rule });
+			if (decoded.rule === "[ROLE_ADMIN]") {
+				return navigate("/admin/dashboard");
+			} else if (decoded.rule === "[ROLE_COURSE_EXPERT]") {
+				return navigate("/course_expert/dashboard");
+			} else if (decoded.rule === "[ROLE_SALE]") {
+				return navigate("/sale/vocher_manager");
+			}
 		}
 	}, [auth.user?.token]);
 	return (
@@ -56,7 +70,7 @@ function App() {
 								/>
 							);
 						})}
-						{store.rule === "admin" &&
+						{store.rule === "[ROLE_ADMIN]" &&
 							adminRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
@@ -77,7 +91,7 @@ function App() {
 									/>
 								);
 							})}
-						{store.rule === "sale" &&
+						{store.rule === "[ROLE_SALE]" &&
 							saleRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
@@ -98,7 +112,7 @@ function App() {
 									/>
 								);
 							})}
-						{store.rule === "courseExpert" &&
+						{store.rule === "[ROLE_COURSE_EXPERT]" &&
 							courseExpertRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
