@@ -16,11 +16,11 @@ const Home = () => {
 
 	useEffect(() => {
 		if (auth.user?.token) {
-			if (store?.rule === "ROLE_ADMIN") {
+			if (store?.rule === "[ROLE_ADMIN]") {
 				return navigate("/admin/dashboard");
-			} else if (store?.rule === "ROLE_SALE") {
+			} else if (store?.rule === "[ROLE_SALE]") {
 				return navigate("/sale/vocher_manager");
-			} else if (store?.rule === "ROLE_COURSE_EXPERT") {
+			} else if (store?.rule === "[ROLE_COURSE_EXPERT]") {
 				return navigate("/course_expert/dashboard");
 			}
 		}
