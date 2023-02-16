@@ -7,10 +7,9 @@ import { toast } from "react-toastify";
 
 function CreateVoucher() {
   const valueRef = useRef();
-  const [image, setImage] = useState("");
   const startRef = useRef();
   const toRef = useRef();
-  const titleRef = useRef();
+  const [title, setTitle] = useState("");
   const desRef = useRef("");
   const [value, setValue] = useState("");
   const [typeVoucher, setTypeVoucher] = useState("course");
@@ -20,9 +19,7 @@ function CreateVoucher() {
     { value: "course", label: "Course" },
     { value: "typeCourse", label: "TypeOfCourse" },
   ];
-  useEffect(() => {
-    console.log(titleRef.current.value);
-  }, [titleRef]);
+  console.log(title);
   const handleSelectType = (choice) => {
     console.log(typeVoucher);
     setChooseCourse([]);
@@ -39,12 +36,20 @@ function CreateVoucher() {
     }
   };
   const handleCreateNewVoucher = () => {
+    if (title === "") {
+      window.scrollTo({
+        top: 0,
+        left: 100,
+        behavior: "smooth",
+      });
+      return toast.error("Enter title before create a voucher");
+    }
     if (value === "") {
       valueRef.current.focus();
       return toast.error("Plese remeber enter value");
     }
     const data = {
-      Name: titleRef.current.innerHTML,
+      Name: title,
       Description: desRef.current.innerHTML,
       Price: value,
       StartDate: startRef.current.value,
@@ -57,9 +62,12 @@ function CreateVoucher() {
     <div className="create_voucher">
       <div className="voucher_left">
         <div className="voucher_left_header">
-          <h3 contentEditable ref={titleRef}>
-            Name of voucher (can edit)
-          </h3>
+          <div
+            className="voucher_left_header_title"
+            contentEditable
+            onInput={(e) => setTitle(e.target.innerHTML)}
+          ></div>
+          {!title && <div className="title_voucher">Title of Voucher</div>}
           <div className="voucher_left_header_des">
             <p contentEditable ref={desRef}>
               Description of voucher
