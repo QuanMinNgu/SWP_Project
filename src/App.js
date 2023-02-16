@@ -1,10 +1,5 @@
 import "./App.scss";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   adminRouter,
   courseExpertRouter,
@@ -28,7 +23,8 @@ function App() {
   useEffect(() => {
     if (auth.user?.token) {
       const decoded = jwt_decode(auth.user?.token);
-      setStore({ rule: decoded.rule });
+      setStore({ rule: decoded.sub });
+      console.log(decoded);
     }
   }, [auth.user?.token]);
   useEffect(() => {
@@ -61,7 +57,7 @@ function App() {
                 />
               );
             })}
-            {store.rule === "ROLE_ADMIN" &&
+            {store.rule === "[ROLE_ADMIN]" &&
               adminRouter.map((item, index) => {
                 const Page = item.element;
                 return item.layout ? (
@@ -82,7 +78,7 @@ function App() {
                   />
                 );
               })}
-            {store.rule === "ROLE_SALE" &&
+            {store.rule === "[ROLE_SALE]" &&
               saleRouter.map((item, index) => {
                 const Page = item.element;
                 return item.layout ? (
@@ -103,7 +99,7 @@ function App() {
                   />
                 );
               })}
-            {store.rule === "ROLE_COURSE_EXPERT" &&
+            {store.rule === "[ROLE_COURSE_EXPERT]" &&
               courseExpertRouter.map((item, index) => {
                 const Page = item.element;
                 return item.layout ? (
@@ -125,7 +121,7 @@ function App() {
                 );
               })}
           </Routes>
-          <ToastContainer autoClose={1500} style={{ fontSize: "1.5rem" }} />
+          <ToastContainer autoClose={2000} style={{ fontSize: "1.5rem" }} />
           {auth.loading && <Loading />}
         </div>
       </Router>

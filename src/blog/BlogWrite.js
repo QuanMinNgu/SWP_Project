@@ -14,29 +14,17 @@ const BlogWrite = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const { cache } = useContext(UserContext);
   const [types, setTypes] = useState([]);
-
-  let optionsKind = [
-    { value: "ha-noi", label: "Software" },
-    { value: "strawberry", label: "Financial" },
-    { value: "vanilla", label: "Marketing" },
-  ];
-
-  useEffect(() => {
-    if (types) {
-      optionsKind = types?.map((item) => {
-        return {
-          value: item?.courseTypeID,
-          label: item?.courseTypeName,
-        };
-      });
-    }
-  }, [types]);
-
+  let optionsKind = types?.map((item) => {
+    return {
+      value: item?.courseTypeID,
+      label: item?.courseTypeName,
+    };
+  });
+  console.log(optionsKind);
   useEffect(() => {
     let here = true;
     const url = "/api/type_course";
     if (cache.current[url]) {
-      console.log(cache.current);
       return setTypes(cache.current[url]);
     }
     dispatch(isLoading());
@@ -80,17 +68,17 @@ const BlogWrite = () => {
     }
     dispatch(isLoading());
     console.log({
-      token: auth.user?.accessToken,
-      title: title,
-      meta: meta,
+      token: auth.user?.token,
+      blogName: title,
+      blogMeta: meta,
       content: content,
       courseTypeID: selectedOption.value,
     });
     try {
       const data = await axios.post("/api/blog/create", {
         token: auth.user?.accessToken,
-        title: title,
-        meta: meta,
+        blogName: title,
+        blogMeta: meta,
         content: content,
         courseTypeID: selectedOption.value,
       });
