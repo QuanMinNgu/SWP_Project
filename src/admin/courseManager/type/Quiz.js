@@ -14,6 +14,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
     const contentRef = useRef(null);
     const answerRef = useRef(null);
     const contentAnswerRef = useRef(null);
+    const timesRef = useRef();
     const contentQuizRef = useRef();
 
     const [editQuesion, setEditQuestion] = useState({});
@@ -66,9 +67,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
         }
         const newArr = quesions?.map((item, index) => {
             if (index === ind * 1) {
-                item?.answers?.push({
-                    title: answerRef.current.value,
-                });
+                item?.answers?.push(answerRef.current.value);
                 return item;
             }
             return item;
@@ -78,7 +77,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
     };
     const handleEditAnswer = ({ childId, parentId }) => {
         setEditContentAnswer({
-            title: quesions[parentId].answers[childId]?.title,
+            title: quesions[parentId].answers[childId],
             childId: childId,
             parentId: parentId,
         });
@@ -99,9 +98,8 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
             return toast.error("Please, enter value.");
         }
         const newArr = quesions;
-        newArr[editContentAnswer.parentId].answers[
-            editContentAnswer.childId
-        ].title = contentAnswerRef.current.value;
+        newArr[editContentAnswer.parentId].answers[editContentAnswer.childId] =
+            contentAnswerRef.current.value;
         setQuesions([...newArr]);
         setEditAnswer(false);
     };
@@ -115,7 +113,11 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
     };
 
     const handleCreateQuiz = () => {
-        if (!titleRef.current.value) {
+        if (
+            !titleRef.current.value ||
+            !contentQuizRef.current.value ||
+            !timesRef.current.value
+        ) {
             return toast.error("Please enter value.");
         }
         const arr = lesson;
@@ -126,6 +128,8 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                 type: "quiz",
                 value: [...quesions],
                 contentQuiz: contentQuizRef.current.value,
+                link: null,
+                time: timesRef.current.value * 1,
             });
         } else {
             arr[inde].numLesson.splice(addLesson?.childId, 0, {
@@ -133,6 +137,8 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                 type: "quiz",
                 value: [...quesions],
                 contentQuiz: contentQuizRef.current.value,
+                link: null,
+                time: timesRef.current.value * 1,
             });
         }
         setLesson([...arr]);
@@ -192,16 +198,12 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                                             childId: ind,
                                         })
                                     }
-                                    id={item?.title + index + ind + "answer"}
+                                    id={item + index + ind + "answer"}
                                     type="radio"
-                                    name={item?.title + index + "answer"}
+                                    name={item + index + "answer"}
                                 />
-                                <label
-                                    htmlFor={
-                                        item?.title + index + ind + "answer"
-                                    }
-                                >
-                                    {infor?.title}
+                                <label htmlFor={item + index + ind + "answer"}>
+                                    {infor}
                                 </label>
                                 <button
                                     onClick={() =>
@@ -450,6 +452,13 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
                             <textarea
                                 ref={contentQuizRef}
                                 placeholder="Enter content of this quiz"
+                            />
+                        </div>
+                        <div className="lessonCreate_input">
+                            <input
+                                ref={timesRef}
+                                type="number"
+                                placeholder="Enter times of quiz (second)"
                             />
                         </div>
                         <div className="lessonCreate_button_form">

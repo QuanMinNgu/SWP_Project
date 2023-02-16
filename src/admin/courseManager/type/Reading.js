@@ -19,6 +19,7 @@ const Reading = ({
     const [content, setContent] = useState("");
     const [create, setCreate] = useState(false);
     const titleRef = useRef();
+    const timesRef = useRef();
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const handleChange = (data) => {
@@ -50,7 +51,7 @@ const Reading = ({
     }, []);
 
     const handleCreateReading = () => {
-        if (!content) {
+        if (!content || !timesRef.current.value) {
             return toast.error("Please enter value.");
         }
         const arr = lesson;
@@ -59,13 +60,31 @@ const Reading = ({
             arr[inde].numLesson.push({
                 title: titleRef.current.value,
                 type: "reading",
-                value: content,
+                value: [
+                    {
+                        title: content,
+                        answers: null,
+                        correctAnswer: null,
+                    },
+                ],
+                link: null,
+                time: timesRef.current.value * 1,
+                contentQuiz: null,
             });
         } else {
             arr[inde].numLesson.splice(addLesson?.childId, 0, {
                 title: titleRef.current.value,
                 type: "reading",
-                value: content,
+                value: [
+                    {
+                        title: content,
+                        answers: null,
+                        correctAnswer: null,
+                    },
+                ],
+                link: null,
+                time: 0,
+                contentQuiz: null,
             });
         }
         setLesson([...arr]);
@@ -154,6 +173,13 @@ const Reading = ({
                             <textarea
                                 ref={titleRef}
                                 placeholder="Enter title of this quiz"
+                            />
+                        </div>
+                        <div className="lessonCreate_input">
+                            <input
+                                ref={timesRef}
+                                type="number"
+                                placeholder="Enter times of quiz (second)"
                             />
                         </div>
                         <div className="lessonCreate_button_form">

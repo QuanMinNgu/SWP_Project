@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.scss";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
@@ -8,14 +8,58 @@ import { toast } from "react-toastify";
 import { isSuccess, isLoading, isFailing } from ".././redux/slice/auth";
 import axios from "axios";
 import Select from "react-select";
-
+import { UserContext } from "../App";
 const BlogWrite = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [type, setType] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const { cache } = useContext(UserContext);
+  const [types, setTypes] = useState([]);
+
+  let optionsKind = [
+    { value: "ha-noi", label: "Software" },
+    { value: "strawberry", label: "Financial" },
+    { value: "vanilla", label: "Marketing" },
+  ];
+
+  useEffect(() => {
+    if (types) {
+      optionsKind = types?.map((item) => {
+        return {
+          value: item?.courseTypeID,
+          label: item?.courseTypeName,
+        };
+      });
+    }
+  }, [types]);
+
+  useEffect(() => {
+    let here = true;
+    const url = "/api/type_course";
+    if (cache.current[url]) {
+      console.log(cache.current);
+      return setTypes(cache.current[url]);
+    }
+    dispatch(isLoading());
+    axios
+      .get(url)
+      .then((res) => {
+        if (!here) {
+          return;
+        }
+        setTypes(res?.data?.types);
+        cache.current[url] = res?.data?.types;
+        dispatch(isSuccess());
+      })
+      .catch((err) => {
+        dispatch(isFailing());
+      });
+    return () => {
+      here = false;
+    };
+  }, []);
   const [title, setTitle] = useState("");
   const [meta, setMeta] = useState("");
   const [content, setContent] = useState("");
-  const [select, setSelect] = useState("");
   const handleChange = (data) => {
     setEditorState(data);
   };
@@ -31,7 +75,7 @@ const BlogWrite = () => {
   }, [editorState]);
 
   const handleCreateNewBlog = async () => {
-    if (!title || !meta || !content || !select) {
+    if (!title || !meta || !content) {
       return toast.error("Vui lòng điền hết thông tin.");
     }
     dispatch(isLoading());
@@ -39,16 +83,16 @@ const BlogWrite = () => {
       token: auth.user?.accessToken,
       title: title,
       meta: meta,
-      courseTypeID: select,
       content: content,
+      courseTypeID: selectedOption.value,
     });
     try {
       const data = await axios.post("/api/blog/create", {
         token: auth.user?.accessToken,
-        blogName: title,
-        blogMeta: meta,
-        courseTypeID: select,
+        title: title,
+        meta: meta,
         content: content,
+        courseTypeID: selectedOption.value,
       });
       toast.success(data?.data?.msg);
       dispatch(isSuccess());
@@ -57,27 +101,7 @@ const BlogWrite = () => {
       dispatch(isFailing());
     }
   };
-  useEffect(() => {
-    const fetchGetAllType = async () => {
-      dispatch(isLoading());
-      try {
-        const res = await axios.get("/api/type_course");
-        console.log(res?.data?.types);
-        setType(res?.data?.types);
-        dispatch(isSuccess());
-      } catch (err) {
-        dispatch(isFailing());
-        return toast.error(err?.response?.data?.msg);
-      }
-    };
-    fetchGetAllType();
-  }, []);
-  const options = type?.map((item) => {
-    return {
-      value: item?.id,
-      label: item?.courseTypeName,
-    };
-  });
+
   return (
     <div className="newPost">
       <div className="newPost_title">
@@ -91,6 +115,15 @@ const BlogWrite = () => {
         {!title && <div className="newPost_title_content">Tiêu đề</div>}
       </div>
       <div className="newPost_title">
+        <div>
+          <Select
+            className="search_wrap_select"
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={optionsKind}
+            placeholder="Kind"
+          />
+        </div>
         <div
           className="newPost_title_edit_meta"
           contentEditable={true}
@@ -98,15 +131,7 @@ const BlogWrite = () => {
             setMeta(e.target.innerHTML);
           }}
         ></div>
-        {!meta && (
-          <div className="newPost_title_content_meta">Nội dung nhỏ</div>
-        )}
-      </div>
-      <div className="newPost_select">
-        <Select
-          options={options}
-          onChange={(choice) => setSelect(choice.value)}
-        />
+        {!meta && <div className="newPost_title_content_meta_ref">Meta</div>}
       </div>
       <div className="newPost_content">
         <Editor

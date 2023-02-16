@@ -40,17 +40,31 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
             arr[inde].numLesson.push({
                 title: titleRef.current.value,
                 type: "listening",
-                value: content,
+                value: [
+                    {
+                        title: content,
+                        answers: null,
+                        correctAnswer: null,
+                    },
+                ],
                 link: url,
                 time: playerRef.current.getDuration(),
+                contentQuiz: null,
             });
         } else {
             arr[inde].numLesson.splice(addLesson?.childId, 0, {
                 title: titleRef.current.value,
                 type: "listening",
-                value: content,
+                value: [
+                    {
+                        title: content,
+                        answers: null,
+                        correctAnswer: null,
+                    },
+                ],
                 link: url,
                 time: playerRef.current.getDuration(),
+                contentQuiz: null,
             });
         }
         setLesson([...arr]);

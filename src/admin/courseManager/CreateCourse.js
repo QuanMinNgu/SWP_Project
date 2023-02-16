@@ -28,7 +28,6 @@ const CreateCourse = () => {
     const [lesson, setLesson] = useState([]);
     const imageRef = useRef();
     const lessonRef = useRef();
-    const priceRef = useRef();
     const [addLesson, setAddLesson] = useState(false);
 
     const { cache } = useContext(UserContext);
@@ -60,6 +59,10 @@ const CreateCourse = () => {
         }
     }, [types]);
     const [courseExperts, setCourseExperts] = useState([]);
+
+    // useEffect(() => {
+    //     console.log(lesson);
+    // }, [lesson]);
 
     useEffect(() => {
         let here = true;
@@ -141,6 +144,10 @@ const CreateCourse = () => {
         }
     };
 
+    useEffect(() => {
+        console.log(lesson);
+    }, [lesson]);
+
     const handleCreateLesson = () => {
         setLesson([
             ...lesson,
@@ -173,9 +180,7 @@ const CreateCourse = () => {
         lesson?.forEach((item) => {
             coun += item?.numLesson?.length;
             item?.numLesson?.forEach((item) => {
-                if (item?.type === "listening") {
-                    tim += item?.time;
-                }
+                tim += item?.time * 1;
             });
         });
         setNumberOfLesson({
@@ -324,7 +329,7 @@ const CreateCourse = () => {
                             benefit?.map((item, index) => (
                                 <li
                                     className="benefitList"
-                                    key={item + "benefit"}
+                                    key={item + "benefit" + index}
                                 >
                                     {item}
                                     <div className="benefit_button">
@@ -419,6 +424,13 @@ const CreateCourse = () => {
                                 }`}</b>
                             </li>
                         </ul>
+                        <button
+                            style={{ height: "4rem" }}
+                            className="button button_update"
+                            onClick={handleCreatePakageForACourse}
+                        >
+                            Save Package
+                        </button>
                     </div>
                     <div className="CoursePanel">
                         {lesson?.map((item, index) => (
@@ -510,13 +522,6 @@ const CreateCourse = () => {
                             className="save_button"
                         >
                             Save
-                        </button>
-                        <button
-                            className="save_button"
-                            style={{ marginLeft: "0.5rem" }}
-                            onClick={handleCreatePakageForACourse}
-                        >
-                            Save Package
                         </button>
                     </div>
                     <div className="type_select">

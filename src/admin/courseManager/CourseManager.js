@@ -95,7 +95,6 @@ const CourseManager = () => {
           return;
         }
         setTypes(res?.data?.types);
-        console.log(res?.data);
         cache.current[url] = res?.data?.types;
         dispatch(isSuccess());
       })
@@ -130,6 +129,7 @@ const CourseManager = () => {
       dispatch(isSuccess());
       setTypes(data?.data?.types);
       toast.success(data?.data?.msg);
+      console.log(data?.data?.types);
       titleRef.current.value = "";
     } catch (err) {
       dispatch(isFailing());
