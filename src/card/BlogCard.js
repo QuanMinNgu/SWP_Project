@@ -40,7 +40,7 @@ const BlogCard = ({ item, key }) => {
             }}
           >
             <div className="blog_card_body_content_header">
-              <h3>{item?.title}</h3>
+              <h3>{item?.blogName}</h3>
             </div>
           </Link>
           <div className="blog_card_body_content_mid">
