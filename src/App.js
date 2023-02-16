@@ -1,10 +1,5 @@
 import "./App.scss";
-import {
-	BrowserRouter as Router,
-	Routes,
-	Route,
-	useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
 	adminRouter,
 	courseExpertRouter,
@@ -22,8 +17,6 @@ export const UserContext = createContext();
 function App() {
 	const [store, setStore] = useState({ rule: "user" });
 
-	const navigate = useNavigate();
-
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(isSuccess());
@@ -38,6 +31,7 @@ function App() {
 			setStore({ rule: decoded.rule });
 		}
 	}, [auth.user?.token]);
+
 	return (
 		<UserContext.Provider value={{ store, setStore, cache: cacheRef }}>
 			<Router>
@@ -63,7 +57,7 @@ function App() {
 								/>
 							);
 						})}
-						{store.rule === "[ROLE_ADMIN]" &&
+						{store.rule === "ROLE_ADMIN" &&
 							adminRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
@@ -84,7 +78,7 @@ function App() {
 									/>
 								);
 							})}
-						{store.rule === "[ROLE_SALE]" &&
+						{store.rule === "ROLE_SALE" &&
 							saleRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
@@ -105,7 +99,7 @@ function App() {
 									/>
 								);
 							})}
-						{store.rule === "[ROLE_COURSE_EXPERT]" &&
+						{store.rule === "ROLE_COURSE_EXPERT" &&
 							courseExpertRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
