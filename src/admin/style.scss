@@ -1448,7 +1448,7 @@
     flex-wrap: wrap;
 }
 .expertCourse_type_remain_card {
-    padding: 0 5rem;
+    padding: 0 3rem;
     height: 5rem;
     background-color: #0dcaf0;
     display: flex;
@@ -1459,6 +1459,7 @@
     color: white;
     font-size: 1.6rem;
     position: relative;
+    min-width: 15rem;
 }
 .expertCourse_type_remain_card_abs {
     position: absolute;
