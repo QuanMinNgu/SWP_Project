@@ -103,22 +103,19 @@ const Header = () => {
 									setCourse(false);
 								}}
 								className="header_navbar_items_img"
-								src="https://phunugioi.com/wp-content/uploads/2020/02/mau-background-dep.jpg"
+								src={auth.user?.image}
 								alt="Ảnh"
 							/>
 							{account && (
 								<div className="header_navbar_account">
 									<div className="header_navbar_account_infor">
 										<div className="header_navbar_account_infor_img">
-											<img
-												src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-												alt="Ảnh bìa"
-											/>
+											<img src={auth.user?.image} alt="Ảnh bìa" />
 										</div>
 										<div className="header_navbar_account_infor_name">
-											<div>Minh Quang</div>
+											<div>{auth.user?.name}</div>
 											<div>
-												<i>ID:12213210</i>
+												<i>ID:{auth.user?.id}</i>
 											</div>
 										</div>
 									</div>

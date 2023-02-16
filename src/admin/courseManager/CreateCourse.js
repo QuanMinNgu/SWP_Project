@@ -231,7 +231,7 @@ const CreateCourse = () => {
             courseExpert: courseExpert?.id,
             kind: selectedOption?.value,
             price: newPrice * 1,
-            token: auth.user?.accessToken,
+            token: auth.user?.token,
         });
         dispatch(isLoading());
         try {
@@ -241,7 +241,7 @@ const CreateCourse = () => {
                 courseExpert: courseExpert?.id,
                 kind: selectedOption?.value,
                 price: newPrice * 1,
-                token: auth.user?.accessToken,
+                token: auth.user?.token,
             });
             dispatch(isSuccess());
             toast.success(data?.data?.msg);
@@ -261,7 +261,7 @@ const CreateCourse = () => {
                     `/api/course/update_pakage?id=${idRef.current}`,
                     {
                         lessons: lesson,
-                        token: auth.user?.accessToken,
+                        token: auth.user?.token,
                     }
                 );
                 dispatch(isSuccess());
