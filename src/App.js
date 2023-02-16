@@ -36,13 +36,6 @@ function App() {
 			const decoded = jwt_decode(auth.user?.token);
 			console.log(decoded);
 			setStore({ rule: decoded.rule });
-			if (decoded.rule === "[ROLE_ADMIN]") {
-				return navigate("/admin/dashboard");
-			} else if (decoded.rule === "[ROLE_COURSE_EXPERT]") {
-				return navigate("/course_expert/dashboard");
-			} else if (decoded.rule === "[ROLE_SALE]") {
-				return navigate("/sale/vocher_manager");
-			}
 		}
 	}, [auth.user?.token]);
 	return (
