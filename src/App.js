@@ -1,5 +1,10 @@
 import "./App.scss";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import {
   adminRouter,
   courseExpertRouter,
@@ -15,22 +20,22 @@ import { isSuccess } from "./redux/slice/auth";
 import jwt_decode from "jwt-decode";
 export const UserContext = createContext();
 function App() {
-  const [store, setStore] = useState({ rule: "admin" });
+  const [store, setStore] = useState({ rule: "user" });
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(isSuccess());
-  }, []);
-  const cacheRef = useRef({});
   const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (auth.user?.token) {
       const decoded = jwt_decode(auth.user?.token);
-      console.log(decoded);
       setStore({ rule: decoded.rule });
     }
   }, [auth.user?.token]);
+  useEffect(() => {
+    dispatch(isSuccess());
+  }, []);
+  const cacheRef = useRef({});
+
   return (
     <UserContext.Provider value={{ store, setStore, cache: cacheRef }}>
       <Router>
@@ -56,7 +61,7 @@ function App() {
                 />
               );
             })}
-            {store.rule === "admin" &&
+            {store.rule === "ROLE_ADMIN" &&
               adminRouter.map((item, index) => {
                 const Page = item.element;
                 return item.layout ? (
@@ -77,7 +82,7 @@ function App() {
                   />
                 );
               })}
-            {store.rule === "sale" &&
+            {store.rule === "ROLE_SALE" &&
               saleRouter.map((item, index) => {
                 const Page = item.element;
                 return item.layout ? (
@@ -98,7 +103,7 @@ function App() {
                   />
                 );
               })}
-            {store.rule === "courseExpert" &&
+            {store.rule === "ROLE_COURSE_EXPERT" &&
               courseExpertRouter.map((item, index) => {
                 const Page = item.element;
                 return item.layout ? (
