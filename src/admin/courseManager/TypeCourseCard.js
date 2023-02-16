@@ -15,7 +15,7 @@ const TypeCourseCard = ({ item, setTypeUpdate, typeUpdate }) => {
         const data = await axios.post(
           `/api/type_course/delete/id=${item?.courseTypeID}`,
           {
-            token: auth.user?.accessToken,
+            token: auth.user?.token,
           }
         );
         dispatch(isSuccess());
@@ -37,16 +37,21 @@ const TypeCourseCard = ({ item, setTypeUpdate, typeUpdate }) => {
     }
     dispatch(isLoading());
     console.log({
-      token: auth.user?.accessToken,
+      token: auth.user?.token,
       courseTypeName: titleRef.current.value,
     });
     try {
-      const data = await axios.post(`/api/type_course/update?id=${item?.id}`, {
-        token: auth.user?.accessToken,
-        courseTypeName: titleRef.current.value,
-      });
+      const data = await axios.post(
+        `/api/type_course/update/id=${item?.courseTypeID}`,
+        {
+          token: auth.user?.token,
+          courseTypeName: titleRef.current.value,
+        }
+      );
       dispatch(isSuccess());
       toast.success(data?.data?.msg);
+      setEdit(false);
+      setTypeUpdate(!typeUpdate);
     } catch (err) {
       dispatch(isFailing());
       return toast.error(err?.response?.data?.msg);

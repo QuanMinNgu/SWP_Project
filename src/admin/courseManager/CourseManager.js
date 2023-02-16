@@ -134,37 +134,6 @@ const CourseManager = () => {
     }
   };
 
-  const handleChooseExpert = async () => {
-    const check = window.confirm(
-      "Bạn có muốn chọn Minh Quang thành course expert của khóa học này không?"
-    );
-  };
-
-  const handleCreateNewType = async () => {
-    if (!titleRef.current.value) {
-      return toast.error("Please,enter value.");
-    }
-    dispatch(isLoading());
-    console.log({
-      token: auth.user?.token,
-      courseTypeName: titleRef.current.value,
-    });
-    try {
-      const data = await axios.post("/api/type_course/create", {
-        token: auth.user?.token,
-        courseTypeName: titleRef.current.value,
-      });
-      dispatch(isSuccess());
-      setTypes(data?.data?.types);
-      toast.success(data?.data?.msg);
-      titleRef.current.value = "";
-      setTypeUpdate(!typeUpdate);
-    } catch (err) {
-      dispatch(isFailing());
-      return toast.error(err?.response?.data?.msg);
-    }
-  };
-
   const [selectedOption, setSelectedOption] = useState(null);
   return (
     <div className="managerCourse">
@@ -503,12 +472,7 @@ const CourseManager = () => {
           <div className="expertCourse_type_course_remain">
             <div className="expertCourse_type_Card_container">
               {types?.map((item) => (
-                <TypeCourseCard
-                  key={item?.id}
-                  item={item}
-                  setTypeUpdate={setTypeUpdate}
-                  typeUpdate={typeUpdate}
-                />
+                <TypeCourseCard key={item?.id} item={item} />
               ))}
             </div>
           </div>
