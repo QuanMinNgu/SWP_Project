@@ -20,7 +20,6 @@ const BlogWrite = () => {
       label: item?.courseTypeName,
     };
   });
-  console.log(optionsKind);
   useEffect(() => {
     let here = true;
     const url = "/api/type_course";
