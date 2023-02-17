@@ -225,6 +225,8 @@ const CreateCourse = () => {
 			} catch (err) {
 				return;
 			}
+		} else {
+			return toast.error("Please enter a image.");
 		}
 
 		console.log({
@@ -245,6 +247,7 @@ const CreateCourse = () => {
 					accountID: courseExpert?.accountID,
 					courseTypeID: selectedOption?.value,
 					price: newPrice * 1,
+					image: urlImage,
 				},
 				{
 					headers: {
