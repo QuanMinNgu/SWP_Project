@@ -42,20 +42,17 @@ const CreateCourse = () => {
 
 	const [types, setTypes] = useState([]);
 
-	let optionsKind = [
-		{ value: "ha-noi", label: "Software" },
-		{ value: "strawberry", label: "Financial" },
-		{ value: "vanilla", label: "Marketing" },
-	];
+	const [optionsKind, setOptionKind] = useState({});
 
 	useEffect(() => {
 		if (types) {
-			optionsKind = types?.map((item) => {
+			const arr = types?.map((item) => {
 				return {
 					value: item?.id,
 					label: item?.title,
 				};
 			});
+			setOptionKind([...arr]);
 		}
 	}, [types]);
 	const [courseExperts, setCourseExperts] = useState([]);
@@ -102,8 +99,9 @@ const CreateCourse = () => {
 				if (!here) {
 					return dispatch(isSuccess());
 				}
-				setCourseExperts(res?.data?.types);
-				cache.current[url] = res?.data?.types;
+				setCourseExperts(res?.data?.users);
+				console.log(res?.data);
+				cache.current[url] = res?.data?.users;
 				dispatch(isSuccess());
 			})
 			.catch((err) => {
@@ -228,7 +226,7 @@ const CreateCourse = () => {
 		console.log({
 			title: title,
 			content: contentArr,
-			courseExpert: courseExpert?.id,
+			courseExpert: courseExpert?.accountID,
 			kind: selectedOption?.value,
 			price: newPrice * 1,
 			token: auth.user?.token,
@@ -240,7 +238,7 @@ const CreateCourse = () => {
 				{
 					title: title,
 					content: contentArr,
-					courseExpert: courseExpert?.id,
+					courseExpert: courseExpert?.accountID,
 					kind: selectedOption?.value,
 					price: newPrice * 1,
 				},
@@ -570,7 +568,7 @@ const CreateCourse = () => {
 							<tbody>
 								{courseExperts?.map((item) => (
 									<tr
-										key={item?.id + "courseExperts"}
+										key={item?.accountID + "courseExperts"}
 										className="ex_thead_wrap_items"
 									>
 										<th className="ex_thead_title">
@@ -586,7 +584,7 @@ const CreateCourse = () => {
 														{item?.gmail}
 													</i>
 													<i className="ex_thead_user_infor_id">
-														ID:{item?.id}
+														ID:{item?.accountID}
 													</i>
 												</div>
 											</div>
