@@ -35,13 +35,17 @@ const UserManager = () => {
 
 	useEffect(() => {
 		let here = true;
-		const url = `/api/account?limit=20&token=${auth.user?.token}`;
+		const url = `/api/account?limit=20`;
 		if (cache.current[url]) {
 			return setUsers(cache.current[url]);
 		}
 		dispatch(isLoading());
 		axios
-			.get(url)
+			.get(url, {
+				headers: {
+					token: `${auth.user?.token}`,
+				},
+			})
 			.then((res) => {
 				if (!here) {
 					return dispatch(isSuccess());

@@ -17,13 +17,20 @@ const UserManagerCard = ({ setUserInfor, item }) => {
 		dispatch(isLoading());
 		console.log({
 			token: auth.user?.token,
-			role: role,
+			name: role,
 		});
 		try {
-			const data = await axios.post(`/api/account/change_role/id=${item?.id}`, {
-				token: auth.user?.token,
-				role: role,
-			});
+			const data = await axios.post(
+				`/api/account/change_role/id=${item?.id}`,
+				{
+					name: role,
+				},
+				{
+					headers: {
+						token: auth.user?.token,
+					},
+				}
+			);
 			toast.success(data?.data?.msg);
 			dispatch(isSuccess());
 		} catch (err) {
