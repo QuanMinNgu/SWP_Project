@@ -14,11 +14,7 @@ const UserManager = () => {
 		{ value: "no-free", label: "Not Free" },
 	];
 
-	const optionsKind = [
-		{ value: "ha-noi", label: "Software" },
-		{ value: "strawberry", label: "Financial" },
-		{ value: "vanilla", label: "Marketing" },
-	];
+	const [optionsKind, setOptionKind] = useState({});
 
 	const optionsSort = [
 		{ value: "vanilla", label: "Stars Increased" },
@@ -32,6 +28,44 @@ const UserManager = () => {
 
 	const [users, setUsers] = useState([]);
 	const dispatch = useDispatch();
+	const [types, setTypes] = useState([]);
+
+	useEffect(() => {
+		if (types) {
+			const arr = types?.map((item) => {
+				return {
+					value: item?.courseTypeID,
+					label: item?.courseTypeName,
+				};
+			});
+			setOptionKind([...arr]);
+		}
+	}, [types]);
+
+	useEffect(() => {
+		let here = true;
+		const url = "/api/type_course";
+		if (cache.current[url]) {
+			return setTypes(cache.current[url]);
+		}
+		dispatch(isLoading());
+		axios
+			.get(url)
+			.then((res) => {
+				if (!here) {
+					return;
+				}
+				setTypes(res?.data?.types);
+				cache.current[url] = res?.data?.types;
+				dispatch(isSuccess());
+			})
+			.catch((err) => {
+				dispatch(isFailing());
+			});
+		return () => {
+			here = false;
+		};
+	}, []);
 
 	useEffect(() => {
 		let here = true;
@@ -109,7 +143,7 @@ const UserManager = () => {
 				</table>
 			</div>
 			<div className="pagination">
-				<Pagination />
+				<Pagination limit={20} />
 			</div>
 		</div>
 	);

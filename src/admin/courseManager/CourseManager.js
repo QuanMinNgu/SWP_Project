@@ -37,11 +37,7 @@ const CourseManager = () => {
 		{ value: "no-free", label: "Not Free" },
 	];
 
-	const optionsKind = [
-		{ value: "ha-noi", label: "Software" },
-		{ value: "strawberry", label: "Financial" },
-		{ value: "vanilla", label: "Marketing" },
-	];
+	const [optionsKind, setOptionKind] = useState({});
 
 	const optionsSort = [
 		{ value: "vanilla", label: "Stars Increased" },
@@ -57,6 +53,17 @@ const CourseManager = () => {
 			setCheckAll(false);
 		}
 	};
+	useEffect(() => {
+		if (types) {
+			const arr = types?.map((item) => {
+				return {
+					value: item?.courseTypeID,
+					label: item?.courseTypeName,
+				};
+			});
+			setOptionKind([...arr]);
+		}
+	}, [types]);
 
 	useEffect(() => {
 		let here = true;
