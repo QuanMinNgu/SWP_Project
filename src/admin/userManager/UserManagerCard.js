@@ -21,7 +21,7 @@ const UserManagerCard = ({ setUserInfor, item }) => {
 		});
 		try {
 			const data = await axios.post(
-				`/api/account/change_role/id=${item?.id}`,
+				`/api/account/change_role/id=${item?.accountID}`,
 				{
 					name: role,
 				},
@@ -52,7 +52,7 @@ const UserManagerCard = ({ setUserInfor, item }) => {
 						</h6>
 						<i className="user_email_infor_email">{item?.gmail}</i>
 						<span>
-							<i>ID:{item?.id}</i>
+							<i>ID:{item?.accountID}</i>
 						</span>
 					</div>
 				</div>
