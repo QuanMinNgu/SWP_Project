@@ -193,6 +193,10 @@ const CreateCourse = () => {
 	const numOfLessonRef = useRef();
 	const timeOfLessonRef = useRef();
 
+	useEffect(() => {
+		console.log(lesson);
+	}, [lesson]);
+
 	const idRef = useRef(null);
 
 	const handleCreateNewCourse = async () => {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
 	const [bars, setBars] = useState(false);
