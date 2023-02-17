@@ -69,25 +69,25 @@ const UserManagerCard = ({ setUserInfor, item }) => {
 					{bars && (
 						<div className="bars_user_detail">
 							<div
-								onClick={() => handleChangeRule("ROLE_ADMIN")}
+								onClick={() => handleChangeRule("[ROLE_ADMIN]")}
 								className="bars_detail_items"
 							>
 								<i>Cg Admin</i>
 							</div>
 							<div
-								onClick={() => handleChangeRule("ROLE_SALE")}
+								onClick={() => handleChangeRule("[ROLE_SALE]")}
 								className="bars_detail_items"
 							>
 								<i>Cg Saler</i>
 							</div>
 							<div
-								onClick={() => handleChangeRule("ROLE_COURSE_EXPERT")}
+								onClick={() => handleChangeRule("[ROLE_COURSE_EXPERT]")}
 								className="bars_detail_items"
 							>
 								<i>Cg CoExpert</i>
 							</div>
 							<div
-								onClick={() => handleChangeRule("ROLE_USER")}
+								onClick={() => handleChangeRule("[ROLE_USER]")}
 								className="bars_detail_items"
 							>
 								<i>Cg User</i>
