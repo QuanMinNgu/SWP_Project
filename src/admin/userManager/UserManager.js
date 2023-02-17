@@ -42,6 +42,8 @@ const UserManager = () => {
 	const dispatch = useDispatch();
 	const [types, setTypes] = useState([]);
 
+	const [userUpdate, setUserUpdate] = useState(false);
+
 	useEffect(() => {
 		let here = true;
 		const url = "/api/type_course";
@@ -70,9 +72,6 @@ const UserManager = () => {
 	useEffect(() => {
 		let here = true;
 		const url = `/api/account?page=1&limit=20`;
-		if (cache.current[url]) {
-			return setUsers(cache.current[url]);
-		}
 		dispatch(isLoading());
 		axios
 			.get(url, {
@@ -85,6 +84,7 @@ const UserManager = () => {
 					return dispatch(isSuccess());
 				}
 				setUsers(res?.data?.users);
+				cache.current[url] = res?.data?.users;
 				dispatch(isSuccess());
 			})
 			.catch((err) => {
@@ -96,7 +96,7 @@ const UserManager = () => {
 		return () => {
 			here = false;
 		};
-	}, []);
+	}, [userUpdate]);
 
 	const [selectedOption, setSelectedOption] = useState(null);
 	return (
@@ -130,7 +130,12 @@ const UserManager = () => {
 					</thead>
 					<tbody>
 						{users?.map((item) => (
-							<UserManagerCard key={item?.gmail} item={item} />
+							<UserManagerCard
+								userUpdate={userUpdate}
+								setUserUpdate={setUserUpdate}
+								key={item?.gmail}
+								item={item}
+							/>
 						))}
 					</tbody>
 				</table>

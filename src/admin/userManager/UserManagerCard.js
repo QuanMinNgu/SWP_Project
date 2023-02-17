@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import "../style.scss";
-const UserManagerCard = ({ setUserInfor, item }) => {
+const UserManagerCard = ({ setUserInfor, item, userUpdate, setUserUpdate }) => {
 	const [bars, setBars] = useState(false);
 
 	const dispatch = useDispatch();
@@ -32,6 +32,7 @@ const UserManagerCard = ({ setUserInfor, item }) => {
 				}
 			);
 			toast.success(data?.data?.msg);
+			setUserUpdate(!userUpdate);
 			dispatch(isSuccess());
 		} catch (err) {
 			dispatch(isFailing());
