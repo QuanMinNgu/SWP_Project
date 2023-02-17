@@ -6,37 +6,45 @@ import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import "./style.scss";
 const ActiveAccount = () => {
-    const { slug } = useParams();
+	const { slug } = useParams();
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-    useEffect(() => {
-        let here = true;
-        dispatch(isLoading());
-        axios
-            .post("/api/account/active", {
-                token: slug,
-            })
-            .then((res) => {
-                if (!here) {
-                    return dispatch(isSuccess());
-                }
-                toast.success(res?.data?.msg);
-                dispatch(isSuccess());
-                navigate("/login");
-            })
-            .catch((err) => {
-                dispatch(isFailing());
-                toast.error(err?.response?.data?.msg);
-            });
+	useEffect(() => {
+		let here = true;
+		dispatch(isLoading());
+		axios
+			.post(
+				"/api/account/active",
+				{
+					token: slug,
+				},
+				{
+					headers: {
+						token: slug,
+					},
+				}
+			)
+			.then((res) => {
+				if (!here) {
+					return dispatch(isSuccess());
+				}
+				toast.success(res?.data?.msg);
+				dispatch(isSuccess());
+				navigate("/login");
+			})
+			.catch((err) => {
+				dispatch(isFailing());
+				toast.error(err?.response?.data?.msg);
+			});
 
-        return () => {
-            here = false;
-        };
-    }, [slug]);
+		return () => {
+			here = false;
+		};
+	}, [slug]);
 
-    return <div>Kích hoạt tài khoản thành công.</div>;
+	return <div>Kích hoạt tài khoản thành công.</div>;
 };
 
 export default ActiveAccount;
