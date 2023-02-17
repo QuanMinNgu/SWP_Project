@@ -29,6 +29,7 @@ const BlogWrite = () => {
   }, [types]);
   useEffect(() => {
     let here = true;
+    w;
     const url = "/api/type_course";
     if (cache.current[url]) {
       return setTypes(cache.current[url]);

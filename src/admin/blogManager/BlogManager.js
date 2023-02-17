@@ -1,9 +1,36 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import "../style.scss";
+import { UserContext } from "../../App";
 import BLogAdminCard from "./BlogAdminCard";
 import "./main.scss";
 
 const BlogManager = () => {
+  const [types, setTypes] = useState([]);
+  const { cache } = useContext(UserContext);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchApitTypes = async () => {
+      dispatch(isLoading());
+      try {
+        const res = await axios.get("/api/type_course");
+        setTypes(res?.data?.types);
+        cache.current["/api/type_course"] = res?.data?.types;
+        dispatch(isSuccess());
+      } catch (error) {
+        dispatch(isFailing());
+      }
+    };
+    if (cache) {
+      return setTypes(cache.current["/api/type_course"]);
+    } else {
+      fetchApitTypes();
+    }
+  }, []);
+  console.log(cache);
   return (
     <div className="blog_manager">
       <div className="blog_manager_container">
@@ -70,9 +97,11 @@ const BlogManager = () => {
               <h2>Type of Blogs</h2>
             </div>
             <div className="admin_blog_left_type_box">
-              <div>Software Ennginer</div>
-              <div>Social Learning</div>
-              <div>Hacker</div>
+              {types?.map((item) => {
+                return (
+                  <div key={item?.courseTypeID}>{item?.courseTypeName}</div>
+                );
+              })}
             </div>
           </div>
         </div>
