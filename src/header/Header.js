@@ -171,7 +171,7 @@ const Header = () => {
 											}}
 											className="header_navbar_account_items"
 										>
-											Trang cá nhân
+											Personal page
 										</div>
 									</Link>
 									<div className="header_navbar_account_items">
@@ -182,7 +182,7 @@ const Header = () => {
 												}}
 												className="header_navbar_account_items_link"
 											>
-												Viết blog
+												Blogging
 											</div>
 										</Link>
 										<Link style={{ textDecoration: "none" }} to="/me/blog">
@@ -192,7 +192,7 @@ const Header = () => {
 												}}
 												className="header_navbar_account_items_link no_bottom"
 											>
-												Bài viết của tôi
+												My Blogs
 											</div>
 										</Link>
 									</div>
@@ -203,7 +203,7 @@ const Header = () => {
 											}}
 											className="header_navbar_account_items"
 										>
-											Bài viết đã lưu
+											Blogs Saved
 										</div>
 									</Link>
 									<div className="header_navbar_account_items">
@@ -217,7 +217,7 @@ const Header = () => {
 												}}
 												className="header_navbar_account_items_link"
 											>
-												Cài đặt
+												Settings
 											</div>
 										</Link>
 										<Link style={{ textDecoration: "none" }} to="/">
@@ -228,7 +228,7 @@ const Header = () => {
 												}}
 												className="header_navbar_account_items_link no_bottom"
 											>
-												Đăng xuất
+												Log Out
 											</div>
 										</Link>
 									</div>
@@ -240,7 +240,7 @@ const Header = () => {
 			) : (
 				<div className="header_navbar">
 					<Link style={{ textDecoration: "none" }} to="/login">
-						<div className="header_navbar_button">Đăng Nhập</div>
+						<div className="header_navbar_button">Login</div>
 					</Link>
 				</div>
 			)}
