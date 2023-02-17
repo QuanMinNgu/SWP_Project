@@ -15,6 +15,7 @@ function VoucherTemplateDetail() {
           style={{
             display: "flex",
             width: "100%",
+            flexWrap: "wrap",
           }}
         >
           <h2 className="t_time">From : </h2>
