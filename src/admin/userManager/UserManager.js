@@ -9,12 +9,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import { toast } from "react-toastify";
 const UserManager = () => {
-	const options = [
-		{ value: "free", label: "Free" },
-		{ value: "no-free", label: "Not Free" },
+	const optionsKind = [
+		{
+			value: "",
+			label: "Course Expert",
+		},
+		{
+			value: "",
+			label: "Sale",
+		},
+		{
+			value: "",
+			label: "Admin",
+		},
+		{
+			value: "",
+			label: "User",
+		},
 	];
-
-	const [optionsKind, setOptionKind] = useState({});
 
 	const optionsSort = [
 		{ value: "vanilla", label: "Stars Increased" },
@@ -29,18 +41,6 @@ const UserManager = () => {
 	const [users, setUsers] = useState([]);
 	const dispatch = useDispatch();
 	const [types, setTypes] = useState([]);
-
-	useEffect(() => {
-		if (types) {
-			const arr = types?.map((item) => {
-				return {
-					value: item?.courseTypeID,
-					label: item?.courseTypeName,
-				};
-			});
-			setOptionKind([...arr]);
-		}
-	}, [types]);
 
 	useEffect(() => {
 		let here = true;
@@ -106,15 +106,8 @@ const UserManager = () => {
 					className="search_wrap_select"
 					defaultValue={selectedOption}
 					onChange={setSelectedOption}
-					options={options}
-					placeholder="Price"
-				/>
-				<Select
-					className="search_wrap_select"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
 					options={optionsKind}
-					placeholder="Kind"
+					placeholder="Role"
 				/>
 				<Select
 					className="search_wrap_select"

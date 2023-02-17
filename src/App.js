@@ -13,20 +13,21 @@ import { useDispatch, useSelector } from "react-redux";
 import Loading from "./loading/Loading";
 import { isSuccess } from "./redux/slice/auth";
 import jwt_decode from "jwt-decode";
+import NotFound from "./notfound/NotFound";
 export const UserContext = createContext();
 function App() {
-	const [store, setStore] = useState({ rule: "[ROLE_ADMIN]" });
+	const [store, setStore] = useState({ rule: "user" });
 
 	const dispatch = useDispatch();
 	const auth = useSelector((state) => state.auth);
 
-	// useEffect(() => {
-	// 	if (auth.user?.token) {
-	// 		const decoded = jwt_decode(auth.user?.token);
-	// 		setStore({ rule: decoded.sub });
-	// 		console.log(decoded);
-	// 	}
-	// }, [auth.user?.token]);
+	useEffect(() => {
+		if (auth.user?.token) {
+			const decoded = jwt_decode(auth.user?.token);
+			setStore({ rule: decoded.sub });
+			console.log(decoded);
+		}
+	}, [auth.user?.token]);
 	useEffect(() => {
 		dispatch(isSuccess());
 	}, []);
@@ -120,6 +121,7 @@ function App() {
 									/>
 								);
 							})}
+						<Route path="*" element={<NotFound />} />
 					</Routes>
 					<ToastContainer autoClose={2000} style={{ fontSize: "1.5rem" }} />
 					{auth.loading && <Loading />}
