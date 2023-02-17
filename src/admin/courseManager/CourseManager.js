@@ -18,6 +18,8 @@ const CourseManager = () => {
 
 	const [courses, setCourse] = useState([]);
 
+	const [update, setUpdate] = useState(false);
+
 	const [types, setTypes] = useState([]);
 
 	const auth = useSelector((state) => state.auth);
@@ -101,7 +103,7 @@ const CourseManager = () => {
 		return () => {
 			here = false;
 		};
-	}, []);
+	}, [update]);
 
 	const handleChooseExpert = async (e) => {
 		const check = window.confirm(
@@ -142,6 +144,7 @@ const CourseManager = () => {
 			setTypes(data?.data?.types);
 			toast.success(data?.data?.msg);
 			console.log(data?.data?.types);
+			setUpdate(!update);
 			titleRef.current.value = "";
 		} catch (err) {
 			dispatch(isFailing());
@@ -487,7 +490,12 @@ const CourseManager = () => {
 					<div className="expertCourse_type_course_remain">
 						<div className="expertCourse_type_Card_container">
 							{types?.map((item) => (
-								<TypeCourseCard key={item?.id} item={item} />
+								<TypeCourseCard
+									key={item?.id}
+									item={item}
+									update={update}
+									setUpdate={setUpdate}
+								/>
 							))}
 						</div>
 					</div>

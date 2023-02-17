@@ -1,8 +1,11 @@
-import React, { useContext, useEffect } from "react";
-import { useSelector } from "react-redux";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { UserContext } from "../App";
 import Card from "../card/Card";
+import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import SwiperJs from "../swiper/SwiperJs";
 import "./style.scss";
 const Home = () => {
@@ -10,8 +13,12 @@ const Home = () => {
 		window.scrollTo(0, 0);
 	}, []);
 
-	const { store } = useContext(UserContext);
+	const { store, cache } = useContext(UserContext);
 	const auth = useSelector((state) => state.auth);
+
+	const dispatch = useDispatch();
+
+	const [courses, setCourses] = useState({});
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -24,7 +31,38 @@ const Home = () => {
 				return navigate("/course_expert/dashboard");
 			}
 		}
-	}, [auth.user?.token]);
+	}, [store?.rule]);
+
+	useEffect(() => {
+		let here = true;
+		const url = "/api/home";
+		if (cache.current[url]) {
+			return setCourses(cache.current[url]);
+		}
+		dispatch(isLoading());
+		axios
+			.get(url)
+			.then((res) => {
+				if (!here) {
+					return dispatch(isSuccess());
+				}
+				setCourses(res?.data);
+				cache.current[url] = res?.data;
+				console.log(res?.data);
+				dispatch(isSuccess());
+			})
+			.catch((err) => {
+				if (!here) {
+					return dispatch(isFailing());
+				}
+				dispatch(isFailing());
+				toast.error(err?.response?.data?.msg);
+			});
+		return () => {
+			here = false;
+		};
+	}, []);
+
 	return (
 		<div className="home_sp">
 			<div className="home_sp_slide">

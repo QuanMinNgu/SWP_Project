@@ -34,19 +34,24 @@ const DashboardDetail = () => {
 
 	useEffect(() => {
 		let here = true;
-		const url = `/api/dashboard?token=${auth.user?.token}`;
+		const url = `/api/dashboard`;
 		if (cache.current[url]) {
 			return setDashboard(cache.current[url]);
 		}
 		dispatch(isLoading());
 		axios
-			.get(url)
+			.get(url, {
+				headers: {
+					token: auth.user?.token,
+				},
+			})
 			.then((res) => {
 				if (!here) {
 					return dispatch(isSuccess());
 				}
 				setDashboard(res?.data);
 				cache.current[url] = res?.data;
+				console.log(res?.data);
 				dispatch(isSuccess());
 			})
 			.catch((err) => {
