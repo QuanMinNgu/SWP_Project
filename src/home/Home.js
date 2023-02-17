@@ -21,17 +21,17 @@ const Home = () => {
 	const [courses, setCourses] = useState({});
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (auth.user?.token) {
-			if (store?.rule === "[ROLE_ADMIN]") {
-				return navigate("/admin/dashboard");
-			} else if (store?.rule === "[ROLE_SALE]") {
-				return navigate("/sale/vocher_manager");
-			} else if (store?.rule === "[ROLE_COURSE_EXPERT]") {
-				return navigate("/course_expert/dashboard");
-			}
-		}
-	}, [store?.rule]);
+	// useEffect(() => {
+	// 	if (auth.user?.token) {
+	// 		if (store?.rule === "[ROLE_ADMIN]") {
+	// 			return navigate("/admin/dashboard");
+	// 		} else if (store?.rule === "[ROLE_SALE]") {
+	// 			return navigate("/sale/vocher_manager");
+	// 		} else if (store?.rule === "[ROLE_COURSE_EXPERT]") {
+	// 			return navigate("/course_expert/dashboard");
+	// 		}
+	// 	}
+	// }, [store?.rule]);
 
 	useEffect(() => {
 		let here = true;

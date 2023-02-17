@@ -12,14 +12,21 @@ import { UserContext } from "../App";
 const BlogWrite = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [selectedOption, setSelectedOption] = useState(null);
+
+  const [optionsKind, setOptionKind] = useState({});
   const { cache } = useContext(UserContext);
   const [types, setTypes] = useState([]);
-  let optionsKind = types?.map((item) => {
-    return {
-      value: item?.courseTypeID,
-      label: item?.courseTypeName,
-    };
-  });
+  useEffect(() => {
+    if (types) {
+      const arr = types?.map((item) => {
+        return {
+          value: item?.courseTypeID,
+          label: item?.courseTypeName,
+        };
+      });
+      setOptionKind([...arr]);
+    }
+  }, [types]);
   useEffect(() => {
     let here = true;
     const url = "/api/type_course";
@@ -62,7 +69,7 @@ const BlogWrite = () => {
   }, [editorState]);
 
   const handleCreateNewBlog = async () => {
-    if (!title || !meta || !content) {
+    if (!title || !meta || !content || !selectedOption?.value) {
       return toast.error("Vui lòng điền hết thông tin.");
     }
     dispatch(isLoading());
@@ -140,7 +147,7 @@ const BlogWrite = () => {
         )}
       </div>
       <div className="newPost_update">
-        <button onClick={handleCreateNewBlog}>
+        <button className="button_update_post" onClick={handleCreateNewBlog}>
           <i
             style={{ marginRight: "0.5rem", fontSize: "1.3rem" }}
             className="fa-solid fa-upload"
