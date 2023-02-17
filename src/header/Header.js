@@ -171,7 +171,7 @@ const Header = () => {
 											}}
 											className="header_navbar_account_items"
 										>
-											Personal page
+											Profile
 										</div>
 									</Link>
 									<div className="header_navbar_account_items">

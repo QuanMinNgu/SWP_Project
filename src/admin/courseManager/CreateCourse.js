@@ -196,8 +196,8 @@ const CreateCourse = () => {
 	const idRef = useRef(null);
 
 	const handleCreateNewCourse = async () => {
-		if (!title || !contentSmall || !newPrice) {
-			return toast.error("Vui lòng điền hết thông tin");
+		if (!title || !contentSmall || !newPrice || !selectedOption?.value) {
+			return toast.error("Please enter all value.");
 		}
 		let contentArr = contentSmall + "--?--";
 		benefit.forEach((item) => {
@@ -280,7 +280,7 @@ const CreateCourse = () => {
 				dispatch(isFailing());
 			}
 		} else {
-			return toast.error("Vui lòng Save khóa học trước.");
+			return toast.error("Please Save course first.");
 		}
 	};
 
@@ -300,7 +300,7 @@ const CreateCourse = () => {
 								setTitle(e.target.innerHTML);
 							}}
 						></div>
-						{!title && <div className="newPost_title_content">Tiêu đề</div>}
+						{!title && <div className="newPost_title_content">Title</div>}
 					</div>
 					<div className="newPost_title">
 						<div
@@ -311,7 +311,7 @@ const CreateCourse = () => {
 							}}
 						></div>
 						{!contentSmall && (
-							<div className="newPost_title_content_meta">Nội dung</div>
+							<div className="newPost_title_content_meta">Content</div>
 						)}
 					</div>
 					<div className="course_detail_learn">
@@ -352,7 +352,7 @@ const CreateCourse = () => {
 					<div className="course_detail_timeLine">
 						<ul>
 							<li>
-								<b ref={lessonLengthRef}>{lesson?.length}</b> Pakages
+								<b ref={lessonLengthRef}>{lesson?.length}</b> Topics
 							</li>
 							<li>.</li>
 							<li>
@@ -528,7 +528,7 @@ const CreateCourse = () => {
 							</i>
 						</li>
 						<li>
-							<i>Tự tin khi học tập</i>
+							<i>Confident when studying</i>
 						</li>
 					</ul>
 				</div>
