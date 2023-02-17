@@ -48,8 +48,8 @@ const CreateCourse = () => {
 		if (types) {
 			const arr = types?.map((item) => {
 				return {
-					value: item?.id,
-					label: item?.title,
+					value: item?.courseTypeID,
+					label: item?.courseTypeName,
 				};
 			});
 			setOptionKind([...arr]);
