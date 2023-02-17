@@ -224,10 +224,10 @@ const CreateCourse = () => {
 		}
 
 		console.log({
-			title: title,
-			content: contentArr,
-			courseExpert: courseExpert?.accountID,
-			kind: selectedOption?.value,
+			courseName: title,
+			description: contentArr,
+			accountID: courseExpert?.accountID,
+			courseTypeID: selectedOption?.value,
 			price: newPrice * 1,
 			token: auth.user?.token,
 		});
@@ -236,10 +236,10 @@ const CreateCourse = () => {
 			const data = await axios.post(
 				"/api/course/create",
 				{
-					title: title,
-					content: contentArr,
-					courseExpert: courseExpert?.accountID,
-					kind: selectedOption?.value,
+					courseName: title,
+					description: contentArr,
+					accountID: courseExpert?.accountID,
+					courseTypeID: selectedOption?.value,
 					price: newPrice * 1,
 				},
 				{
@@ -250,7 +250,7 @@ const CreateCourse = () => {
 			);
 			dispatch(isSuccess());
 			toast.success(data?.data?.msg);
-			idRef.current = data?.data?.id;
+			idRef.current = data?.data?.courseID;
 		} catch (err) {
 			toast.error(err?.response?.data?.msg);
 			dispatch(isFailing());
