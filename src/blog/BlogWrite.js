@@ -80,7 +80,7 @@ const BlogWrite = () => {
           blogName: title,
           blogMeta: meta,
           content: content,
-          courseTypeID: selectedOption.value,
+          courseTypeId: selectedOption.value,
         },
         {
           headers: {
