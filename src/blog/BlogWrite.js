@@ -74,13 +74,20 @@ const BlogWrite = () => {
 			courseTypeID: selectedOption.value,
 		});
 		try {
-			const data = await axios.post("/api/blog/create", {
-				token: auth.user?.accessToken,
-				blogName: title,
-				blogMeta: meta,
-				content: content,
-				courseTypeID: selectedOption.value,
-			});
+			const data = await axios.post(
+				"/api/blog/create",
+				{
+					blogName: title,
+					blogMeta: meta,
+					content: content,
+					courseTypeID: selectedOption.value,
+				},
+				{
+					headers: {
+						token: auth.user?.token,
+					},
+				}
+			);
 			toast.success(data?.data?.msg);
 			dispatch(isSuccess());
 		} catch (err) {
