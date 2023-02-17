@@ -22,13 +22,16 @@ const Register = () => {
 			rePassword: rePasswordRef.current?.value,
 		};
 		if (!user.gmail || !user.password || !user.name || !user.rePassword) {
-			return toast.error("Vui lòng điề hết thông tin.");
+			return toast.error("Please enter all value.");
+		}
+		if (user.name.length > 100) {
+			return toast.error("Length of name can not over 100 characters.");
 		}
 		if (user.password.length < 8) {
-			return toast.error("Mật khẩu cần lớn hơn 8 ký tự.");
+			return toast.error("Password need more than 8 characters.");
 		}
 		if (user.password !== user.rePassword) {
-			return toast.error("Mật khẩu không khớp.");
+			return toast.error("Password and Re-Password are not the same.");
 		}
 		dispatch(isLoading());
 		console.log({

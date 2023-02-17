@@ -17,10 +17,10 @@ const Login = () => {
 			password: passwordRef.current?.value,
 		};
 		if (!user.gmail || !user.password) {
-			return toast.error("Vui lòng điền hết thông tin.");
+			return toast.error("Please enter all value.");
 		}
 		if (user.password.length < 8) {
-			return toast.error("Mật khẩu không chính xác.");
+			return toast.error("Password or email are not correct.");
 		}
 		dispatch(isLoading());
 		console.log(user);

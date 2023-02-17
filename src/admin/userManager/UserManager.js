@@ -35,7 +35,7 @@ const UserManager = () => {
 
 	useEffect(() => {
 		let here = true;
-		const url = `/api/account?limit=20`;
+		const url = `/api/account?page=1&limit=20`;
 		if (cache.current[url]) {
 			return setUsers(cache.current[url]);
 		}
