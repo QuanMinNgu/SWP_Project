@@ -76,7 +76,7 @@ const BlogWrite = () => {
     console.log({
       token: auth.user?.token,
       blogName: title,
-      blogMeta: meta,
+      blogMeta: meta.toString(),
       content: content,
       courseTypeId: selectedOption.value,
     });
@@ -85,7 +85,7 @@ const BlogWrite = () => {
         "/api/blog/create",
         {
           blogName: title,
-          blogMeta: meta,
+          blogMeta: meta.toString(),
           content: content,
           courseTypeId: selectedOption.value,
         },
