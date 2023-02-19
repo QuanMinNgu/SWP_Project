@@ -125,14 +125,13 @@ const BlogWrite = () => {
             placeholder="Kind"
           />
         </div>
-        <div
-          className="newPost_title_edit_meta"
-          contentEditable={true}
-          onInput={(e) => {
-            setMeta(e.target.innerHTML);
-          }}
-        ></div>
-        {!meta && <div className="newPost_title_content_meta_ref">Meta</div>}
+        <div className="newPost_title_input">
+          <input
+            className="newPost_title_edit_meta"
+            onChange={(e) => setMeta(e.target.value)}
+          />
+          {!meta && <div className="newPost_title_content_meta_ref">Meta</div>}
+        </div>
       </div>
       <div className="newPost_content">
         <Editor
