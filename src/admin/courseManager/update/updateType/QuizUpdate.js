@@ -441,19 +441,20 @@ const QuizUpdate = ({
 									marginBottom: "3rem",
 								}}
 								ref={titleRef}
-								placeholder="Enter title of this quiz"
+								placeholder="Enter title"
 							/>
 						</div>
 						<div className="lessonCreate_textarea">
 							<textarea
 								defaultValue={data?.contentQuiz}
 								ref={contentQuizRef}
-								placeholder="Enter content of this quiz"
+								placeholder="Enter content"
 							/>
 						</div>
 						<div className="lessonCreate_input">
 							<input
 								ref={timesRef}
+								defaultValue={data?.time}
 								type="number"
 								placeholder="Enter times of quiz (second)"
 							/>

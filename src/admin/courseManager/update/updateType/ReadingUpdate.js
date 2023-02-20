@@ -30,7 +30,11 @@ const ReadingUpdate = ({
 	const [editorState, setEditorState] = useState(
 		EditorState.createWithContent(
 			ContentState.createFromBlockArray(
-				convertFromHTML(Array.isArray(data?.value) ? "<p></p>" : data?.value)
+				convertFromHTML(
+					data?.type !== "reading" && data?.type !== "listening"
+						? "<p></p>"
+						: data.value[0]?.title
+				)
 			)
 		)
 	);
@@ -161,14 +165,15 @@ const ReadingUpdate = ({
 							<textarea
 								defaultValue={data?.title}
 								ref={titleRef}
-								placeholder="Enter title of this quiz"
+								placeholder="Enter title"
 							/>
 						</div>
 						<div className="lessonCreate_input">
 							<input
 								ref={timesRef}
 								type="number"
-								placeholder="Enter times of quiz (second)"
+								defaultValue={data?.time}
+								placeholder="Enter times"
 							/>
 						</div>
 						<div className="lessonCreate_button_form">

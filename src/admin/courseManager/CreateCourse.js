@@ -60,9 +60,9 @@ const CreateCourse = () => {
 	}, [types]);
 	const [courseExperts, setCourseExperts] = useState([]);
 
-	// useEffect(() => {
-	//     console.log(lesson);
-	// }, [lesson]);
+	useEffect(() => {
+		console.log(lesson);
+	}, [lesson]);
 
 	useEffect(() => {
 		let here = true;
