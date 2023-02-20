@@ -25,7 +25,6 @@ function App() {
 		if (auth.user?.token) {
 			const decoded = jwt_decode(auth.user?.token);
 			setStore({ rule: decoded.sub });
-			console.log(decoded);
 		}
 	}, [auth.user?.token]);
 	useEffect(() => {

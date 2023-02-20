@@ -34,7 +34,7 @@ const CreateCourse = () => {
 
 	const [selectedOption, setSelectedOption] = useState(null);
 
-	const [title, setTitle] = useState("");
+	const titleRef = useRef();
 	const [contentSmall, setContentSmall] = useState("");
 	const [newPrice, setNewPrice] = useState("");
 
@@ -200,7 +200,14 @@ const CreateCourse = () => {
 	const idRef = useRef(null);
 
 	const handleCreateNewCourse = async () => {
-		if (!title || !contentSmall || !newPrice || !selectedOption?.value) {
+		const title = titleRef.current.value;
+		if (
+			!title ||
+			!contentSmall ||
+			!newPrice ||
+			!selectedOption?.value ||
+			isNaN(newPrice)
+		) {
 			return toast.error("Please enter all value.");
 		}
 		let contentArr = contentSmall + "--?--";
@@ -300,25 +307,23 @@ const CreateCourse = () => {
 			<div className="row">
 				<div className="col c-12 m-8 l-8">
 					<div className="newPost_title">
-						<div
-							className="newPost_title_edit"
-							contentEditable={true}
-							onInput={(e) => {
-								setTitle(e.target.innerHTML);
-							}}
-						></div>
-						{!title && <div className="newPost_title_content">Title</div>}
+						<textarea
+							ref={titleRef}
+							className="create_input_title"
+							type="text"
+							placeholder="Title"
+						/>
 					</div>
 					<div className="newPost_title">
 						<div
-							className="newPost_title_edit_meta"
+							className="createCourse_title_edit_meta"
 							contentEditable={true}
 							onInput={(e) => {
 								setContentSmall(e.target.innerHTML);
 							}}
 						></div>
 						{!contentSmall && (
-							<div className="newPost_title_content_meta">Content</div>
+							<div className="createCourse_title_content_meta">Content</div>
 						)}
 					</div>
 					<div className="course_detail_learn">

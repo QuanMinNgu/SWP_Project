@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import DashboardDetail from "./DashboardDetail";
 import UserManager from "./userManager/UserManager";
 import BlogManager from "./blogManager/BlogManager";
-import SendMail from "./SendMail";
+import SendMail from "./sendMail/SendMail";
 import CourseManager from "./courseManager/CourseManager";
 import VocherManager from "./vocherManager/VocherManager";
 import CreateCourse from "./courseManager/CreateCourse";

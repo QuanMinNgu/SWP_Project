@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./style.scss";
+import "../style.scss";
+import AlreadyForm from "./AlreadyForm";
 const SendMail = () => {
 	const [type, setType] = useState("individual");
 	return (
@@ -40,7 +41,9 @@ const SendMail = () => {
 				</div>
 			</div>
 			<div className="sendMail_user_form">
-				<div className="sendMail_user_alreadyForm"></div>
+				<div className="sendMail_user_alreadyForm">
+					<AlreadyForm />
+				</div>
 			</div>
 		</div>
 	);
