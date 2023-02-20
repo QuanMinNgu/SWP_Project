@@ -44,7 +44,6 @@ const UserManager = () => {
 
   const [userUpdate, setUserUpdate] = useState(false);
 
-<<<<<<< HEAD
   useEffect(() => {
     let here = true;
     const url = "/api/type_course";
@@ -53,7 +52,11 @@ const UserManager = () => {
     }
     dispatch(isLoading());
     axios
-      .get(url)
+      .get(url, {
+        headers: {
+          token: auth.user?.token,
+        },
+      })
       .then((res) => {
         if (!here) {
           return;
@@ -69,36 +72,6 @@ const UserManager = () => {
       here = false;
     };
   }, []);
-=======
-	useEffect(() => {
-		let here = true;
-		const url = "/api/type_course";
-		if (cache.current[url]) {
-			return setTypes(cache.current[url]);
-		}
-		dispatch(isLoading());
-		axios
-			.get(url, {
-				headers: {
-					token: auth.user?.token,
-				},
-			})
-			.then((res) => {
-				if (!here) {
-					return;
-				}
-				setTypes(res?.data?.types);
-				cache.current[url] = res?.data?.types;
-				dispatch(isSuccess());
-			})
-			.catch((err) => {
-				dispatch(isFailing());
-			});
-		return () => {
-			here = false;
-		};
-	}, []);
->>>>>>> d47920b8fb7b515f035607788c9ae70cd35b9ce9
 
   useEffect(() => {
     let here = true;
