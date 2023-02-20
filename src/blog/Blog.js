@@ -15,7 +15,7 @@ const Blog = () => {
     const axiosGetAllBlog = async () => {
       dispatch(isLoading());
       try {
-        const res = await axios.get("/api/blog");
+        const res = await axios.get("/api/blog/page=1&limit=20");
         setListBlog(res?.data?.blogs);
         console.log(res?.data?.blogs);
         dispatch(isSuccess());

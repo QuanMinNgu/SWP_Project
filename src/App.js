@@ -21,30 +21,16 @@ function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-<<<<<<< HEAD
   useEffect(() => {
     if (auth.user?.token) {
       const decoded = jwt_decode(auth.user?.token);
       setStore({ rule: decoded.sub });
-      console.log(decoded);
     }
   }, [auth.user?.token]);
   useEffect(() => {
     dispatch(isSuccess());
   }, []);
   const cacheRef = useRef({});
-=======
-	useEffect(() => {
-		if (auth.user?.token) {
-			const decoded = jwt_decode(auth.user?.token);
-			setStore({ rule: decoded.sub });
-		}
-	}, [auth.user?.token]);
-	useEffect(() => {
-		dispatch(isSuccess());
-	}, []);
-	const cacheRef = useRef({});
->>>>>>> 3d540bf914bbc9cd77a500c6a7dea91bb7fe41c6
 
   return (
     <UserContext.Provider value={{ store, setStore, cache: cacheRef }}>
@@ -92,7 +78,7 @@ function App() {
                   />
                 );
               })}
-            {store.rule === "[ROLE_ADMIN]" &&
+            {store.rule === "[ROLE_SALE]" &&
               saleRouter.map((item, index) => {
                 const Page = item.element;
                 return item.layout ? (
