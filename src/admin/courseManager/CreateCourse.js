@@ -193,6 +193,10 @@ const CreateCourse = () => {
 	const numOfLessonRef = useRef();
 	const timeOfLessonRef = useRef();
 
+	useEffect(() => {
+		console.log(lesson);
+	}, [lesson]);
+
 	const idRef = useRef(null);
 
 	const handleCreateNewCourse = async () => {
@@ -221,13 +225,15 @@ const CreateCourse = () => {
 			} catch (err) {
 				return;
 			}
+		} else {
+			return toast.error("Please enter a image.");
 		}
 
 		console.log({
-			title: title,
-			content: contentArr,
-			courseExpert: courseExpert?.accountID,
-			kind: selectedOption?.value,
+			courseName: title,
+			description: contentArr,
+			accountID: courseExpert?.accountID,
+			courseTypeID: selectedOption?.value,
 			price: newPrice * 1,
 			token: auth.user?.token,
 		});
@@ -236,11 +242,12 @@ const CreateCourse = () => {
 			const data = await axios.post(
 				"/api/course/create",
 				{
-					title: title,
-					content: contentArr,
-					courseExpert: courseExpert?.accountID,
-					kind: selectedOption?.value,
+					courseName: title,
+					description: contentArr,
+					accountID: courseExpert?.accountID,
+					courseTypeID: selectedOption?.value,
 					price: newPrice * 1,
+					image: urlImage,
 				},
 				{
 					headers: {
@@ -250,7 +257,7 @@ const CreateCourse = () => {
 			);
 			dispatch(isSuccess());
 			toast.success(data?.data?.msg);
-			idRef.current = data?.data?.id;
+			idRef.current = data?.data?.courseID;
 		} catch (err) {
 			toast.error(err?.response?.data?.msg);
 			dispatch(isFailing());

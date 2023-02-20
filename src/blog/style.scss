@@ -299,7 +299,7 @@
 }
 .newPost_content_title {
   position: absolute;
-  top: 11rem;
+  top: 7rem;
   @include mobile {
     top: 28.3rem;
   }
@@ -315,8 +315,6 @@
   color: rgba(0, 0, 0, 0.4);
   z-index: 10;
   position: relative;
-  border: none;
-  width: 100%;
 }
 .newPost_title_content_meta {
   position: absolute;
@@ -348,8 +346,15 @@
 .button_update_post {
   z-index: 1000;
 }
+.newPost_input_title {
+  width: 100%;
+  outline: none;
+  border: none;
+  font-size: 3.5rem;
+  font-weight: 700;
+  min-height: 10rem;
+  resize: vertical;
+}
 .newPost_title_input {
-  padding: 0.5rem 0;
-  position: relative;
   flex: 1;
 }

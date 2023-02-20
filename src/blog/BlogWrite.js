@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./style.scss";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
@@ -51,8 +51,8 @@ const BlogWrite = () => {
       here = false;
     };
   }, []);
-  const [title, setTitle] = useState("");
-  const [meta, setMeta] = useState("");
+  const titleRef = useRef();
+  const metaRef = useRef();
   const [content, setContent] = useState("");
   const handleChange = (data) => {
     setEditorState(data);
@@ -69,23 +69,25 @@ const BlogWrite = () => {
   }, [editorState]);
 
   const handleCreateNewBlog = async () => {
+    const title = titleRef.current.value;
+    const meta = metaRef.current.value;
     if (!title || !meta || !content || !selectedOption?.value) {
-      return toast.error("Vui lòng điền hết thông tin.");
+      return toast.error("Please enter all information.");
     }
     dispatch(isLoading());
     console.log({
       token: auth.user?.token,
       blogName: title,
-      blogMeta: meta.toString(),
+      blogMeta: meta,
       content: content,
-      courseTypeId: selectedOption.value,
+      courseTypeId: selectedOption?.value,
     });
     try {
       const data = await axios.post(
         "/api/blog/create",
         {
           blogName: title,
-          blogMeta: meta.toString(),
+          blogMeta: meta,
           content: content,
           courseTypeId: selectedOption.value,
         },
@@ -106,14 +108,12 @@ const BlogWrite = () => {
   return (
     <div className="newPost">
       <div className="newPost_title">
-        <div
-          className="newPost_title_edit"
-          contentEditable={true}
-          onInput={(e) => {
-            setTitle(e.target.innerHTML);
-          }}
-        ></div>
-        {!title && <div className="newPost_title_content">Tiêu đề</div>}
+        <textarea
+          ref={titleRef}
+          className="newPost_input_title"
+          type="text"
+          placeholder="Enter title"
+        />
       </div>
       <div className="newPost_title">
         <div>
@@ -126,11 +126,12 @@ const BlogWrite = () => {
           />
         </div>
         <div className="newPost_title_input">
-          <input
-            className="newPost_title_edit_meta"
-            onChange={(e) => setMeta(e.target.value)}
+          <textarea
+            ref={metaRef}
+            className="newPost_input_title"
+            type="text"
+            placeholder="Enter Meta"
           />
-          {!meta && <div className="newPost_title_content_meta_ref">Meta</div>}
         </div>
       </div>
       <div className="newPost_content">
