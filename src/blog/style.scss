@@ -256,6 +256,7 @@
   margin-bottom: 4rem;
   position: relative;
   display: flex;
+  align-items: center;
 }
 .newPost_title_edit {
   width: 100%;
@@ -357,4 +358,12 @@
 }
 .newPost_title_input {
   flex: 1;
+}
+.newPost_input_title_meta {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 1.7rem;
+  resize: vertical;
+  min-height: 8rem;
 }

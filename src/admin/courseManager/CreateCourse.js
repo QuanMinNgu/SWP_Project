@@ -17,6 +17,7 @@ import axios from "axios";
 import { UserContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
+import { useParams } from "react-router-dom";
 const CreateCourse = () => {
 	const benefitRef = useRef();
 	const [benefit, setBenefit] = useState([]);
@@ -32,9 +33,11 @@ const CreateCourse = () => {
 
 	const { cache } = useContext(UserContext);
 
+	const { slug } = useParams();
+
 	const [selectedOption, setSelectedOption] = useState(null);
 
-	const [title, setTitle] = useState("");
+	const titleRef = useRef();
 	const [contentSmall, setContentSmall] = useState("");
 	const [newPrice, setNewPrice] = useState("");
 
@@ -88,29 +91,27 @@ const CreateCourse = () => {
 
 	useEffect(() => {
 		let here = true;
-		const url = "/api/account/course_expert";
-		if (cache.current[url]) {
-			return setCourseExperts(cache.current[url]);
+		if (slug === "create_course") {
+			const url = "/api/account/course_expert";
+			dispatch(isLoading());
+			axios
+				.get(url)
+				.then((res) => {
+					if (!here) {
+						return dispatch(isSuccess());
+					}
+					setCourseExperts(res?.data?.users);
+					cache.current[url] = res?.data?.users;
+					dispatch(isSuccess());
+				})
+				.catch((err) => {
+					dispatch(isFailing());
+				});
 		}
-		dispatch(isLoading());
-		axios
-			.get(url)
-			.then((res) => {
-				if (!here) {
-					return dispatch(isSuccess());
-				}
-				setCourseExperts(res?.data?.users);
-				console.log(res?.data);
-				cache.current[url] = res?.data?.users;
-				dispatch(isSuccess());
-			})
-			.catch((err) => {
-				dispatch(isFailing());
-			});
 		return () => {
 			here = false;
 		};
-	}, []);
+	}, [slug]);
 
 	const [urlArray, setUrlArray] = useState([]);
 
@@ -200,7 +201,14 @@ const CreateCourse = () => {
 	const idRef = useRef(null);
 
 	const handleCreateNewCourse = async () => {
-		if (!title || !contentSmall || !newPrice || !selectedOption?.value) {
+		const title = titleRef.current.value;
+		if (
+			!title ||
+			!contentSmall ||
+			!newPrice ||
+			!selectedOption?.value ||
+			isNaN(newPrice)
+		) {
 			return toast.error("Please enter all value.");
 		}
 		let contentArr = contentSmall + "--?--";
@@ -300,25 +308,23 @@ const CreateCourse = () => {
 			<div className="row">
 				<div className="col c-12 m-8 l-8">
 					<div className="newPost_title">
-						<div
-							className="newPost_title_edit"
-							contentEditable={true}
-							onInput={(e) => {
-								setTitle(e.target.innerHTML);
-							}}
-						></div>
-						{!title && <div className="newPost_title_content">Title</div>}
+						<textarea
+							ref={titleRef}
+							className="create_input_title"
+							type="text"
+							placeholder="Title"
+						/>
 					</div>
 					<div className="newPost_title">
 						<div
-							className="newPost_title_edit_meta"
+							className="createCourse_title_edit_meta"
 							contentEditable={true}
 							onInput={(e) => {
 								setContentSmall(e.target.innerHTML);
 							}}
 						></div>
 						{!contentSmall && (
-							<div className="newPost_title_content_meta">Content</div>
+							<div className="createCourse_title_content_meta">Content</div>
 						)}
 					</div>
 					<div className="course_detail_learn">
