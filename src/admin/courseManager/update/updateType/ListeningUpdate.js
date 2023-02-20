@@ -26,7 +26,11 @@ const ListeningUpdate = ({
 	const [editorState, setEditorState] = useState(
 		EditorState.createWithContent(
 			ContentState.createFromBlockArray(
-				convertFromHTML(Array.isArray(data?.value) ? "<p></p>" : data?.value)
+				convertFromHTML(
+					data?.type !== "reading" && data?.type !== "listening"
+						? "<p></p>"
+						: data.value[0]?.title
+				)
 			)
 		)
 	);
@@ -36,7 +40,9 @@ const ListeningUpdate = ({
 	const [content, setContent] = useState("");
 
 	useEffect(() => {
-		setContent(data?.value);
+		if (data?.type === "listening") {
+			setContent(data?.value?.title);
+		}
 	}, [data]);
 
 	useEffect(() => {
@@ -129,7 +135,7 @@ const ListeningUpdate = ({
 							<textarea
 								defaultValue={data?.title}
 								ref={titleRef}
-								placeholder="Enter title of this quiz"
+								placeholder="Enter title"
 							/>
 						</div>
 						<div className="lessonCreate_button_form">
