@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import BlogCard from "../card/BlogCard";
+import Pagination from "../paginating/Pagination";
 import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import "./style.scss";
 const Blog = () => {
@@ -48,6 +49,9 @@ const Blog = () => {
             return <BlogCard item={item} key={index} />;
           })}
         </div>
+      </div>
+      <div className="pagination">
+        <Pagination limit={20} />
       </div>
     </div>
   );
