@@ -17,6 +17,7 @@ import axios from "axios";
 import { UserContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
+import { useParams } from "react-router-dom";
 const CreateCourse = () => {
 	const benefitRef = useRef();
 	const [benefit, setBenefit] = useState([]);
@@ -31,6 +32,8 @@ const CreateCourse = () => {
 	const [addLesson, setAddLesson] = useState(false);
 
 	const { cache } = useContext(UserContext);
+
+	const { slug } = useParams();
 
 	const [selectedOption, setSelectedOption] = useState(null);
 
@@ -88,29 +91,27 @@ const CreateCourse = () => {
 
 	useEffect(() => {
 		let here = true;
-		const url = "/api/account/course_expert";
-		if (cache.current[url]) {
-			return setCourseExperts(cache.current[url]);
+		if (slug === "create_course") {
+			const url = "/api/account/course_expert";
+			dispatch(isLoading());
+			axios
+				.get(url)
+				.then((res) => {
+					if (!here) {
+						return dispatch(isSuccess());
+					}
+					setCourseExperts(res?.data?.users);
+					cache.current[url] = res?.data?.users;
+					dispatch(isSuccess());
+				})
+				.catch((err) => {
+					dispatch(isFailing());
+				});
 		}
-		dispatch(isLoading());
-		axios
-			.get(url)
-			.then((res) => {
-				if (!here) {
-					return dispatch(isSuccess());
-				}
-				setCourseExperts(res?.data?.users);
-				console.log(res?.data);
-				cache.current[url] = res?.data?.users;
-				dispatch(isSuccess());
-			})
-			.catch((err) => {
-				dispatch(isFailing());
-			});
 		return () => {
 			here = false;
 		};
-	}, []);
+	}, [slug]);
 
 	const [urlArray, setUrlArray] = useState([]);
 

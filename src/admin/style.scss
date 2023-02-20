@@ -1556,42 +1556,6 @@
 		outline: none;
 	}
 }
-.already_form {
-	margin-top: 5rem;
-	display: flex;
-	justify-content: center;
-}
-.already_form_table {
-	width: 60%;
-	border: 0.1rem solid rgba(0, 0, 0, 0.3);
-	border-collapse: collapse;
-	& > thead > tr {
-		border-bottom: 0.1rem solid rgba(0, 0, 0, 0.3);
-	}
-}
-.already_form_id {
-	width: 10%;
-	border-right: 0.1rem solid rgba(0, 0, 0, 0.3);
-	height: 4rem;
-	font-size: 1.7rem;
-}
-.already_form_name {
-	border-right: 0.1rem solid rgba(0, 0, 0, 0.3);
-	width: 60%;
-	font-size: 1.7rem;
-}
-.already_form_id_items {
-	border-right: 0.1rem solid rgba(0, 0, 0, 0.3);
-	width: 10%;
-	height: 6rem;
-	font-size: 1.5rem;
-}
-.already_form_name_items {
-	width: 60%;
-	font-size: 1.5rem;
-	border-right: 0.1rem solid rgba(0, 0, 0, 0.3);
-	font-weight: 500;
-}
 .create_input_title {
 	width: 100%;
 	border: none;
@@ -1618,4 +1582,43 @@
 	outline: none;
 	font-weight: 500;
 	color: rgba(0, 0, 0, 0.4);
+}
+.already_form {
+	margin-top: 5rem;
+	display: flex;
+	justify-content: center;
+}
+.already_form_table {
+	width: 60%;
+	border: 0.1rem solid rgba(0, 0, 0, 0.3);
+	border-collapse: collapse;
+	& > thead > tr {
+		border-bottom: 0.1rem solid rgba(0, 0, 0, 0.3);
+	}
+}
+.already_form_id {
+	width: 10%;
+	border-right: 0.1rem solid rgba(0, 0, 0, 0.3);
+	height: 5rem;
+	font-size: 1.7rem;
+}
+.already_form_name {
+	border-right: 0.1rem solid rgba(0, 0, 0, 0.3);
+	width: 70%;
+	font-size: 1.7rem;
+}
+.already_form_id_items {
+	border-right: 0.1rem solid rgba(0, 0, 0, 0.3);
+	width: 10%;
+	height: 7rem;
+	font-size: 1.5rem;
+}
+.already_form_name_items {
+	width: 70%;
+	font-size: 1.5rem;
+	border-right: 0.1rem solid rgba(0, 0, 0, 0.3);
+	font-weight: 500;
+}
+.tr_table {
+	border-bottom: 0.1rem solid rgba(0, 0, 0, 0.3);
 }
