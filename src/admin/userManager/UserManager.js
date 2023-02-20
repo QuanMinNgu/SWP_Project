@@ -52,7 +52,11 @@ const UserManager = () => {
 		}
 		dispatch(isLoading());
 		axios
-			.get(url)
+			.get(url, {
+				headers: {
+					token: auth.user?.token,
+				},
+			})
 			.then((res) => {
 				if (!here) {
 					return;
