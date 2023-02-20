@@ -128,7 +128,7 @@ const BlogWrite = () => {
 				<div className="newPost_title_input">
 					<textarea
 						ref={metaRef}
-						className="newPost_input_title"
+						className="newPost_input_title_meta"
 						type="text"
 						placeholder="Enter Meta"
 					/>
