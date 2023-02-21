@@ -67,13 +67,14 @@ const CourseManager = () => {
 
 	useEffect(() => {
 		let here = true;
-		const url = "/api/course/tim-kiem?limit=20";
-		if (cache.current[url]) {
-			return setCourse(cache.current[url]);
-		}
+		const url = "/api/course/getAllCourse?limit=20&page=1";
 		dispatch(isLoading());
 		axios
-			.get(url)
+			.get(url, {
+				headers: {
+					token: auth.user?.token,
+				},
+			})
 			.then((res) => {
 				if (!here) {
 					return dispatch(isSuccess());
