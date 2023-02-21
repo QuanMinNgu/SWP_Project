@@ -275,7 +275,9 @@ const CreateCourse = () => {
 	const handleCreatePakageForACourse = async () => {
 		if (idRef.current) {
 			dispatch(isLoading());
-			console.log(lesson);
+			console.log({
+				lessons: lesson,
+			});
 			try {
 				const data = await axios.post(
 					`/api/course/update_pakage/id=${idRef.current}`,
