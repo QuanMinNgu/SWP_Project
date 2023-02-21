@@ -275,12 +275,14 @@ const CreateCourse = () => {
 	const handleCreatePakageForACourse = async () => {
 		if (idRef.current) {
 			dispatch(isLoading());
-			console.log(lesson);
+			console.log({
+				lessonPakages: lesson,
+			});
 			try {
 				const data = await axios.post(
 					`/api/course/update_pakage/id=${idRef.current}`,
 					{
-						lessons: lesson,
+						lessonPakages: lesson,
 					},
 					{
 						headers: {
@@ -419,7 +421,7 @@ const CreateCourse = () => {
 							className="button button_update"
 							onClick={handleCreatePakageForACourse}
 						>
-							Save Package
+							Save Topics
 						</button>
 					</div>
 					<div className="CoursePanel">

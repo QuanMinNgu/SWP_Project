@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-const usePaginating = ({ limit, count }) => {
+const usePaginating = ({ count }) => {
 	const [page, setPage] = useState(1);
-	const li = limit || 1;
-	const cou = count || 1;
-	const numPage = Math.ceil(cou / li);
+	const numPage = count;
 	const [firstArr, setFirstArr] = useState([]);
 	const [lastArr, setLastArr] = useState([]);
 
@@ -25,7 +23,7 @@ const usePaginating = ({ limit, count }) => {
 			setFirstArr(newArr);
 			setLastArr([]);
 		}
-	}, [page, count, limit]);
+	}, [page, count]);
 	const prev = () => {
 		setPage(Math.max(page - 1, 1));
 	};

@@ -67,13 +67,14 @@ const CourseManager = () => {
 
 	useEffect(() => {
 		let here = true;
-		const url = "/api/course/tim-kiem?limit=20";
-		if (cache.current[url]) {
-			return setCourse(cache.current[url]);
-		}
+		const url = "/api/course/getAllCourse?limit=20&page=1";
 		dispatch(isLoading());
 		axios
-			.get(url)
+			.get(url, {
+				headers: {
+					token: auth.user?.token,
+				},
+			})
 			.then((res) => {
 				if (!here) {
 					return dispatch(isSuccess());
@@ -125,6 +126,27 @@ const CourseManager = () => {
 			// }
 		}
 	};
+
+	const [courseExperts, setCourseExperts] = useState([]);
+
+	useEffect(() => {
+		let here = true;
+		const url = "/api/account/course_expert";
+		dispatch(isLoading());
+		axios
+			.get(url)
+			.then((res) => {
+				if (!here) {
+					return dispatch(isSuccess());
+				}
+				setCourseExperts(res?.data?.users);
+				cache.current[url] = res?.data?.users;
+				dispatch(isSuccess());
+			})
+			.catch((err) => {
+				dispatch(isFailing());
+			});
+	}, []);
 
 	const handleCreateNewType = async () => {
 		if (!titleRef.current.value) {
@@ -313,150 +335,34 @@ const CourseManager = () => {
 								</tr>
 							</thead>
 							<tbody>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
+								{courseExperts?.map((item, index) => (
+									<tr
+										key={item?.accountID + index}
+										className="ex_thead_wrap_items"
+									>
+										<th className="ex_thead_title">
+											<div className="ex_thead_user">
+												<div className="ex_thead_user_img">
+													<img src={item?.image} alt="Ảnh" />
 												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
-											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button>Choose</button>
-									</th>
-								</tr>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
+												<div className="ex_thead_user_infor">
+													<div className="ex_thead_user_infor_name">
+														{item?.name}
+													</div>
+													<i className="ex_thead_user_infor_email">
+														{item?.gmail}
+													</i>
+													<i className="ex_thead_user_infor_id">
+														ID:{item?.accountID}
+													</i>
 												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
 											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button onClick={handleChooseExpert}>Choose</button>
-									</th>
-								</tr>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
-												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
-											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button>Choose</button>
-									</th>
-								</tr>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
-												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
-											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button>Choose</button>
-									</th>
-								</tr>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
-												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
-											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button>Choose</button>
-									</th>
-								</tr>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
-												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
-											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button>Choose</button>
-									</th>
-								</tr>
+										</th>
+										<th className="ex_thead_button">
+											<button>Choose</button>
+										</th>
+									</tr>
+								))}
 							</tbody>
 						</table>
 					</div>

@@ -59,7 +59,7 @@ const CourseManagerCard = ({ checkAll, setExpert, item }) => {
 					<div className="thead_card_name">
 						<div>
 							<Link className="thead_card_name-link" to="/">
-								{item?.name}
+								{item?.courseName}
 							</Link>
 						</div>
 						<span className="thead_card_price">
@@ -80,7 +80,7 @@ const CourseManagerCard = ({ checkAll, setExpert, item }) => {
 								{item?.courseExpert?.name}
 							</Link>
 						</h6>
-						<span>ID:{item?.courseExpert?.id}</span>
+						<span>ID:{item?.courseExpert?.accountID}</span>
 					</div>
 				</div>
 			</th>

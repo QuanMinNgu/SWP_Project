@@ -1,0 +1,33 @@
+.marketing {
+  margin-top: 2rem;
+  &_create {
+    display: flex;
+    justify-content: center;
+  }
+}
+.create_market {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  &_name {
+    display: flex;
+    align-items: center;
+    & > h3 {
+      width: 10%;
+      font-size: 2rem;
+    }
+    &_input {
+      flex: 1;
+      display: flex;
+      margin-right: 1rem;
+      & > input {
+        flex: 1;
+        height: 100%;
+        border: none;
+        outline: none;
+        font-size: 2rem;
+      }
+    }
+  }
+}
