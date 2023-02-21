@@ -21,7 +21,7 @@ const SaleDashboard = () => {
   const handleLogOut = () => {
     dispatch(isLogOut());
     toast.success("Đăng xuất thành công");
-    navigate("/login");
+    navigate("/login" );
   };
   return (
     <div className="dashboard">
