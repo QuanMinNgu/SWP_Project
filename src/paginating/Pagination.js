@@ -1,9 +1,9 @@
 import React from "react";
 import "./style.scss";
 import usePaginating from "./usePaginating";
-const Pagination = ({ limit, count }) => {
+const Pagination = ({ count }) => {
 	const { page, numPage, firstArr, lastArr, activePage, jump, nex, prev } =
-		usePaginating({ limit: limit, count: count });
+		usePaginating({ count: count });
 
 	return (
 		<div className="pagination">

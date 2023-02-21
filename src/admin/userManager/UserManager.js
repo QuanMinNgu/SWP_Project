@@ -87,8 +87,8 @@ const UserManager = () => {
 				if (!here) {
 					return dispatch(isSuccess());
 				}
-				setUsers(res?.data?.users);
-				cache.current[url] = res?.data?.users;
+				setUsers(res?.data);
+				cache.current[url] = res?.data;
 				dispatch(isSuccess());
 			})
 			.catch((err) => {
@@ -133,7 +133,7 @@ const UserManager = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{users?.map((item) => (
+						{users?.users?.map((item) => (
 							<UserManagerCard
 								userUpdate={userUpdate}
 								setUserUpdate={setUserUpdate}
@@ -145,7 +145,7 @@ const UserManager = () => {
 				</table>
 			</div>
 			<div className="pagination">
-				<Pagination limit={20} />
+				<Pagination count={users?.numPage} />
 			</div>
 		</div>
 	);
