@@ -276,13 +276,13 @@ const CreateCourse = () => {
 		if (idRef.current) {
 			dispatch(isLoading());
 			console.log({
-				lessons: lesson,
+				lessonPakages: lesson,
 			});
 			try {
 				const data = await axios.post(
 					`/api/course/update_pakage/id=${idRef.current}`,
 					{
-						lessons: lesson,
+						lessonPakages: lesson,
 					},
 					{
 						headers: {
