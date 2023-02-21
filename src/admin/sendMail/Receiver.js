@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReceiverCard from "./ReceiverCard";
 
-const Receiver = ({ setReceive, receivers, setReceivers }) => {
+const Receiver = ({ setReceive, receivers, setReceivers, users }) => {
 	const [checkall, setCheckAll] = useState(false);
 	return (
 		<div className="receiver">
@@ -29,8 +29,10 @@ const Receiver = ({ setReceive, receivers, setReceivers }) => {
 									onChange={(e) => {
 										if (e.target.checked) {
 											setCheckAll(true);
+											setReceivers([...users]);
 										} else {
 											setCheckAll(false);
+											setReceivers([]);
 										}
 									}}
 									id="checkall_receiver"
@@ -42,12 +44,15 @@ const Receiver = ({ setReceive, receivers, setReceivers }) => {
 						</tr>
 					</thead>
 					<tbody>
-						<ReceiverCard checkall={checkall} />
-						<ReceiverCard checkall={checkall} />
-						<ReceiverCard checkall={checkall} />
-						<ReceiverCard checkall={checkall} />
-						<ReceiverCard checkall={checkall} />
-						<ReceiverCard checkall={checkall} />
+						{users?.map((item) => (
+							<ReceiverCard
+								setReceivers={setReceivers}
+								receivers={receivers}
+								item={item}
+								key={item?.accountID + "userItemcard"}
+								checkall={checkall}
+							/>
+						))}
 					</tbody>
 				</table>
 			</div>
