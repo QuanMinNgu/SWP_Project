@@ -130,7 +130,7 @@
 	position: fixed;
 	padding: 0 2rem;
 	padding-right: 20rem;
-	z-index: 10;
+	z-index: 40;
 	top: 0;
 	right: 0rem;
 	left: 32rem;
@@ -1621,4 +1621,121 @@
 }
 .tr_table {
 	border-bottom: 0.1rem solid rgba(0, 0, 0, 0.3);
+}
+.sendMailTitle {
+	& > input {
+		width: 100%;
+		border: none;
+		outline: none;
+		height: 4rem;
+		border-bottom: 0.1rem solid rgba(0, 0, 0, 0.3);
+		margin-bottom: 0.5rem;
+		font-size: 1.7rem;
+	}
+}
+.sendMail_content {
+	margin-top: 3rem;
+}
+.sendMail_content_abs {
+	margin-top: 2.7rem;
+}
+.sendMail_receive {
+	min-height: 4rem;
+	border-bottom: 0.1rem solid rgba(0, 0, 0, 0.3);
+	margin-bottom: 0.5rem;
+	font-size: 1.7rem;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	color: rgba(0, 0, 0, 0.6);
+	cursor: pointer;
+}
+.receiver {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 40%;
+	min-height: 20rem;
+	background-color: white;
+	z-index: 300;
+	border-radius: 0.5rem;
+	padding: 1rem;
+	box-shadow: 0 0 0.5rem 0.1rem black;
+}
+.receiver_close {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 299;
+}
+.receiver_close_icons {
+	display: flex;
+	justify-content: flex-end;
+}
+.receiver_close_icons_wrap {
+	width: 3rem;
+	height: 3rem;
+	border-radius: 50%;
+	border: 0.1rem solid rgba(0, 0, 0, 0.7);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 2.5rem;
+	padding-bottom: 0.3rem;
+	cursor: pointer;
+}
+.receiver_searching {
+	display: flex;
+	justify-content: center;
+	margin-top: 2rem;
+	& > input {
+		width: 60%;
+		height: 4.3rem;
+		margin-right: 1rem;
+		border-radius: 2rem;
+		padding: 0 2rem;
+		font-size: 1.6rem;
+	}
+}
+.receiver_searching_items {
+	width: 100%;
+	height: 60vh;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	border: 0.1rem solid rgba(0, 0, 0, 0.1);
+	margin-top: 2rem;
+}
+.r_table {
+	border-collapse: collapse;
+	border: 0.1rem solid rgba(0, 0, 0, 0.3);
+	width: 100%;
+}
+.r_row {
+	border-bottom: 0.1rem solid rgba(0, 0, 0, 0.3);
+}
+.r_h {
+	width: 80%;
+	border-right: 0.1rem solid rgba(0, 0, 0, 0.3);
+	height: 4rem;
+	font-size: 1.5rem;
+	& > input {
+		width: 1.6rem;
+		height: 1.6rem;
+		margin-right: 0.4rem;
+		cursor: pointer;
+	}
+}
+.r_h_users {
+	border-right: 0.1rem solid rgba(0, 0, 0, 0.3);
+	width: 80%;
+	height: 10rem;
+}
+.r_h_checkbox > input {
+	width: 2rem;
+	height: 2rem;
+	cursor: pointer;
 }
