@@ -419,7 +419,7 @@ const CreateCourse = () => {
 							className="button button_update"
 							onClick={handleCreatePakageForACourse}
 						>
-							Save Package
+							Save Topics
 						</button>
 					</div>
 					<div className="CoursePanel">
