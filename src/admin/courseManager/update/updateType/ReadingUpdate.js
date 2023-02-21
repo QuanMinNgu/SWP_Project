@@ -33,7 +33,7 @@ const ReadingUpdate = ({
 				convertFromHTML(
 					data?.type !== "reading" && data?.type !== "listening"
 						? "<p></p>"
-						: data.value[0]?.title
+						: data?.description
 				)
 			)
 		)
@@ -75,16 +75,10 @@ const ReadingUpdate = ({
 		arr[index].numLesson[addLesson] = {
 			title: titleRef.current.value,
 			type: "reading",
-			value: [
-				{
-					title: content,
-					answers: null,
-					correctAnswer: null,
-				},
-			],
+			value: null,
 			link: null,
 			time: timesRef.current.value * 1,
-			contentQuiz: null,
+			description: content,
 		};
 		setLesson([...arr]);
 		setCreate(false);

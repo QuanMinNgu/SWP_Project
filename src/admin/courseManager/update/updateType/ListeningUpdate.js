@@ -29,7 +29,7 @@ const ListeningUpdate = ({
 				convertFromHTML(
 					data?.type !== "reading" && data?.type !== "listening"
 						? "<p></p>"
-						: data.value[0]?.title
+						: data?.description
 				)
 			)
 		)
@@ -41,7 +41,7 @@ const ListeningUpdate = ({
 
 	useEffect(() => {
 		if (data?.type === "listening") {
-			setContent(data?.value?.title);
+			setContent(data?.description);
 		}
 	}, [data]);
 
@@ -67,14 +67,8 @@ const ListeningUpdate = ({
 		arr[index].numLesson[addLesson] = {
 			title: titleRef.current.value,
 			type: "listening",
-			value: [
-				{
-					title: content,
-					answers: null,
-					correctAnswer: null,
-				},
-			],
-			contentQuiz: null,
+			value: null,
+			description: content,
 			link: url || data?.link,
 			time: playerRef.current.getDuration(),
 		};

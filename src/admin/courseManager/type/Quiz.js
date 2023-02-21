@@ -123,7 +123,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
 				title: titleRef.current.value,
 				type: "quiz",
 				value: [...quesions],
-				contentQuiz: contentQuizRef.current.value,
+				description: contentQuizRef.current.value,
 				link: null,
 				time: timesRef.current.value * 1,
 			});
@@ -132,7 +132,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
 				title: titleRef.current.value,
 				type: "quiz",
 				value: [...quesions],
-				contentQuiz: contentQuizRef.current.value,
+				description: contentQuizRef.current.value,
 				link: null,
 				time: timesRef.current.value * 1,
 			});
