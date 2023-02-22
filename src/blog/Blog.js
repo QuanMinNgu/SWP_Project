@@ -51,7 +51,7 @@ const Blog = () => {
           <BlogCard />
         </div>
       </div>
-      <div className="pagination">
+      <div className="pagination blog_page">
         <Pagination limit={20} />
       </div>
     </div>
