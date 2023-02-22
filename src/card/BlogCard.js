@@ -13,10 +13,6 @@ const BlogCard = ({ item, key }) => {
   };
   return (
     <div className="blog_card" key={key}>
-      <div className="blog_card_header" onClick={handleBlogDetail}>
-        <img src="https://i.pinimg.com/564x/26/3a/d5/263ad55f3fc6f594d8f1c91d2c396a48.jpg" />
-      </div>
-
       <div className="blog_card_body">
         <div className="blog_card_body_top">
           <div>
@@ -42,7 +38,7 @@ const BlogCard = ({ item, key }) => {
             <h3>{item?.blogName}</h3>
           </div>
           <div className="blog_card_body_content_mid">
-            <p>{item?.content}</p>
+            <p>{item?.blogMeta}</p>
           </div>
         </div>
       </div>
