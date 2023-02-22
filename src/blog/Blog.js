@@ -16,7 +16,7 @@ const Blog = () => {
     const axiosGetAllBlog = async () => {
       dispatch(isLoading());
       try {
-        const res = await axios.get("/api/blog/page=1&limit=20");
+        const res = await axios.get("/api/blog?page=1&limit=20");
         setListBlog(res?.data?.blogs);
         console.log(res?.data?.blogs);
         dispatch(isSuccess());
@@ -48,6 +48,7 @@ const Blog = () => {
           {listBLog?.map((item, index) => {
             return <BlogCard item={item} key={index} />;
           })}
+          <BlogCard />
         </div>
       </div>
       <div className="pagination">
