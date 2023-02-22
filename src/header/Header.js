@@ -175,16 +175,6 @@ const Header = () => {
 										</div>
 									</Link>
 									<div className="header_navbar_account_items">
-										<Link style={{ textDecoration: "none" }} to="/me/new-post">
-											<div
-												onClick={() => {
-													setAccount(false);
-												}}
-												className="header_navbar_account_items_link"
-											>
-												Blogging
-											</div>
-										</Link>
 										<Link style={{ textDecoration: "none" }} to="/me/blog">
 											<div
 												onClick={() => {
@@ -203,7 +193,7 @@ const Header = () => {
 											}}
 											className="header_navbar_account_items"
 										>
-											Blogs Saved
+											Favorite Blogs
 										</div>
 									</Link>
 									<div className="header_navbar_account_items">
