@@ -52,7 +52,7 @@ const BlogDetail = () => {
     <div className="blog_detail">
       <div className="blog_detail_user">
         <div className="blog_detail_user_info">
-          <h2>{blog?.account?.name}</h2>
+          <h2>{blog?.name}</h2>
           <div className="blog_detail_user_react">
             <div className="blog_detail_user_react_love" onClick={handleReact}>
               {react ? (
@@ -77,9 +77,9 @@ const BlogDetail = () => {
           <h2>{blog?.blogName}</h2>
         </div>
         <div className="blog_detail_center_info">
-          <img src="https://res.cloudinary.com/sttruyen/image/upload/v1673249807/another/b6sudrpaizo80snhsq9m.png" />
+          <img src={blog?.image} />
           <div className="blog_detail_center_info_user">
-            <h2>{blog?.account?.name}</h2>
+            <h2>{blog?.name}</h2>
           </div>
         </div>
         <div className="blog_detail_center_content">
