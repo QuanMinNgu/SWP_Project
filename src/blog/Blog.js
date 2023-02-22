@@ -48,7 +48,6 @@ const Blog = () => {
           {listBLog?.map((item, index) => {
             return <BlogCard item={item} key={index} />;
           })}
-          <BlogCard />
         </div>
       </div>
       <div className="pagination">

@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
 import "./main.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const BlogCard = ({ item, key }) => {
   const [love, setLove] = useState(false);
+  const navigate = useNavigate();
   const handleLove = () => {
     setLove(!love);
   };
+  const handleBlogDetail = () => {
+    navigate(`/blog/${item?.blogID}`);
+  };
   return (
     <div className="blog_card" key={key}>
-      <Link to="/blog/abc">
-        <div className="blog_card_header">
-          <img src="https://i.pinimg.com/564x/26/3a/d5/263ad55f3fc6f594d8f1c91d2c396a48.jpg" />
-        </div>
-      </Link>
+      <div className="blog_card_header" onClick={handleBlogDetail}>
+        <img src="https://i.pinimg.com/564x/26/3a/d5/263ad55f3fc6f594d8f1c91d2c396a48.jpg" />
+      </div>
+
       <div className="blog_card_body">
         <div className="blog_card_body_top">
           <div>
@@ -32,17 +35,12 @@ const BlogCard = ({ item, key }) => {
           </div>
         </div>
         <div className="blog_card_body_content">
-          <Link
-            to="/blog/abc"
-            style={{
-              textDecoration: "none",
-              color: "black",
-            }}
+          <div
+            className="blog_card_body_content_header"
+            onClick={handleBlogDetail}
           >
-            <div className="blog_card_body_content_header">
-              <h3>{item?.blogName}</h3>
-            </div>
-          </Link>
+            <h3>{item?.blogName}</h3>
+          </div>
           <div className="blog_card_body_content_mid">
             <p>{item?.content}</p>
           </div>
