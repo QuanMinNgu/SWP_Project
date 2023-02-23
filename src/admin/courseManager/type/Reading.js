@@ -64,6 +64,7 @@ const Reading = ({
 				link: null,
 				time: timesRef.current.value * 1,
 				description: content,
+				lessonID: null,
 			});
 		} else {
 			arr[inde].numLesson.splice(addLesson?.childId, 0, {
@@ -73,6 +74,7 @@ const Reading = ({
 				link: null,
 				time: 0,
 				description: content,
+				lessonID: null,
 			});
 		}
 		setLesson([...arr]);
