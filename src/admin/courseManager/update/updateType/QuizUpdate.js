@@ -41,6 +41,7 @@ const QuizUpdate = ({
 				title: contentRef.current.value,
 				answers: [],
 				correctAnswer: 0,
+				questionID: null,
 			},
 		]);
 		contentRef.current.value = "";

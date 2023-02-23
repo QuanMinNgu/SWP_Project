@@ -29,6 +29,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
 				title: contentRef.current.value,
 				answers: [],
 				correctAnswer: 0,
+				questionID: null,
 			},
 		]);
 		contentRef.current.value = "";

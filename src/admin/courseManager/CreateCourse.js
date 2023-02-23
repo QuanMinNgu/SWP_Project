@@ -275,6 +275,9 @@ const CreateCourse = () => {
 					`/api/course/update_pakage/id=${idRef.current}`,
 					{
 						lessonPakages: lesson,
+						deletePackage: null,
+						deleteLesson: null,
+						deleteQuestion: null,
 					},
 					{
 						headers: {
