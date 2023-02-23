@@ -44,6 +44,7 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
 				link: url,
 				time: playerRef.current.getDuration(),
 				description: content,
+				lessonID: null,
 			});
 		} else {
 			arr[inde].numLesson.splice(addLesson?.childId, 0, {
@@ -53,6 +54,7 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
 				link: url,
 				time: playerRef.current.getDuration(),
 				description: content,
+				lessonID: null,
 			});
 		}
 		setLesson([...arr]);

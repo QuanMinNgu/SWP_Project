@@ -135,6 +135,7 @@ const QuizUpdate = ({
 			description: contentQuizRef.current.value,
 			link: null,
 			time: timesRef.current.value * 1,
+			lessonID: null,
 		};
 		setLesson([...arr]);
 		setCreate(false);

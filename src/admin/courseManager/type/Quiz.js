@@ -126,6 +126,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
 				description: contentQuizRef.current.value,
 				link: null,
 				time: timesRef.current.value * 1,
+				lessonID: null,
 			});
 		} else {
 			arr[inde].numLesson.splice(addLesson?.childId, 0, {
@@ -135,6 +136,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
 				description: contentQuizRef.current.value,
 				link: null,
 				time: timesRef.current.value * 1,
+				lessonID: null,
 			});
 		}
 		setLesson([...arr]);
