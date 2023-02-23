@@ -78,9 +78,7 @@ const QuizUpdate = ({
 		}
 		const newArr = quesions?.map((item, index) => {
 			if (index === ind * 1) {
-				item?.answers?.push({
-					title: answerRef.current.value,
-				});
+				item?.answers?.push(answerRef.current.value);
 				return item;
 			}
 			return item;
@@ -109,9 +107,8 @@ const QuizUpdate = ({
 			return toast.error("Please, enter value.");
 		}
 		const newArr = quesions;
-		newArr[editContentAnswer.parentId].answers[
-			editContentAnswer.childId
-		].title = contentAnswerRef.current.value;
+		newArr[editContentAnswer.parentId].answers[editContentAnswer.childId] =
+			contentAnswerRef.current.value;
 		setQuesions([...newArr]);
 		setEditAnswer(false);
 	};
@@ -194,19 +191,17 @@ const QuizUpdate = ({
 											childId: ind,
 										})
 									}
-									id={
-										"updateCorrect" + item?.title + index + ind + "answerUpdate"
-									}
+									id={"updateCorrect" + item + index + ind + "answerUpdate"}
 									type="radio"
-									name={item?.title + index + "answerUpdate"}
+									name={item + index + "answerUpdate"}
 									defaultChecked={item?.correctAnswer === ind ? true : false}
 								/>
 								<label
 									htmlFor={
-										"updateCorrect" + item?.title + index + ind + "answerUpdate"
+										"updateCorrect" + item + index + ind + "answerUpdate"
 									}
 								>
-									{infor?.title}
+									{infor}
 								</label>
 								<button
 									onClick={() =>
@@ -448,7 +443,7 @@ const QuizUpdate = ({
 						</div>
 						<div className="lessonCreate_textarea">
 							<textarea
-								defaultValue={data?.contentQuiz}
+								defaultValue={data?.description}
 								ref={contentQuizRef}
 								placeholder="Enter content"
 							/>

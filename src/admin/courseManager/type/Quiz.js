@@ -200,6 +200,7 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
 									id={item + index + ind + "answer"}
 									type="radio"
 									name={item + index + "answer"}
+									defaultChecked={ind === 0 ? true : false}
 								/>
 								<label htmlFor={item + index + ind + "answer"}>{infor}</label>
 								<button
