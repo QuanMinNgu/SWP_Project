@@ -34,6 +34,7 @@ const CoursePanelEdit = ({
 		}
 		const ar = lesson;
 		ar[index].lessonTitle = contentRef.current.value;
+		ar[index].packageID = null;
 		setLesson([...ar]);
 		setEdit(false);
 	};
@@ -55,6 +56,7 @@ const CoursePanelEdit = ({
 			const ar = lesson;
 			ar.splice(index, 0, {
 				lessonTitle: contentNewPakageRef.current.value,
+				packageID: null,
 				numLesson: [],
 			});
 			setLesson([...ar]);
@@ -63,6 +65,7 @@ const CoursePanelEdit = ({
 			const ar = lesson;
 			ar.splice(index + 1, 0, {
 				lessonTitle: contentNewPakageRef.current.value,
+				packageID: null,
 				numLesson: [],
 			});
 			setLesson([...ar]);
@@ -90,7 +93,7 @@ const CoursePanelEdit = ({
 					{index + 1}.{item?.lessonTitle}
 				</div>
 				<div className="CoursePanel_body">
-					{item?.numLesson?.length} bài học
+					{item?.numLesson?.length} Lessons
 				</div>
 				<div className="CoursePanel_edit_button_wrap">
 					<button

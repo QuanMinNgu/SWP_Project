@@ -61,10 +61,6 @@ const CreateCourse = () => {
 	const [courseExperts, setCourseExperts] = useState([]);
 
 	useEffect(() => {
-		console.log(lesson);
-	}, [lesson]);
-
-	useEffect(() => {
 		let here = true;
 		const url = "/api/type_course";
 		if (cache.current[url]) {
@@ -143,15 +139,12 @@ const CreateCourse = () => {
 		}
 	};
 
-	useEffect(() => {
-		console.log(lesson);
-	}, [lesson]);
-
 	const handleCreateLesson = () => {
 		setLesson([
 			...lesson,
 			{
 				lessonTitle: lessonRef.current.value,
+				packageID: null,
 				numLesson: [],
 			},
 		]);
@@ -194,10 +187,6 @@ const CreateCourse = () => {
 	const numOfLessonRef = useRef();
 	const timeOfLessonRef = useRef();
 
-	useEffect(() => {
-		console.log(lesson);
-	}, [lesson]);
-
 	const idRef = useRef(null);
 
 	const handleCreateNewCourse = async () => {
@@ -234,7 +223,9 @@ const CreateCourse = () => {
 				return;
 			}
 		} else {
-			return toast.error("Please enter a image.");
+			return idRef.current
+				? toast.error("Please save Pakage First.")
+				: toast.error("Please enter a image.");
 		}
 
 		console.log({
@@ -266,6 +257,7 @@ const CreateCourse = () => {
 			dispatch(isSuccess());
 			toast.success(data?.data?.msg);
 			idRef.current = data?.data?.courseID;
+			imageRef.current = "";
 		} catch (err) {
 			toast.error(err?.response?.data?.msg);
 			dispatch(isFailing());
@@ -304,6 +296,10 @@ const CreateCourse = () => {
 	const { getRootProps, getInputProps } = useDropzone({
 		onDrop,
 	});
+
+	useEffect(() => {
+		console.log(lesson);
+	}, [lesson]);
 
 	return (
 		<div className="managerCourse">
