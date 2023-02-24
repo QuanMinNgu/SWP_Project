@@ -5,11 +5,6 @@ function MarkBlogCard() {
   const [react, setReact] = useState(false);
   return (
     <div className="user_card">
-      <Link to="/blog/:slug">
-        <div className="user_card_header">
-          <img src="https://i.pinimg.com/564x/dd/45/05/dd4505032f143e60c3454d0a44e3ddbc.jpg" />
-        </div>
-      </Link>
       <div className="user_card_body">
         <div className="user_card_body_top">
           <h3>My Blog Card</h3>
