@@ -26,12 +26,14 @@ const CourseManagerCard = ({ checkAll, setExpert, item }) => {
 	}, [checkAll]);
 
 	const handeleDeleteCourse = async () => {
-		const check = window.confirm(`Do you really wanna delete ${item?.name} ?`);
+		const check = window.confirm(
+			`Do you really wanna delete ${item?.courseName} ?`
+		);
 		if (check) {
 			dispatch(isLoading());
 			try {
 				const data = await axios.post(
-					`/api/course/delete/${item?.id}`,
+					`/api/course/delete/${item?.courseID}`,
 					{
 						token: auth.user?.token,
 					},
@@ -58,7 +60,10 @@ const CourseManagerCard = ({ checkAll, setExpert, item }) => {
 					</div>
 					<div className="thead_card_name">
 						<div>
-							<Link className="thead_card_name-link" to="/">
+							<Link
+								className="thead_card_name-link"
+								to={`/course/${item?.courseID}`}
+							>
 								{item?.courseName}
 							</Link>
 						</div>
@@ -68,23 +73,34 @@ const CourseManagerCard = ({ checkAll, setExpert, item }) => {
 					</div>
 				</div>
 			</th>
-			<th className="thead_price">SE</th>
+			<th className="thead_type">{item?.numberOfEnroll}</th>
+			<th className="thead_type">{item?.starRated}</th>
+			<th className="thead_type">{item?.typeName}</th>
 			<th className="thead_courseExpert">
-				<div className="courseExpert_infor">
-					<div className="courseExpert_infor_img">
+				<div className="user_maner_infor">
+					<div className="user_maner_infor_img">
 						<img src={item?.courseExpert?.image} alt="Ảnh" />
 					</div>
-					<div className="courseExpert_infor_name">
+					<div className="user_maner_infor_name">
 						<h6>
-							<Link className="courseExpert_name" to="/">
-								{item?.courseExpert?.name}
-							</Link>
+							<div className="user_maner_name">{item?.courseExpert?.name}</div>
 						</h6>
-						<span>ID:{item?.courseExpert?.accountID}</span>
+						<i className="user_email_infor_email">
+							{item?.courseExpert?.gmail}
+						</i>
+						<span>
+							<i>ID:{item?.courseExpert?.accountID}</i>
+						</span>
 					</div>
 				</div>
 			</th>
-			<th className="thead_status noactive_status">{item?.status}</th>
+			<th
+				className={`thead_status ${
+					item?.status ? "active_status" : "noactive_status"
+				}`}
+			>
+				{item?.status ? "Active" : "Inactive"}
+			</th>
 			<th style={{ fontWeight: "700" }} className="thead_checkbox">
 				<input ref={cardRef} id="checkall" type="checkbox" />
 			</th>
@@ -111,7 +127,7 @@ const CourseManagerCard = ({ checkAll, setExpert, item }) => {
 							</div>
 							<div
 								onClick={() => {
-									nagivate(`/admin/update_course?id=${item?.id}`);
+									nagivate(`/admin/update_course?id=${item?.courseID}`);
 								}}
 								className="bars_detail_items"
 							>

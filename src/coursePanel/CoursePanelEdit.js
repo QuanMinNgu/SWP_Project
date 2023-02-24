@@ -33,7 +33,7 @@ const CoursePanelEdit = ({
 			return toast.error("Please enter input value.");
 		}
 		const ar = lesson;
-		ar[index].lessonTitle = contentRef.current.value;
+		ar[index].packageTitle = contentRef.current.value;
 		ar[index].packageID = null;
 		setLesson([...ar]);
 		setEdit(false);
@@ -55,7 +55,7 @@ const CoursePanelEdit = ({
 		if (addMorePakage === "prev") {
 			const ar = lesson;
 			ar.splice(index, 0, {
-				lessonTitle: contentNewPakageRef.current.value,
+				packageTitle: contentNewPakageRef.current.value,
 				packageID: null,
 				numLesson: [],
 			});
@@ -64,7 +64,7 @@ const CoursePanelEdit = ({
 		} else if (addMorePakage === "next") {
 			const ar = lesson;
 			ar.splice(index + 1, 0, {
-				lessonTitle: contentNewPakageRef.current.value,
+				packageTitle: contentNewPakageRef.current.value,
 				packageID: null,
 				numLesson: [],
 			});
@@ -90,7 +90,7 @@ const CoursePanelEdit = ({
 						}}
 						className={!panel ? "fa-solid fa-plus" : "fa-solid fa-minus"}
 					></i>
-					{index + 1}.{item?.lessonTitle}
+					{index + 1}.{item?.packageTitle}
 				</div>
 				<div className="CoursePanel_body">
 					{item?.numLesson?.length} Lessons
@@ -137,7 +137,7 @@ const CoursePanelEdit = ({
 							ref={contentRef}
 							type="text"
 							placeholder="Enter title"
-							defaultValue={item?.lessonTitle}
+							defaultValue={item?.packageTitle}
 						/>
 						<div>
 							<button

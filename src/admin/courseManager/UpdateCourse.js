@@ -15,12 +15,10 @@ import Reading from "./type/Reading";
 import Select from "react-select";
 import axios from "axios";
 import { UserContext } from "../../App";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
-const UpdateCourse = () => {
-	const titleRef = useRef();
-	const contentRef = useRef();
+import { useLocation, useParams } from "react-router-dom";
+const CreateCourse = () => {
 	const benefitRef = useRef();
 	const [benefit, setBenefit] = useState([]);
 	const [courseExpert, setCourseExpert] = useState("");
@@ -33,19 +31,72 @@ const UpdateCourse = () => {
 	const lessonRef = useRef();
 	const [addLesson, setAddLesson] = useState(false);
 
-	const [course, setCourse] = useState({});
-
 	const { cache } = useContext(UserContext);
-	const auth = useSelector((state) => state.auth);
-	const dispatch = useDispatch();
 
 	const { slug } = useParams();
 
+	const [selectedOption, setSelectedOption] = useState(null);
+
+	const [course, setCourse] = useState({});
+
+	const titleRef = useRef();
+	const [contentSmall, setContentSmall] = useState("");
+
+	const contentRef = useRef();
+	const [newPrice, setNewPrice] = useState("");
+
+	const dispatch = useDispatch();
+
+	const [types, setTypes] = useState([]);
+
+	const [optionsKind, setOptionKind] = useState({});
+
+	useEffect(() => {
+		if (types) {
+			const arr = types?.map((item) => {
+				return {
+					value: item?.courseTypeID,
+					label: item?.courseTypeName,
+				};
+			});
+			setOptionKind([...arr]);
+		}
+	}, [types]);
+	const [courseExperts, setCourseExperts] = useState([]);
+
 	useEffect(() => {
 		let here = true;
-		const url = `/api/course/admin_get?id=${slug}`;
+		const url = "/api/type_course";
 		if (cache.current[url]) {
-			return setCourse(cache.current[url]);
+			return setTypes(cache.current[url]);
+		}
+		dispatch(isLoading());
+		axios
+			.get(url)
+			.then((res) => {
+				if (!here) {
+					return;
+				}
+				setTypes(res?.data?.types);
+				cache.current[url] = res?.data?.types;
+				dispatch(isSuccess());
+			})
+			.catch((err) => {
+				dispatch(isFailing());
+			});
+		return () => {
+			here = false;
+		};
+	}, []);
+
+	const { search } = useLocation();
+	const idCourse = new URLSearchParams(search).get("id");
+
+	useEffect(() => {
+		let here = true;
+		const url = `/api/course/admin_get?id=${idCourse}`;
+		if (cache.current[url]) {
+			return;
 		}
 		dispatch(isLoading());
 		axios
@@ -56,23 +107,49 @@ const UpdateCourse = () => {
 			})
 			.then((res) => {
 				if (!here) {
-					return dispatch(isSuccess());
+					return;
 				}
-				setCourse(res?.data);
-				console.log(res?.data);
-				cache.current[url] = res?.data;
+				dispatch(isSuccess());
+				setCourse(res?.data?.course);
+				console.log(res?.data?.course);
+				document.querySelector("#priceOfCourse").innerHTML =
+					res?.data?.course?.price;
 			})
 			.catch((err) => {
 				if (!here) {
-					return dispatch(isFailing());
+					return;
 				}
-				toast.error(err?.response?.data?.msg);
 				dispatch(isFailing());
+				toast.error(err?.response?.data?.msg);
 			});
 		return () => {
 			here = false;
 		};
-	}, []);
+	}, [idCourse]);
+
+	useEffect(() => {
+		let here = true;
+		if (slug.includes("update_course")) {
+			const url = "/api/account/course_expert";
+			dispatch(isLoading());
+			axios
+				.get(url)
+				.then((res) => {
+					if (!here) {
+						return dispatch(isSuccess());
+					}
+					setCourseExperts(res?.data?.users);
+					cache.current[url] = res?.data?.users;
+					dispatch(isSuccess());
+				})
+				.catch((err) => {
+					dispatch(isFailing());
+				});
+		}
+		return () => {
+			here = false;
+		};
+	}, [slug]);
 
 	const [urlArray, setUrlArray] = useState([]);
 
@@ -92,21 +169,24 @@ const UpdateCourse = () => {
 		benefitRef.current.value = "";
 	};
 
-	const handleChooseExpert = () => {
+	const handleChooseExpert = (item) => {
 		const check = window.confirm(
-			"Bạn có muốn chọn Minh Quang thành course expert của khóa học này không?"
+			`Do you wanna choose ${item?.name} for this course?`
 		);
-		setCourseExpert({
-			name: "Quang Minh",
-		});
-		setExpert(false);
+		if (check) {
+			setCourseExpert({
+				...item,
+			});
+			setExpert(false);
+		}
 	};
 
 	const handleCreateLesson = () => {
 		setLesson([
 			...lesson,
 			{
-				lessonTitle: lessonRef.current.value,
+				packageTitle: lessonRef.current.value,
+				packageID: null,
 				numLesson: [],
 			},
 		]);
@@ -118,11 +198,6 @@ const UpdateCourse = () => {
 		benefit.splice(e, 1);
 		setBenefit([...benefit]);
 	};
-	const optionsKind = [
-		{ value: "ha-noi", label: "Software" },
-		{ value: "strawberry", label: "Financial" },
-		{ value: "vanilla", label: "Marketing" },
-	];
 
 	const onDrop = useCallback((acceptedFiles) => {
 		const url = URL.createObjectURL(acceptedFiles[0]);
@@ -139,9 +214,7 @@ const UpdateCourse = () => {
 		lesson?.forEach((item) => {
 			coun += item?.numLesson?.length;
 			item?.numLesson?.forEach((item) => {
-				if (item?.type === "listening") {
-					tim += item?.time;
-				}
+				tim += item?.time * 1;
 			});
 		});
 		setNumberOfLesson({
@@ -150,32 +223,146 @@ const UpdateCourse = () => {
 		});
 	}, [lesson]);
 
+	const auth = useSelector((state) => state.auth);
+
+	const lessonLengthRef = useRef();
+	const numOfLessonRef = useRef();
+	const timeOfLessonRef = useRef();
+
+	const idRef = useRef(null);
+
 	const handleCreateNewCourse = async () => {
+		const title = titleRef.current.value;
+		if (
+			!title ||
+			!contentRef.current.value ||
+			!newPrice ||
+			!selectedOption?.value ||
+			isNaN(newPrice)
+		) {
+			return toast.error("Please enter all value.");
+		}
+		let contentArr = contentRef.current.value + "--?--";
+		benefit.forEach((item) => {
+			contentArr += item + "--?--";
+		});
+		contentArr += lessonLengthRef.current.innerHTML + "--?--";
+		contentArr += numOfLessonRef.current.innerHTML + "--?--";
+		contentArr += numberOfLesson?.time;
+
+		let urlImage = "";
+		if (imageRef.current) {
+			const formData = new FormData();
+			formData.append("file", imageRef.current);
+			formData.append("upload_preset", "sttruyenxyz");
+			try {
+				const res = await axios.post(
+					"https://api.cloudinary.com/v1_1/sttruyen/image/upload",
+					formData
+				);
+				urlImage = "https:" + res.data.url.split(":")[1];
+			} catch (err) {
+				return;
+			}
+		} else {
+			return idRef.current
+				? toast.error("Please save Pakage First.")
+				: toast.error("Please enter a image.");
+		}
+
+		console.log({
+			courseName: title,
+			description: contentArr,
+			accountID: courseExpert?.accountID,
+			courseTypeID: selectedOption?.value,
+			price: newPrice * 1,
+			token: auth.user?.token,
+		});
+		dispatch(isLoading());
 		try {
-			const data = await axios.post("/api/course/create", {
-				...lesson,
+			const data = await axios.post(
+				"/api/course/create",
+				{
+					courseName: title,
+					description: contentArr,
+					accountID: courseExpert?.accountID,
+					courseTypeID: selectedOption?.value,
+					price: newPrice * 1,
+					image: urlImage,
+				},
+				{
+					headers: {
+						token: auth.user?.token,
+					},
+				}
+			);
+			dispatch(isSuccess());
+			toast.success(data?.data?.msg);
+			idRef.current = data?.data?.courseID;
+			imageRef.current = "";
+		} catch (err) {
+			toast.error(err?.response?.data?.msg);
+			dispatch(isFailing());
+		}
+	};
+
+	const handleCreatePakageForACourse = async () => {
+		if (idRef.current) {
+			dispatch(isLoading());
+			console.log({
+				lessonPakages: lesson,
 			});
-			console.log(data?.data);
-		} catch (err) {}
+			try {
+				const data = await axios.post(
+					`/api/course/update_pakage/id=${idRef.current}`,
+					{
+						lessonPakages: lesson,
+						deletePackage: null,
+						deleteLesson: null,
+						deleteQuestion: null,
+					},
+					{
+						headers: {
+							token: auth.user?.token,
+						},
+					}
+				);
+				dispatch(isSuccess());
+				toast.success(data?.data?.msg);
+			} catch (err) {
+				toast.error(err?.response?.data?.msg);
+				dispatch(isFailing());
+			}
+		} else {
+			return toast.error("Please Save course first.");
+		}
 	};
 
 	const { getRootProps, getInputProps } = useDropzone({
 		onDrop,
 	});
-	const [selectedOption, setSelectedOption] = useState(null);
+
 	return (
 		<div className="managerCourse">
 			<div className="row">
 				<div className="col c-12 m-8 l-8">
-					<div className="course_detail_name">
-						<h3 ref={titleRef} contentEditable={true}>
-							{course?.title}
-						</h3>
+					<div className="newPost_title">
+						<textarea
+							ref={titleRef}
+							className="create_input_title"
+							type="text"
+							placeholder="Title"
+							defaultValue={course?.courseName}
+						/>
 					</div>
-					<div className="course_detail_content">
-						<p ref={contentRef} contentEditable={true}>
-							Description of course (can edit)
-						</p>
+					<div className="newPost_title">
+						<textarea
+							ref={contentRef}
+							className="create_input_Content"
+							type="text"
+							placeholder="Content"
+							defaultValue={course?.description}
+						/>
 					</div>
 					<div className="course_detail_learn">
 						<h3>The benefits of this course:</h3>
@@ -184,12 +371,12 @@ const UpdateCourse = () => {
 							<button onClick={handleCreateBenefit}>Send</button>
 						</div>
 					</div>
-					<ul className="course_detail_learn_items">
+					<ul id="benefit" className="course_detail_learn_items">
 						{benefit?.length === 0 ? (
 							<li className="benefitList">Example of benefit of this course</li>
 						) : (
 							benefit?.map((item, index) => (
-								<li className="benefitList" key={item + "benefit"}>
+								<li className="benefitList" key={item + "benefit" + index}>
 									{item}
 									<div className="benefit_button">
 										<button
@@ -215,37 +402,44 @@ const UpdateCourse = () => {
 					<div className="course_detail_timeLine">
 						<ul>
 							<li>
-								<b>{lesson?.length}</b> Pakages
+								<b ref={lessonLengthRef}>{lesson?.length}</b> Topics
 							</li>
 							<li>.</li>
 							<li>
-								<b>{numberOfLesson?.num}</b> Lessons
+								<b ref={numOfLessonRef}>{numberOfLesson?.num}</b> Lessons
 							</li>
 							<li>.</li>
 							<li>
 								Times{" "}
-								<b>{`${
+								<b ref={timeOfLessonRef}>{`${
 									Math.floor(numberOfLesson?.time / 3600) < 10 ? "0" : ""
 								}${Math.floor(numberOfLesson?.time / 3600)} :
-                    
-                    ${
-											Math.floor(numberOfLesson?.time / 3600) > 0
-												? `${
-														Math.floor(numberOfLesson?.time / 60) -
-															Math.floor(numberOfLesson?.time / 3600) * 60 <
-														10
-															? "0"
-															: ""
-												  }${
-														Math.floor(numberOfLesson?.time / 60) -
-														Math.floor(numberOfLesson?.time / 3600) * 60
-												  }`
-												: `${
-														Math.floor(numberOfLesson?.time / 60) < 10
-															? "0"
-															: ""
-												  }${Math.floor(numberOfLesson?.time / 60)}`
-										} : ${
+                                
+                                ${
+																	Math.floor(numberOfLesson?.time / 3600) > 0
+																		? `${
+																				Math.floor(numberOfLesson?.time / 60) -
+																					Math.floor(
+																						numberOfLesson?.time / 3600
+																					) *
+																						60 <
+																				10
+																					? "0"
+																					: ""
+																		  }${
+																				Math.floor(numberOfLesson?.time / 60) -
+																				Math.floor(
+																					numberOfLesson?.time / 3600
+																				) *
+																					60
+																		  }`
+																		: `${
+																				Math.floor(numberOfLesson?.time / 60) <
+																				10
+																					? "0"
+																					: ""
+																		  }${Math.floor(numberOfLesson?.time / 60)}`
+																} : ${
 									Math.floor(numberOfLesson?.time) -
 										Math.floor(numberOfLesson?.time / 60) * 60 <
 									10
@@ -257,6 +451,13 @@ const UpdateCourse = () => {
 								}`}</b>
 							</li>
 						</ul>
+						<button
+							style={{ height: "4rem" }}
+							className="button button_update"
+							onClick={handleCreatePakageForACourse}
+						>
+							Save Topics
+						</button>
 					</div>
 					<div className="CoursePanel">
 						{lesson?.map((item, index) => (
@@ -306,13 +507,33 @@ const UpdateCourse = () => {
 								<input {...getInputProps()} />
 								<i className="fa-regular fa-image"></i>
 								<div className="image_create_container">
-									<img src={image} />
+									<img src={image || course?.image} />
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className="course_detail_price" contentEditable={true}>
-						Enter Price
+					<div style={{ marginLeft: "6rem" }} className="newPost_title">
+						<div
+							style={{
+								color: "#F05123",
+							}}
+							className="newPost_title_edit"
+							id="priceOfCourse"
+							contentEditable={true}
+							onInput={(e) => {
+								setNewPrice(e.target.innerHTML);
+							}}
+						></div>
+						{!newPrice && (
+							<div
+								style={{
+									color: "#F05123",
+								}}
+								className="newPost_title_content"
+							>
+								Enter Price
+							</div>
+						)}
 					</div>
 					<div className="course_detail_button">
 						<button
@@ -358,7 +579,7 @@ const UpdateCourse = () => {
 							</i>
 						</li>
 						<li>
-							<i>Tự tin khi học tập</i>
+							<i>Confident when studying</i>
 						</li>
 					</ul>
 				</div>
@@ -396,150 +617,36 @@ const UpdateCourse = () => {
 								</tr>
 							</thead>
 							<tbody>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
+								{courseExperts?.map((item) => (
+									<tr
+										key={item?.accountID + "courseExperts"}
+										className="ex_thead_wrap_items"
+									>
+										<th className="ex_thead_title">
+											<div className="ex_thead_user">
+												<div className="ex_thead_user_img">
+													<img src={item?.image} alt="Ảnh" />
 												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
-											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button>Choose</button>
-									</th>
-								</tr>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
+												<div className="ex_thead_user_infor">
+													<div className="ex_thead_user_infor_name">
+														{item?.name}
+													</div>
+													<i className="ex_thead_user_infor_email">
+														{item?.gmail}
+													</i>
+													<i className="ex_thead_user_infor_id">
+														ID:{item?.accountID}
+													</i>
 												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
 											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button onClick={handleChooseExpert}>Choose</button>
-									</th>
-								</tr>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
-												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
-											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button>Choose</button>
-									</th>
-								</tr>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
-												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
-											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button>Choose</button>
-									</th>
-								</tr>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
-												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
-											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button>Choose</button>
-									</th>
-								</tr>
-								<tr className="ex_thead_wrap_items">
-									<th className="ex_thead_title">
-										<div className="ex_thead_user">
-											<div className="ex_thead_user_img">
-												<img
-													src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-													alt="Ảnh"
-												/>
-											</div>
-											<div className="ex_thead_user_infor">
-												<div className="ex_thead_user_infor_name">
-													Minh Quang
-												</div>
-												<i className="ex_thead_user_infor_email">
-													quangminhnguyen265@gmail.com
-												</i>
-												<i className="ex_thead_user_infor_id">ID:1231232</i>
-											</div>
-										</div>
-									</th>
-									<th className="ex_thead_button">
-										<button>Choose</button>
-									</th>
-								</tr>
+										</th>
+										<th className="ex_thead_button">
+											<button onClick={() => handleChooseExpert(item)}>
+												Choose
+											</button>
+										</th>
+									</tr>
+								))}
 							</tbody>
 						</table>
 					</div>
@@ -717,4 +824,4 @@ const UpdateCourse = () => {
 	);
 };
 
-export default UpdateCourse;
+export default CreateCourse;

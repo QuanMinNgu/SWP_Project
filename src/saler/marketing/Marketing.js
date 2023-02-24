@@ -1,42 +1,53 @@
-import React from "react";
+import React, { useCallback, useRef, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { useNavigate } from "react-router-dom";
-import VoucherCard from "../saleVoucher/VoucherCard";
-import MarketingCart from "./MarketingCart";
+import SwiperJs from "../../swiper/SwiperJs";
+import MarketingCard from "./MarketingCard";
 import "./style.scss";
 const Marketing = () => {
-  const navigate = useNavigate();
-  const handleCreateNewMarket = () => {
-    navigate("/sale/create_market");
-  };
-  return (
-    <div className="marketing">
-      <div className="marketing_create">
-        <button
-          className="button"
-          style={{
-            height: "40px",
-          }}
-          onClick={handleCreateNewMarket}
-        >
-          Create new Market
-        </button>
-      </div>
-      <div className="manage_voucher">
-        <table className="s_table">
-          <thead className="s_thead">
-            <tr className="s_trow">
-              <th className="v_stt">STT</th>
-              <th className="v_voucher">Name</th>
-              <th className="v_time">Market Image</th>
-            </tr>
-          </thead>
-          <tbody>
-            <MarketingCart />
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+	const navigate = useNavigate();
+
+	const [image, setImage] = useState("");
+	const imageRef = useRef();
+	const onDrop = useCallback((acceptedFiles) => {
+		const url = URL.createObjectURL(acceptedFiles[0]);
+		if (image) {
+			URL.revokeObjectURL(image);
+		}
+		imageRef.current = acceptedFiles[0];
+		setImage(url);
+	}, []);
+	const { getRootProps, getInputProps } = useDropzone({
+		onDrop,
+	});
+	return (
+		<div className="marketing">
+			<div className="marketing_swiper">
+				<SwiperJs />
+			</div>
+			<div className="marketing_card">
+				<div className="marketing_card_create">
+					<div className="movie_drop_zone">
+						<div className="movie_drop_zone_wrap" {...getRootProps()}>
+							<input {...getInputProps()} />
+							<i className="fa-regular fa-image"></i>
+							<div className="image_create_container">
+								<img src={image} />
+							</div>
+						</div>
+					</div>
+				</div>
+				<MarketingCard />
+				<MarketingCard />
+				<MarketingCard />
+				<MarketingCard />
+				<MarketingCard />
+				<MarketingCard />
+				<MarketingCard />
+				<MarketingCard />
+			</div>
+		</div>
+	);
 };
 
 export default Marketing;

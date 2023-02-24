@@ -31,6 +31,8 @@ const CreateCourse = () => {
 	const lessonRef = useRef();
 	const [addLesson, setAddLesson] = useState(false);
 
+	const contentRef = useRef();
+
 	const { cache } = useContext(UserContext);
 
 	const { slug } = useParams();
@@ -38,7 +40,6 @@ const CreateCourse = () => {
 	const [selectedOption, setSelectedOption] = useState(null);
 
 	const titleRef = useRef();
-	const [contentSmall, setContentSmall] = useState("");
 	const [newPrice, setNewPrice] = useState("");
 
 	const dispatch = useDispatch();
@@ -129,7 +130,7 @@ const CreateCourse = () => {
 
 	const handleChooseExpert = (item) => {
 		const check = window.confirm(
-			"Bạn có muốn chọn Minh Quang thành course expert của khóa học này không?"
+			`Do you wanna choose ${item?.name} for this course?`
 		);
 		if (check) {
 			setCourseExpert({
@@ -143,7 +144,7 @@ const CreateCourse = () => {
 		setLesson([
 			...lesson,
 			{
-				lessonTitle: lessonRef.current.value,
+				packageTitle: lessonRef.current.value,
 				packageID: null,
 				numLesson: [],
 			},
@@ -193,20 +194,17 @@ const CreateCourse = () => {
 		const title = titleRef.current.value;
 		if (
 			!title ||
-			!contentSmall ||
+			!contentRef.current.value ||
 			!newPrice ||
 			!selectedOption?.value ||
 			isNaN(newPrice)
 		) {
 			return toast.error("Please enter all value.");
 		}
-		let contentArr = contentSmall + "--?--";
+		let contentArr = contentRef.current.value + "--?--";
 		benefit.forEach((item) => {
 			contentArr += item + "--?--";
 		});
-		contentArr += lessonLengthRef.current.innerHTML + "--?--";
-		contentArr += numOfLessonRef.current.innerHTML + "--?--";
-		contentArr += numberOfLesson?.time;
 
 		let urlImage = "";
 		if (imageRef.current) {
@@ -241,6 +239,7 @@ const CreateCourse = () => {
 			const data = await axios.post(
 				"/api/course/create",
 				{
+					courseID: null,
 					courseName: title,
 					description: contentArr,
 					accountID: courseExpert?.accountID,
@@ -269,12 +268,18 @@ const CreateCourse = () => {
 			dispatch(isLoading());
 			console.log({
 				lessonPakages: lesson,
+				deletePackage: null,
+				deleteLesson: null,
+				deleteQuestion: null,
 			});
 			try {
 				const data = await axios.post(
 					`/api/course/update_pakage/id=${idRef.current}`,
 					{
 						lessonPakages: lesson,
+						deletePackage: null,
+						deleteLesson: null,
+						deleteQuestion: null,
 					},
 					{
 						headers: {
@@ -314,16 +319,12 @@ const CreateCourse = () => {
 						/>
 					</div>
 					<div className="newPost_title">
-						<div
-							className="createCourse_title_edit_meta"
-							contentEditable={true}
-							onInput={(e) => {
-								setContentSmall(e.target.innerHTML);
-							}}
-						></div>
-						{!contentSmall && (
-							<div className="createCourse_title_content_meta">Content</div>
-						)}
+						<textarea
+							ref={contentRef}
+							className="create_input_Content"
+							type="text"
+							placeholder="Content"
+						/>
 					</div>
 					<div className="course_detail_learn">
 						<h3>The benefits of this course:</h3>
