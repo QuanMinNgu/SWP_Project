@@ -81,6 +81,7 @@ const CourseManager = () => {
 				}
 				setCourse(res?.data?.courses);
 				cache.current[url] = res?.data?.courses;
+				console.log(res?.data?.courses);
 				dispatch(isSuccess());
 			})
 			.catch((err) => {
@@ -233,7 +234,13 @@ const CourseManager = () => {
 							<th style={{ fontWeight: "700" }} className="thead_title">
 								Course Name & Detail
 							</th>
-							<th style={{ fontWeight: "700" }} className="thead_price">
+							<th style={{ fontWeight: "700" }} className="thead_type">
+								Enrolling
+							</th>
+							<th style={{ fontWeight: "700" }} className="thead_type">
+								Stars Rate
+							</th>
+							<th style={{ fontWeight: "700" }} className="thead_type">
 								Type
 							</th>
 							<th style={{ fontWeight: "700" }} className="thead_courseExpert">

@@ -302,10 +302,13 @@
 	border-bottom: 0.1rem solid rgba(0, 0, 0, 0.3);
 }
 .thead_title {
-	width: 45%;
+	width: 37%;
 }
 .thead_price {
 	width: 10%;
+}
+.thead_type {
+	width: 7%;
 }
 .thead_courseExpert {
 	width: 25%;
@@ -317,7 +320,7 @@
 	width: 5%;
 }
 .thead_status {
-	width: 10%;
+	width: 7%;
 }
 .thead_wrap_items {
 	height: 11rem;
@@ -1767,4 +1770,12 @@
 }
 .receiverItems_Name {
 	padding-bottom: 0.2rem;
+}
+.create_input_Content {
+	width: 100%;
+	height: 5rem;
+	border: none;
+	outline: none;
+	font-size: 1.7rem;
+	color: rgba(0, 0, 0, 0.7);
 }
