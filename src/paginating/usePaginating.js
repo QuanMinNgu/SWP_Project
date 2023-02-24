@@ -31,6 +31,8 @@ const usePaginating = ({ count }) => {
 	useEffect(() => {
 		if (page > 1) {
 			navigate(`?page=${page}`);
+		} else if (page === 1) {
+			navigate("?");
 		}
 	}, [page]);
 	const prev = () => {
