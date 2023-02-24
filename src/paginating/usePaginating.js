@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const usePaginating = ({ count }) => {
 	const [page, setPage] = useState(1);
 	const numPage = count;
 	const [firstArr, setFirstArr] = useState([]);
 	const [lastArr, setLastArr] = useState([]);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const newArr = [...Array(numPage)].map((item, index) => index + 1);
@@ -24,6 +27,12 @@ const usePaginating = ({ count }) => {
 			setLastArr([]);
 		}
 	}, [page, count]);
+
+	useEffect(() => {
+		if (page > 1) {
+			navigate(`?page=${page}`);
+		}
+	}, [page]);
 	const prev = () => {
 		setPage(Math.max(page - 1, 1));
 	};
