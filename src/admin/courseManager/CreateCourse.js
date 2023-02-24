@@ -239,6 +239,7 @@ const CreateCourse = () => {
 			const data = await axios.post(
 				"/api/course/create",
 				{
+					courseID: null,
 					courseName: title,
 					description: contentArr,
 					accountID: courseExpert?.accountID,
