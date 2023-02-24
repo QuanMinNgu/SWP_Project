@@ -17,8 +17,8 @@ const Blog = () => {
 			dispatch(isLoading());
 			try {
 				const res = await axios.get("/api/blog?page=1&limit=20");
-				setListBlog(res?.data?.blogs);
-				console.log(res?.data?.blogs);
+				setListBlog(res?.data);
+				console.log(res?.data);
 				dispatch(isSuccess());
 			} catch (err) {
 				dispatch(isFailing());
@@ -45,13 +45,13 @@ const Blog = () => {
 			</div>
 			<div className="blog_container_body">
 				<div className="blog_container_body_cards">
-					{listBLog?.map((item, index) => {
+					{listBLog?.blogs?.map((item, index) => {
 						return <BlogCard item={item} key={index} />;
 					})}
 				</div>
 			</div>
 			<div className="pagination blog_page">
-				<Pagination limit={20} />
+				<Pagination count={listBLog?.numPage} />
 			</div>
 		</div>
 	);
