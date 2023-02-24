@@ -90,11 +90,11 @@ const CreateCourse = () => {
 	}, []);
 
 	const { search } = useLocation();
-	const id = new URLSearchParams(search).get("id");
+	const idCourse = new URLSearchParams(search).get("id");
 
 	useEffect(() => {
 		let here = true;
-		const url = `/api/course/admin_get?id=${id}`;
+		const url = `/api/course/admin_get?id=${idCourse}`;
 		if (cache.current[url]) {
 			return;
 		}
@@ -111,6 +111,7 @@ const CreateCourse = () => {
 				}
 				dispatch(isSuccess());
 				setCourse(res?.data?.course);
+				console.log(res?.data?.course);
 				document.querySelector("#priceOfCourse").innerHTML =
 					res?.data?.course?.price;
 			})
@@ -124,7 +125,7 @@ const CreateCourse = () => {
 		return () => {
 			here = false;
 		};
-	}, [id]);
+	}, [idCourse]);
 
 	useEffect(() => {
 		let here = true;
