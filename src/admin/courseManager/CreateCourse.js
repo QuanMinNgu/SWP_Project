@@ -205,9 +205,6 @@ const CreateCourse = () => {
 		benefit.forEach((item) => {
 			contentArr += item + "--?--";
 		});
-		contentArr += lessonLengthRef.current.innerHTML + "--?--";
-		contentArr += numOfLessonRef.current.innerHTML + "--?--";
-		contentArr += numberOfLesson?.time;
 
 		let urlImage = "";
 		if (imageRef.current) {
@@ -270,6 +267,9 @@ const CreateCourse = () => {
 			dispatch(isLoading());
 			console.log({
 				lessonPakages: lesson,
+				deletePackage: null,
+				deleteLesson: null,
+				deleteQuestion: null,
 			});
 			try {
 				const data = await axios.post(
