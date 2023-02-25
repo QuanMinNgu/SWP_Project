@@ -1,57 +1,122 @@
 .voucher_template_warper {
-	height: 500px;
-	width: 100%;
+  height: 500px;
+  width: 100%;
 }
 .voucher_template {
-	font-family: "Itim", cursive;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background-color: #ef5353;
-	border: 0.5rem solid white;
-	border-radius: 1rem;
-	color: white;
-	width: 100%;
-	&_top {
-		margin: 2rem 0;
-		& > h2 {
-			font-size: 3.6rem;
-		}
-	}
-	&_body {
-		display: flex;
-		flex-wrap: wrap;
-		width: 90%;
-	}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #3ab0ff;
+
+  border: 0.5rem solid white;
+  border-radius: 1rem;
+  color: white;
+  width: 100%;
+  &_top {
+    margin: 2rem 0;
+    & > h2 {
+      font-size: 3.6rem;
+    }
+  }
+  &_body {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+  }
 }
 .v_name {
-	width: 100%;
-	margin-bottom: 2rem;
-	font-size: 2.6rem;
+  width: 100%;
+  margin-bottom: 2rem;
+  font-size: 2.6rem;
 }
 .t_time {
-	font-size: 2.6rem;
-	margin-bottom: 2rem;
-	width: 100%;
+  font-size: 2.6rem;
+  margin-bottom: 2rem;
+  width: 100%;
 }
 .vocher_template_detail {
-	border: 0.5rem solid rgba(0, 0, 0, 0.5);
+  border: 0.5rem solid rgba(0, 0, 0, 0.5);
 }
 .v_description {
-	line-height: 4rem;
+  line-height: 4rem;
 }
 .vocher_icons_wrap {
-	margin-top: 2rem;
-	margin-right: 2rem;
-	width: 5rem;
-	height: 5rem;
-	border: 0.1rem solid white;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 50%;
-	color: white;
-	font-size: 5rem;
-	padding-bottom: 1rem;
-	cursor: pointer;
+  margin-top: 2rem;
+  margin-right: 2rem;
+  width: 5rem;
+  height: 5rem;
+  border: 0.1rem solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+  font-size: 5rem;
+  padding-bottom: 1rem;
+  cursor: pointer;
+}
+.voucher_new {
+  display: flex;
+  background-color: #f9f2ed;
+  border-radius: 2rem;
+  &_left {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    border-right: 1px dashed #000;
+    &_header {
+      text-align: center;
+      margin-bottom: 2rem;
+      & > h3 {
+        font-size: 5rem;
+      }
+    }
+    &_body {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      &_time {
+        display: flex;
+        border-bottom: 1px solid #000;
+        padding-bottom: 1rem;
+        & > p {
+          font-size: 1.5rem;
+          margin-right: 1rem;
+        }
+        & > span {
+          font-size: 1.5rem;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
+.voucher_new_left_body_des {
+  margin-top: 1rem;
+  & > p {
+    text-align: center;
+  }
+}
+.voucher_new_left_right {
+  padding: 4rem 2rem;
+  width: 30%;
+  background-color: #3ab0ff;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+
+  &_header {
+    & > p {
+      font-size: 3rem;
+      -ms-text-kashida-space: 1;
+    }
+    & > h3 {
+      font-weight: 700;
+      font-size: 2rem;
+      text-align: center;
+      margin: 2rem 0;
+    }
+  }
 }
