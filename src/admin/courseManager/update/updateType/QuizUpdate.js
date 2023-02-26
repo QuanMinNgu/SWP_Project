@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../style.scss";
 const QuizUpdate = ({
@@ -8,6 +9,8 @@ const QuizUpdate = ({
 	data,
 	setUpdateLesson,
 	index,
+	setDeleteQuestion,
+	deleteQuestion,
 }) => {
 	const [bars, setBars] = useState(false);
 	const [edit, setEdit] = useState(false);
@@ -48,8 +51,19 @@ const QuizUpdate = ({
 		setBars(false);
 	};
 
+	const { slug } = useParams();
+
 	const handleRemoveQuestion = (e) => {
 		const check = window.confirm("Do you really wanna delete this question?");
+		if (
+			slug.includes("update_course") &&
+			quesions[e]?.questionID !== null &&
+			check
+		) {
+			const ar = deleteQuestion;
+			ar.push(quesions[e]?.questionID);
+			setDeleteQuestion([...ar]);
+		}
 		if (check) {
 			quesions.splice(e, 1);
 			setQuesions([...quesions]);

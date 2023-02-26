@@ -316,6 +316,10 @@ const CreateCourse = () => {
 		}
 	};
 
+	const [deletePackage, setDeletePackage] = useState([]);
+	const [deleteLesson, setDeleteLesson] = useState([]);
+	const [deleteQuestion, setDeleteQuestion] = useState([]);
+
 	const handleCreatePakageForACourse = async () => {
 		console.log({
 			lessonPakages: lesson,
@@ -325,9 +329,9 @@ const CreateCourse = () => {
 				`/api/course/update_pakage/id=${course?.course?.courseID}`,
 				{
 					lessonPakages: lesson,
-					deletePackage: null,
-					deleteLesson: null,
-					deleteQuestion: null,
+					deletePackage: deletePackage.length > 0 ? deletePackage : null,
+					deleteLesson: deleteLesson.length > 0 ? deleteLesson : null,
+					deleteQuestion: deleteQuestion.length > 0 ? deleteQuestion : null,
 				},
 				{
 					headers: {
@@ -470,6 +474,12 @@ const CreateCourse = () => {
 								key={index + "coursePanel"}
 								item={item}
 								index={index}
+								setDeleteLesson={setDeleteLesson}
+								setDeletePackage={setDeletePackage}
+								setDeleteQuestion={setDeleteQuestion}
+								deleteLesson={deleteLesson}
+								deletePackage={deletePackage}
+								deleteQuestion={deleteQuestion}
 							/>
 						))}
 						{inputForm && (
