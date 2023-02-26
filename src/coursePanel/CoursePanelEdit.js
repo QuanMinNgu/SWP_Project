@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import UpdateLesson from "../admin/courseManager/update/UpdateLesson";
 
@@ -11,6 +12,12 @@ const CoursePanelEdit = ({
 	setUrlArray,
 	urlArray,
 	urlArrayRef,
+	setDeleteLesson,
+	setDeletePackage,
+	setDeleteQuestion,
+	deleteLesson,
+	deletePackage,
+	deleteQuestion,
 }) => {
 	const [panel, setPanel] = useState(false);
 	const [edit, setEdit] = useState(false);
@@ -19,8 +26,19 @@ const CoursePanelEdit = ({
 	const [updateLesson, setUpdateLesson] = useState(false);
 	const [addMorePakage, setAddMorePakage] = useState(false);
 
+	const { slug } = useParams();
+
 	const handleDeletePakage = (e) => {
 		const check = window.confirm("Do you really wanna delete this pakage?");
+		if (
+			slug.includes("update_course") &&
+			lesson[e]?.packageID !== null &&
+			check
+		) {
+			const ar = deletePackage;
+			ar.push(lesson[e]?.packageID);
+			setDeletePackage([...ar]);
+		}
 		if (check) {
 			const ar = lesson;
 			ar.splice(e, 1);
@@ -34,13 +52,22 @@ const CoursePanelEdit = ({
 		}
 		const ar = lesson;
 		ar[index].packageTitle = contentRef.current.value;
-		ar[index].packageID = null;
+		ar[index].packageID = ar[index].packageID || null;
 		setLesson([...ar]);
 		setEdit(false);
 	};
 
 	const handleDeleteLesson = (e) => {
 		const check = window.confirm("Do you really wanna delete this lesson?");
+		if (
+			slug.includes("update_course") &&
+			lesson[index].numLesson[e]?.lessonID !== null &&
+			check
+		) {
+			const ar = deleteLesson;
+			ar.push(lesson[index].numLesson[e]?.lessonID);
+			setDeleteLesson([...ar]);
+		}
 		if (check) {
 			const ar = lesson;
 			ar[index].numLesson.splice(e, 1);
@@ -311,6 +338,8 @@ const CoursePanelEdit = ({
 								setUrlArray={setUrlArray}
 								urlArray={urlArray}
 								urlArrayRef={urlArrayRef}
+								setDeleteQuestion={setDeleteQuestion}
+								deleteQuestion={deleteQuestion}
 							/>
 						)}
 					</div>

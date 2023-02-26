@@ -71,7 +71,7 @@ const ListeningUpdate = ({
 			description: content,
 			link: url || data?.link,
 			time: playerRef.current.getDuration(),
-			lessonID: null,
+			lessonID: arr[index].numLesson[addLesson]?.lessonID || null,
 		};
 		setLesson([...arr]);
 		setCreate(false);

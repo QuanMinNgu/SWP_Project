@@ -40,7 +40,6 @@ const CreateCourse = () => {
 	const [course, setCourse] = useState({});
 
 	const titleRef = useRef();
-	const [contentSmall, setContentSmall] = useState("");
 
 	const contentRef = useRef();
 	const [newPrice, setNewPrice] = useState("");
@@ -110,8 +109,20 @@ const CreateCourse = () => {
 					return;
 				}
 				dispatch(isSuccess());
-				setCourse(res?.data?.course);
-				console.log(res?.data?.course);
+				setCourse(res?.data);
+				console.log(res?.data);
+				setNewPrice(res?.data?.course?.price);
+				const arr = res?.data?.course?.description?.split("--?--");
+				arr.shift();
+				setBenefit([...arr]);
+				setCourseExpert({
+					...res?.data?.courseExpert,
+				});
+				setSelectedOption({
+					value: res?.data?.courseType?.courseTypeID,
+					label: res?.data?.courseType?.courseTypeName,
+				});
+				setLesson([...res?.data?.lessonPackages]);
 				document.querySelector("#priceOfCourse").innerHTML =
 					res?.data?.course?.price;
 			})
@@ -193,7 +204,6 @@ const CreateCourse = () => {
 		lessonRef.current.value = "";
 	};
 
-	const handleEditList = (e) => {};
 	const handleDeleteList = (e) => {
 		benefit.splice(e, 1);
 		setBenefit([...benefit]);
@@ -233,6 +243,7 @@ const CreateCourse = () => {
 
 	const handleCreateNewCourse = async () => {
 		const title = titleRef.current.value;
+
 		if (
 			!title ||
 			!contentRef.current.value ||
@@ -243,12 +254,13 @@ const CreateCourse = () => {
 			return toast.error("Please enter all value.");
 		}
 		let contentArr = contentRef.current.value + "--?--";
-		benefit.forEach((item) => {
-			contentArr += item + "--?--";
+		benefit.forEach((item, index) => {
+			if (index !== benefit.length - 1) {
+				contentArr += item + "--?--";
+			} else {
+				contentArr += item;
+			}
 		});
-		contentArr += lessonLengthRef.current.innerHTML + "--?--";
-		contentArr += numOfLessonRef.current.innerHTML + "--?--";
-		contentArr += numberOfLesson?.time;
 
 		let urlImage = "";
 		if (imageRef.current) {
@@ -264,10 +276,6 @@ const CreateCourse = () => {
 			} catch (err) {
 				return;
 			}
-		} else {
-			return idRef.current
-				? toast.error("Please save Pakage First.")
-				: toast.error("Please enter a image.");
 		}
 
 		console.log({
@@ -277,12 +285,14 @@ const CreateCourse = () => {
 			courseTypeID: selectedOption?.value,
 			price: newPrice * 1,
 			token: auth.user?.token,
+			courseID: course?.course?.courseID,
 		});
 		dispatch(isLoading());
 		try {
 			const data = await axios.post(
 				"/api/course/create",
 				{
+					courseID: course?.course?.courseID,
 					courseName: title,
 					description: contentArr,
 					accountID: courseExpert?.accountID,
@@ -306,35 +316,34 @@ const CreateCourse = () => {
 		}
 	};
 
+	const [deletePackage, setDeletePackage] = useState([]);
+	const [deleteLesson, setDeleteLesson] = useState([]);
+	const [deleteQuestion, setDeleteQuestion] = useState([]);
+
 	const handleCreatePakageForACourse = async () => {
-		if (idRef.current) {
-			dispatch(isLoading());
-			console.log({
-				lessonPakages: lesson,
-			});
-			try {
-				const data = await axios.post(
-					`/api/course/update_pakage/id=${idRef.current}`,
-					{
-						lessonPakages: lesson,
-						deletePackage: null,
-						deleteLesson: null,
-						deleteQuestion: null,
+		console.log({
+			lessonPakages: lesson,
+		});
+		try {
+			const data = await axios.post(
+				`/api/course/update_pakage/id=${course?.course?.courseID}`,
+				{
+					lessonPakages: lesson,
+					deletePackage: deletePackage.length > 0 ? deletePackage : null,
+					deleteLesson: deleteLesson.length > 0 ? deleteLesson : null,
+					deleteQuestion: deleteQuestion.length > 0 ? deleteQuestion : null,
+				},
+				{
+					headers: {
+						token: auth.user?.token,
 					},
-					{
-						headers: {
-							token: auth.user?.token,
-						},
-					}
-				);
-				dispatch(isSuccess());
-				toast.success(data?.data?.msg);
-			} catch (err) {
-				toast.error(err?.response?.data?.msg);
-				dispatch(isFailing());
-			}
-		} else {
-			return toast.error("Please Save course first.");
+				}
+			);
+			dispatch(isSuccess());
+			toast.success(data?.data?.msg);
+		} catch (err) {
+			toast.error(err?.response?.data?.msg);
+			dispatch(isFailing());
 		}
 	};
 
@@ -352,7 +361,7 @@ const CreateCourse = () => {
 							className="create_input_title"
 							type="text"
 							placeholder="Title"
-							defaultValue={course?.courseName}
+							defaultValue={course?.course?.courseName}
 						/>
 					</div>
 					<div className="newPost_title">
@@ -361,7 +370,7 @@ const CreateCourse = () => {
 							className="create_input_Content"
 							type="text"
 							placeholder="Content"
-							defaultValue={course?.description}
+							defaultValue={course?.course?.description?.split("--?--")[0]}
 						/>
 					</div>
 					<div className="course_detail_learn">
@@ -379,12 +388,6 @@ const CreateCourse = () => {
 								<li className="benefitList" key={item + "benefit" + index}>
 									{item}
 									<div className="benefit_button">
-										<button
-											onClick={() => handleEditList(index)}
-											className="edit_button"
-										>
-											Edit
-										</button>
 										<button
 											onClick={() => handleDeleteList(index)}
 											className="delete_button"
@@ -471,6 +474,12 @@ const CreateCourse = () => {
 								key={index + "coursePanel"}
 								item={item}
 								index={index}
+								setDeleteLesson={setDeleteLesson}
+								setDeletePackage={setDeletePackage}
+								setDeleteQuestion={setDeleteQuestion}
+								deleteLesson={deleteLesson}
+								deletePackage={deletePackage}
+								deleteQuestion={deleteQuestion}
 							/>
 						))}
 						{inputForm && (
@@ -507,7 +516,7 @@ const CreateCourse = () => {
 								<input {...getInputProps()} />
 								<i className="fa-regular fa-image"></i>
 								<div className="image_create_container">
-									<img src={image || course?.image} />
+									<img src={image || course?.course?.image} />
 								</div>
 							</div>
 						</div>
@@ -547,7 +556,12 @@ const CreateCourse = () => {
 					<div className="type_select">
 						<Select
 							className="search_wrap_select"
-							defaultValue={selectedOption}
+							defaultValue={
+								selectedOption || {
+									value: 1,
+									label: "Marketing",
+								}
+							}
 							onChange={setSelectedOption}
 							options={optionsKind}
 							placeholder="Kind"

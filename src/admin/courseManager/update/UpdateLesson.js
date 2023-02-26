@@ -11,6 +11,8 @@ const UpdateLesson = ({
 	setUrlArray,
 	urlArray,
 	urlArrayRef,
+	setDeleteQuestion,
+	deleteQuestion,
 }) => {
 	const [previousLink, setPreviousLink] = useState(false);
 	const [type, setType] = useState(item?.type || "listening");
@@ -155,6 +157,8 @@ const UpdateLesson = ({
 							addLesson={item?.ind}
 							setLesson={setLesson}
 							lesson={lesson}
+							setDeleteQuestion={setDeleteQuestion}
+							deleteQuestion={deleteQuestion}
 						/>
 					)}
 				</div>
