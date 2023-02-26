@@ -110,8 +110,8 @@ const CreateCourse = () => {
 					return;
 				}
 				dispatch(isSuccess());
-				setCourse(res?.data?.course);
-				console.log(res?.data?.course);
+				setCourse(res?.data);
+				console.log(res?.data);
 				document.querySelector("#priceOfCourse").innerHTML =
 					res?.data?.course?.price;
 			})
