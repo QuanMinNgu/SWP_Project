@@ -34,7 +34,7 @@ const CoursePanelEdit = ({
 		}
 		const ar = lesson;
 		ar[index].packageTitle = contentRef.current.value;
-		ar[index].packageID = null;
+		ar[index].packageID = ar[index].packageID || null;
 		setLesson([...ar]);
 		setEdit(false);
 	};

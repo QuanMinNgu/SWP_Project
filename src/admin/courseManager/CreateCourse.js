@@ -202,8 +202,12 @@ const CreateCourse = () => {
 			return toast.error("Please enter all value.");
 		}
 		let contentArr = contentRef.current.value + "--?--";
-		benefit.forEach((item) => {
-			contentArr += item + "--?--";
+		benefit.forEach((item, index) => {
+			if (index !== benefit.length - 1) {
+				contentArr += item + "--?--";
+			} else {
+				contentArr += item;
+			}
 		});
 
 		let urlImage = "";
@@ -341,12 +345,6 @@ const CreateCourse = () => {
 								<li className="benefitList" key={item + "benefit" + index}>
 									{item}
 									<div className="benefit_button">
-										<button
-											onClick={() => handleEditList(index)}
-											className="edit_button"
-										>
-											Edit
-										</button>
 										<button
 											onClick={() => handleDeleteList(index)}
 											className="delete_button"

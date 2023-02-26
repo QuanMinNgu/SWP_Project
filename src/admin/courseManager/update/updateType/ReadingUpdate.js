@@ -79,7 +79,7 @@ const ReadingUpdate = ({
 			link: null,
 			time: timesRef.current.value * 1,
 			description: content,
-			lessonID: null,
+			lessonID: arr[index].numLesson[addLesson]?.lessonID || null,
 		};
 		setLesson([...arr]);
 		setCreate(false);
