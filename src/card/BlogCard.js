@@ -16,8 +16,8 @@ const BlogCard = ({ item, key }) => {
       <div className="blog_card_body">
         <div className="blog_card_body_top">
           <div>
-            <img src="https://i.pinimg.com/564x/26/3a/d5/263ad55f3fc6f594d8f1c91d2c396a48.jpg" />
-            <h2>{item?.account?.accountName}</h2>
+            <img src={item?.image} />
+            <h2>{item?.name}</h2>
           </div>
           <div>
             <span>{item?.courseType?.courseTypeName}</span>
