@@ -21,7 +21,17 @@ const BlogCard = ({ item, key }) => {
           </div>
           <div>
             <span>{item?.courseType?.courseTypeName}</span>
-            <div style={{ fontSize: "1rem" }}>{item?.courseType}</div>
+            <div
+              style={{
+                fontSize: "1rem",
+                padding: "6px",
+                backgroundColor: "#f2f2f2",
+                borderRadius: "5px",
+                fontWeight: "600",
+              }}
+            >
+              {item?.courseType}
+            </div>
             <div onClick={handleLove}>
               {love ? (
                 <i class="fa-solid fa-heart"></i>

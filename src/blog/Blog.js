@@ -12,6 +12,7 @@ const Blog = () => {
   const { search } = useLocation();
   const dispatch = useDispatch();
   const [listBLog, setListBlog] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const { cache } = useContext(UserContext);
   const page = new URLSearchParams(search).get("page") || 1;
   useEffect(() => {
@@ -46,6 +47,21 @@ const Blog = () => {
       here = false;
     };
   }, []);
+  const handleSearch = async () => {
+    try {
+      dispatch(isLoading());
+      const res = await axios.get(
+        `/api/blog_search?page=${page}&limit=20&txt=${searchText}`
+      );
+      console.log(searchText, page);
+      setListBlog(res?.data);
+      dispatch(isSuccess());
+      return toast.success("All below is blog search");
+    } catch (error) {
+      dispatch(isFailing());
+      return toast.error(error?.response?.data?.msg);
+    }
+  };
 
   return (
     <div className="blog_container">
@@ -56,8 +72,12 @@ const Blog = () => {
         </div>
         <div className="blog_container_header_right">
           <div className="blog_container_header_right_input">
-            <input type="text" placeholder="Tìm kiếm blog" />
-            <button>
+            <input
+              type="text"
+              placeholder="Tìm kiếm blog"
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button onClick={handleSearch}>
               <i className="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
