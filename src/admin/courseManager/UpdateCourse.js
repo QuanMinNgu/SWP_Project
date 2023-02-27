@@ -111,7 +111,7 @@ const CreateCourse = () => {
 				dispatch(isSuccess());
 				setCourse(res?.data);
 				console.log(res?.data);
-				setNewPrice(res?.data?.course?.price);
+				setNewPrice(res?.data?.course?.price || "0");
 				const arr = res?.data?.course?.description?.split("--?--");
 				arr.shift();
 				setBenefit([...arr]);
@@ -276,6 +276,8 @@ const CreateCourse = () => {
 			} catch (err) {
 				return;
 			}
+		} else {
+			urlImage = course?.course?.image;
 		}
 
 		console.log({
@@ -286,6 +288,7 @@ const CreateCourse = () => {
 			price: newPrice * 1,
 			token: auth.user?.token,
 			courseID: course?.course?.courseID,
+			image: urlImage,
 		});
 		dispatch(isLoading());
 		try {

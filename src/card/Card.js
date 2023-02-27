@@ -36,7 +36,13 @@ const Card = ({ item }) => {
 						</div>
 					) : (
 						<div className="card_detail_w">
-							<span>${item?.price}</span>
+							<span
+								className={`card_detail_price ${
+									item?.price === 0 ? "card_detail_w_r" : ""
+								}`}
+							>
+								{item?.price === 0 ? "Free" : "$" + item?.price}
+							</span>
 						</div>
 					)}
 					<div className="card_detail_p">
