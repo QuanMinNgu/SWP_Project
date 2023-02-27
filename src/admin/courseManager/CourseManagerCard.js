@@ -175,14 +175,6 @@ const CourseManagerCard = ({
 							</div>
 							<div
 								onClick={() => {
-									setExpert(true);
-								}}
-								className="bars_detail_items"
-							>
-								<i>Cg CExpert</i>
-							</div>
-							<div
-								onClick={() => {
 									nagivate(`/admin/update_course?id=${item?.courseID}`);
 								}}
 								className="bars_detail_items"

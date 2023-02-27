@@ -116,20 +116,6 @@ const CourseManager = () => {
 		};
 	}, [update]);
 
-	const handleChooseExpert = async (e) => {
-		const check = window.confirm(
-			"Bạn có muốn chọn Minh Quang thành course expert của khóa học này không?"
-		);
-		if (check) {
-			// try {
-			//     const data = await axios.post(`/api/course/change_course_expert/${e?.id}`,{
-			//     })
-			// } catch (err) {
-			// 	return toast.error(err?.response?.data?.msg);
-			// }
-		}
-	};
-
 	const [courseExperts, setCourseExperts] = useState([]);
 
 	useEffect(() => {
@@ -298,15 +284,6 @@ const CourseManager = () => {
 											>
 												<i>Cg Active</i>
 											</div>
-											<div
-												onClick={() => {
-													setExpert(true);
-													setBars(false);
-												}}
-												className="bars_detail_items"
-											>
-												<i>Cg CExpert</i>
-											</div>
 										</div>
 									)}
 								</div>
@@ -330,72 +307,7 @@ const CourseManager = () => {
 			<div className="pagination">
 				<Pagination />
 			</div>
-			{expert && (
-				<div
-					onClick={() => {
-						setExpert(false);
-					}}
-					className="user_manager_information"
-				></div>
-			)}
-			{expert && (
-				<div className="expertCourse_container">
-					<div className="expertCourse_close">
-						<div
-							onClick={() => {
-								setExpert(false);
-							}}
-							className="expertCourse_close_icons"
-						>
-							&times;
-						</div>
-					</div>
-					<div className="expertCourse_searching">
-						<input type="text" placeholder="Searching by id, name or email" />
-						<button className="button">Search</button>
-					</div>
-					<div className="expertCourse_form">
-						<table className="ex_table">
-							<thead className="ex_thead">
-								<tr className="ex_thead_wrap">
-									<th className="ex_thead_title">User</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								{courseExperts?.map((item, index) => (
-									<tr
-										key={item?.accountID + index}
-										className="ex_thead_wrap_items"
-									>
-										<th className="ex_thead_title">
-											<div className="ex_thead_user">
-												<div className="ex_thead_user_img">
-													<img src={item?.image} alt="Ảnh" />
-												</div>
-												<div className="ex_thead_user_infor">
-													<div className="ex_thead_user_infor_name">
-														{item?.name}
-													</div>
-													<i className="ex_thead_user_infor_email">
-														{item?.gmail}
-													</i>
-													<i className="ex_thead_user_infor_id">
-														ID:{item?.accountID}
-													</i>
-												</div>
-											</div>
-										</th>
-										<th className="ex_thead_button">
-											<button>Choose</button>
-										</th>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				</div>
-			)}
+
 			{typeCourse && (
 				<div
 					onClick={() => {
