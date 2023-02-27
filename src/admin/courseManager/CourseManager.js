@@ -182,6 +182,8 @@ const CourseManager = () => {
 		}
 	};
 
+	const handleChangeStatus = async (e) => {};
+
 	const [selectedOption, setSelectedOption] = useState(null);
 	return (
 		<div className="managerCourse">
@@ -261,19 +263,25 @@ const CourseManager = () => {
 								/>
 							</th>
 							<th className="thead_bars">
-								<div className="thead_bars_icons">
-									<i
-										onClick={() => {
-											setBars(!bars);
-										}}
-										className="fa-solid fa-ellipsis"
-									></i>
+								<div
+									onClick={() => {
+										setBars(!bars);
+									}}
+									className="thead_bars_icons"
+								>
+									<i className="fa-solid fa-ellipsis"></i>
 									{bars && (
 										<div className="bars_detail">
-											<div className="bars_detail_items">
+											<div
+												onClick={() => handleChangeStatus(false)}
+												className="bars_detail_items"
+											>
 												<i>Cg Inactive</i>
 											</div>
-											<div className="bars_detail_items">
+											<div
+												onClick={() => handleChangeStatus(true)}
+												className="bars_detail_items"
+											>
 												<i>Cg Active</i>
 											</div>
 											<div
@@ -284,9 +292,6 @@ const CourseManager = () => {
 												className="bars_detail_items"
 											>
 												<i>Cg CExpert</i>
-											</div>
-											<div className="bars_detail_items">
-												<i>Delete</i>
 											</div>
 										</div>
 									)}
