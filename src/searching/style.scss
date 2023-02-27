@@ -1,88 +1,97 @@
 @import "../style.module.scss";
 .searching {
-    width: calc(100% - 9rem);
-    margin-left: 9rem;
-    margin-top: 8rem;
-    @include mobile {
-        width: 100%;
-        margin-left: 0;
-    }
-    min-height: 100vh;
-    padding-left: 4rem;
-    padding-right: 2rem;
+	width: calc(100% - 9rem);
+	margin-left: 9rem;
+	margin-top: 8rem;
+	@include mobile {
+		width: 100%;
+		margin-left: 0;
+	}
+	min-height: 100vh;
+	padding-left: 4rem;
+	padding-right: 2rem;
 }
 .searching_head {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 3rem;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-top: 3rem;
 }
 .button_container_searching {
-    @include mobile {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 2rem;
-    }
-    & > button {
-        margin-left: 1rem;
-        padding: 0 2rem;
-        height: 4rem;
-        cursor: pointer;
-        border-radius: 3rem;
-        color: white;
-        background-color: #696969;
-        border: 0.1rem solid #0dcaf0;
-        font-size: 1.7rem;
-        @include mobile {
-            height: 5rem;
-        }
-        &:hover {
-            background-color: #0dcaf0;
-        }
-    }
+	@include mobile {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-top: 2rem;
+	}
+	& > button {
+		margin-left: 1rem;
+		padding: 0 2rem;
+		height: 4rem;
+		cursor: pointer;
+		border-radius: 3rem;
+		color: white;
+		background-color: #696969;
+		border: 0.1rem solid #0dcaf0;
+		font-size: 1.7rem;
+		@include mobile {
+			height: 5rem;
+		}
+		&:hover {
+			background-color: #0dcaf0;
+		}
+	}
 }
 .search {
-    width: 100%;
-    min-height: calc(100vh - 18rem);
-    &_wrap {
-        margin-top: 4rem;
-        &_paginating {
-            margin-top: 3rem;
-        }
-        &_card {
-            margin-top: 3rem;
-        }
-        &_search {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        &_select {
-            width: 17rem;
-            height: 4rem;
-            font-size: 1.5rem;
-            margin-right: 1.5rem;
-            margin-bottom: 1rem;
-            @include mobile {
-                margin-top: 2rem;
-                width: 15rem;
-            }
-        }
-    }
+	width: 100%;
+	min-height: calc(100vh - 18rem);
+	&_wrap {
+		margin-top: 4rem;
+		&_paginating {
+			margin-top: 3rem;
+		}
+		&_card {
+			margin-top: 3rem;
+		}
+		&_search {
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+		&_select {
+			width: 17rem;
+			height: 4rem;
+			font-size: 1.5rem;
+			margin-right: 1.5rem;
+			margin-bottom: 1rem;
+			@include mobile {
+				margin-top: 2rem;
+				width: 15rem;
+			}
+		}
+	}
 }
 
 .searching_title {
-    text-align: center;
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-    font-weight: 900;
+	text-align: center;
+	font-size: 1.4rem;
+	margin-bottom: 1rem;
+	font-weight: 900;
 }
 .searching_card {
-    margin-top: 4rem;
-    padding: 0 1rem;
+	margin-top: 4rem;
+	padding: 0 1rem;
+	min-height: calc(100vh - 30rem);
 }
 .searching_paginating {
-    margin: 4rem 0;
+	margin: 4rem 0;
+}
+.no_course_found {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	font-size: 3rem;
+	margin-top: 4rem;
+	font-weight: 600;
 }

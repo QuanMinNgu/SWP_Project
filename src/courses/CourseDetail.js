@@ -49,7 +49,7 @@ const CourseDetail = () => {
 					return dispatch(isSuccess());
 				}
 				dispatch(isSuccess());
-				console.log(res?.data?.course);
+				console.log(res?.data);
 				setCourse(res?.data?.course);
 			})
 			.catch((err) => {
