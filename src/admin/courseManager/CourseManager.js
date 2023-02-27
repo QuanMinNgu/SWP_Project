@@ -142,10 +142,6 @@ const CourseManager = () => {
 			return toast.error("Please,enter value.");
 		}
 		dispatch(isLoading());
-		console.log({
-			token: auth.user?.token,
-			courseTypeName: titleRef.current.value,
-		});
 		try {
 			const data = await axios.post(
 				"/api/type_course/create",
@@ -178,6 +174,7 @@ const CourseManager = () => {
 			});
 			toast.success(data?.data?.msg);
 			dispatch(isSuccess());
+			setUpdate(!update);
 		} catch (err) {
 			dispatch(isFailing());
 			return toast.error(err?.response?.data?.msg);

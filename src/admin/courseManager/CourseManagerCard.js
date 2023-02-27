@@ -78,6 +78,7 @@ const CourseManagerCard = ({
 				courseID: [item?.courseID],
 			});
 			toast.success(data?.data?.msg);
+			item.status = !item?.status;
 			dispatch(isSuccess());
 		} catch (err) {
 			dispatch(isFailing());
