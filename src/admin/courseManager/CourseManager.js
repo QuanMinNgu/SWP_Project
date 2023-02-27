@@ -18,6 +18,8 @@ const CourseManager = () => {
 
 	const [courses, setCourse] = useState([]);
 
+	const [courseSelected, setCourseSelected] = useState([]);
+
 	const [update, setUpdate] = useState(false);
 
 	const [types, setTypes] = useState([]);
@@ -51,6 +53,7 @@ const CourseManager = () => {
 			setCheckAll(true);
 		} else {
 			setCheckAll(false);
+			setCourseSelected([]);
 		}
 	};
 	useEffect(() => {
@@ -81,7 +84,6 @@ const CourseManager = () => {
 				}
 				setCourse(res?.data?.courses);
 				cache.current[url] = res?.data?.courses;
-				console.log(res?.data?.courses);
 				dispatch(isSuccess());
 			})
 			.catch((err) => {
@@ -173,7 +175,6 @@ const CourseManager = () => {
 			dispatch(isSuccess());
 			setTypes(data?.data?.types);
 			toast.success(data?.data?.msg);
-			console.log(data?.data?.types);
 			setUpdate(!update);
 			titleRef.current.value = "";
 		} catch (err) {
@@ -182,7 +183,20 @@ const CourseManager = () => {
 		}
 	};
 
-	const handleChangeStatus = async (e) => {};
+	const handleChangeStatus = async (e) => {
+		dispatch(isLoading());
+		try {
+			const data = await axios.post(`/api/course/change_status`, {
+				status: e,
+				courseID: courseSelected,
+			});
+			toast.success(data?.data?.msg);
+			dispatch(isSuccess());
+		} catch (err) {
+			dispatch(isFailing());
+			return toast.error(err?.response?.data?.msg);
+		}
+	};
 
 	const [selectedOption, setSelectedOption] = useState(null);
 	return (
@@ -302,10 +316,12 @@ const CourseManager = () => {
 					<tbody>
 						{courses?.map((item) => (
 							<CourseManagerCard
-								key={item?.id}
+								key={item?.courseID + "couseMap"}
 								item={item}
 								checkAll={checkAll}
 								setExpert={setExpert}
+								courseSelected={courseSelected}
+								setCourseSelected={setCourseSelected}
 							/>
 						))}
 					</tbody>

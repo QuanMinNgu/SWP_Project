@@ -5,7 +5,13 @@ import "../style.scss";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
-const CourseManagerCard = ({ checkAll, setExpert, item }) => {
+const CourseManagerCard = ({
+	checkAll,
+	setExpert,
+	item,
+	courseSelected,
+	setCourseSelected,
+}) => {
 	const cardRef = useRef(null);
 
 	const [bars, setBars] = useState(false);
@@ -19,8 +25,20 @@ const CourseManagerCard = ({ checkAll, setExpert, item }) => {
 		if (cardRef.current) {
 			if (checkAll) {
 				cardRef.current.checked = true;
+				const some = courseSelected?.some(
+					(infor) => infor * 1 === item?.courseID
+				);
+				if (!some) {
+					const ar = courseSelected;
+					ar.push(item?.courseID);
+					setCourseSelected([...ar]);
+				}
 			} else {
 				cardRef.current.checked = false;
+				const ar = courseSelected?.filter(
+					(infor) => infor * 1 !== item?.courseID
+				);
+				setCourseSelected([...ar]);
 			}
 		}
 	}, [checkAll]);
@@ -49,6 +67,39 @@ const CourseManagerCard = ({ checkAll, setExpert, item }) => {
 				dispatch(isFailing());
 				toast.error(er?.response?.data?.msg);
 			}
+		}
+	};
+
+	const handleChangeStatus = async () => {
+		dispatch(isLoading());
+		try {
+			const data = await axios.post(`/api/course/change_status`, {
+				status: !item?.status,
+				courseID: [item?.courseID],
+			});
+			toast.success(data?.data?.msg);
+			dispatch(isSuccess());
+		} catch (err) {
+			dispatch(isFailing());
+			return toast.error(err?.response?.data?.msg);
+		}
+	};
+
+	const handleChangeSelect = () => {
+		if (cardRef.current.checked) {
+			const some = courseSelected?.some(
+				(infor) => infor * 1 === item?.courseID
+			);
+			if (!some) {
+				const ar = courseSelected;
+				ar.push(item?.courseID);
+				setCourseSelected([...ar]);
+			}
+		} else {
+			const ar = courseSelected?.filter(
+				(infor) => infor * 1 !== item?.courseID
+			);
+			setCourseSelected([...ar]);
 		}
 	};
 	return (
@@ -102,7 +153,12 @@ const CourseManagerCard = ({ checkAll, setExpert, item }) => {
 				{item?.status ? "Active" : "Inactive"}
 			</th>
 			<th style={{ fontWeight: "700" }} className="thead_checkbox">
-				<input ref={cardRef} id="checkall" type="checkbox" />
+				<input
+					ref={cardRef}
+					onChange={(e) => handleChangeSelect(e)}
+					id="checkall"
+					type="checkbox"
+				/>
 			</th>
 			<th className="thead_bars">
 				<div
@@ -114,7 +170,7 @@ const CourseManagerCard = ({ checkAll, setExpert, item }) => {
 					<i className="fa-solid fa-ellipsis"></i>
 					{bars && (
 						<div className="bars_detail">
-							<div className="bars_detail_items">
+							<div onClick={handleChangeStatus} className="bars_detail_items">
 								<i>Cg Status</i>
 							</div>
 							<div
