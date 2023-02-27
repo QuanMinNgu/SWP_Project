@@ -16,7 +16,7 @@ import jwt_decode from "jwt-decode";
 import NotFound from "./notfound/NotFound";
 export const UserContext = createContext();
 function App() {
-  const [store, setStore] = useState({ rule: "user" });
+  const [store, setStore] = useState({ rule: "[ROLE_SALE]" });
 
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);

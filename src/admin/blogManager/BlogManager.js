@@ -7,11 +7,13 @@ import "../style.scss";
 import { UserContext } from "../../App";
 import BLogAdminCard from "./BlogAdminCard";
 import "./main.scss";
+import Pagination from "../../paginating/Pagination";
 
 const BlogManager = () => {
   const [types, setTypes] = useState([]);
   const { cache } = useContext(UserContext);
   const dispatch = useDispatch();
+  const [listBlog, setListBlog] = useState([]);
   useEffect(() => {
     const fetchApitTypes = async () => {
       dispatch(isLoading());
@@ -67,6 +69,7 @@ const BlogManager = () => {
                 <BLogAdminCard />
                 <BLogAdminCard />
                 <BLogAdminCard />
+                <Pagination count={listBlog?.numPage} />
               </div>
             </div>
           </div>
