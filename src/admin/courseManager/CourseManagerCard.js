@@ -178,7 +178,7 @@ const CourseManagerCard = ({
 								onClick={() => {
 									if (item?.status) {
 										toast.error(
-											"Please change status to inactive to update this course."
+											"Please change status to inactive before updating this course."
 										);
 									} else {
 										nagivate(`/admin/update_course?id=${item?.courseID}`);

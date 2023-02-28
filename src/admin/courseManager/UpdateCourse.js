@@ -17,7 +17,7 @@ import axios from "axios";
 import { UserContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 const CreateCourse = () => {
 	const benefitRef = useRef();
 	const [benefit, setBenefit] = useState([]);
@@ -93,6 +93,8 @@ const CreateCourse = () => {
 	const { search } = useLocation();
 	const idCourse = new URLSearchParams(search).get("id");
 
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		let here = true;
 		const url = `/api/course/admin_get?id=${idCourse}`;
@@ -112,7 +114,12 @@ const CreateCourse = () => {
 				}
 				dispatch(isSuccess());
 				setCourse(res?.data);
-				console.log(res?.data);
+				if (res?.data?.course?.status) {
+					toast.error(
+						"Please change status to inactive before updating this course."
+					);
+					return navigate("/admin/course_manager");
+				}
 				setNewPrice(res?.data?.course?.price || "0");
 				const arr = res?.data?.course?.description?.split("--?--");
 				arr.shift();
