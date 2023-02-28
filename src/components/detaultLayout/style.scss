@@ -1,69 +1,69 @@
 @import "../../style.module.scss";
 .home_navbar {
-    position: fixed;
-    top: 10rem;
+	position: fixed;
+	top: 10rem;
 }
 .home {
-    width: 100%;
-    padding: 0 2rem;
-    margin-top: 2rem;
-    display: flex;
-    &_navbar {
-        z-index: 400;
-        &_plus {
-            margin-left: 1.3rem;
-            width: 4.6rem;
-            height: 4.6rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.8rem;
-            background-color: #1473e6;
-            border-radius: 50%;
-            font-size: 1.8rem;
-            color: white;
-            cursor: pointer;
-        }
-        &_items {
-            text-decoration: none;
-        }
-        &_items > div {
-            width: 7rem;
-            height: 7rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: black;
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            &.active {
-                background-color: rgba(0, 0, 0, 0.1);
-            }
-            &:hover {
-                background-color: rgba(0, 0, 0, 0.05);
-            }
-            border-radius: 2rem;
-            & > span {
-                font-size: 1.2rem;
-                margin-top: 0.5rem;
-                font-weight: 600;
-            }
-        }
-    }
+	width: 100%;
+	padding: 0 2rem;
+	margin-top: 2rem;
+	display: flex;
+	&_navbar {
+		z-index: 400;
+		&_plus {
+			margin-left: 1.3rem;
+			width: 4.6rem;
+			height: 4.6rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 1.8rem;
+			background-color: #1473e6;
+			border-radius: 50%;
+			font-size: 1.8rem;
+			color: white;
+			cursor: pointer;
+		}
+		&_items {
+			text-decoration: none;
+		}
+		&_items > div {
+			width: 7rem;
+			height: 7rem;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			color: black;
+			font-size: 1.8rem;
+			margin-bottom: 0.5rem;
+			&.active {
+				background-color: rgba(0, 0, 0, 0.1);
+			}
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.05);
+			}
+			border-radius: 2rem;
+			& > span {
+				font-size: 1.2rem;
+				margin-top: 0.5rem;
+				font-weight: 600;
+			}
+		}
+	}
 }
 @include mobile {
-    .home_navbar {
-        display: none;
-    }
+	.home_navbar {
+		display: none;
+	}
 }
 @include middleSmall {
-    .home_navbar {
-        display: none;
-    }
+	.home_navbar {
+		display: none;
+	}
 }
 @include tablet {
-    .home_navbar {
-        display: none;
-    }
+	.home_navbar {
+		display: none;
+	}
 }

@@ -1,232 +1,238 @@
 @import "../style.module.scss";
 .course_detail {
-  @include desktopHigh {
-    padding: 0 14rem;
-  }
-  margin-top: 2rem;
-  &_name {
-    font-size: 2.5rem;
-  }
-  &_content {
-    margin-top: 2rem;
-    font-size: 1.6rem;
-    color: rgba(0, 0, 0, 0.6);
-  }
-  margin-top: 8rem;
-  &_learn {
-    margin-top: 2rem;
-    font-size: 1.7rem;
-    &_items {
-      margin-top: 2rem;
-      display: flex;
-      margin-left: 1rem;
-      flex-wrap: wrap;
-      & > li {
-        width: 50%;
-        @include mobile {
-          width: 100%;
-        }
-        font-size: 1.6rem;
-        margin-bottom: 1rem;
-        color: rgba(0, 0, 0, 0.6);
-      }
-    }
-  }
-  &_timeLine {
-    margin-top: 2rem;
-    & > ul {
-      display: flex;
-      list-style: none;
-      & > li {
-        margin-right: 0.5rem;
-        font-size: 1.6rem;
-      }
-    }
-  }
+	@include desktopHigh {
+		padding: 0 14rem;
+	}
+	margin-top: 2rem;
+	&_name {
+		font-size: 2.5rem;
+	}
+	&_content {
+		margin-top: 2rem;
+		font-size: 1.6rem;
+		color: rgba(0, 0, 0, 0.6);
+	}
+	margin-top: 8rem;
+	&_learn {
+		margin-top: 2rem;
+		font-size: 1.7rem;
+		&_items {
+			margin-top: 2rem;
+			display: flex;
+			margin-left: 1rem;
+			flex-wrap: wrap;
+			& > li {
+				width: 50%;
+				@include mobile {
+					width: 100%;
+				}
+				font-size: 1.6rem;
+				margin-bottom: 1rem;
+				color: rgba(0, 0, 0, 0.6);
+			}
+		}
+	}
+	&_timeLine {
+		margin-top: 2rem;
+		& > ul {
+			display: flex;
+			list-style: none;
+			& > li {
+				margin-right: 0.5rem;
+				font-size: 1.6rem;
+			}
+		}
+	}
 }
 .CoursePanel {
-  margin-top: 2rem;
+	margin-top: 2rem;
 }
 .CoursePanel_wrap {
-  position: relative;
+	position: relative;
 }
 .CoursePanel_container {
-  width: 100%;
-  height: 5rem;
-  background-color: #f5f5f5;
-  border-radius: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 3rem;
-  align-items: center;
-  box-shadow: 0 0 0.1rem 0.05rem rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  margin: 1rem 0;
-  position: relative;
+	width: 100%;
+	height: 5rem;
+	background-color: #f5f5f5;
+	border-radius: 0.5rem;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 3rem;
+	align-items: center;
+	box-shadow: 0 0 0.1rem 0.05rem rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	margin: 1rem 0;
+	position: relative;
 }
 .CoursePanel_head {
-  font-size: 1.7rem;
-  font-weight: 650;
+	font-size: 1.7rem;
+	font-weight: 650;
 }
 .CoursePanel_body {
-  font-size: 1.6rem;
-  font-weight: 300;
+	font-size: 1.6rem;
+	font-weight: 300;
 }
 .panelCard_container {
-  width: 100%;
-  padding: 0 4rem;
-  height: 4.5rem;
-  display: flex;
-  align-items: center;
-  border-bottom: 0.1rem solid rgba(0, 0, 0, 0.05);
-  justify-content: space-between;
-  & > div {
-    font-size: 1.4rem;
-    color: rgba(0, 0, 0, 0.8);
-    font-family: "Lora", serif;
-  }
+	width: 100%;
+	padding: 0 4rem;
+	height: 4.5rem;
+	display: flex;
+	align-items: center;
+	border-bottom: 0.1rem solid rgba(0, 0, 0, 0.05);
+	justify-content: space-between;
+	& > div {
+		font-size: 1.4rem;
+		color: rgba(0, 0, 0, 0.8);
+		font-family: "Lora", serif;
+	}
 }
 .course_detail_img {
-  width: 100%;
-  height: 24rem;
+	width: 100%;
+	height: 24rem;
 
-  & > img {
-    object-fit: cover;
-    @include mobile {
-      margin-top: 2rem;
-    }
-    width: 100%;
-    height: 100%;
-    border-radius: 2rem;
-  }
-  @include mobile {
-    margin-bottom: 2.4rem;
-  }
+	& > img {
+		object-fit: cover;
+		@include mobile {
+			margin-top: 2rem;
+		}
+		width: 100%;
+		height: 100%;
+		border-radius: 2rem;
+	}
+	@include mobile {
+		margin-bottom: 2.4rem;
+	}
 }
 .course_detail_price {
-  width: 100%;
-  text-align: center;
-  font-size: 3rem;
-  margin-top: 1rem;
-  color: #f05123;
-  font-weight: 600;
+	width: 100%;
+	text-align: center;
+	font-size: 3rem;
+	margin-top: 1rem;
+	color: #f05123;
+	font-weight: 600;
 }
 .course_detail_button {
-  width: 100%;
-  text-align: center;
-  margin-top: 2rem;
-  & > button {
-    padding: 0 4rem;
-    height: 4.5rem;
-    background-color: #f05123;
-    border-radius: 3rem;
-    outline: none;
-    border: none;
-    color: white;
-    font-size: 1.8rem;
-    cursor: pointer;
-  }
+	width: 100%;
+	text-align: center;
+	margin-top: 2rem;
+	& > button {
+		padding: 0 4rem;
+		height: 4.5rem;
+		background-color: #f05123;
+		border-radius: 3rem;
+		outline: none;
+		border: none;
+		color: white;
+		font-size: 1.8rem;
+		cursor: pointer;
+	}
 }
 .course_detail_list {
-  margin-top: 3rem;
-  font-size: 1.8rem;
-  text-align: center;
-  list-style: none;
-  & > li {
-    margin-top: 1rem;
-  }
+	margin-top: 3rem;
+	font-size: 1.8rem;
+	text-align: center;
+	list-style: none;
+	& > li {
+		margin-top: 1rem;
+	}
 }
 .CoursePanel_edit {
-  position: absolute;
-  top: 0;
-  left: -4rem;
-  margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  font-size: 1.5rem;
-  & > div {
-    width: 3rem;
-    height: 3rem;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    position: relative;
-  }
+	position: absolute;
+	top: 0;
+	left: -4rem;
+	margin-top: 1rem;
+	display: flex;
+	align-items: center;
+	font-size: 1.5rem;
+	& > div {
+		width: 3rem;
+		height: 3rem;
+		background-color: rgba(0, 0, 0, 0.1);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		position: relative;
+	}
 }
 .CoursePanel_editPanel {
-  position: absolute;
-  top: -2.4rem;
-  list-style: none;
-  width: 10rem;
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 0.2rem 0.1rem rgba(0, 0, 0, 0.5);
-  z-index: 10;
-  left: 120%;
-  & > li {
-    width: 100%;
-    height: 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.2);
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-  }
+	position: absolute;
+	top: -2.4rem;
+	list-style: none;
+	width: 10rem;
+	background-color: white;
+	border-radius: 0.5rem;
+	box-shadow: 0 0 0.2rem 0.1rem rgba(0, 0, 0, 0.5);
+	z-index: 10;
+	left: 120%;
+	& > li {
+		width: 100%;
+		height: 4rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-bottom: 0.1rem solid rgba(0, 0, 0, 0.2);
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+	}
 }
 .rating_container {
-  margin-top: 10rem;
-  border-top: 0.5rem solid rgba(0, 0, 0, 0.2);
-  border-radius: 3rem;
-  padding-top: 5rem;
+	margin-top: 10rem;
+	border-top: 0.5rem solid rgba(0, 0, 0, 0.2);
+	border-radius: 3rem;
+	padding-top: 5rem;
 }
 .voucher_details {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 200;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 200;
 }
 .voucher_details_container {
-  position: fixed;
-  z-index: 1000;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50%;
-  @include mobile {
-    width: 90%;
-  }
-  @include middleSmall {
-    width: 80%;
-  }
-  @include tablet {
-    width: 80%;
-  }
-  @include desktop {
-    width: 90%;
-  }
-  padding: 1rem 0;
+	position: fixed;
+	z-index: 1000;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 50%;
+	@include mobile {
+		width: 90%;
+	}
+	@include middleSmall {
+		width: 80%;
+	}
+	@include tablet {
+		width: 80%;
+	}
+	@include desktop {
+		width: 90%;
+	}
+	padding: 1rem 0;
 }
 .course_vocher {
-  margin-top: 2rem;
+	margin-top: 2rem;
 }
 .vocher_icons {
-  display: flex;
-  justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 }
 .course_vocher_list {
-  display: flex;
-  flex-direction: column;
-  & > div {
-    margin-bottom: 2rem;
-  }
-  height: 300px;
-  overflow-y: scroll;
+	display: flex;
+	flex-direction: column;
+	& > div {
+		margin-bottom: 2rem;
+	}
+	height: 300px;
+	overflow-y: scroll;
+}
+.course_detail_content {
+	word-break: break-all;
+}
+.course_detail_name {
+	word-break: break-all;
 }
