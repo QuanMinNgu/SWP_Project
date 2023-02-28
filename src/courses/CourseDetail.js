@@ -43,6 +43,7 @@ const CourseDetail = () => {
 			);
 			dispatch(isSuccess());
 			toast.success(data?.data?.msg);
+			setCanLearn(true);
 		} catch (err) {
 			dispatch(isFailing());
 			toast.error(err?.response?.data?.msg);
@@ -209,7 +210,7 @@ const CourseDetail = () => {
 							>
 								Dashboard
 							</button>
-						) : course?.course?.price === 0 || canLearn ? (
+						) : canLearn ? (
 							<button
 								onClick={() => {
 									if (auth.user?.token) {
@@ -228,8 +229,11 @@ const CourseDetail = () => {
 							<button
 								onClick={() => {
 									if (auth.user?.token) {
-										enrollCourseSuccess();
-										setPayment(true);
+										if (course?.course?.price === 0) {
+											enrollCourseSuccess();
+										} else {
+											setPayment(true);
+										}
 									} else {
 										navigate("/login");
 										toast.error("Please login first.");
