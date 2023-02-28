@@ -13,16 +13,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 const CourseDetail = () => {
 	const [payment, setPayment] = useState(false);
-
 	const { slug } = useParams();
-
 	const auth = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
-
 	const { cache, store } = useContext(UserContext);
-
 	const [canLearn, setCanLearn] = useState(false);
-
 	const [course, setCourse] = useState({});
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
@@ -30,6 +25,29 @@ const CourseDetail = () => {
 	const [topics, setTopics] = useState({});
 
 	const [benefit, setBenefit] = useState([]);
+
+	const enrollCourseSuccess = async () => {
+		dispatch(isLoading());
+		try {
+			const data = await axios.post(
+				"/api/course/enroll",
+				{
+					courseID: course?.course?.courseID,
+					price: course?.course?.price,
+				},
+				{
+					headers: {
+						token: auth.user?.token,
+					},
+				}
+			);
+			dispatch(isSuccess());
+			toast.success(data?.data?.msg);
+		} catch (err) {
+			dispatch(isFailing());
+			toast.error(err?.response?.data?.msg);
+		}
+	};
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -195,7 +213,7 @@ const CourseDetail = () => {
 								onClick={() => {
 									if (auth.user?.token) {
 										navigate(
-											`/learning/${course?.lessonPackages[0]?.numLesson[0]?.lessonID}`
+											`/learning/${course?.course?.courseID}/${course?.lessonPackages[0]?.numLesson[0]?.lessonID}`
 										);
 									} else {
 										navigate("/login");
@@ -209,6 +227,7 @@ const CourseDetail = () => {
 							<button
 								onClick={() => {
 									if (auth.user?.token) {
+										enrollCourseSuccess();
 										setPayment(true);
 									} else {
 										navigate("/login");

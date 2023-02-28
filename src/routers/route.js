@@ -84,7 +84,7 @@ export const publicRouter = [
 	},
 	{
 		element: CourseLearn,
-		path: "/learning/:slug",
+		path: "/learning/:courseid/:lessonid",
 	},
 	{
 		element: CourseDetail,

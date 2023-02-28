@@ -14,7 +14,7 @@ const CourseLearn = () => {
 
 	const dispatch = useDispatch();
 
-	const { slug } = useParams();
+	const { courseid, lessonid } = useParams();
 	const navigate = useNavigate();
 
 	const auth = useSelector((state) => state.auth);
@@ -25,7 +25,7 @@ const CourseLearn = () => {
 			toast.error("Please login first.");
 			return navigate("/login");
 		}
-		const url = `/api/course/lesson?id=${slug}`;
+		const url = `/api/course/lesson?courseid=${courseid}&lessonid=${lessonid}`;
 		dispatch(isLoading());
 		axios
 			.get(url, {
@@ -44,7 +44,7 @@ const CourseLearn = () => {
 		return () => {
 			here = false;
 		};
-	}, [slug]);
+	}, [lessonid, courseid]);
 
 	const [quizz, setQuizz] = useState(true);
 	const [youtube, setYoutube] = useState(false);
@@ -52,17 +52,6 @@ const CourseLearn = () => {
 	const [bars, setbars] = useState(false);
 
 	const { search } = useLocation();
-
-	useEffect(() => {
-		const lesson = new URLSearchParams(search).get("lesson") || 0;
-		if (lesson * 1 === 2) {
-			setQuizz(false);
-			setYoutube(true);
-		} else {
-			setQuizz(true);
-			setYoutube(false);
-		}
-	}, [search]);
 
 	const style = {
 		background: `conic-gradient(#F05123 ${percent}deg,transparent 0deg)`,
@@ -72,7 +61,7 @@ const CourseLearn = () => {
 		<div className="CourseLearn">
 			<div className="CourseLearn_Head">
 				<div className="CourseLearn_Head_Navbar">
-					<Link style={{ textDecoration: "none" }} to="/">
+					<Link style={{ textDecoration: "none" }} to={`/course/${courseid}`}>
 						<div className="CourseLearn_Head_Navbar_icons">
 							<i className="fa-solid fa-angle-left"></i>
 						</div>
