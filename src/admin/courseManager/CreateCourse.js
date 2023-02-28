@@ -293,6 +293,17 @@ const CreateCourse = () => {
 				);
 				dispatch(isSuccess());
 				toast.success(data?.data?.msg);
+				idRef.current = "";
+				imageRef.current = "";
+				contentRef.current.value = "";
+				titleRef.current.value = "";
+				setBenefit([]);
+				setImage("");
+				setNewPrice("");
+				document.getElementById("priceOfCourseCreate").innerHTML = "";
+				setCourseExpert("");
+				setSelectedOption("");
+				setLesson([]);
 			} catch (err) {
 				toast.error(err?.response?.data?.msg);
 				dispatch(isFailing());
@@ -479,6 +490,7 @@ const CreateCourse = () => {
 							}}
 							className="newPost_title_edit"
 							contentEditable={true}
+							id="priceOfCourseCreate"
 							onInput={(e) => {
 								setNewPrice(e.target.innerHTML);
 							}}
