@@ -70,7 +70,7 @@ const CourseManager = () => {
 
 	useEffect(() => {
 		let here = true;
-		const url = "/api/course/getAllCourse?limit=20&page=1";
+		const url = "/api/common/course/getAllCourse?limit=20&page=1";
 		dispatch(isLoading());
 		axios
 			.get(url, {
