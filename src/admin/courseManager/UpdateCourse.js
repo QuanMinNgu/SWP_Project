@@ -50,6 +50,8 @@ const CreateCourse = () => {
 
 	const [optionsKind, setOptionKind] = useState({});
 
+	const [reload, setReload] = useState(false);
+
 	useEffect(() => {
 		if (types) {
 			const arr = types?.map((item) => {
@@ -243,7 +245,6 @@ const CreateCourse = () => {
 
 	const handleCreateNewCourse = async () => {
 		const title = titleRef.current.value;
-
 		if (
 			!title ||
 			!contentRef.current.value ||
@@ -559,12 +560,7 @@ const CreateCourse = () => {
 					<div className="type_select">
 						<Select
 							className="search_wrap_select"
-							defaultValue={
-								selectedOption || {
-									value: 1,
-									label: "Marketing",
-								}
-							}
+							value={selectedOption}
 							onChange={setSelectedOption}
 							options={optionsKind}
 							placeholder="Kind"

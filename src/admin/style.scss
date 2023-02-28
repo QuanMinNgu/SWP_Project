@@ -1779,3 +1779,12 @@
 	font-size: 1.7rem;
 	color: rgba(0, 0, 0, 0.7);
 }
+.customer_select {
+	min-width: 12rem;
+	height: 3.6rem;
+	outline: #009cff;
+	font-size: 1.7rem;
+	& > option {
+		line-height: 5rem;
+	}
+}
