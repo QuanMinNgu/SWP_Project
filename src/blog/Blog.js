@@ -51,7 +51,7 @@ const Blog = () => {
     try {
       dispatch(isLoading());
       const res = await axios.get(
-        `/api/blog/blog_search?page=${page}&limit=20&txt=${searchText}`
+        `/api/blog/blog_search?page=${page}&limit=20&search=${searchText}`
       );
       console.log(searchText, page);
       setListBlog(res?.data);
