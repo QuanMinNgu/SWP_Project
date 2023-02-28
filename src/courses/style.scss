@@ -223,5 +223,10 @@
 }
 .course_vocher_list {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  & > div {
+    margin-bottom: 2rem;
+  }
+  height: 300px;
+  overflow-y: scroll;
 }

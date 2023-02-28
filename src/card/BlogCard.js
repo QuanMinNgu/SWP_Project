@@ -21,6 +21,17 @@ const BlogCard = ({ item, key }) => {
           </div>
           <div>
             <span>{item?.courseType?.courseTypeName}</span>
+            <div
+              style={{
+                fontSize: "1rem",
+                padding: "6px",
+                backgroundColor: "#f2f2f2",
+                borderRadius: "5px",
+                fontWeight: "600",
+              }}
+            >
+              {item?.courseType}
+            </div>
             <div onClick={handleLove}>
               {love ? (
                 <i class="fa-solid fa-heart"></i>
@@ -34,6 +45,7 @@ const BlogCard = ({ item, key }) => {
           <div
             className="blog_card_body_content_header"
             onClick={handleBlogDetail}
+            style={{ cursor: "pointer" }}
           >
             <h3>{item?.blogName}</h3>
           </div>
