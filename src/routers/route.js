@@ -20,6 +20,7 @@ import SaleDashboard from "../saler/SaleDashboard";
 import CourseExpertDashboard from "../courseExpert/CourseExpertDashboard";
 import ViewPdf from "../viewPdf/ViewPdf";
 import ActiveAccount from "../auth/ActiveAccount";
+import Voucher from "../voucher/Voucher";
 export const publicRouter = [
   {
     element: Home,
@@ -83,7 +84,7 @@ export const publicRouter = [
   },
   {
     element: CourseLearn,
-    path: "/learning/:slug",
+    path: "/learning/:courseid/:lessonid",
   },
   {
     element: CourseDetail,

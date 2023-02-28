@@ -35,7 +35,7 @@ const Home = () => {
 
 	useEffect(() => {
 		let here = true;
-		const url = "/api/home";
+		const url = "/api/common/home";
 		if (cache.current[url]) {
 			return setCourses(cache.current[url]);
 		}
