@@ -72,6 +72,7 @@ const CourseDetail = () => {
 				}
 				dispatch(isSuccess());
 				setCourse(res?.data);
+				console.log(res?.data);
 				if (res?.data?.enrolled) {
 					setCanLearn(true);
 				}
@@ -243,13 +244,13 @@ const CourseDetail = () => {
 						<li>
 							<i>
 								Giáo viên:
-								<Link style={{ marginLeft: "0.5rem" }} to="/">
-									Nguyễn Minh Quang
+								<Link style={{ marginLeft: "0.5rem" }} to="?">
+									{course?.course?.courseExpertName}
 								</Link>
 							</i>
 						</li>
 						<li>
-							<i>Tự tin khi học tập</i>
+							<i>Confidence when learning</i>
 						</li>
 					</ul>
 					<div className="course_vocher">
@@ -292,7 +293,13 @@ const CourseDetail = () => {
 					className="coursePaymentAbs"
 				></div>
 			)}
-			{payment && <Pay setPayment={setPayment} setCanLearn={setCanLearn} />}
+			{payment && (
+				<Pay
+					price={course?.course?.price || 0.1}
+					setPayment={setPayment}
+					setCanLearn={setCanLearn}
+				/>
+			)}
 		</div>
 	);
 };
