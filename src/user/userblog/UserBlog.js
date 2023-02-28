@@ -5,19 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import { UserContext } from "../../App";
-import Pagination from "../../paginating/Pagination";
-import { useLocation } from "react-router-dom";
 const UserBlog = () => {
-  const { search } = useLocation();
   const [listBlog, setListBlog] = useState([]);
   const dispatch = useDispatch();
   const { cache } = useContext(UserContext);
   const auth = useSelector((state) => state?.auth);
-  const page = new URLSearchParams(search).get("page") || 1;
 
   useEffect(() => {
     let here = true;
-    const url = `/api/blog/my_blog?limit=20&page=${page}`;
+    const url = `/api/blog/my_blog`;
     if (cache.current[url]) {
       return setListBlog(cache.current[url]);
     }
@@ -32,8 +28,9 @@ const UserBlog = () => {
         if (!here) {
           return;
         }
-        setListBlog(res?.data);
-        cache.current[url] = res?.data;
+        console.log(res?.data);
+        setListBlog(res?.data?.blogs);
+        cache.current[url] = res?.data?.blogs;
         dispatch(isSuccess());
       })
       .catch((err) => {
@@ -42,7 +39,7 @@ const UserBlog = () => {
     return () => {
       here = false;
     };
-  }, []);
+  }, [listBlog]);
 
   return (
     <div className="user_blog">
@@ -51,12 +48,17 @@ const UserBlog = () => {
         <p>Nơi lưu trữ blog của bạn</p>
       </div>
       <div className="user_blog_body">
-        {listBlog?.blogs?.map((item, index) => {
-          return <UserBlogCard item={item} index={index} />;
+        {listBlog?.map((item, index) => {
+          return (
+            <UserBlogCard
+              item={item}
+              index={index}
+              cache={cache}
+              setListBlog={setListBlog}
+              listBlog={listBlog}
+            />
+          );
         })}
-      </div>
-      <div className="user_blog_footer">
-        <Pagination count={listBlog?.numPage} />
       </div>
     </div>
   );

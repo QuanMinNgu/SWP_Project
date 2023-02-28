@@ -50,7 +50,7 @@ const BlogCard = ({ item, key }) => {
             <h3>{item?.blogName}</h3>
           </div>
           <div className="blog_card_body_content_mid">
-            <p>{item?.blogMeta}</p>
+            <p>{item?.blogMeta || item?.content}</p>
           </div>
         </div>
       </div>
