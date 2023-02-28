@@ -46,7 +46,7 @@ const Searching = () => {
 
 	useEffect(() => {
 		let here = false;
-		const url = `/api/course/get?page=1&limit=20`;
+		const url = `/api/common/course/get?page=1&limit=20`;
 		dispatch(isLoading());
 		axios
 			.get(url)

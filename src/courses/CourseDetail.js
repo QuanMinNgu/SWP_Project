@@ -56,7 +56,7 @@ const CourseDetail = () => {
 
 	useEffect(() => {
 		let here = true;
-		const url = `/api/course?id=${slug}`;
+		const url = `/api/common/course?id=${slug}`;
 		if (cache.current[url]) {
 			return setCourse(cache.current[url]);
 		}
