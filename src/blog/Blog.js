@@ -19,35 +19,33 @@ const Blog = () => {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
-    if (!search) {
-      let here = true;
-      const url = `/api/blog?page=${page}&limit=20`;
-      if (cache.current[url]) {
-        return setListBlog(cache.current[url]);
-      }
-      dispatch(isLoading());
-      axios
-        .get(url)
-        .then((res) => {
-          if (!here) {
-            return dispatch(isSuccess());
-          }
-          setListBlog(res?.data);
-          cache.current[url] = res?.data;
-          console.log(res?.data);
-          dispatch(isSuccess());
-        })
-        .catch((err) => {
-          if (!here) {
-            return dispatch(isFailing());
-          }
-          dispatch(isFailing());
-          toast.error(err?.response?.data?.msg);
-        });
-      return () => {
-        here = false;
-      };
+    let here = true;
+    const url = `/api/blog?page=${page}&limit=20`;
+    if (cache.current[url]) {
+      return setListBlog(cache.current[url]);
     }
+    dispatch(isLoading());
+    axios
+      .get(url)
+      .then((res) => {
+        if (!here) {
+          return dispatch(isSuccess());
+        }
+        setListBlog(res?.data);
+        cache.current[url] = res?.data;
+        console.log(res?.data);
+        dispatch(isSuccess());
+      })
+      .catch((err) => {
+        if (!here) {
+          return dispatch(isFailing());
+        }
+        dispatch(isFailing());
+        toast.error(err?.response?.data?.msg);
+      });
+    return () => {
+      here = false;
+    };
   }, [page]);
   const handleSearch = async () => {
     try {
