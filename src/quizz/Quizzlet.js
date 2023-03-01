@@ -22,6 +22,7 @@ const Quizzlet = ({ item }) => {
 		if (quiz) {
 			if (times < 1) {
 				return window.alert("End item?.timeman");
+				handleSubmitButton();
 			}
 			const timesInterval = setInterval(() => {
 				setTimes((prev) => {
@@ -70,6 +71,7 @@ const Quizzlet = ({ item }) => {
 					},
 				}
 			);
+			console.log(quizLearn);
 			setResult(data?.data);
 			setPercent(
 				financial((quizLearn?.length / data?.data?.totalCorrectAnswer) * 100)

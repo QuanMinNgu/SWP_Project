@@ -93,7 +93,7 @@ const CourseLearn = () => {
 						</Link>
 					</div>
 					<div className="CourseLearn_Head_Navbar_title">
-						<span>HTML CSS từ Zero đến Hero</span>
+						<span>{course?.lesson?.title}</span>
 					</div>
 				</div>
 				<div className="CourseLearn_Head_circle">
@@ -186,10 +186,14 @@ const CourseLearn = () => {
 					</div>
 				</div>
 				<div className="courseLearn_mobile_card">
-					<CourseLearnCard />
-					<CourseLearnCard />
-					<CourseLearnCard />
-					<CourseLearnCard />
+					{course?.lessonPakages?.map((item, index) => (
+						<CourseLearnCard
+							key={index + "lessonMobile"}
+							index={index}
+							item={item}
+							course={course}
+						/>
+					))}
 				</div>
 			</div>
 			{!bars && (
