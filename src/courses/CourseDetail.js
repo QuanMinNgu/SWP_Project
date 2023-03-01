@@ -73,7 +73,6 @@ const CourseDetail = () => {
 				}
 				dispatch(isSuccess());
 				setCourse(res?.data);
-				console.log(res?.data);
 				if (res?.data?.enrolled) {
 					setCanLearn(true);
 				}

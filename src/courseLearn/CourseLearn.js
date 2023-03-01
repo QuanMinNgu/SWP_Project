@@ -39,9 +39,8 @@ const CourseLearn = () => {
 			})
 			.then((res) => {
 				dispatch(isSuccess());
-				console.log(res?.data);
 				let less = 0;
-				res?.data?.lessonPackages?.forEach((item) => {
+				res?.data?.lessonPakages?.forEach((item) => {
 					less += item?.numLesson?.length;
 				});
 				setCourse(res?.data);
@@ -93,7 +92,9 @@ const CourseLearn = () => {
 					<div style={style} className="circle">
 						<div className="number">86%</div>
 					</div>
-					<span>1/166 bài học</span>
+					<span>
+						{} / {less} lessons
+					</span>
 				</div>
 			</div>
 			<div className="CourseLearn_body">
@@ -152,13 +153,17 @@ const CourseLearn = () => {
 					<div className="CourseLearn_body_content">
 						<div>
 							<div className="CourseLearn_body_title">
-								<span>Nội dung bài học</span>
+								<span>Content of this course</span>
 							</div>
 							<div>
-								<CourseLearnCard />
-								<CourseLearnCard />
-								<CourseLearnCard />
-								<CourseLearnCard />
+								{course?.lessonPakages?.map((item, index) => (
+									<CourseLearnCard
+										key={index + "lesson"}
+										index={index}
+										item={item}
+										course={course}
+									/>
+								))}
 							</div>
 						</div>
 					</div>
