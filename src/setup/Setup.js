@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
+import { isFailing, isLoading, isLogin, isSuccess } from "../redux/slice/auth";
 const Setup = () => {
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -113,7 +113,13 @@ const Setup = () => {
 				}
 			);
 			toast.success(data?.data?.msg);
-			dispatch(isSuccess());
+			dispatch(
+				isLogin({
+					...auth.user,
+					name: movie.name,
+					image: movie.image,
+				})
+			);
 		} catch (err) {
 			dispatch(isFailing());
 			toast.error(err?.response?.data?.msg);
