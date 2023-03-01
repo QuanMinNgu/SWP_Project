@@ -31,7 +31,9 @@ const CourseLearnCard = ({ item, index, course }) => {
 					<span>
 						{index + 1 < course?.currentLearningPackage
 							? item?.numLesson?.length
-							: 1}
+							: index + 1 === course?.currentLearningPackage
+							? course?.currentLearningLesson
+							: 0}
 						/{item?.numLesson?.length} |{" "}
 						{`${Math.floor(time / 3600) < 10 ? "0" : ""}${Math.floor(
 							time / 3600
