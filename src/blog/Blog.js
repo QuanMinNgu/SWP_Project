@@ -20,7 +20,7 @@ const Blog = () => {
   }, []);
   useEffect(() => {
     let here = true;
-    const url = `/api/blog?page=${page}&limit=20`;
+    const url = `/api/common/blog?page=${page}&limit=20`;
     if (cache.current[url]) {
       return setListBlog(cache.current[url]);
     }
