@@ -8,7 +8,7 @@ const CourseLearnCardD = ({ item, index, course, parentID }) => {
 	const [check, setCheck] = useState(false);
 	const [checkNew, setCheckNew] = useState(false);
 
-	const { courseid } = useParams();
+	const { courseid, lessonid } = useParams();
 
 	useEffect(() => {
 		if (parentID + 1 < course?.currentLearningPackage) {
@@ -18,6 +18,19 @@ const CourseLearnCardD = ({ item, index, course, parentID }) => {
 				setCheck(true);
 			} else if (index === course?.currentLearningLesson) {
 				setCheckNew(true);
+			}
+		}
+
+		if (course?.currentLearningPackage > 0) {
+			if (
+				course?.currentLearningLesson ===
+					course?.lessonPakages[course?.currentLearningPackage - 1]?.numLesson
+						?.length &&
+				course?.currentLearningPackage === parentID
+			) {
+				if (index === 0) {
+					setCheckNew(true);
+				}
 			}
 		}
 	}, [item]);
@@ -31,7 +44,9 @@ const CourseLearnCardD = ({ item, index, course, parentID }) => {
 					toast.error("Please learn a lesson above first.");
 				}
 			}}
-			className={`CourseLearnCardDetail ${check ? "active" : ""}`}
+			className={`CourseLearnCardDetail ${
+				lessonid * 1 === item?.lessonID ? "active" : ""
+			}`}
 		>
 			<div className="CourseLearnCardDetail_head">
 				<div>

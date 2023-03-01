@@ -44,6 +44,7 @@ const CourseLearn = () => {
 					less += item?.numLesson?.length;
 				});
 				setCourse(res?.data);
+				console.log(res?.data);
 				setLess(less);
 			})
 			.catch((err) => {
