@@ -12,6 +12,10 @@ import { toast } from "react-toastify";
 const CourseLearn = () => {
 	const [percent, setPercent] = useState(86 * 3.6);
 
+	const [course, setCourse] = useState({});
+
+	const [less, setLess] = useState(0);
+
 	const dispatch = useDispatch();
 
 	const { courseid, lessonid } = useParams();
@@ -36,6 +40,12 @@ const CourseLearn = () => {
 			.then((res) => {
 				dispatch(isSuccess());
 				console.log(res?.data);
+				let less = 0;
+				res?.data?.lessonPackages?.forEach((item) => {
+					less += item?.numLesson?.length;
+				});
+				setCourse(res?.data);
+				setLess(less);
 			})
 			.catch((err) => {
 				dispatch(isFailing());

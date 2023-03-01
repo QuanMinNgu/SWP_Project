@@ -32,8 +32,8 @@ const BlogDetail = () => {
 				if (!here) {
 					return dispatch(isSuccess());
 				}
-				setBlog(res?.data);
-				cache.current[url] = res?.data;
+				setBlog(res?.data?.blogDetail);
+				cache.current[url] = res?.data?.blogDetail;
 				console.log(res?.data);
 				dispatch(isSuccess());
 			})
