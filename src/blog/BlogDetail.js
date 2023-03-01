@@ -86,7 +86,7 @@ const BlogDetail = () => {
           </div>
         </div>
         <div className="blog_detail_center_content">
-          <div>{parse(blog?.content)}</div>
+          <div>{content ? parse(content) : ""}</div>
         </div>
       </div>
       <div id="commentContainer" className="comment_Container">
