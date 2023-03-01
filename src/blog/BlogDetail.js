@@ -25,6 +25,7 @@ const BlogDetail = () => {
     let here = true;
     const url = `/api/common/blog/blog_details?id=${slug}`;
     if (cache.current[url]) {
+      setContent(cache.current[url].content);
       return setBlog(cache.current[url]);
     }
     dispatch(isLoading());
