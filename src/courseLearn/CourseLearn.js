@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./style.scss";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import CourseLearnCard from "./CourseLearnCard";
@@ -15,6 +15,8 @@ const CourseLearn = () => {
 	const [course, setCourse] = useState({});
 
 	const [less, setLess] = useState(0);
+
+	const innerContentRef = useRef();
 
 	const dispatch = useDispatch();
 
@@ -45,6 +47,7 @@ const CourseLearn = () => {
 				});
 				setCourse(res?.data);
 				console.log(res?.data);
+				innerContentRef.current.innerHTML = res?.data?.lesson?.description;
 				setLess(less);
 			})
 			.catch((err) => {
@@ -102,47 +105,30 @@ const CourseLearn = () => {
 				<div className="CourseLearn_body_detail_container">
 					<div className="CourseLearn_body_detail">
 						<div>
-							{quizz && <Quizzlet />}
-							{youtube && (
+							{course?.lesson?.type === "quiz" && (
+								<Quizzlet item={course?.lesson} />
+							)}
+							{course?.lesson?.type === "listening" && (
 								<div className="CourseLearn_body_detail_video">
 									<ReactPlayer
 										width="100%"
 										height="100%"
-										url="https://www.youtube.com/watch?v=uqccg55tgHc"
+										url={course?.lesson?.link}
 									/>
 								</div>
 							)}
-							{!quizz && (
+							{course?.lesson?.type !== "quiz" && (
 								<div className="CourseLearn_body_detail_content">
 									<div className="CourseLearn_body_detail_content_title">
 										<span>Nội dung</span>
 									</div>
-									<div className="CourseLearn_body_detail_content_teacher">
-										<span>
-											<i>
-												Giáo viên giảng dạy:
-												<Link
-													style={{
-														marginLeft: "0.5rem",
-													}}
-													to="/"
-												>
-													Minh Quang
-												</Link>
-											</i>
-										</span>
-									</div>
-									<div className="CourseLearn_body_detail_content_clearly">
-										Tham gia các cộng đồng để cùng học hỏi, chia sẻ và "thám
-										thính" xem F8 sắp có gì mới nhé! Fanpage:
-										https://www.facebook.com/f8vnofficial Group:
-										https://www.facebook.com/groups/649972919142215 Youtube:
-										https://www.youtube.com/F8VNOfficial Sơn Đặng:
-										https://www.facebook.com/sondnf8
-									</div>
+									<div
+										ref={innerContentRef}
+										className="CourseLearn_body_detail_content_clearly"
+									></div>
 								</div>
 							)}
-							{!quizz && (
+							{course?.lesson?.type !== "quiz" && (
 								<div className="comment_container">
 									<Comment />
 								</div>
