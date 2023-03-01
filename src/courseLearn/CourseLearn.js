@@ -10,11 +10,11 @@ import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
 const CourseLearn = () => {
-	const [percent, setPercent] = useState(86 * 3.6);
-
 	const [course, setCourse] = useState({});
 
 	const [less, setLess] = useState(0);
+
+	const [cur, setCur] = useState(0);
 
 	const innerContentRef = useRef();
 
@@ -22,6 +22,8 @@ const CourseLearn = () => {
 
 	const { courseid, lessonid } = useParams();
 	const navigate = useNavigate();
+	const [bars, setbars] = useState(false);
+	const { search } = useLocation();
 
 	const auth = useSelector((state) => state.auth);
 
@@ -42,11 +44,18 @@ const CourseLearn = () => {
 			.then((res) => {
 				dispatch(isSuccess());
 				let less = 0;
-				res?.data?.lessonPakages?.forEach((item) => {
+				let curLes = 0;
+				res?.data?.lessonPakages?.forEach((item, index) => {
 					less += item?.numLesson?.length;
+					if (index < res?.data?.currentLearningPackage - 1) {
+						curLes += item?.numLesson?.length;
+					} else if (index === res?.data?.currentLearningPackage - 1) {
+						curLes += res?.data?.currentLearningLesson;
+					}
 				});
 				setCourse(res?.data);
-				console.log(res?.data);
+				setCur(curLes);
+
 				innerContentRef.current.innerHTML = res?.data?.lesson?.description;
 				setLess(less);
 			})
@@ -59,15 +68,10 @@ const CourseLearn = () => {
 		};
 	}, [lessonid, courseid]);
 
-	const [quizz, setQuizz] = useState(true);
-	const [youtube, setYoutube] = useState(false);
-
-	const [bars, setbars] = useState(false);
-
-	const { search } = useLocation();
-
 	const style = {
-		background: `conic-gradient(#F05123 ${percent}deg,transparent 0deg)`,
+		background: `conic-gradient(#F05123 ${
+			Math.round((cur / less) * 100) * 3.6
+		}deg,transparent 0deg)`,
 	};
 
 	return (
@@ -94,10 +98,10 @@ const CourseLearn = () => {
 				</div>
 				<div className="CourseLearn_Head_circle">
 					<div style={style} className="circle">
-						<div className="number">86%</div>
+						<div className="number">{Math.round((cur / less) * 100)}%</div>
 					</div>
 					<span>
-						{} / {less} lessons
+						{cur} / {less} lessons
 					</span>
 				</div>
 			</div>
@@ -114,6 +118,7 @@ const CourseLearn = () => {
 										width="100%"
 										height="100%"
 										url={course?.lesson?.link}
+										controls
 									/>
 								</div>
 							)}
