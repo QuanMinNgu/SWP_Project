@@ -56,6 +56,8 @@ const CourseLearn = () => {
 				setCourse(res?.data);
 				setCur(curLes);
 
+				console.log(res?.data);
+
 				innerContentRef.current.innerHTML = res?.data?.lesson?.description;
 				setLess(less);
 			})
