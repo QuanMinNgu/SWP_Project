@@ -20,7 +20,7 @@ const Blog = () => {
 	}, []);
 	useEffect(() => {
 		let here = true;
-		const url = `/api/blog?page=${page}&limit=20`;
+		const url = `/api/common/blog?page=${page}&limit=20`;
 		if (cache.current[url]) {
 			return setListBlog(cache.current[url]);
 		}
@@ -51,7 +51,7 @@ const Blog = () => {
 		try {
 			dispatch(isLoading());
 			const res = await axios.get(
-				`/api/blog/blog_search?page=${page}&limit=20&search=${searchText}`
+				`/api/common/blog/blog_search?page=${page}&limit=20&search=${searchText}`
 			);
 			console.log(searchText, page);
 			setListBlog(res?.data);
