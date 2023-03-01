@@ -21,7 +21,7 @@ const BlogDetail = () => {
   };
   useEffect(() => {
     let here = true;
-    const url = `/api/blog_details?id=${slug}`;
+    const url = `/api/common/blog/blog_details?id=${slug}`;
     if (cache.current[url]) {
       return setBlog(cache.current[url]);
     }
