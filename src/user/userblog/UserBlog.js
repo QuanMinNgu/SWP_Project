@@ -10,7 +10,6 @@ const UserBlog = () => {
   const dispatch = useDispatch();
   const { cache } = useContext(UserContext);
   const auth = useSelector((state) => state?.auth);
-
   useEffect(() => {
     let here = true;
     const url = `/api/blog/my_blog`;

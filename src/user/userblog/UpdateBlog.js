@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./style.scss";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+import {
+  EditorState,
+  convertToRaw,
+  convertFromHTML,
+  ContentState,
+} from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -9,12 +14,16 @@ import { isSuccess, isLoading, isFailing } from "../../redux/slice/auth";
 import axios from "axios";
 import Select from "react-select";
 import { UserContext } from "../../App";
+import { useParams } from "react-router-dom";
 const UpdateBlog = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [selectedOption, setSelectedOption] = useState(null);
   const [optionsKind, setOptionKind] = useState({});
   const { cache } = useContext(UserContext);
   const [types, setTypes] = useState([]);
+  const { slug } = useParams();
+  const [blog, setBlog] = useState();
+  const [currentType, setCurrentType] = useState({});
   useEffect(() => {
     if (types) {
       const arr = types?.map((item) => {
@@ -67,7 +76,7 @@ const UpdateBlog = () => {
     setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
   }, [editorState]);
 
-  const handleCreateNewBlog = async () => {
+  const handleUpdate = async () => {
     const title = titleRef.current.value;
     const meta = metaRef.current.value;
     if (!title || !meta || !content || !selectedOption?.value) {
@@ -83,7 +92,7 @@ const UpdateBlog = () => {
     });
     try {
       const data = await axios.post(
-        "/api/blog/create",
+        `/api/blog/update?id=${slug}`,
         {
           blogName: title,
           blogMeta: meta,
@@ -103,7 +112,47 @@ const UpdateBlog = () => {
       dispatch(isFailing());
     }
   };
-
+  useEffect(() => {
+    let here = true;
+    const url = `/api/common/blog/blog_details?id=${slug}`;
+    if (cache.current[url]) {
+      setContent(cache.current[url].content);
+      return setBlog(cache.current[url]);
+    }
+    dispatch(isLoading());
+    axios
+      .get(url)
+      .then((res) => {
+        if (!here) {
+          return dispatch(isSuccess());
+        }
+        setBlog(res?.data?.blogDetail);
+        cache.current[url] = res?.data?.blogDetail;
+        setCurrentType({
+          label: res?.data?.blogDetail?.courseTypeName,
+          value: res?.data?.blogDetail?.courseTypeId,
+        });
+        console.log(res?.data);
+        setEditorState(
+          EditorState.createWithContent(
+            ContentState.createFromBlockArray(
+              convertFromHTML(`<div>${res?.data?.blogDetail?.content}</div>`)
+            )
+          )
+        );
+        dispatch(isSuccess());
+      })
+      .catch((err) => {
+        if (!here) {
+          return dispatch(isFailing());
+        }
+        dispatch(isFailing());
+        toast.error(err?.response?.data?.msg);
+      });
+    return () => {
+      here = false;
+    };
+  }, []);
   return (
     <div className="newPost">
       <div className="newPost_title">
@@ -112,13 +161,13 @@ const UpdateBlog = () => {
           className="newPost_input_title"
           type="text"
           placeholder="Enter title"
+          defaultValue={blog?.blogName}
         />
       </div>
       <div className="newPost_title">
         <div>
           <Select
             className="search_wrap_select"
-            defaultValue={selectedOption}
             onChange={setSelectedOption}
             options={optionsKind}
             placeholder="Kind"
@@ -130,6 +179,7 @@ const UpdateBlog = () => {
             className="newPost_input_title_meta"
             type="text"
             placeholder="Enter Meta"
+            defaultValue={blog?.blogMeta}
           />
         </div>
       </div>
@@ -146,7 +196,7 @@ const UpdateBlog = () => {
         )}
       </div>
       <div className="newPost_update">
-        <button className="button_update_post" onClick={handleCreateNewBlog}>
+        <button className="button_update_post" onClick={handleUpdate}>
           <i
             style={{ marginRight: "0.5rem", fontSize: "1.3rem" }}
             className="fa-solid fa-upload"
