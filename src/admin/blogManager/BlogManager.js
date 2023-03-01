@@ -5,109 +5,145 @@ import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import "../style.scss";
 import { UserContext } from "../../App";
-import BLogAdminCard from "./BlogAdminCard";
+import BlogAdminCard from "./BlogAdminCard";
 import "./main.scss";
 import Pagination from "../../paginating/Pagination";
+import { useLocation } from "react-router-dom";
+import Select from "react-select";
 
 const BlogManager = () => {
+  const { search } = useLocation();
+  const page = new URLSearchParams(search).get("page") || 1;
+
   const [types, setTypes] = useState([]);
   const { cache } = useContext(UserContext);
   const dispatch = useDispatch();
   const [listBlog, setListBlog] = useState([]);
-  useEffect(() => {
-    const fetchApitTypes = async () => {
-      dispatch(isLoading());
-      try {
-        const res = await axios.get("/api/type_course");
-        setTypes(res?.data?.types);
-        cache.current["/api/type_course"] = res?.data?.types;
-        dispatch(isSuccess());
-      } catch (error) {
-        dispatch(isFailing());
-      }
-    };
-    if (cache) {
-      return setTypes(cache.current["/api/type_course"]);
-    } else {
-      fetchApitTypes();
-    }
-  }, []);
-  console.log(cache);
-  return (
-    <div className="blog_manager">
-      <div className="blog_manager_container">
-        <div className="admin_blog_right">
-          <div className="admin_blog_right_header">
-            <div className="admin_blog_right_header_content">
-              <div className="admin_blog_right_header_title">
-                <h2>Hello Dinh Hoan!</h2>
-              </div>
-              <div className="admin_blog_right_header_text">
-                <p>
-                  That is all of blog of application. Have a nice day my admin,
-                  nice to meet you
-                </p>
-              </div>
-              <div className="admin_blog_right_header_input">
-                <input type="text" placeholder="Tìm kiếm blog" />
-                <button>
-                  <i className="fa-solid fa-magnifying-glass"></i>
-                </button>
-              </div>
-            </div>
-            <div className="admin_blog_right_header_img">
-              <img src="https://i.pinimg.com/564x/39/a3/b3/39a3b3a4b92614132481909a9adc9171.jpg" />
-            </div>
-          </div>
-          <div className="admin_blog_right_body">
-            <div className="admin_blog_right_body_warper">
-              <div className="blog_body_header">
-                <h2>Top Blog</h2>
-              </div>
-              <div className="blog_body_content">
-                <BLogAdminCard />
-                <BLogAdminCard />
-                <BLogAdminCard />
-                <BLogAdminCard />
-                <Pagination count={listBlog?.numPage} />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="admin_blog_left">
-          <div className="admin_blog_left_box">
-            <i class="fa-solid fa-blog"></i>
-            <div className="admin_blog_left_box_content">
-              <h2>1000</h2>
-              <span>Total Blog</span>
-            </div>
-          </div>
-          <div
-            className="admin_blog_left_box"
-            style={{
-              background: "#10c4d8",
-            }}
-          >
-            <i class="fa-solid fa-user"></i>
+  const [update, setUpdate] = useState(false);
+  const optionsKind = [
+    {
+      value: "",
+      label: "Course Expert",
+    },
+    {
+      value: "",
+      label: "Sale",
+    },
+    {
+      value: "",
+      label: "Admin",
+    },
+    {
+      value: "",
+      label: "User",
+    },
+  ];
 
-            <div className="admin_blog_left_box_content">
-              <h2>1000</h2>
-              <span>Total Bloger</span>
-            </div>
-          </div>
-          <div className="admin_blog_left_type">
-            <div className="admin_blog_left_type_title">
-              <h2>Type of Blogs</h2>
-            </div>
-            <div className="admin_blog_left_type_box">
-              {types?.map((item) => {
-                return (
-                  <div key={item?.courseTypeID}>{item?.courseTypeName}</div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+  const optionsSort = [
+    { value: "vanilla", label: "Stars Increased" },
+    { value: "asd", label: "Stars Decreased" },
+    { value: "vaniasdlla", label: "Newest" },
+    { value: "vanilsla", label: "Oldest" },
+  ];
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  useEffect(() => {
+    let here = true;
+    const url = "/api/type_course";
+    if (cache.current[url]) {
+      return setTypes(cache.current[url]);
+    }
+    dispatch(isLoading());
+    axios
+      .get(url)
+      .then((res) => {
+        if (!here) {
+          return;
+        }
+        setTypes(res?.data?.types);
+        cache.current[url] = res?.data?.types;
+        dispatch(isSuccess());
+      })
+      .catch((err) => {
+        dispatch(isFailing());
+      });
+    return () => {
+      here = false;
+    };
+  }, []);
+  useEffect(() => {
+    let here = true;
+    const url = `/api/common/blog?page=${page}&limit=20`;
+    dispatch(isLoading());
+    axios
+      .get(url)
+      .then((res) => {
+        if (!here) {
+          return dispatch(isSuccess());
+        }
+        setListBlog(res?.data);
+        cache.current[url] = res?.data;
+        console.log(res?.data);
+        dispatch(isSuccess());
+      })
+      .catch((err) => {
+        if (!here) {
+          return dispatch(isFailing());
+        }
+        dispatch(isFailing());
+        toast.error(err?.response?.data?.msg);
+      });
+    return () => {
+      here = false;
+    };
+  }, [update]);
+  console.log(cache);
+
+  return (
+    <div className="managerCourse">
+      <div className="managerCourse_navbar">
+        <Select
+          className="search_wrap_select"
+          defaultValue={selectedOption}
+          onChange={setSelectedOption}
+          options={optionsKind}
+          placeholder="Role"
+        />
+        <Select
+          className="search_wrap_select"
+          defaultValue={selectedOption}
+          onChange={setSelectedOption}
+          options={optionsSort}
+          placeholder="Sort"
+        />
+        <button>Tìm Kiếm</button>
+      </div>
+      <div className="manageCourse_table">
+        <table className="s_table">
+          <thead className="s_thead">
+            <tr className="s_trow">
+              <th className="b_tstt">STT</th>
+              <th className="b_tuser">User</th>
+              <th className="b_tblog">Name</th>
+              <th className="b_tbars"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {listBlog?.blogs?.map((item, index) => {
+              return (
+                <BlogAdminCard
+                  item={item}
+                  index={index}
+                  setUpdate={setUpdate}
+                  update={update}
+                />
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="pagination">
+        <Pagination count={listBlog?.numPage} />
       </div>
     </div>
   );
