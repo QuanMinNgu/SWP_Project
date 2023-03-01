@@ -49,7 +49,7 @@ const Blog = () => {
 			};
 		}
 		let here = true;
-		const url = `/api/blog/blog_search?page=${page}&limit=20&search=${searchText}`;
+		const url = `/api/common/blog/blog_search?page=${page}&limit=20&search=${searchText}`;
 		if (cache.current[url]) {
 			return setListBlog(cache.current[url]);
 		}
