@@ -136,7 +136,6 @@ const Setup = () => {
 			<div className="setUp_navbar">
 				<div
 					onClick={() => {
-						console.log("Here");
 						navigate("/settings/personal");
 					}}
 					className={`setUp_navbar_items ${
