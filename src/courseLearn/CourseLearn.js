@@ -127,7 +127,7 @@ const CourseLearn = () => {
 							{course?.lesson?.type !== "quiz" && (
 								<div className="CourseLearn_body_detail_content">
 									<div className="CourseLearn_body_detail_content_title">
-										<span>Nội dung</span>
+										<span>Content of lesson</span>
 									</div>
 									<div
 										ref={innerContentRef}
