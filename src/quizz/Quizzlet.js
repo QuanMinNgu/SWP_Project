@@ -66,7 +66,12 @@ const Quizzlet = ({ item }) => {
 		if (check && times > 1) {
 			return toast.error("Please enter all answer.");
 		}
-		console.log({ quiz: quizLearn, lessonID: lessonid });
+		console.log({
+			quiz: quizLearn,
+			lessonID: lessonid,
+			finishTime: new Date(),
+			enrollTime: enrollTimeRef.current,
+		});
 		try {
 			const data = await axios.post(
 				"/api/lesson/quiz/submit",
