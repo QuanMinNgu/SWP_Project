@@ -2,16 +2,57 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import "./main.scss";
 import { Link, useNavigate } from "react-router-dom";
-const BlogCard = ({ item, key }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
+import axios from "axios";
+import { toast } from "react-toastify";
+const BlogCard = ({ item, key, update, setUpdate, loveBlog }) => {
   const [love, setLove] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state?.auth);
   const handleLove = () => {
-    setLove(!love);
+    if (!love) {
+      try {
+        dispatch(isLoading());
+        const res = axios.post(`/api/blog/save?id=${item?.blogID}`, {
+          token: auth?.user?.token,
+        });
+        dispatch(isSuccess());
+        setLove(!love);
+        setUpdate(!update);
+        return toast.success(res?.data?.msg);
+      } catch (error) {
+        dispatch(isFailing());
+        return toast.error(error?.response?.data?.msg);
+      }
+    } else {
+      try {
+        dispatch(isLoading());
+        const res = axios.post(`/api/blog/not_mark?id=${item?.blogID}`, {
+          token: auth?.user?.token,
+        });
+        dispatch(isSuccess());
+        setLove(!love);
+        setUpdate(!update);
+        return toast.success(res?.data?.msg);
+      } catch (error) {
+        dispatch(isFailing());
+        return toast.error(error?.response?.data?.msg);
+      }
+    }
   };
   const handleBlogDetail = () => {
     navigate(`/blog/${item?.blogID}`);
   };
-
+  useEffect(() => {
+    const check = loveBlog?.find((ite) => ite?.blogID === item?.blogID);
+    if (check) {
+      setLove(true);
+    } else {
+      setLove(false);
+    }
+  }, [loveBlog]);
   return (
     <div className="blog_card" key={key}>
       <div className="blog_card_body">

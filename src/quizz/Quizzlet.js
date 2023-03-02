@@ -66,12 +66,7 @@ const Quizzlet = ({ item }) => {
 		if (check && times > 1) {
 			return toast.error("Please enter all answer.");
 		}
-		console.log({
-			quiz: quizLearn,
-			lessonID: lessonid,
-			finishTime: new Date(),
-			enrollTime: enrollTimeRef.current,
-		});
+
 		try {
 			const data = await axios.post(
 				"/api/lesson/quiz/submit",
@@ -88,8 +83,11 @@ const Quizzlet = ({ item }) => {
 				}
 			);
 			setResult(data?.data);
+			console.log(data?.data);
 			setPercent(
-				financial((quizLearn?.length / data?.data?.totalCorrectAnswer) * 100)
+				financial(
+					(quizLearn?.length / (data?.data?.totalCorrectAnswer * 1)) * 100
+				)
 			);
 		} catch (err) {
 			setResult({

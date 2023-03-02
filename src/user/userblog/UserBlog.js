@@ -39,7 +39,6 @@ const UserBlog = () => {
       here = false;
     };
   }, [listBlog]);
-
   return (
     <div className="user_blog">
       <div className="user_blog_header">

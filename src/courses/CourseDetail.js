@@ -100,6 +100,7 @@ const CourseDetail = () => {
           return dispatch(isFailing());
         }
         dispatch(isFailing());
+        navigate("/");
         toast.error(err?.response?.data?.msg);
       });
     return () => {
