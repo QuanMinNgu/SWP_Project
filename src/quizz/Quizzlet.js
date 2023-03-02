@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,9 +13,12 @@ const Quizzlet = ({ item }) => {
 
 	const [result, setResult] = useState(false);
 
+	const enrollTimeRef = useRef(0);
+
 	useEffect(() => {
 		if (item) {
 			setTimes(item?.time);
+			enrollTimeRef.current = new Date();
 		}
 	}, [item]);
 
@@ -70,6 +73,8 @@ const Quizzlet = ({ item }) => {
 				{
 					quiz: quizLearn,
 					lessonID: lessonid,
+					finishTime: new Date(),
+					enrollTime: enrollTimeRef.current,
 				},
 				{
 					headers: {
