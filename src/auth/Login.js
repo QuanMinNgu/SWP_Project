@@ -23,7 +23,6 @@ const Login = () => {
 			return toast.error("Password or email are not correct.");
 		}
 		dispatch(isLoading());
-		console.log(user);
 		try {
 			const data = await axios.post("/api/auth/login", {
 				...user,

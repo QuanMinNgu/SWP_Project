@@ -11,6 +11,8 @@ const CourseManagerCard = ({
 	item,
 	courseSelected,
 	setCourseSelected,
+	updateCourse,
+	setUpdateCourse,
 }) => {
 	const cardRef = useRef(null);
 
@@ -78,7 +80,7 @@ const CourseManagerCard = ({
 				courseID: [item?.courseID],
 			});
 			toast.success(data?.data?.msg);
-			item.status = !item?.status;
+			setUpdateCourse(!updateCourse);
 			dispatch(isSuccess());
 		} catch (err) {
 			dispatch(isFailing());

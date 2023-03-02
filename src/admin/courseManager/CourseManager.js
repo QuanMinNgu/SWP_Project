@@ -68,6 +68,8 @@ const CourseManager = () => {
 		}
 	}, [types]);
 
+	const [updateCourse, setUpdateCourse] = useState(false);
+
 	useEffect(() => {
 		let here = true;
 		const url = "/api/common/course/getAllCourse?limit=20&page=1";
@@ -93,7 +95,8 @@ const CourseManager = () => {
 		return () => {
 			here = false;
 		};
-	}, []);
+	}, [updateCourse]);
+
 	useEffect(() => {
 		let here = true;
 		const url = "/api/type_course";
@@ -174,7 +177,7 @@ const CourseManager = () => {
 			});
 			toast.success(data?.data?.msg);
 			dispatch(isSuccess());
-			setUpdate(!update);
+			setUpdateCourse(!updateCourse);
 		} catch (err) {
 			dispatch(isFailing());
 			return toast.error(err?.response?.data?.msg);
@@ -296,6 +299,8 @@ const CourseManager = () => {
 								setExpert={setExpert}
 								courseSelected={courseSelected}
 								setCourseSelected={setCourseSelected}
+								setUpdateCourse={setUpdateCourse}
+								updateCourse={updateCourse}
 							/>
 						))}
 					</tbody>
