@@ -21,9 +21,10 @@ const Quizzlet = ({ item }) => {
 
 	useEffect(() => {
 		if (quiz) {
-			if (times < 1) {
-				return window.alert("End item?.timeman");
+			if (times < 1 || result) {
 				handleSubmitButton();
+				toast.warn("Time up");
+				return;
 			}
 			const timesInterval = setInterval(() => {
 				setTimes((prev) => {
@@ -59,7 +60,7 @@ const Quizzlet = ({ item }) => {
 
 	const handleSubmitButton = async () => {
 		const check = quizLearn?.some((item) => item?.answer === null);
-		if (check) {
+		if (check && times > 1) {
 			return toast.error("Please enter all answer.");
 		}
 		console.log({ quiz: quizLearn, lessonID: lessonid });
@@ -209,6 +210,7 @@ const Quizzlet = ({ item }) => {
 										onClick={() => {
 											setResult(false);
 											setQuiz(false);
+											setTimes(item?.time);
 										}}
 										className="expertCourse_close_icons"
 									>
@@ -251,6 +253,7 @@ const Quizzlet = ({ item }) => {
 										onClick={() => {
 											setResult(false);
 											setQuiz(false);
+											setTimes(item?.time);
 										}}
 										style={{
 											height: "4rem",
