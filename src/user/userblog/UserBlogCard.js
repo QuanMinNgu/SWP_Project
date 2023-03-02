@@ -1,14 +1,15 @@
 import "./style.scss";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const UserBlogCard = ({ item, index, cache, setListBlog, listBlog }) => {
   const [option, setOption] = useState(false);
   const auth = useSelector((state) => state?.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleDelete = async () => {
     try {
       dispatch(isLoading());
@@ -25,6 +26,7 @@ const UserBlogCard = ({ item, index, cache, setListBlog, listBlog }) => {
       return toast.error(error?.response?.data?.msg);
     }
   };
+
   return (
     <div className="user_card" key={index}>
       <div className="user_card_body">
@@ -39,7 +41,7 @@ const UserBlogCard = ({ item, index, cache, setListBlog, listBlog }) => {
           </div>
           {option && (
             <div className="option_card_blog">
-              <h3>Edit</h3>
+              <h3 onClick={() => navigate(`/me/blog/${item?.blogID}`)}>Edit</h3>
               <h3 onClick={handleDelete}>Delete</h3>
             </div>
           )}

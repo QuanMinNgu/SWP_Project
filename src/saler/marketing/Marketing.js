@@ -49,6 +49,7 @@ const Marketing = () => {
         formData
       );
       urlImage = "https:" + res.data.url.split(":")[1];
+      console.log(res);
     } catch (err) {
       return;
     }
@@ -121,7 +122,7 @@ const Marketing = () => {
               <input {...getInputProps()} />
               <i className="fa-regular fa-image"></i>
               <div className="image_create_container_img">
-                <img src="" />
+                <img src={image} />
               </div>
             </div>
           </div>

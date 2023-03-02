@@ -21,6 +21,7 @@ import CourseExpertDashboard from "../courseExpert/CourseExpertDashboard";
 import ViewPdf from "../viewPdf/ViewPdf";
 import ActiveAccount from "../auth/ActiveAccount";
 import Voucher from "../voucher/Voucher";
+import UpdateBlog from "../user/userblog/UpdateBlog";
 export const publicRouter = [
   {
     element: Home,
@@ -107,6 +108,11 @@ export const publicRouter = [
   {
     element: MarkBlog,
     path: "/me/markblog",
+    layout: DefaultLayout,
+  },
+  {
+    element: UpdateBlog,
+    path: "/me/blog/:slug",
     layout: DefaultLayout,
   },
 ];
