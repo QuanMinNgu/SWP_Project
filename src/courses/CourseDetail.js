@@ -34,6 +34,7 @@ const CourseDetail = () => {
 				{
 					courseID: course?.course?.courseID,
 					price: course?.course?.price,
+					createdDate: new Date(),
 				},
 				{
 					headers: {

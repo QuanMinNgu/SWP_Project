@@ -32,6 +32,7 @@ const Pay = ({ setPayment, setCanLearn, price }) => {
 				{
 					courseID: slug,
 					price: price,
+					createdDate: new Date(),
 				},
 				{
 					headers: {
