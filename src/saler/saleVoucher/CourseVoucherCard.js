@@ -1,20 +1,34 @@
 import React from "react";
 
-function CourseVoucherCard() {
+function CourseVoucherCard({
+  item,
+  index,
+  setChoose,
+  setChooseCourse,
+  chooseCourse,
+}) {
+  const handleChoose = () => {
+    setChoose(false);
+    setChooseCourse([
+      ...chooseCourse,
+      {
+        courseName: item?.courseName,
+        courseID: item?.courseID,
+        image: item?.image,
+      },
+    ]);
+  };
   return (
-    <div className="voucher_card">
+    <div className="voucher_card" key={index} onClick={handleChoose}>
       <div className="voucher_card_img">
-        <img src="https://i.pinimg.com/564x/69/43/3a/69433a2d448baf4e2b4095e5b184e9eb.jpg" />
+        <img src={item?.image} />
       </div>
       <div className="voucher_card_body">
         <div className="voucher_card_body_top">
-          <h3>Khóa học của Đình Hoàn</h3>
+          <h3>{item?.courseName}</h3>
         </div>
         <div className="voucher_card_body_bottom">
-          <p>
-            Chào mừng đến với khóa học của đình hoàn có rất nhiều bài học phong
-            phú
-          </p>
+          <p>{item?.description}</p>
         </div>
       </div>
     </div>

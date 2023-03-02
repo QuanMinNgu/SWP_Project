@@ -4,22 +4,26 @@ import CourseTypeVoucher from "./CourseTypeVoucher";
 import CourseVoucher from "./CourseVoucher";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
+import axios from "axios";
 
 function CreateVoucher() {
   const valueRef = useRef();
   const startRef = useRef();
   const toRef = useRef();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state?.auth);
   const [title, setTitle] = useState("");
   const desRef = useRef("");
   const [value, setValue] = useState("");
   const [typeVoucher, setTypeVoucher] = useState("course");
-  const [chooseCourse, setChooseCourse] = useState([1, 2, 3]);
+  const [chooseCourse, setChooseCourse] = useState([]);
   let startDate = format(new Date(), "yyyy-MM-dd");
   const type = [
     { value: "course", label: "Course" },
     { value: "typeCourse", label: "TypeOfCourse" },
   ];
-  console.log(title);
   const handleSelectType = (choice) => {
     console.log(typeVoucher);
     setChooseCourse([]);
@@ -35,7 +39,7 @@ function CreateVoucher() {
       return toast.error("Please enter to date more than start");
     }
   };
-  const handleCreateNewVoucher = () => {
+  const handleCreateNewVoucher = async () => {
     if (title === "") {
       window.scrollTo({
         top: 0,
@@ -48,15 +52,37 @@ function CreateVoucher() {
       valueRef.current.focus();
       return toast.error("Plese remeber enter value");
     }
-    const data = {
+    if (!chooseCourse || chooseCourse.length === 0) {
+      return toast.error("Please fill all");
+    }
+    console.log({
       Name: title,
       Description: desRef.current.innerHTML,
       Price: value,
       StartDate: startRef.current.value,
       ToDate: toRef.current.value,
-      type: chooseCourse,
-    };
-    console.log(data);
+      type: typeVoucher,
+      id: chooseCourse,
+    });
+    try {
+      dispatch(isLoading());
+      const res = await axios.post("/api/voucher/create", {
+        Name: title,
+        Description: desRef.current.innerHTML,
+        Price: value,
+        StartDate: startRef.current.value,
+        ToDate: toRef.current.value,
+        type: typeVoucher,
+        id: chooseCourse,
+        token: auth?.user?.token,
+      });
+      dispatch(isSuccess());
+      console.log(res?.data);
+      return toast.success(res?.data?.msg);
+    } catch (error) {
+      dispatch(isFailing());
+      return toast.error(error?.responese?.data?.msg);
+    }
   };
   return (
     <div className="create_voucher">

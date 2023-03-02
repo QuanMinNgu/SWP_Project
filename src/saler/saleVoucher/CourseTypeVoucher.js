@@ -1,37 +1,61 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import Select from "react-select";
+import { isSuccess, isLoading, isFailing } from "../../redux/slice/auth";
+import { UserContext } from "../../App";
+import axios from "axios";
 function CourseTypeVoucher({ chooseCourse, setChooseCourse }) {
-  const arr = [
-    {
-      id: 1,
-      name: "Software",
-    },
-    {
-      id: 2,
-      name: "Life",
-    },
-    {
-      id: 3,
-      name: "Soft Skill",
-    },
-  ];
-  const options = arr.map((item) => {
-    return {
-      value: `${item.id}`,
-      label: `${item.name}`,
-    };
-  });
+  const [types, setTypes] = useState([]);
+  const { cache } = useContext(UserContext);
+  const dispatch = useDispatch();
+  const [optionsKind, setOptionKind] = useState({});
+  useEffect(() => {
+    if (types) {
+      const arr = types?.map((item) => {
+        return {
+          value: item?.courseTypeID,
+          label: item?.courseTypeName,
+        };
+      });
+      setOptionKind([...arr]);
+    }
+  }, [types]);
   const handleChangeCourse = (choice) => {
     setChooseCourse({
-      CourseTypeId: choice.value,
+      CourseTypeID: choice.value,
     });
   };
-  console.log(chooseCourse);
+  useEffect(() => {
+    let here = true;
+    const url = "/api/type_course";
+    if (cache.current[url]) {
+      console.log(cache.current[url]);
+      return setTypes(cache.current[url]);
+    }
+    dispatch(isLoading());
+    axios
+      .get(url)
+      .then((res) => {
+        if (!here) {
+          return;
+        }
+        setTypes(res?.data?.types);
+        console.log(res?.data);
+        cache.current[url] = res?.data?.types;
+        dispatch(isSuccess());
+      })
+      .catch((err) => {
+        dispatch(isFailing());
+      });
+    return () => {
+      here = false;
+    };
+  }, []);
   return (
     <div className="course_type_voucher">
       <label>Course Type :</label>
       <Select
-        options={options}
+        options={optionsKind}
         onChange={(choice) => handleChangeCourse(choice)}
       />
     </div>
