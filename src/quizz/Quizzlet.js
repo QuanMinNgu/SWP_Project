@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import QuizzCard from "./QuizzCard";
 import "./style.scss";
@@ -40,6 +41,8 @@ const Quizzlet = ({ item }) => {
 
 	const [quizLearn, setQuizLearn] = useState([]);
 
+	const { lessonid } = useParams();
+
 	const auth = useSelector((state) => state.auth);
 
 	useEffect(() => {
@@ -59,11 +62,13 @@ const Quizzlet = ({ item }) => {
 		if (check) {
 			return toast.error("Please enter all answer.");
 		}
+		console.log({ quiz: quizLearn, lessonID: lessonid });
 		try {
 			const data = await axios.post(
 				"/api/lesson/quiz/submit",
 				{
 					quiz: quizLearn,
+					lessonID: lessonid,
 				},
 				{
 					headers: {
@@ -71,7 +76,6 @@ const Quizzlet = ({ item }) => {
 					},
 				}
 			);
-			console.log(quizLearn);
 			setResult(data?.data);
 			setPercent(
 				financial((quizLearn?.length / data?.data?.totalCorrectAnswer) * 100)
