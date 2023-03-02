@@ -22,7 +22,7 @@
       margin-left: 1rem;
       flex-wrap: wrap;
       & > li {
-        width: 50%;
+        width: 48%;
         @include mobile {
           width: 100%;
         }
@@ -224,16 +224,15 @@
 .course_vocher_list {
   display: flex;
   flex-direction: column;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   & > div {
     margin-bottom: 2rem;
   }
   height: 300px;
   overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
-
 .course_detail_content {
   word-break: break-all;
 }

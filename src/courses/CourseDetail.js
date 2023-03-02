@@ -34,6 +34,7 @@ const CourseDetail = () => {
         {
           courseID: course?.course?.courseID,
           price: course?.course?.price,
+          createdDate: new Date(),
         },
         {
           headers: {
@@ -246,7 +247,7 @@ const CourseDetail = () => {
           <ul className="course_detail_list">
             <li>
               <i>
-                Giáo viên:
+                Teacher:
                 <Link style={{ marginLeft: "0.5rem" }} to="?">
                   {course?.course?.courseExpertName}
                 </Link>
@@ -258,7 +259,6 @@ const CourseDetail = () => {
           </ul>
           <div className="course_vocher">
             <div className="course_vocher_list">
-              <VocherTemplate onClick={() => setOpen(true)} />
               <VocherTemplate onClick={() => setOpen(true)} />
             </div>
           </div>
@@ -277,7 +277,7 @@ const CourseDetail = () => {
         </div>
       </div>
       <div className="rating_container">
-        <Rating />
+        <Rating course={course} />
       </div>
       {payment && (
         <div

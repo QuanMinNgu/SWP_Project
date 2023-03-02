@@ -65,8 +65,20 @@ const CourseLearnCardD = ({ item, index, course, parentID }) => {
 				</div>
 			</div>
 			{check ? (
-				<div className="CourseLearnCardDetail_body">
-					<i className="fa-solid fa-check"></i>
+				<div
+					style={
+						item?.type === "quiz" && !item?.quizResultDTO
+							? { backgroundColor: "red" }
+							: {
+									backgroundColor: "#5db85c",
+							  }
+					}
+					className="CourseLearnCardDetail_body"
+				>
+					{item?.type !== "quiz" && <i className="fa-solid fa-check"></i>}
+					{item?.type === "quiz" && item?.quizResultDTO && (
+						<i className="fa-solid fa-check"></i>
+					)}
 				</div>
 			) : checkNew ? (
 				<div

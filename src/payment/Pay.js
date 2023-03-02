@@ -1,8 +1,11 @@
 import React from "react";
 import "./style.scss";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { isLoading, isSuccess, isFailing } from "../redux/slice/auth";
+import axios from "axios";
 const Pay = ({ setPayment, setCanLearn, price }) => {
 	const initialOptions = {
 		"client-id":
@@ -14,7 +17,36 @@ const Pay = ({ setPayment, setCanLearn, price }) => {
 	const handleApprove = () => {
 		setCanLearn(true);
 		setPayment(false);
-		toast.success("Thank you for enrolled this course.");
+		enrollCourseSuccess();
+	};
+
+	const { slug } = useParams();
+	const dispatch = useDispatch();
+	const auth = useSelector((state) => state.auth);
+
+	const enrollCourseSuccess = async () => {
+		dispatch(isLoading());
+		try {
+			const data = await axios.post(
+				"/api/course/enroll",
+				{
+					courseID: slug,
+					price: price,
+					createdDate: new Date(),
+				},
+				{
+					headers: {
+						token: auth.user?.token,
+					},
+				}
+			);
+			dispatch(isSuccess());
+			toast.success(data?.data?.msg);
+			setCanLearn(true);
+		} catch (err) {
+			dispatch(isFailing());
+			toast.error(err?.response?.data?.msg);
+		}
 	};
 	return (
 		<div className="payment">

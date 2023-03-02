@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import QuizzCard from "./QuizzCard";
 import "./style.scss";
@@ -12,17 +13,21 @@ const Quizzlet = ({ item }) => {
 
 	const [result, setResult] = useState(false);
 
+	const enrollTimeRef = useRef(0);
+
 	useEffect(() => {
 		if (item) {
 			setTimes(item?.time);
+			enrollTimeRef.current = new Date();
 		}
 	}, [item]);
 
 	useEffect(() => {
 		if (quiz) {
-			if (times < 1) {
-				return window.alert("End item?.timeman");
+			if (times < 1 || result) {
 				handleSubmitButton();
+				toast.warn("Time up");
+				return;
 			}
 			const timesInterval = setInterval(() => {
 				setTimes((prev) => {
@@ -40,6 +45,8 @@ const Quizzlet = ({ item }) => {
 
 	const [quizLearn, setQuizLearn] = useState([]);
 
+	const { lessonid } = useParams();
+
 	const auth = useSelector((state) => state.auth);
 
 	useEffect(() => {
@@ -56,14 +63,23 @@ const Quizzlet = ({ item }) => {
 
 	const handleSubmitButton = async () => {
 		const check = quizLearn?.some((item) => item?.answer === null);
-		if (check) {
+		if (check && times > 1) {
 			return toast.error("Please enter all answer.");
 		}
+		console.log({
+			quiz: quizLearn,
+			lessonID: lessonid,
+			finishTime: new Date(),
+			enrollTime: enrollTimeRef.current,
+		});
 		try {
 			const data = await axios.post(
 				"/api/lesson/quiz/submit",
 				{
 					quiz: quizLearn,
+					lessonID: lessonid,
+					finishTime: new Date(),
+					enrollTime: enrollTimeRef.current,
 				},
 				{
 					headers: {
@@ -71,7 +87,6 @@ const Quizzlet = ({ item }) => {
 					},
 				}
 			);
-			console.log(quizLearn);
 			setResult(data?.data);
 			setPercent(
 				financial((quizLearn?.length / data?.data?.totalCorrectAnswer) * 100)
@@ -205,6 +220,7 @@ const Quizzlet = ({ item }) => {
 										onClick={() => {
 											setResult(false);
 											setQuiz(false);
+											setTimes(item?.time);
 										}}
 										className="expertCourse_close_icons"
 									>
@@ -247,6 +263,7 @@ const Quizzlet = ({ item }) => {
 										onClick={() => {
 											setResult(false);
 											setQuiz(false);
+											setTimes(item?.time);
 										}}
 										style={{
 											height: "4rem",
