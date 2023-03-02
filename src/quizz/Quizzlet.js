@@ -84,11 +84,7 @@ const Quizzlet = ({ item }) => {
 			);
 			setResult(data?.data);
 			console.log(data?.data);
-			setPercent(
-				financial(
-					(quizLearn?.length / (data?.data?.totalCorrectAnswer * 1)) * 100
-				)
-			);
+			setPercent(data?.data?.percentCal * 1);
 		} catch (err) {
 			setResult({
 				totalQuestion: 0,
@@ -228,13 +224,13 @@ const Quizzlet = ({ item }) => {
 								<div className="quiz_result_item_container">
 									<div className="quiz_result_item">
 										<div style={style} className="circle_result">
-											<div className="number">{percent}%</div>
+											<div className="number">{result?.percentCal * 1}%</div>
 										</div>
 									</div>
 									<div className="quiz_result_result">
 										<div className="quiz_result_item_card">
 											<span>
-												<i>Total Questions</i>: <b>{result?.totalQuestion}</b>
+												<i>Total Questions</i>: <b>{quizLearn?.length}</b>
 											</span>
 										</div>
 										<div className="quiz_result_item_card">
@@ -250,7 +246,7 @@ const Quizzlet = ({ item }) => {
 													style={!result.result ? { color: "red" } : {}}
 													className="result_color"
 												>
-													{result.result ? "You get pass" : "You not pass"}
+													{result.result ? "Passed" : "Not Passed"}
 												</b>
 											</span>
 										</div>
