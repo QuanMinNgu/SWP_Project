@@ -246,7 +246,7 @@ const CourseDetail = () => {
 					<ul className="course_detail_list">
 						<li>
 							<i>
-								Giáo viên:
+								Teacher:
 								<Link style={{ marginLeft: "0.5rem" }} to="?">
 									{course?.course?.courseExpertName}
 								</Link>
@@ -286,7 +286,7 @@ const CourseDetail = () => {
 				</div>
 			</div>
 			<div className="rating_container">
-				<Rating />
+				<Rating course={course} />
 			</div>
 			{payment && (
 				<div
