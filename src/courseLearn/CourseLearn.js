@@ -48,18 +48,36 @@ const CourseLearn = () => {
 				res?.data?.lessonPakages?.forEach((item, index) => {
 					less += item?.numLesson?.length;
 					if (index < res?.data?.currentLearningPackage - 1) {
-						curLes += item?.numLesson?.length;
+						item?.numLesson?.forEach((item) => {
+							if (item?.type === "quiz") {
+								if (item?.quizResultDTO) {
+									curLes += 1;
+								}
+							} else {
+								curLes += 1;
+							}
+						});
 					} else if (index === res?.data?.currentLearningPackage - 1) {
-						curLes += res?.data?.currentLearningLesson;
+						item?.numLesson?.forEach((item, i) => {
+							if (i + 1 <= res?.data?.currentLearningLesson) {
+								if (item?.type === "quiz") {
+									if (item?.quizResultDTO) {
+										curLes += 1;
+									}
+								} else {
+									curLes += 1;
+								}
+							}
+						});
 					}
 				});
 				setCourse(res?.data);
 				setCur(curLes);
+				setLess(less);
 
 				console.log(res?.data);
 
 				innerContentRef.current.innerHTML = res?.data?.lesson?.description;
-				setLess(less);
 			})
 			.catch((err) => {
 				dispatch(isFailing());
