@@ -16,6 +16,8 @@ const Rating = ({ course }) => {
 
 	const { search } = useLocation();
 
+	const [update, setUpdate] = useState(false);
+
 	const page = new URLSearchParams(search).get("page") || 1;
 
 	const { slug } = useParams();
@@ -39,7 +41,7 @@ const Rating = ({ course }) => {
 			.catch((err) => {
 				toast.error(err?.response?.data?.msg);
 			});
-	}, [slug, page]);
+	}, [slug, page, update]);
 
 	const handleCreateRating = async () => {
 		if (!auth.user?.token) {
@@ -72,6 +74,7 @@ const Rating = ({ course }) => {
 			);
 			dispatch(isSuccess());
 			toast.success(data?.data?.msg);
+			setUpdate(!update);
 		} catch (err) {
 			dispatch(isFailing());
 			return toast.error(err?.response?.data?.msg);
