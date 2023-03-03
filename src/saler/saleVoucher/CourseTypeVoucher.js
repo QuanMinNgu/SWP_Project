@@ -21,9 +21,8 @@ function CourseTypeVoucher({ chooseCourse, setChooseCourse }) {
     }
   }, [types]);
   const handleChangeCourse = (choice) => {
-    setChooseCourse({
-      CourseTypeID: choice.value,
-    });
+    console.log(choice.value);
+    setChooseCourse(choice.value);
   };
   useEffect(() => {
     let here = true;

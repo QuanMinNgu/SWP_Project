@@ -19,7 +19,8 @@ function CreateVoucher() {
   const [value, setValue] = useState("");
   const [typeVoucher, setTypeVoucher] = useState("course");
   const [chooseCourse, setChooseCourse] = useState([]);
-  let startDate = format(new Date(), "yyyy-MM-dd");
+  const [duration, setDuration] = useState();
+  const [apply, setApply] = useState();
   const type = [
     { value: "course", label: "Course" },
     { value: "typeCourse", label: "TypeOfCourse" },
@@ -28,16 +29,6 @@ function CreateVoucher() {
     console.log(typeVoucher);
     setChooseCourse([]);
     setTypeVoucher(choice.value);
-  };
-  const handleChangeTime = (e) => {
-    if (startRef.current.value < startDate) {
-      startRef.current.value = startDate;
-      return toast.error("Only equal or more time current");
-    }
-    if (startRef.current.value > e.target.value) {
-      toRef.current.value = startRef.current.value;
-      return toast.error("Please enter to date more than start");
-    }
   };
   const handleCreateNewVoucher = async () => {
     if (title === "") {
@@ -55,27 +46,58 @@ function CreateVoucher() {
     if (!chooseCourse || chooseCourse.length === 0) {
       return toast.error("Please fill all");
     }
-    console.log({
-      Name: title,
-      Description: desRef.current.innerHTML,
-      Price: value,
-      StartDate: startRef.current.value,
-      ToDate: toRef.current.value,
-      type: typeVoucher,
-      id: chooseCourse,
-    });
     try {
-      dispatch(isLoading());
-      const res = await axios.post("/api/voucher/create", {
-        Name: title,
+      let data;
+      if (typeVoucher === "course") {
+        data = {
+          name: title,
+          description: desRef.current.innerHTML,
+          amount: value,
+          duration: duration,
+          StartApply: apply,
+          type: typeVoucher,
+          id: chooseCourse,
+        };
+      }
+      if (typeVoucher === "typeCourse") {
+        data = {
+          name: title,
+          description: desRef.current.innerHTML,
+          amount: value,
+          duration: duration,
+          StartApply: apply,
+          type: typeVoucher,
+          courseTypeID: chooseCourse,
+        };
+      }
+      console.log({
+        name: title,
         Description: desRef.current.innerHTML,
         Price: value,
-        StartDate: startRef.current.value,
-        ToDate: toRef.current.value,
+        Duration: duration,
+        StartApply: apply,
         type: typeVoucher,
-        id: chooseCourse,
+        courseTypeID: chooseCourse,
         token: auth?.user?.token,
       });
+      dispatch(isLoading());
+      const res = await axios.post(
+        "/api/voucher/create",
+        {
+          name: title,
+          description: desRef.current.innerHTML,
+          amount: value,
+          duration: duration,
+          StartApply: apply,
+          type: typeVoucher,
+          id: chooseCourse,
+        },
+        {
+          headers: {
+            token: auth?.user?.token,
+          },
+        }
+      );
       dispatch(isSuccess());
       console.log(res?.data);
       return toast.success(res?.data?.msg);
@@ -136,19 +158,17 @@ function CreateVoucher() {
           </div>
         </div>
         <div className="voucher_left_bottom">
-          <label>Time Apply :</label>
+          <label>Duration :</label>
           <input
-            type="date"
-            ref={startRef}
-            defaultValue={startDate}
-            onChange={(e) => handleChangeTime(e)}
+            type="number"
+            onChange={(e) => setDuration(e.target.value)}
+            placeholder="Đơn vị : Ngày"
           />
-          <label>To :</label>
+          <label>Apply :</label>
           <input
-            type="date"
-            ref={toRef}
-            defaultValue={startDate}
-            onChange={(e) => handleChangeTime(e)}
+            type="number"
+            onChange={(e) => setApply(e.target.value)}
+            placeholder="Đơn vị : Ngày"
           />
         </div>
         <div className="voucher_bottom">
