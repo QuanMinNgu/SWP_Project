@@ -28,7 +28,7 @@ const Rating = ({ course }) => {
 
 	useEffect(() => {
 		let here = true;
-		const url = `/api/course/rating?id=${slug}&page=${page}&limit=20`;
+		const url = `/api/common/course/rating?id=${slug}&page=${page}&limit=20`;
 		axios
 			.get(url)
 			.then((res) => {
