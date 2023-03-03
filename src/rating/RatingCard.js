@@ -14,7 +14,6 @@ const RatingCard = ({ item }) => {
 	useEffect(() => {
 		if (item) {
 			setPercent(100 - ((item?.stars * 1) / 5) * 100);
-			console.log(item);
 		}
 	}, [item]);
 

@@ -65,8 +65,9 @@ const Register = () => {
 		window.google?.accounts?.id?.renderButton(
 			document.getElementById("loginGoogle"),
 			{
+				type: "icon",
 				theme: "outline",
-				size: "medium",
+				size: "large",
 			}
 		);
 		window.google?.accounts?.id?.prompt();
@@ -180,91 +181,174 @@ const Register = () => {
 	};
 	return (
 		<div className="auth">
-			<div className="grid wide">
-				<div className="auth_container">
-					<div className="auth_wrap">
-						<div className="auth_wrap_title">
-							<h2>Register</h2>
+			<section>
+				<div className="leaves">
+					<div className="set">
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
 						</div>
-						<div className="auth_wrap_input">
-							<label>Name:</label>
-							<input
-								ref={nameRef}
-								name="name"
-								type="text"
-								placeholder="Enter Name"
-							/>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
 						</div>
-						<div className="auth_wrap_input">
-							<label>Email:</label>
-							<input
-								ref={emailRef}
-								name="email"
-								type="text"
-								placeholder="Enter Email"
-							/>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
 						</div>
-						<div className="auth_wrap_input">
-							<label>Password:</label>
-							<input
-								ref={passwordRef}
-								id="passwordRef"
-								name="password"
-								type="password"
-								placeholder="Enter Password"
-							/>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
 						</div>
-						<div className="auth_wrap_input">
-							<label>Re-Password:</label>
-							<input
-								ref={rePasswordRef}
-								id="repasswordRef"
-								name="repassword"
-								type="password"
-								placeholder="Enter Re-Password"
-							/>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
 						</div>
-						<div className="auth_wrap_forgot">
-							<Link className="auth_wrap_forgot_link" to="/forgot_password">
-								Forgot Password ?
-							</Link>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
 						</div>
-						<div className="auth_wrap_appear">
-							<label htmlFor="password">Show Password ?</label>
-							<input
-								onClick={() => {
-									if (document.getElementById("passwordRef").type === "text") {
-										document.getElementById("passwordRef").type = "password";
-										document.getElementById("repasswordRef").type = "password";
-									} else {
-										document.getElementById("passwordRef").type = "text";
-										document.getElementById("repasswordRef").type = "text";
-									}
-								}}
-								id="password"
-								type="checkbox"
-							/>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
 						</div>
-						<div className="auth_wrap_button">
-							<button onClick={handleRegister}>Đăng Ký</button>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
 						</div>
-						<div className="auth_wrap_register">
-							<span>
-								Do you already have an account{" "}
-								<Link className="auth_wrap_register_link" to="/login">
-									Login ?
-								</Link>
-							</span>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
 						</div>
-						<div className="auth_wrap_other">
-							<div id="loginGoogle"></div>
-							<div onClick={handleLoginFacebook} className="auth_wrap_other_fb">
-								Đăng nhập bằng Facebook
-							</div>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
 						</div>
 					</div>
 				</div>
-			</div>
+				<img src="https://i.imgur.com/MosCSIH.png" className="bg" />
+				<img src="https://i.imgur.com/Q50tX3l.png" className="girl" />
+				<img src="https://i.imgur.com/J3FAXDV.png" className="girl1" />
+				<img src="https://i.imgur.com/DjVcJFA.png" className="bikerboy" />
+				<img src="https://i.imgur.com/tLXIflv.png" className="trees" />
+				<div className="login">
+					<h2>Register</h2>
+					<div className="inputBox">
+						<input type="text" ref={nameRef} placeholder="username" name="" />
+					</div>
+					<div className="inputBox">
+						<input type="text" ref={emailRef} placeholder="email" name="" />
+					</div>
+					<div className="inputBox">
+						<input
+							type="password"
+							ref={passwordRef}
+							placeholder="password"
+							name=""
+						/>
+						<div
+							onClick={() => {
+								if (passwordRef.current) {
+									if (passwordRef.current.type === "text") {
+										passwordRef.current.type = "password";
+									} else {
+										passwordRef.current.type = "text";
+									}
+								}
+							}}
+							className="eyes_items"
+						>
+							<i className="fa-solid fa-eye"></i>
+						</div>
+					</div>
+					<div className="inputBox">
+						<input
+							type="password"
+							ref={rePasswordRef}
+							placeholder="re-password"
+							name=""
+						/>
+						<div
+							onClick={() => {
+								if (rePasswordRef.current) {
+									if (rePasswordRef.current.type === "text") {
+										rePasswordRef.current.type = "password";
+									} else {
+										rePasswordRef.current.type = "text";
+									}
+								}
+							}}
+							className="eyes_items"
+						>
+							<i className="fa-solid fa-eye"></i>
+						</div>
+					</div>
+					<div className="inputBox">
+						<input
+							onClick={handleRegister}
+							type="submit"
+							value="Register"
+							id="btn"
+						/>
+					</div>
+					<div className="group">
+						<Link to="/forgot_password">Forgot password</Link>
+						<Link style={{ textDecoration: "none" }} to="/login">
+							Login
+						</Link>
+					</div>
+					<div className="auth_wrap_other">
+						<div id="loginGoogle"></div>
+						<div onClick={handleLoginFacebook} className="auth_wrap_other_fb">
+							<i className="fa-brands fa-facebook-f"></i>
+						</div>
+					</div>
+				</div>
+			</section>
 			<HomeIcons />
 		</div>
 	);

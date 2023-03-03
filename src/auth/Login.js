@@ -44,8 +44,9 @@ const Login = () => {
 		window.google?.accounts?.id?.renderButton(
 			document.getElementById("loginGoogle"),
 			{
+				type: "icon",
 				theme: "outline",
-				size: "medium",
+				size: "large",
 			}
 		);
 		window.google?.accounts?.id?.prompt();
@@ -144,70 +145,144 @@ const Login = () => {
 	};
 	return (
 		<div className="auth">
-			<div className="grid wide">
-				<div className="auth_container">
-					<div className="auth_wrap">
-						<div className="auth_wrap_title">
-							<h2>Login</h2>
+			<section>
+				<div class="leaves">
+					<div class="set">
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
 						</div>
-						<div className="auth_wrap_input">
-							<label>Email:</label>
-							<input
-								ref={emailRef}
-								name="email"
-								type="text"
-								placeholder="Enter Email"
-							/>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
 						</div>
-						<div className="auth_wrap_input">
-							<label>Password:</label>
-							<input
-								ref={passwordRef}
-								id="passwordRef"
-								name="password"
-								type="password"
-								placeholder="Enter Password"
-							/>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
 						</div>
-						<div className="auth_wrap_forgot">
-							<Link className="auth_wrap_forgot_link" to="/forgot_password">
-								Forgot password ?
-							</Link>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
 						</div>
-						<div className="auth_wrap_appear">
-							<label htmlFor="password">Show password ?</label>
-							<input
-								onClick={() => {
-									if (document.getElementById("passwordRef").type === "text") {
-										document.getElementById("passwordRef").type = "password";
-									} else {
-										document.getElementById("passwordRef").type = "text";
-									}
-								}}
-								id="password"
-								type="checkbox"
-							/>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
 						</div>
-						<div className="auth_wrap_button">
-							<button onClick={handleLogin}>Login</button>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
 						</div>
-						<div className="auth_wrap_register">
-							<span>
-								Do you already have an account{" "}
-								<Link className="auth_wrap_register_link" to="/register">
-									Register ?
-								</Link>
-							</span>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
 						</div>
-						<div className="auth_wrap_other">
-							<div id="loginGoogle"></div>
-							<div onClick={handleLoginFacebook} className="auth_wrap_other_fb">
-								Đăng nhập bằng Facebook
-							</div>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Oc3aYTb.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/sjEjxPI.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/Z0YR03s.png" />
+						</div>
+						<div>
+							<img src="https://i.imgur.com/fVYvICL.png" />
 						</div>
 					</div>
 				</div>
-			</div>
+				<img src="https://i.imgur.com/MosCSIH.png" class="bg" />
+				<img src="https://i.imgur.com/Q50tX3l.png" class="girl" />
+				<img src="https://i.imgur.com/J3FAXDV.png" class="girl1" />
+				<img src="https://i.imgur.com/DjVcJFA.png" class="bikerboy" />
+				<img src="https://i.imgur.com/tLXIflv.png" class="trees" />
+				<div class="login">
+					<h2>Login</h2>
+					<div class="inputBox">
+						<input type="text" ref={emailRef} placeholder="username" name="" />
+					</div>
+					<div class="inputBox">
+						<input
+							type="password"
+							ref={passwordRef}
+							placeholder="password"
+							name=""
+						/>
+						<div
+							onClick={() => {
+								if (passwordRef.current) {
+									if (passwordRef.current.type === "text") {
+										passwordRef.current.type = "password";
+									} else {
+										passwordRef.current.type = "text";
+									}
+								}
+							}}
+							className="eyes_items"
+						>
+							<i className="fa-solid fa-eye"></i>
+						</div>
+					</div>
+					<div class="inputBox">
+						<input onClick={handleLogin} type="submit" value="Login" id="btn" />
+					</div>
+					<div class="group">
+						<Link to="/">Forgot password</Link>
+						<Link style={{ textDecoration: "none" }} to="/register">
+							Register
+						</Link>
+					</div>
+					<div className="auth_wrap_other">
+						<div id="loginGoogle"></div>
+						<div onClick={handleLoginFacebook} className="auth_wrap_other_fb">
+							<i className="fa-brands fa-facebook-f"></i>
+						</div>
+					</div>
+				</div>
+			</section>
 			<HomeIcons />
 		</div>
 	);
