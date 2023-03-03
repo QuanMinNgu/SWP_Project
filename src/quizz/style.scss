@@ -72,7 +72,7 @@
 	flex-wrap: nowrap;
 }
 .quiz_content_content {
-	width: 80%;
+	width: 75%;
 	font-size: 2.5rem;
 	@include mobile {
 		width: 100%;
@@ -209,4 +209,67 @@
 	@include tablet {
 		margin-top: 3rem;
 	}
+}
+.quiz_all {
+	width: 80%;
+}
+.quiz_old_result {
+	width: 100%;
+	min-height: 12rem;
+	border-top: 0.1rem solid rgba(0, 0, 0, 0.1);
+	border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+	margin-top: 3rem;
+	padding: 1rem 0;
+	display: flex;
+}
+.quiz_old_nav_1 {
+	width: 65%;
+	border-right: 0.1rem solid rgba(0, 0, 0, 0.1);
+	font-size: 1.8rem;
+}
+.quiz_old_nav_2 {
+	width: 15%;
+}
+.quiz_old_nav_3 {
+	width: 20%;
+}
+.quiz_old_nav_2 {
+	border-right: 0.1rem solid rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-size: 1.6rem;
+}
+.quiz_receive_grade {
+	display: flex;
+	align-items: center;
+}
+.quiz_receive_checked {
+	width: 1.8rem;
+	height: 1.8rem;
+	background-color: #5db85c;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	color: white;
+	margin-right: 0.5rem;
+	font-size: 1rem;
+	padding-top: 0.2rem;
+}
+.quiz_receive_passGrade {
+	margin-top: 1.5rem;
+	font-size: 1.7rem;
+	color: rgba(0, 0, 0, 0.6);
+}
+.quiz_receive_passGradeWord {
+	margin-right: 1rem;
+}
+.quiz_old_grade {
+	margin-top: 0.8rem;
+	color: #5db85c;
+	font-weight: 700;
+}
+.quiz_old_nav_3 {
+	padding: 0 0.5rem;
+	font-size: 1.4rem;
+	font-weight: 400;
 }

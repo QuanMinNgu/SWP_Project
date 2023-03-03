@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
-const RatingCard = () => {
+const RatingCard = ({ item }) => {
+	const [percent, setPercent] = useState(0);
+
+	useEffect(() => {
+		if (item) {
+			setPercent(100 - ((item?.stars * 1) / 5) * 100);
+		}
+	}, [item]);
 	const clipPath = {
-		clipPath: "inset(0% 20% 0% 0%)",
+		clipPath: `inset(0% ${percent}% 0% 0%)`,
 	};
 	return (
 		<div className="ratingCard">
 			<div className="ratingCard_img">
-				<img
-					src="https://res.cloudinary.com/sttruyen/image/upload/v1670845412/Sttruyenxyz/tsmietvqzskvkakoe4fk.jpg"
-					alt="Ảnh"
-				/>
+				<img src={item?.userImage} alt="Ảnh" />
 			</div>
 			<div className="ratingCard_infor">
 				<div className="ratingCard_infor_name">
-					MinhQuang
+					{item?.userName}
 					<div className="ratingCard_infor_rate">
 						<div className="ratingCard_infor_rate_star">
 							<i className="fa-regular fa-star"></i>
@@ -35,12 +39,7 @@ const RatingCard = () => {
 						</div>
 					</div>
 				</div>
-				<div className="ratingCard_infor_content">
-					Món này đúng thật rất ngon nhưng chỉ tội hơi thiếu muối Món này đúng
-					thật rất ngon nhưng chỉ tội hơi thiếu muối Món này đúng thật rất ngon
-					nhưng chỉ tội hơi thiếu muối Món này đúng thật rất ngon nhưng chỉ tội
-					hơi thiếu muối
-				</div>
+				<div className="ratingCard_infor_content">{item?.content}</div>
 			</div>
 		</div>
 	);
