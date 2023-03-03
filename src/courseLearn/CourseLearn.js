@@ -28,6 +28,8 @@ const CourseLearn = () => {
 
 	const auth = useSelector((state) => state.auth);
 
+	const [updateLesson, setUpdateLesson] = useState(false);
+
 	useEffect(() => {
 		let here = true;
 		if (!auth.user?.token) {
@@ -87,7 +89,7 @@ const CourseLearn = () => {
 		return () => {
 			here = false;
 		};
-	}, [lessonid, courseid]);
+	}, [lessonid, courseid, updateLesson]);
 
 	const style = {
 		background: `conic-gradient(#F05123 ${
@@ -131,7 +133,11 @@ const CourseLearn = () => {
 					<div className="CourseLearn_body_detail">
 						<div>
 							{course?.lesson?.type === "quiz" && (
-								<Quizzlet item={course?.lesson} />
+								<Quizzlet
+									item={course?.lesson}
+									setUpdateLesson={setUpdateLesson}
+									updateLesson={updateLesson}
+								/>
 							)}
 							{course?.lesson?.type === "listening" && (
 								<div className="CourseLearn_body_detail_video">

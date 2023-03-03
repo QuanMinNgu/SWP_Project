@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import QuizzCard from "./QuizzCard";
 import "./style.scss";
-const Quizzlet = ({ item }) => {
+const Quizzlet = ({ item, updateLesson, setUpdateLesson }) => {
 	const [quiz, setQuiz] = useState(false);
 
 	const [times, setTimes] = useState(1800);
@@ -83,7 +83,6 @@ const Quizzlet = ({ item }) => {
 				}
 			);
 			setResult(data?.data);
-			console.log(data?.data);
 			setPercent(data?.data?.percentCal * 1);
 		} catch (err) {
 			setResult({
@@ -215,6 +214,7 @@ const Quizzlet = ({ item }) => {
 											setResult(false);
 											setQuiz(false);
 											setTimes(item?.time);
+											setUpdateLesson(!updateLesson);
 										}}
 										className="expertCourse_close_icons"
 									>
@@ -258,6 +258,7 @@ const Quizzlet = ({ item }) => {
 											setResult(false);
 											setQuiz(false);
 											setTimes(item?.time);
+											setUpdateLesson(!updateLesson);
 										}}
 										style={{
 											height: "4rem",
