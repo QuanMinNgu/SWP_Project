@@ -53,7 +53,7 @@ const CourseLearn = () => {
 					if (index < res?.data?.currentLearningPackage - 1) {
 						item?.numLesson?.forEach((item) => {
 							if (item?.type === "quiz") {
-								if (item?.quizResultDTO) {
+								if (item?.quizResultDTO?.quizStatus) {
 									curLes += 1;
 								}
 							} else {
@@ -64,7 +64,7 @@ const CourseLearn = () => {
 						item?.numLesson?.forEach((item, i) => {
 							if (i + 1 <= res?.data?.currentLearningLesson) {
 								if (item?.type === "quiz") {
-									if (item?.quizResultDTO) {
+									if (item?.quizResultDTO?.quizStatus) {
 										curLes += 1;
 									}
 								} else {
