@@ -14,7 +14,7 @@ const CourseLearn = () => {
 
 	const [less, setLess] = useState(0);
 
-	const [cur, setCur] = useState(0);
+	const [cur, setCur] = useState(-1);
 
 	const innerContentRef = useRef();
 
@@ -23,6 +23,7 @@ const CourseLearn = () => {
 	const { courseid, lessonid } = useParams();
 	const navigate = useNavigate();
 	const [bars, setbars] = useState(false);
+	const [ce, setCe] = useState(true);
 	const { search } = useLocation();
 
 	const auth = useSelector((state) => state.auth);
@@ -224,6 +225,47 @@ const CourseLearn = () => {
 					className="coursLearn_mobile_bars"
 				>
 					+
+				</div>
+			)}
+
+			{ce && cur === less && (
+				<div
+					onClick={() => {
+						setCe(false);
+					}}
+					className="happy"
+				></div>
+			)}
+			{ce && cur === less && (
+				<div
+					onClick={() => {
+						setCe(false);
+					}}
+					className="happy_2"
+				>
+					<div id="happyTime" className="happy_title orange">
+						Congratulations on completing the course
+					</div>
+					<div className="happY_img">
+						<div className="happy_img_wrap">
+							<img
+								src="https://res.cloudinary.com/sttruyen/image/upload/v1677813895/ipxu2ntg2ywimkjcxqvw.gif"
+								alt="Anhr"
+							/>
+						</div>
+						<div className="happy_img_wrap wrap_2">
+							<img
+								src="https://res.cloudinary.com/sttruyen/image/upload/v1677813895/ipxu2ntg2ywimkjcxqvw.gif"
+								alt="Anhr"
+							/>
+						</div>
+						<div className="happy_img_wrap wrap_3">
+							<img
+								src="https://res.cloudinary.com/sttruyen/image/upload/v1677813895/ipxu2ntg2ywimkjcxqvw.gif"
+								alt="Anhr"
+							/>
+						</div>
+					</div>
 				</div>
 			)}
 		</div>

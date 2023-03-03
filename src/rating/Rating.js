@@ -28,7 +28,7 @@ const Rating = ({ course }) => {
 
 	useEffect(() => {
 		let here = true;
-		const url = `/api/common/course/rating?id=${slug}&page=${page}&limit=20`;
+		const url = `/api/course/rating?id=${slug}&page=${page}&limit=20`;
 		axios
 			.get(url)
 			.then((res) => {
@@ -60,7 +60,7 @@ const Rating = ({ course }) => {
 		dispatch(isLoading());
 		try {
 			const data = await axios.post(
-				"/api/common/course/rating/create",
+				"/api/course/rating/create",
 				{
 					stars: star,
 					content: comment,
@@ -96,51 +96,58 @@ const Rating = ({ course }) => {
 						></i>
 						<h2>Review</h2>
 					</div>
-					<div>
-						{starArr.map((_, index) => (
-							<i
-								onMouseOver={() => {
-									setHover(index + 1);
-								}}
-								onMouseLeave={() => {
-									setHover(null);
-								}}
-								onClick={() => {
-									setStar(index + 1);
-								}}
-								key={index + "star"}
-								className={
-									hover
-										? hover > index
+					{course?.enrolled && (
+						<div>
+							{starArr.map((_, index) => (
+								<i
+									onMouseOver={() => {
+										setHover(index + 1);
+									}}
+									onMouseLeave={() => {
+										setHover(null);
+									}}
+									onClick={() => {
+										setStar(index + 1);
+									}}
+									key={index + "star"}
+									className={
+										hover
+											? hover > index
+												? "fa-solid fa-star"
+												: "fa-regular fa-star"
+											: star > index
 											? "fa-solid fa-star"
 											: "fa-regular fa-star"
-										: star > index
-										? "fa-solid fa-star"
-										: "fa-regular fa-star"
-								}
-							></i>
-						))}
+									}
+								></i>
+							))}
+						</div>
+					)}
+				</div>
+				{course?.enrolled && (
+					<div>
+						<button onClick={handleCreateRating}>Send</button>
+					</div>
+				)}
+			</div>
+			{course?.enrolled && (
+				<div className="detail_body_infor_content_input_wrap">
+					<div
+						onInput={(e) => {
+							setComment(e.target.innerHTML);
+						}}
+						contentEditable="true"
+						className="detail_body_infor_content_input"
+					></div>
+					<div
+						style={!comment ? { display: "flex" } : { display: "none" }}
+						className="detail_body_infor_content_input_abs"
+					>
+						Comment in here
 					</div>
 				</div>
-				<div>
-					<button onClick={handleCreateRating}>Send</button>
-				</div>
-			</div>
-			<div className="detail_body_infor_content_input_wrap">
-				<div
-					onInput={(e) => {
-						setComment(e.target.innerHTML);
-					}}
-					contentEditable="true"
-					className="detail_body_infor_content_input"
-				></div>
-				<div
-					style={!comment ? { display: "flex" } : { display: "none" }}
-					className="detail_body_infor_content_input_abs"
-				>
-					Comment in here
-				</div>
-			</div>
+			)}
+
 			<div className="detail_body_infor_content_rating">
 				{ratings?.rating?.map((item, index) => (
 					<RatingCard key={index + "rating"} item={item} />
