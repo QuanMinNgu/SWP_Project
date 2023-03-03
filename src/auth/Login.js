@@ -270,7 +270,7 @@ const Login = () => {
 						<input onClick={handleLogin} type="submit" value="Login" id="btn" />
 					</div>
 					<div class="group">
-						<Link to="/">Forgot password</Link>
+						<Link to="/forgot_password">Forgot password</Link>
 						<Link style={{ textDecoration: "none" }} to="/register">
 							Register
 						</Link>
