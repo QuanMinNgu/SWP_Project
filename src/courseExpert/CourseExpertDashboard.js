@@ -19,6 +19,7 @@ const CourseExpertDashboard = () => {
 	const navigate = useNavigate();
 
 	const [scrolldown, setScrolldown] = useState(false);
+	const [course, setCourse] = useState([]);
 
 	const auth = useSelector((state) => state.auth);
 
@@ -74,6 +75,35 @@ const CourseExpertDashboard = () => {
 			here = false;
 		};
 	}, []);
+
+	const [updateCourse, setUpdateCourse] = useState(false);
+
+	useEffect(() => {
+		let here = true;
+		const url = "/api/common/course/getAllCourse?limit=20&page=1";
+		dispatch(isLoading());
+		axios
+			.get(url, {
+				headers: {
+					token: auth.user?.token,
+				},
+			})
+			.then((res) => {
+				if (!here) {
+					return dispatch(isSuccess());
+				}
+				setCourse(res?.data);
+				cache.current[url] = res?.data;
+				dispatch(isSuccess());
+			})
+			.catch((err) => {
+				dispatch(isFailing());
+				toast.error("Sorry, We get something wrong in server.");
+			});
+		return () => {
+			here = false;
+		};
+	}, [updateCourse]);
 
 	const handleLogOut = () => {
 		toast.success("Logout successfully.");
@@ -214,17 +244,17 @@ const CourseExpertDashboard = () => {
 									</tr>
 								</thead>
 								<tbody>
-									<CourseExpertCard />
-									<CourseExpertCard />
-									<CourseExpertCard />
-									<CourseExpertCard />
-									<CourseExpertCard />
-									<CourseExpertCard />
+									{course?.courses?.map((item, index) => (
+										<CourseExpertCard
+											item={item}
+											key={index + "courseExpert"}
+										/>
+									))}
 								</tbody>
 							</table>
 						</div>
 						<div className="pagination">
-							<Pagination />
+							<Pagination count={course?.numPage} />
 						</div>
 					</div>
 				)}

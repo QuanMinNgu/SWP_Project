@@ -69,6 +69,7 @@ const CourseManager = () => {
 	}, [types]);
 
 	const [updateCourse, setUpdateCourse] = useState(false);
+	const [numPage, setNumPage] = useState(1);
 
 	useEffect(() => {
 		let here = true;
@@ -85,6 +86,7 @@ const CourseManager = () => {
 					return dispatch(isSuccess());
 				}
 				setCourse(res?.data?.courses);
+				setNumPage(res?.data?.numPage);
 				cache.current[url] = res?.data?.courses;
 				dispatch(isSuccess());
 			})
@@ -307,7 +309,7 @@ const CourseManager = () => {
 				</table>
 			</div>
 			<div className="pagination">
-				<Pagination />
+				<Pagination count={numPage} />
 			</div>
 
 			{typeCourse && (
