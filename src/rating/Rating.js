@@ -75,6 +75,9 @@ const Rating = ({ course }) => {
 			dispatch(isSuccess());
 			toast.success(data?.data?.msg);
 			setUpdate(!update);
+			setComment("");
+			setStar(null);
+			document.getElementById("commentRating").innerHTML = "";
 		} catch (err) {
 			dispatch(isFailing());
 			return toast.error(err?.response?.data?.msg);
@@ -136,6 +139,7 @@ const Rating = ({ course }) => {
 						onInput={(e) => {
 							setComment(e.target.innerHTML);
 						}}
+						id="commentRating"
 						contentEditable="true"
 						className="detail_body_infor_content_input"
 					></div>

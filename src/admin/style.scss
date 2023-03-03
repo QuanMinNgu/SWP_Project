@@ -431,7 +431,6 @@
 	width: 100%;
 	height: 100%;
 	align-items: center;
-	justify-content: center;
 	padding: 0 3rem;
 }
 .thead_img {
@@ -1787,4 +1786,7 @@
 	& > option {
 		line-height: 5rem;
 	}
+}
+.thead_card_container {
+	justify-content: start;
 }

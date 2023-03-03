@@ -1,11 +1,17 @@
 .thead_stt {
-    width: 5%;
+	width: 5%;
 }
 .image_create_container_wrap {
-    & > img {
-        width: 100%;
-        height: 20rem;
-        object-fit: cover;
-        border-radius: 1rem;
-    }
+	& > img {
+		width: 100%;
+		height: 20rem;
+		object-fit: cover;
+		border-radius: 1rem;
+	}
+}
+.thead_card_name-link {
+	word-break: break-all;
+}
+.thead_card_container {
+	justify-content: start;
 }
