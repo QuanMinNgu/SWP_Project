@@ -241,6 +241,7 @@
 .voucher_card {
   display: flex;
   margin-bottom: 2rem;
+  width: 100%;
   cursor: pointer;
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
@@ -342,4 +343,28 @@
   outline: none;
   font-weight: 800;
   color: rgba(0, 0, 0, 0.4);
+}
+.modal_search {
+  margin-top: 1rem;
+  display: flex;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  align-items: center;
+  border: 1px solid #ccc;
+  margin-bottom: 2rem;
+  border-radius: 2rem;
+  & > input {
+    flex: 1;
+    border-radius: 2rem;
+    padding: 1rem;
+    border: none;
+    outline: none;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  & > i {
+    padding: 0 2rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
 }

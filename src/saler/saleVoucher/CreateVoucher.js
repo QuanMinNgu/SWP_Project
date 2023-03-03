@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import Select from "react-select";
 import CourseTypeVoucher from "./CourseTypeVoucher";
 import CourseVoucher from "./CourseVoucher";
-import { format } from "date-fns";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
@@ -10,8 +9,6 @@ import axios from "axios";
 
 function CreateVoucher() {
   const valueRef = useRef();
-  const startRef = useRef();
-  const toRef = useRef();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   const [title, setTitle] = useState("");
@@ -43,6 +40,9 @@ function CreateVoucher() {
       valueRef.current.focus();
       return toast.error("Plese remeber enter value");
     }
+    if (!duration || !apply) {
+      return toast.error("Please fill all");
+    }
     if (!chooseCourse || chooseCourse.length === 0) {
       return toast.error("Please fill all");
     }
@@ -56,7 +56,7 @@ function CreateVoucher() {
           duration: duration,
           StartApply: apply,
           type: typeVoucher,
-          id: chooseCourse,
+          courseID: chooseCourse[0]?.courseID,
         };
       }
       if (typeVoucher === "typeCourse") {
@@ -77,27 +77,15 @@ function CreateVoucher() {
         Duration: duration,
         StartApply: apply,
         type: typeVoucher,
-        courseTypeID: chooseCourse,
+        courseID: chooseCourse[0]?.courseID,
         token: auth?.user?.token,
       });
       dispatch(isLoading());
-      const res = await axios.post(
-        "/api/voucher/create",
-        {
-          name: title,
-          description: desRef.current.innerHTML,
-          amount: value,
-          duration: duration,
-          StartApply: apply,
-          type: typeVoucher,
-          id: chooseCourse,
+      const res = await axios.post("/api/voucher/create", data, {
+        headers: {
+          token: auth?.user?.token,
         },
-        {
-          headers: {
-            token: auth?.user?.token,
-          },
-        }
-      );
+      });
       dispatch(isSuccess());
       console.log(res?.data);
       return toast.success(res?.data?.msg);

@@ -10,7 +10,6 @@ function CourseVoucherCard({
   const handleChoose = () => {
     setChoose(false);
     setChooseCourse([
-      ...chooseCourse,
       {
         courseName: item?.courseName,
         courseID: item?.courseID,

@@ -47,7 +47,7 @@ const UserBlogCard = ({ item, index, cache, setListBlog, listBlog }) => {
           )}
         </div>
         <div className="user_card_body_content">
-          <p>{item?.meta || item?.content}</p>
+          <p>{item?.meta}</p>
         </div>
       </div>
     </div>

@@ -35,7 +35,7 @@ function MarkBlogCard({ item, index, listBlog, setListBlog, cache }) {
           </div>
         </div>
         <div className="user_card_body_content">
-          <p>{item?.meta || item?.content}</p>
+          <p>{item?.meta}</p>
         </div>
       </div>
     </div>

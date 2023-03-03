@@ -1,36 +1,47 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserContext } from "../../App";
 import CourseVoucherCard from "./CourseVoucherCard";
 import { isSuccess, isLoading, isFailing } from "../../redux/slice/auth";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+import Pagination from "../../paginating/Pagination";
 
 function CourseVoucher({ chooseCourse, setChooseCourse }) {
   const [choose, setChoose] = useState(false);
   const { cache } = useContext(UserContext);
   const [course, setCourse] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const auth = useSelector((state) => state?.auth);
   const dispatch = useDispatch();
   const handleDelete = (index) => {
     chooseCourse.splice(index, 1);
     setChooseCourse([...chooseCourse]);
   };
+  const { search } = useLocation();
+  const page = new URLSearchParams(search).get("page") || 1;
+
   useEffect(() => {
     let here = true;
-    const url = "/api/common/courses";
+    const url = `/api/common/course/getAllCourse?page=${page}&limit=20`;
     if (cache.current[url]) {
       console.log(cache.current[url]);
       return setCourse(cache.current[url]);
     }
     dispatch(isLoading());
     axios
-      .get(url)
+      .get(url, {
+        headers: {
+          token: auth?.user?.token,
+        },
+      })
       .then((res) => {
         if (!here) {
           return;
         }
-        setCourse(res?.data?.courses);
+        setCourse(res?.data);
         console.log(res?.data);
-        cache.current[url] = res?.data?.courses;
+        cache.current[url] = res?.data;
         dispatch(isSuccess());
       })
       .catch((err) => {
@@ -50,11 +61,23 @@ function CourseVoucher({ chooseCourse, setChooseCourse }) {
       </div>
       {chooseCourse.map((item, index) => {
         return (
-          <div className="course_voucher_img" key={index}>
-            <label>{index + 1}</label>
-            <img src="https://i.pinimg.com/564x/2f/43/f0/2f43f073029d048aabf31c314ddb3037.jpg" />
-            <div>
-              <button className="button" onClick={() => handleDelete(index)}>
+          <div
+            style={{
+              width: "100%",
+              marginTop: "1rem",
+              display: "flex",
+            }}
+          >
+            <CourseVoucherCard item={item} index={index} />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <button
+                onClick={handleDelete}
+                className="button"
+                style={{
+                  height: "30px",
+                  backgroundColor: "#e7c340",
+                }}
+              >
                 Delete
               </button>
             </div>
@@ -71,8 +94,15 @@ function CourseVoucher({ chooseCourse, setChooseCourse }) {
                 onClick={() => setChoose(false)}
               ></i>
             </div>
+            <div className="modal_search">
+              <input
+                value={search}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
             <div className="modal_body">
-              {course.map((item, index) => {
+              {course?.courses?.map((item, index) => {
                 return (
                   <CourseVoucherCard
                     item={item}
@@ -83,6 +113,9 @@ function CourseVoucher({ chooseCourse, setChooseCourse }) {
                   />
                 );
               })}
+              <div className="pagination">
+                <Pagination count={course?.numPage} />
+              </div>
             </div>
           </div>
         </div>
