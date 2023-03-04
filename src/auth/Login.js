@@ -149,96 +149,111 @@ const Login = () => {
 				<div class="leaves">
 					<div class="set">
 						<div>
-							<img src="https://i.imgur.com/Oc3aYTb.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939541/another/l3q1ea8alrwhtvweid2p.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/sjEjxPI.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/qayvuhuhcafaptrv9qay.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Z0YR03s.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/iycggpjlelz9qkdgyb7i.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/fVYvICL.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939548/another/lqrsgyzillb26nbfw2j9.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Oc3aYTb.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939541/another/l3q1ea8alrwhtvweid2p.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/sjEjxPI.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/qayvuhuhcafaptrv9qay.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Z0YR03s.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/iycggpjlelz9qkdgyb7i.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/fVYvICL.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939548/another/lqrsgyzillb26nbfw2j9.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Oc3aYTb.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939541/another/l3q1ea8alrwhtvweid2p.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/sjEjxPI.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/qayvuhuhcafaptrv9qay.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Z0YR03s.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/iycggpjlelz9qkdgyb7i.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/fVYvICL.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939548/another/lqrsgyzillb26nbfw2j9.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Oc3aYTb.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939541/another/l3q1ea8alrwhtvweid2p.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/sjEjxPI.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/qayvuhuhcafaptrv9qay.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Z0YR03s.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/iycggpjlelz9qkdgyb7i.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/fVYvICL.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939548/another/lqrsgyzillb26nbfw2j9.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Oc3aYTb.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939541/another/l3q1ea8alrwhtvweid2p.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/sjEjxPI.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/qayvuhuhcafaptrv9qay.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Z0YR03s.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/iycggpjlelz9qkdgyb7i.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/fVYvICL.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939548/another/lqrsgyzillb26nbfw2j9.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Oc3aYTb.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939541/another/l3q1ea8alrwhtvweid2p.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/sjEjxPI.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/qayvuhuhcafaptrv9qay.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Z0YR03s.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/iycggpjlelz9qkdgyb7i.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/fVYvICL.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939548/another/lqrsgyzillb26nbfw2j9.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Oc3aYTb.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939541/another/l3q1ea8alrwhtvweid2p.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/sjEjxPI.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/qayvuhuhcafaptrv9qay.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/Z0YR03s.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939546/another/iycggpjlelz9qkdgyb7i.png" />
 						</div>
 						<div>
-							<img src="https://i.imgur.com/fVYvICL.png" />
+							<img src="https://res.cloudinary.com/sttruyen/image/upload/v1677939548/another/lqrsgyzillb26nbfw2j9.png" />
 						</div>
 					</div>
 				</div>
-				<img src="https://i.imgur.com/MosCSIH.png" class="bg" />
-				<img src="https://i.imgur.com/Q50tX3l.png" class="girl" />
-				<img src="https://i.imgur.com/J3FAXDV.png" class="girl1" />
-				<img src="https://i.imgur.com/DjVcJFA.png" class="bikerboy" />
-				<img src="https://i.imgur.com/tLXIflv.png" class="trees" />
+				<img
+					src="https://res.cloudinary.com/sttruyen/image/upload/v1677939634/another/xvivywsemezjozusubhc.png"
+					class="bg"
+				/>
+				<img
+					src="https://res.cloudinary.com/sttruyen/image/upload/v1677939662/another/qxu2ht94ggwigobzjt7b.png"
+					class="girl"
+				/>
+				<img
+					src="https://res.cloudinary.com/sttruyen/image/upload/v1677939671/another/h9flx2xhbewwws4mum5i.png"
+					class="girl1"
+				/>
+				<img
+					src="https://res.cloudinary.com/sttruyen/image/upload/v1677939696/another/bqvvw6z2tbax5v0s5epd.png"
+					class="bikerboy"
+				/>
+				<img
+					src="https://res.cloudinary.com/sttruyen/image/upload/v1677939712/another/uxilcnteauzggtpdrfwd.png"
+					class="trees"
+				/>
 				<div class="login">
 					<h2>Login</h2>
 					<div class="inputBox">
