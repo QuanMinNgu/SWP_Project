@@ -8,35 +8,39 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import { toast } from "react-toastify";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const UserManager = () => {
 	const { search } = useLocation();
 
-	const page = new URLSearchParams(search).get("page") || 1;
 	const optionsKind = [
 		{
 			value: "",
+			label: "All",
+		},
+		{
+			value: "[ROLE_COURSE_EXPERT]",
 			label: "Course Expert",
 		},
 		{
-			value: "",
+			value: "[ROLE_SALE]",
 			label: "Sale",
 		},
 		{
-			value: "",
+			value: "[ROLE_ADMIN]",
 			label: "Admin",
 		},
 		{
-			value: "",
+			value: "[ROLE_USER]",
 			label: "User",
 		},
 	];
 
 	const optionsSort = [
-		{ value: "vanilla", label: "Stars Increased" },
-		{ value: "asd", label: "Stars Decreased" },
-		{ value: "vaniasdlla", label: "Newest" },
-		{ value: "vanilsla", label: "Oldest" },
+		{ value: "", label: "All" },
+		{ value: "astar", label: "Stars Increased" },
+		{ value: "dstar", label: "Stars Decreased" },
+		{ value: "dcreatedAt", label: "Newest" },
+		{ value: "acreatedAt", label: "Oldest" },
 	];
 
 	const auth = useSelector((state) => state.auth);
@@ -45,6 +49,10 @@ const UserManager = () => {
 	const [users, setUsers] = useState([]);
 	const dispatch = useDispatch();
 	const [types, setTypes] = useState([]);
+
+	const navigate = useNavigate();
+
+	const [updatePagePart, setUpdatePagePart] = useState(false);
 
 	const [userUpdate, setUserUpdate] = useState(false);
 
@@ -79,7 +87,24 @@ const UserManager = () => {
 
 	useEffect(() => {
 		let here = true;
-		const url = `/api/account?page=${page}&limit=20`;
+		const sort = new URLSearchParams(search).get("sort") || "";
+		const role = new URLSearchParams(search).get("role") || "";
+		const page = new URLSearchParams(search).get("page") || 1;
+		const sortSearch = {
+			sort: sort,
+			role: role,
+			page: page,
+			limit: 20,
+		};
+		const excludedFields = ["role", "sort"];
+		excludedFields.forEach((item) => {
+			if (!sortSearch[item]) {
+				delete sortSearch[item];
+			}
+		});
+		const sortSearching = new URLSearchParams(sortSearch).toString();
+		const url = `/api/account?${sortSearching}`;
+		console.log(url);
 		dispatch(isLoading());
 		axios
 			.get(url, {
@@ -104,27 +129,46 @@ const UserManager = () => {
 		return () => {
 			here = false;
 		};
-	}, [userUpdate, page]);
+	}, [userUpdate, search]);
 
-	const [selectedOption, setSelectedOption] = useState(null);
+	const handleSearching = () => {
+		const searching = {
+			role: selectedOptionRole?.value,
+			sort: selectedOptionSort?.value,
+		};
+
+		const excludedFields = ["sort", "role"];
+		excludedFields.forEach((item) => {
+			if (!searching[item]) {
+				delete searching[item];
+			}
+		});
+		searching.page = 1;
+		const searchingUrl = new URLSearchParams(searching).toString();
+		navigate("?" + searchingUrl);
+		setUpdatePagePart(!updatePagePart);
+	};
+
+	const [selectedOptionRole, setSelectedOptionRole] = useState(null);
+	const [selectedOptionSort, setSelectedOptionSort] = useState(null);
 	return (
 		<div className="managerCourse">
 			<div className="managerCourse_navbar">
 				<Select
 					className="search_wrap_select"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
+					defaultValue={selectedOptionRole}
+					onChange={setSelectedOptionRole}
 					options={optionsKind}
 					placeholder="Role"
 				/>
 				<Select
 					className="search_wrap_select"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
+					defaultValue={selectedOptionSort}
+					onChange={setSelectedOptionSort}
 					options={optionsSort}
 					placeholder="Sort"
 				/>
-				<button>Tìm Kiếm</button>
+				<button onClick={handleSearching}>Search</button>
 			</div>
 			<div className="manageCourse_table">
 				<table className="s_table">
@@ -149,7 +193,7 @@ const UserManager = () => {
 				</table>
 			</div>
 			<div className="pagination">
-				<Pagination count={users?.numPage} />
+				<Pagination count={users?.numPage} updatePagePart={updatePagePart} />
 			</div>
 		</div>
 	);

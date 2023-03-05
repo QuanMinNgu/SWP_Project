@@ -3,7 +3,7 @@ import "../style.scss";
 import Select from "react-select";
 import CourseManagerCard from "./CourseManagerCard";
 import Pagination from "../../paginating/Pagination";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TypeCourseCard from "./TypeCourseCard";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -34,18 +34,21 @@ const CourseManager = () => {
 	const [expert, setExpert] = useState(false);
 	const [typeCourse, setTypeCourse] = useState(false);
 	const checkRef = useRef();
+
+	const [optionsKind, setOptionKind] = useState({});
+
 	const options = [
+		{ value: "", label: "All" },
 		{ value: "free", label: "Free" },
 		{ value: "no-free", label: "Not Free" },
 	];
 
-	const [optionsKind, setOptionKind] = useState({});
-
 	const optionsSort = [
-		{ value: "vanilla", label: "Stars Increased" },
-		{ value: "asd", label: "Stars Decreased" },
-		{ value: "vaniasdlla", label: "Newest" },
-		{ value: "vanilsla", label: "Oldest" },
+		{ value: "", label: "All" },
+		{ value: "astar", label: "Stars Increased" },
+		{ value: "dstar", label: "Stars Decreased" },
+		{ value: "dcreatedAt", label: "Newest" },
+		{ value: "acreatedAt", label: "Oldest" },
 	];
 
 	const handleChangeInput = () => {
@@ -64,6 +67,10 @@ const CourseManager = () => {
 					label: item?.courseTypeName,
 				};
 			});
+			arr.unshift({
+				value: "",
+				label: "No sort",
+			});
 			setOptionKind([...arr]);
 		}
 	}, [types]);
@@ -71,9 +78,29 @@ const CourseManager = () => {
 	const [updateCourse, setUpdateCourse] = useState(false);
 	const [numPage, setNumPage] = useState(1);
 
+	const { search } = useLocation();
+
 	useEffect(() => {
 		let here = true;
-		const url = "/api/common/course/getAllCourse?limit=20&page=1";
+		const sort = new URLSearchParams(search).get("sort") || "";
+		const type = new URLSearchParams(search).get("type") || "";
+		const kind = new URLSearchParams(search).get("kind") || "";
+		const page = new URLSearchParams(search).get("page") || 1;
+		const sortSearch = {
+			sort: sort,
+			type: type,
+			kind: kind,
+			page: page,
+			limit: 20,
+		};
+		const excludedFields = ["kind", "type", "sort"];
+		excludedFields.forEach((item) => {
+			if (!sortSearch[item]) {
+				delete sortSearch[item];
+			}
+		});
+		const sortSearching = new URLSearchParams(sortSearch).toString();
+		const url = `/api/common/course/getAllCourse?${sortSearching}`;
 		dispatch(isLoading());
 		axios
 			.get(url, {
@@ -97,7 +124,7 @@ const CourseManager = () => {
 		return () => {
 			here = false;
 		};
-	}, [updateCourse]);
+	}, [updateCourse, search]);
 
 	useEffect(() => {
 		let here = true;
@@ -186,32 +213,55 @@ const CourseManager = () => {
 		}
 	};
 
-	const [selectedOption, setSelectedOption] = useState(null);
+	const [updatePagePart, setUpdatePagePart] = useState(false);
+
+	const handleSearching = () => {
+		const searching = {
+			kind: selectedOptionKind?.value,
+			type: selectedOptionType?.value,
+			sort: selectedOptionSort?.value,
+		};
+
+		const excludedFields = ["kind", "type", "sort"];
+		excludedFields.forEach((item) => {
+			if (!searching[item]) {
+				delete searching[item];
+			}
+		});
+		searching.page = 1;
+		const searchingUrl = new URLSearchParams(searching).toString();
+		navigate("?" + searchingUrl);
+		setUpdatePagePart(!updatePagePart);
+	};
+
+	const [selectedOptionKind, setSelectedOptionKind] = useState(null);
+	const [selectedOptionType, setSelectedOptionType] = useState(null);
+	const [selectedOptionSort, setSelectedOptionSort] = useState(null);
 	return (
 		<div className="managerCourse">
 			<div className="managerCourse_navbar">
 				<Select
 					className="search_wrap_select"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
+					defaultValue={selectedOptionKind}
+					onChange={setSelectedOptionKind}
 					options={options}
-					placeholder="Price"
-				/>
-				<Select
-					className="search_wrap_select"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
-					options={optionsKind}
 					placeholder="Kind"
 				/>
 				<Select
 					className="search_wrap_select"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
+					defaultValue={selectedOptionType}
+					onChange={setSelectedOptionType}
+					options={optionsKind}
+					placeholder="Type"
+				/>
+				<Select
+					className="search_wrap_select"
+					defaultValue={selectedOptionSort}
+					onChange={setSelectedOptionSort}
 					options={optionsSort}
 					placeholder="Sort"
 				/>
-				<button>Tìm Kiếm</button>
+				<button onClick={handleSearching}>Seach</button>
 			</div>
 			<div className="createButton">
 				<button
@@ -309,7 +359,7 @@ const CourseManager = () => {
 				</table>
 			</div>
 			<div className="pagination">
-				<Pagination count={numPage} />
+				<Pagination count={numPage} updatePagePart={updatePagePart} />
 			</div>
 
 			{typeCourse && (

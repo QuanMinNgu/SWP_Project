@@ -7,53 +7,86 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
+import { useLocation, useNavigate } from "react-router-dom";
 const Searching = () => {
 	const [courses, setCourses] = useState([]);
+	const [types, setTypes] = useState([]);
+
+	const [optionsKind, setOptionKind] = useState({});
+
+	const [updatePagePart, setUpdatePagePart] = useState(false);
 
 	const options = [
-		{ value: "ha-noi", label: "Hà Nội" },
-		{ value: "strawberry", label: "TP Hồ Chí Minh" },
-		{ value: "vanilla", label: "Vũng Tàu" },
-		{ value: "vanilla", label: "Huế" },
-		{ value: "vanilla", label: "Cần Thơ" },
-		{ value: "vanilla", label: "Tân Xã" },
-	];
-
-	const optionsKind = [
-		{ value: "ha-noi", label: "Nước Uống" },
-		{ value: "strawberry", label: "Đồ Ăn Nhanh" },
-		{ value: "vanilla", label: "Đồ Ăn Chậm" },
+		{ value: "", label: "All" },
+		{ value: "free", label: "Free" },
+		{ value: "no-free", label: "Not Free" },
 	];
 
 	const optionsSort = [
-		{ value: "ha-noi", label: "Yêu Thích Tăng" },
-		{ value: "strawberry", label: "Yêu Thích Giảm" },
-		{ value: "vanilla", label: "Số Sao Tăng" },
-		{ value: "vanilla", label: "Số Sao Giảm" },
-		{ value: "vanilla", label: "Số Người Đánh Giá Tăng" },
-		{ value: "vanilla", label: "Số Người Đánh Giá Giảm" },
-		{ value: "vanilla", label: "Mới Nhất" },
-		{ value: "vanilla", label: "Cũ Nhất" },
+		{ value: "", label: "All" },
+		{ value: "astar", label: "Stars Increased" },
+		{ value: "dstar", label: "Stars Decreased" },
+		{ value: "dcreatedAt", label: "Newest" },
+		{ value: "acreatedAt", label: "Oldest" },
 	];
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, []);
 
+	useEffect(() => {
+		let here = true;
+		const url = "/api/type_course";
+		dispatch(isLoading());
+		axios
+			.get(url)
+			.then((res) => {
+				if (!here) {
+					return;
+				}
+				setTypes(res?.data?.types);
+				dispatch(isSuccess());
+			})
+			.catch((err) => {
+				dispatch(isFailing());
+			});
+		return () => {
+			here = false;
+		};
+	}, []);
+
 	const auth = useSelector((state) => state.auth);
 
 	const dispatch = useDispatch();
+	const { search } = useLocation();
 
 	useEffect(() => {
 		let here = false;
-		const url = `/api/common/course/get?page=1&limit=20`;
+		const sort = new URLSearchParams(search).get("sort") || "";
+		const type = new URLSearchParams(search).get("type") || "";
+		const kind = new URLSearchParams(search).get("kind") || "";
+		const page = new URLSearchParams(search).get("page") || 1;
+		const sortSearch = {
+			sort: sort,
+			type: type,
+			kind: kind,
+			page: page,
+			limit: 20,
+		};
+		const excludedFields = ["kind", "type", "sort"];
+		excludedFields.forEach((item) => {
+			if (!sortSearch[item]) {
+				delete sortSearch[item];
+			}
+		});
+		const sortSearching = new URLSearchParams(sortSearch).toString();
+		const url = `/api/common/course/get?${sortSearching}`;
 		dispatch(isLoading());
 		axios
 			.get(url)
 			.then((res) => {
 				dispatch(isSuccess());
-				console.log(res?.data?.courses);
-				setCourses(res?.data?.courses);
+				setCourses(res?.data);
 			})
 			.catch((err) => {
 				dispatch(isFailing());
@@ -62,9 +95,48 @@ const Searching = () => {
 		return () => {
 			here = false;
 		};
-	}, []);
+	}, [search]);
 
-	const [selectedOption, setSelectedOption] = useState(null);
+	useEffect(() => {
+		if (types) {
+			const arr = types?.map((item) => {
+				return {
+					value: item?.courseTypeID,
+					label: item?.courseTypeName,
+				};
+			});
+			arr.unshift({
+				value: "",
+				label: "No sort",
+			});
+			setOptionKind([...arr]);
+		}
+	}, [types]);
+
+	const navigate = useNavigate();
+
+	const handleSearching = () => {
+		const searching = {
+			kind: selectedOptionKind?.value,
+			type: selectedOptionType?.value,
+			sort: selectedOptionSort?.value,
+		};
+
+		const excludedFields = ["kind", "type", "sort"];
+		excludedFields.forEach((item) => {
+			if (!searching[item]) {
+				delete searching[item];
+			}
+		});
+		searching.page = 1;
+		const searchingUrl = new URLSearchParams(searching).toString();
+		navigate("?" + searchingUrl);
+		setUpdatePagePart(!updatePagePart);
+	};
+
+	const [selectedOptionKind, setSelectedOptionKind] = useState(null);
+	const [selectedOptionType, setSelectedOptionType] = useState(null);
+	const [selectedOptionSort, setSelectedOptionSort] = useState(null);
 	return (
 		<div className="searching">
 			<div className="searching_title">
@@ -73,44 +145,47 @@ const Searching = () => {
 			<div className="searching_head">
 				<Select
 					className="search_wrap_select"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
+					defaultValue={selectedOptionKind}
+					onChange={setSelectedOptionKind}
 					options={options}
-					placeholder="Chọn vị trí"
+					placeholder="Kind"
 				/>
 				<Select
 					className="search_wrap_select"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
+					defaultValue={selectedOptionType}
+					onChange={setSelectedOptionType}
 					options={optionsKind}
-					placeholder="Chọn loại"
+					placeholder="Type"
 				/>
 				<Select
 					className="search_wrap_select"
-					defaultValue={selectedOption}
-					onChange={setSelectedOption}
+					defaultValue={selectedOptionSort}
+					onChange={setSelectedOptionSort}
 					options={optionsSort}
-					placeholder="Sắp xếp"
+					placeholder="Sort"
 				/>
 				<div className="button_container_searching">
-					<button>Search</button>
+					<button onClick={handleSearching}>Search</button>
 				</div>
 			</div>
 			<div className="searching_card">
 				<div className="row">
-					{courses?.map((item) => (
-						<div className="col c-12 m-6 l-3">
-							<Card key={item?.courseID + "searching"} item={item} />
+					{courses?.courses?.map((item) => (
+						<div
+							key={item?.courseID + "searching"}
+							className="col c-12 m-6 l-3"
+						>
+							<Card item={item} />
 						</div>
 					))}
 
-					{courses?.length === 0 && (
+					{courses?.courses?.length === 0 && (
 						<i className="no_course_found">No Courses Found</i>
 					)}
 				</div>
 			</div>
 			<div className="searching_paginating">
-				<Pagination />
+				<Pagination count={courses?.numPage} updatePagePart={updatePagePart} />
 			</div>
 		</div>
 	);

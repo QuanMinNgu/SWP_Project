@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const usePaginating = ({ count }) => {
 	const [page, setPage] = useState(1);
 	const numPage = count;
 	const [firstArr, setFirstArr] = useState([]);
 	const [lastArr, setLastArr] = useState([]);
+
+	const [updatePage, setUpdatePage] = useState(false);
+
+	useEffect(() => {
+		setPage(1);
+	}, [updatePage]);
 
 	const navigate = useNavigate();
 
@@ -28,12 +34,29 @@ const usePaginating = ({ count }) => {
 		}
 	}, [page, count]);
 
+	const { search } = useLocation();
+
 	useEffect(() => {
-		if (page > 1) {
-			navigate(`?page=${page}`);
-		} else if (page === 1) {
-			navigate("?");
-		}
+		const sort = new URLSearchParams(search).get("sort") || "";
+		const type = new URLSearchParams(search).get("type") || "";
+		const kind = new URLSearchParams(search).get("kind") || "";
+		const role = new URLSearchParams(search).get("role") || "";
+		const sortSearch = {
+			sort: sort,
+			type: type,
+			kind: kind,
+			page: page,
+			role,
+		};
+		const excludedFields = ["kind", "type", "sort", "role"];
+		excludedFields.forEach((item) => {
+			if (!sortSearch[item]) {
+				delete sortSearch[item];
+			}
+		});
+		const sortSearching = new URLSearchParams(sortSearch).toString();
+		navigate("?" + sortSearching);
+		window.scrollTo(0, 0);
 	}, [page]);
 	const prev = () => {
 		setPage(Math.max(page - 1, 1));
@@ -59,6 +82,8 @@ const usePaginating = ({ count }) => {
 		jump,
 		nex,
 		prev,
+		updatePage,
+		setUpdatePage,
 	};
 };
 

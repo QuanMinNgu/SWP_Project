@@ -30,7 +30,7 @@ const DefaultLayout = ({ children, type }) => {
 					<Link className="home_navbar_items" to="/courses/tim-kiem">
 						<div className={type === "Learning" ? "active" : ""}>
 							<i className="fa-solid fa-lightbulb"></i>
-							<span>Học</span>
+							<span>Search</span>
 						</div>
 					</Link>
 					<Link className="home_navbar_items" to="/blog">

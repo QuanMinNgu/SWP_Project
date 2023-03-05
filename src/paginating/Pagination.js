@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./style.scss";
 import usePaginating from "./usePaginating";
-const Pagination = ({ count }) => {
-	const { page, numPage, firstArr, lastArr, activePage, jump, nex, prev } =
-		usePaginating({ count: count });
+const Pagination = ({ count, updatePagePart }) => {
+	const {
+		page,
+		numPage,
+		firstArr,
+		lastArr,
+		activePage,
+		jump,
+		nex,
+		prev,
+		updatePage,
+		setUpdatePage,
+	} = usePaginating({ count: count });
+
+	useEffect(() => {
+		setUpdatePage(!updatePage);
+	}, [updatePagePart]);
 
 	return (
 		<div className="pagination">
