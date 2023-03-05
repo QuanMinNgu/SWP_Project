@@ -165,52 +165,54 @@ const Quizzlet = ({ item, updateLesson, setUpdateLesson }) => {
 								</button>
 							</div>
 						</div>
-						<div className="quiz_old_result">
-							<div className="quiz_old_nav_1">
-								<div className="quiz_receive_grade">
+						{item?.quizResultDTO && (
+							<div className="quiz_old_result">
+								<div className="quiz_old_nav_1">
+									<div className="quiz_receive_grade">
+										<div
+											style={
+												!item?.quizResultDTO?.quizStatus
+													? {
+															backgroundColor: "red",
+													  }
+													: {}
+											}
+											className="quiz_receive_checked"
+										>
+											<i className="fa-solid fa-check"></i>
+										</div>
+										<b>Receive grade</b>
+									</div>
+									<div className="quiz_receive_passGrade">
+										<b className="quiz_receive_passGradeWord">To Pass</b> 80% or
+										higher
+									</div>
+								</div>
+								<div className="quiz_old_nav_2">
+									<div>
+										<b>Your grade</b>
+									</div>
 									<div
 										style={
 											!item?.quizResultDTO?.quizStatus
 												? {
-														backgroundColor: "red",
+														color: "red",
 												  }
 												: {}
 										}
-										className="quiz_receive_checked"
+										className="quiz_old_grade"
 									>
-										<i className="fa-solid fa-check"></i>
+										{item?.quizResultDTO?.result}%
 									</div>
-									<b>Receive grade</b>
 								</div>
-								<div className="quiz_receive_passGrade">
-									<b className="quiz_receive_passGradeWord">To Pass</b> 80% or
-									higher
-								</div>
-							</div>
-							<div className="quiz_old_nav_2">
-								<div>
-									<b>Your grade</b>
-								</div>
-								<div
-									style={
-										!item?.quizResultDTO?.quizStatus
-											? {
-													color: "red",
-											  }
-											: {}
-									}
-									className="quiz_old_grade"
-								>
-									{item?.quizResultDTO?.result}%
+								<div className="quiz_old_nav_3">
+									<span>
+										The result will be the score of the most recent test (We
+										will not save based on your highest score).
+									</span>
 								</div>
 							</div>
-							<div className="quiz_old_nav_3">
-								<span>
-									The result will be the score of the most recent test (We will
-									not save based on your highest score).
-								</span>
-							</div>
-						</div>
+						)}
 					</div>
 				</div>
 			) : (
