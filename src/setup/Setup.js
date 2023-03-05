@@ -170,7 +170,7 @@ const Setup = () => {
 			{slug === "personal" && (
 				<div className="setUp_wrap">
 					<div className="setUp_title">
-						<h2>Thông tin cá nhân</h2>
+						<h2>Personal information</h2>
 					</div>
 					<div className="setUp_name">
 						<div className="setUp_name_navbar">
@@ -311,14 +311,14 @@ const Setup = () => {
 			{slug === "payment" && (
 				<div className="setUp_payment">
 					<div className="setUp_title">
-						<h2>Hóa đơn</h2>
+						<h2>Bill</h2>
 					</div>
 					<div className="setUp_payment_table">
 						<div className="setUp_payment_head">
-							<div className="setUp_payment_head_1">Hóa đơn</div>
-							<div className="setUp_payment_head_2">Ngày tạo</div>
-							<div className="setUp_payment_head_3">Số tiền</div>
-							<div className="setUp_payment_head_4">Nội dung</div>
+							<div className="setUp_payment_head_1">Bill</div>
+							<div className="setUp_payment_head_2">Created</div>
+							<div className="setUp_payment_head_3">Amount</div>
+							<div className="setUp_payment_head_4">Description</div>
 						</div>
 						<div className="setUp_payment_body">
 							<div className="setUp_payment_body_1">

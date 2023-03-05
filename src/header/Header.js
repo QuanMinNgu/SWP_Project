@@ -49,7 +49,7 @@ const Header = () => {
 						alt="brand"
 					/>
 				</Link>
-				<span className="header_brand_title">Học lập trình để đi làm</span>
+				<span className="header_brand_title">As much as you want, we have</span>
 			</div>
 			<div className="header_search">
 				<div className="header_search_container">
