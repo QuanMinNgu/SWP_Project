@@ -79,10 +79,12 @@
       &_mid {
         margin-top: auto;
         flex: 1;
+        display: flex;
       }
       &_mid > p {
         font-size: 1.2rem;
         word-break: break-all;
+        margin-top: auto;
         overflow: hidden;
         text-overflow: ellipsis;
         line-height: 2;
