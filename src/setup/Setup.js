@@ -120,6 +120,8 @@ const Setup = () => {
 					image: movie.image,
 				})
 			);
+			setSetup(false);
+			setAvatar(false);
 		} catch (err) {
 			dispatch(isFailing());
 			toast.error(err?.response?.data?.msg);
@@ -146,7 +148,7 @@ const Setup = () => {
 						style={{ marginRight: "0.5rem", color: "#FF751F" }}
 						className="fa-solid fa-user"
 					></i>{" "}
-					Cài đặt tài khoản
+					Account Settings
 				</div>
 				<div
 					onClick={() => {
@@ -162,7 +164,7 @@ const Setup = () => {
 						}}
 						className="fa-solid fa-money-bill"
 					></i>
-					Thông tin thanh toán
+					Billing Information
 				</div>
 			</div>
 			{slug === "personal" && (
