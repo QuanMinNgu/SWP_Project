@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import "./style.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CourseHeadCard from "../card/CourseHeadCard";
 import AnnouceCard from "../card/AnnouceCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,12 +12,26 @@ const Header = () => {
 	const [course, setCourse] = useState(false);
 	const [annouce, setAnnouce] = useState(false);
 	const [account, setAccount] = useState(false);
+	const searchRef = useRef();
 
 	const auth = useSelector((state) => state.auth);
 
 	const dispatch = useDispatch();
 
+	const navigate = useNavigate();
+
 	const { store } = useContext(UserContext);
+
+	const handleChangeInput = (e) => {
+		if (e.key === "Enter") {
+			if (searchRef.current.value) {
+				navigate(`/courses/tim-kiem?search=${searchRef.current.value}`);
+			} else {
+				navigate(`/courses/tim-kiem`);
+			}
+			searchRef.current.value = "";
+		}
+	};
 
 	return (
 		<div
@@ -39,10 +53,22 @@ const Header = () => {
 			</div>
 			<div className="header_search">
 				<div className="header_search_container">
-					<div className="header_search_icons">
+					<div
+						onClick={() =>
+							handleChangeInput({
+								key: "Enter",
+							})
+						}
+						className="header_search_icons"
+					>
 						<i className="fa-solid fa-magnifying-glass"></i>
 					</div>
-					<input type="text" placeholder="Tìm kiếm khóa học..." />
+					<input
+						onKeyDown={(e) => handleChangeInput(e)}
+						type="text"
+						ref={searchRef}
+						placeholder="find courses..."
+					/>
 				</div>
 			</div>
 			{auth.user?.token ? (
@@ -56,12 +82,12 @@ const Header = () => {
 									setAccount(false);
 								}}
 							>
-								Khóa học của tôi
+								My courses
 							</button>
 							{course && (
 								<div className="header_navbar_items_course">
 									<div className="header_navbar_items_course_title">
-										<h5>Khóa học của tôi</h5>
+										<h5>My courses</h5>
 									</div>
 									<div className="header_navbar_items_course_card">
 										<CourseHeadCard />
@@ -88,7 +114,6 @@ const Header = () => {
 									</div>
 								</div>
 								<div className="header_navbar_items_bell_noti_card">
-									<AnnouceCard />
 									<AnnouceCard />
 								</div>
 							</div>

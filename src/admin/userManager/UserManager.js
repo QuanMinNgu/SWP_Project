@@ -89,14 +89,16 @@ const UserManager = () => {
 		let here = true;
 		const sort = new URLSearchParams(search).get("sort") || "";
 		const role = new URLSearchParams(search).get("role") || "";
+		const searchingU = new URLSearchParams(search).get("search") || "";
 		const page = new URLSearchParams(search).get("page") || 1;
 		const sortSearch = {
 			sort: sort,
 			role: role,
 			page: page,
 			limit: 20,
+			search: searchingU,
 		};
-		const excludedFields = ["role", "sort"];
+		const excludedFields = ["role", "sort", "search"];
 		excludedFields.forEach((item) => {
 			if (!sortSearch[item]) {
 				delete sortSearch[item];
@@ -132,12 +134,14 @@ const UserManager = () => {
 	}, [userUpdate, search]);
 
 	const handleSearching = () => {
+		const searchingU = new URLSearchParams(search).get("search") || "";
 		const searching = {
 			role: selectedOptionRole?.value,
 			sort: selectedOptionSort?.value,
+			search: searchingU,
 		};
 
-		const excludedFields = ["sort", "role"];
+		const excludedFields = ["sort", "role", "search"];
 		excludedFields.forEach((item) => {
 			if (!searching[item]) {
 				delete searching[item];

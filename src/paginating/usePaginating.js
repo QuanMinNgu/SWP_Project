@@ -41,14 +41,17 @@ const usePaginating = ({ count }) => {
 		const type = new URLSearchParams(search).get("type") || "";
 		const kind = new URLSearchParams(search).get("kind") || "";
 		const role = new URLSearchParams(search).get("role") || "";
+		const searchingU = new URLSearchParams(search).get("search") || "";
+
 		const sortSearch = {
 			sort: sort,
 			type: type,
 			kind: kind,
 			page: page,
 			role,
+			search: searchingU,
 		};
-		const excludedFields = ["kind", "type", "sort", "role"];
+		const excludedFields = ["kind", "type", "sort", "role", "search"];
 		excludedFields.forEach((item) => {
 			if (!sortSearch[item]) {
 				delete sortSearch[item];

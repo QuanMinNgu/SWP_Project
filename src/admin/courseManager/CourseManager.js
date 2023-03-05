@@ -86,14 +86,16 @@ const CourseManager = () => {
 		const type = new URLSearchParams(search).get("type") || "";
 		const kind = new URLSearchParams(search).get("kind") || "";
 		const page = new URLSearchParams(search).get("page") || 1;
+		const searching = new URLSearchParams(search).get("search") || "";
 		const sortSearch = {
 			sort: sort,
 			type: type,
 			kind: kind,
 			page: page,
 			limit: 20,
+			search: searching,
 		};
-		const excludedFields = ["kind", "type", "sort"];
+		const excludedFields = ["kind", "type", "sort", "search"];
 		excludedFields.forEach((item) => {
 			if (!sortSearch[item]) {
 				delete sortSearch[item];
@@ -101,6 +103,7 @@ const CourseManager = () => {
 		});
 		const sortSearching = new URLSearchParams(sortSearch).toString();
 		const url = `/api/common/course/getAllCourse?${sortSearching}`;
+		console.log(url);
 		dispatch(isLoading());
 		axios
 			.get(url, {
@@ -216,13 +219,15 @@ const CourseManager = () => {
 	const [updatePagePart, setUpdatePagePart] = useState(false);
 
 	const handleSearching = () => {
+		const searchingU = new URLSearchParams(search).get("search") || "";
 		const searching = {
 			kind: selectedOptionKind?.value,
 			type: selectedOptionType?.value,
 			sort: selectedOptionSort?.value,
+			search: searchingU,
 		};
 
-		const excludedFields = ["kind", "type", "sort"];
+		const excludedFields = ["kind", "type", "sort", "search"];
 		excludedFields.forEach((item) => {
 			if (!searching[item]) {
 				delete searching[item];

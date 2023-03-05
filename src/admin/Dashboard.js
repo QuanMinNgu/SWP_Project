@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./style.scss";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import DashboardDetail from "./DashboardDetail";
@@ -15,10 +15,22 @@ import { toast } from "react-toastify";
 const Dashboard = () => {
 	const { slug } = useParams();
 	const navigate = useNavigate();
+	const searchRef = useRef();
 
 	const dispatch = useDispatch();
 
 	const auth = useSelector((state) => state.auth);
+
+	const handleChangeInput = (e) => {
+		if (e.key === "Enter") {
+			if (searchRef.current.value) {
+				navigate(`?search=${searchRef.current.value}`);
+			} else {
+				navigate(`?`);
+			}
+			searchRef.current.value = "";
+		}
+	};
 
 	const [scrolldown, setScrolldown] = useState(false);
 	return (
@@ -139,7 +151,12 @@ const Dashboard = () => {
 			</div>
 			<div className="dashboard_head">
 				<div className="dashboard_input">
-					<input type="text" placeholder="Searching" />
+					<input
+						ref={searchRef}
+						onKeyDown={(e) => handleChangeInput(e)}
+						type="text"
+						placeholder="Searching"
+					/>
 				</div>
 				<div className="dashboard_head_account">
 					<div className="dashboard_head_img">
