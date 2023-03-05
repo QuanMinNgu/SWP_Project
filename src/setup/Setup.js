@@ -334,28 +334,7 @@ const Setup = () => {
 							<div className="setUp_payment_body_2">12/09/2002</div>
 							<div className="setUp_payment_body_3">$120</div>
 							<div className="setUp_payment_body_4">
-								Trả tiền mua khóa học
-								<Link to="/"> Css, Html</Link>
-								hoặc các khóa học tượng tự như thế
-							</div>
-						</div>
-						<div className="setUp_payment_body">
-							<div className="setUp_payment_body_1">
-								<Link
-									style={{
-										textDecoration: "none",
-									}}
-									to="/"
-								>
-									1990
-								</Link>
-							</div>
-							<div className="setUp_payment_body_2">12/09/2002</div>
-							<div className="setUp_payment_body_3">$120</div>
-							<div className="setUp_payment_body_4">
-								Trả tiền mua khóa học
-								<Link to="/"> Css, Html</Link>
-								hoặc các khóa học tượng tự như thế
+								Pay for <Link to="/"> Css, Html </Link>
 							</div>
 						</div>
 					</div>
