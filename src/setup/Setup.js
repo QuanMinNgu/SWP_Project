@@ -288,7 +288,7 @@ const Setup = () => {
 							<input
 								className="setUp_name_input"
 								type="text"
-								defaultValue={"quangminhnguyen265@gmail.com"}
+								defaultValue={gmail}
 								disabled
 							/>
 						</div>
