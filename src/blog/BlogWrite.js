@@ -74,6 +74,9 @@ const BlogWrite = () => {
 		if (!title || !meta || !content || !selectedOption?.value) {
 			return toast.error("Please enter all information.");
 		}
+		if (!auth.user?.token) {
+			return toast.error("Please login first");
+		}
 		dispatch(isLoading());
 		console.log({
 			token: auth.user?.token,
