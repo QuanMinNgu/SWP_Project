@@ -86,6 +86,12 @@ function CreateVoucher() {
         },
       });
       dispatch(isSuccess());
+      setTitle("");
+      setDes("");
+      setValue("");
+      setChooseCourse([]);
+      setDuration("");
+      setApply("");
       console.log(res?.data);
       return toast.success(res?.data?.msg);
     } catch (error) {
