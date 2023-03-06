@@ -78,7 +78,6 @@ function CreateVoucher() {
         StartApply: apply,
         type: typeVoucher,
         courseID: chooseCourse[0]?.courseID,
-        token: auth?.user?.token,
       });
       dispatch(isLoading());
       const res = await axios.post("/api/voucher/create", data, {
@@ -91,7 +90,7 @@ function CreateVoucher() {
       return toast.success(res?.data?.msg);
     } catch (error) {
       dispatch(isFailing());
-      return toast.error(error?.responese?.data?.msg);
+      return toast.error(error?.response?.data?.msg);
     }
   };
   return (
