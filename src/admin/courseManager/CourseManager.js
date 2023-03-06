@@ -116,6 +116,7 @@ const CourseManager = () => {
 					return dispatch(isSuccess());
 				}
 				setCourse(res?.data?.courses);
+				console.log(res?.data);
 				setNumPage(res?.data?.numPage);
 				cache.current[url] = res?.data?.courses;
 				dispatch(isSuccess());
