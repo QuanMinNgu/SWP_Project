@@ -12,6 +12,7 @@ function CourseVoucher({ chooseCourse, setChooseCourse }) {
   const { cache } = useContext(UserContext);
   const [course, setCourse] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [update, setUpdate] = useState(false);
   const auth = useSelector((state) => state?.auth);
   const dispatch = useDispatch();
   const handleDelete = (index) => {
@@ -23,7 +24,12 @@ function CourseVoucher({ chooseCourse, setChooseCourse }) {
 
   useEffect(() => {
     let here = true;
-    const url = `/api/common/course/getAllCourse?page=${page}&limit=20`;
+    let url = "";
+    if (searchText) {
+      url = `/api/course/get_purchase_course?page=${page}&limit=20&search=${searchText}`;
+    } else {
+      url = `/api/course/get_purchase_course?page=${page}&limit=20`;
+    }
     if (cache.current[url]) {
       console.log(cache.current[url]);
       return setCourse(cache.current[url]);
@@ -50,7 +56,10 @@ function CourseVoucher({ chooseCourse, setChooseCourse }) {
     return () => {
       here = false;
     };
-  }, []);
+  }, [page, update]);
+  const handleSearch = () => {
+    setUpdate(!update);
+  };
   return (
     <div className="course_voucher">
       <label>Course:</label>
@@ -96,23 +105,30 @@ function CourseVoucher({ chooseCourse, setChooseCourse }) {
             </div>
             <div className="modal_search">
               <input
-                value={search}
+                value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />
-              <i class="fa-solid fa-magnifying-glass"></i>
+              <i
+                class="fa-solid fa-magnifying-glass"
+                onClick={handleSearch}
+              ></i>
             </div>
             <div className="modal_body">
-              {course?.courses?.map((item, index) => {
-                return (
-                  <CourseVoucherCard
-                    item={item}
-                    index={index}
-                    setChoose={setChoose}
-                    setChooseCourse={setChooseCourse}
-                    chooseCourse={chooseCourse}
-                  />
-                );
-              })}
+              {!course?.courses ? (
+                <div className="courses_notFound">No Course Found</div>
+              ) : (
+                course?.courses?.map((item, index) => {
+                  return (
+                    <CourseVoucherCard
+                      item={item}
+                      index={index}
+                      setChoose={setChoose}
+                      setChooseCourse={setChooseCourse}
+                      chooseCourse={chooseCourse}
+                    />
+                  );
+                })
+              )}
               <div className="pagination">
                 <Pagination count={course?.numPage} />
               </div>

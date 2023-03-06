@@ -12,7 +12,7 @@ function CreateVoucher() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   const [title, setTitle] = useState("");
-  const desRef = useRef("");
+  const [des, setDes] = useState("");
   const [value, setValue] = useState("");
   const [typeVoucher, setTypeVoucher] = useState("course");
   const [chooseCourse, setChooseCourse] = useState([]);
@@ -51,7 +51,7 @@ function CreateVoucher() {
       if (typeVoucher === "course") {
         data = {
           name: title,
-          description: desRef.current.innerHTML,
+          description: des,
           amount: value,
           duration: duration,
           StartApply: apply,
@@ -62,7 +62,7 @@ function CreateVoucher() {
       if (typeVoucher === "typeCourse") {
         data = {
           name: title,
-          description: desRef.current.innerHTML,
+          description: des,
           amount: value,
           duration: duration,
           StartApply: apply,
@@ -72,7 +72,7 @@ function CreateVoucher() {
       }
       console.log({
         name: title,
-        Description: desRef.current.innerHTML,
+        Description: des,
         Price: value,
         Duration: duration,
         StartApply: apply,
@@ -97,16 +97,20 @@ function CreateVoucher() {
     <div className="create_voucher">
       <div className="voucher_left">
         <div className="voucher_left_header">
-          <div
-            className="voucher_left_header_title"
-            contentEditable
-            onInput={(e) => setTitle(e.target.innerHTML)}
-          ></div>
-          {!title && <div className="title_voucher">Title of Voucher</div>}
+          <div className="voucher_left_header_title">
+            <input
+              type="text"
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter Name of Voucher"
+            />
+          </div>
+
           <div className="voucher_left_header_des">
-            <p contentEditable ref={desRef}>
-              Description of voucher
-            </p>
+            <input
+              type="text"
+              onChange={(e) => setDes(e.target.value)}
+              placeholder="Enter description"
+            />
           </div>
         </div>
         <div className="voucher_left_body">
