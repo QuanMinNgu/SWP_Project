@@ -86,11 +86,7 @@ const Searching = () => {
 		console.log(url);
 		dispatch(isLoading());
 		axios
-			.get(url, {
-				headers: {
-					token: null,
-				},
-			})
+			.get(url)
 			.then((res) => {
 				dispatch(isSuccess());
 				setCourses(res?.data);
