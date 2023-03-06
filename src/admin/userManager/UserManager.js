@@ -18,19 +18,19 @@ const UserManager = () => {
 			label: "All",
 		},
 		{
-			value: "[ROLE_COURSE_EXPERT]",
+			value: "ROLE_COURSE_EXPERT",
 			label: "Course Expert",
 		},
 		{
-			value: "[ROLE_SALE]",
+			value: "ROLE_SALE",
 			label: "Sale",
 		},
 		{
-			value: "[ROLE_ADMIN]",
+			value: "ROLE_ADMIN",
 			label: "Admin",
 		},
 		{
-			value: "[ROLE_USER]",
+			value: "ROLE_USER",
 			label: "User",
 		},
 	];
