@@ -24,12 +24,7 @@ function CourseVoucher({ chooseCourse, setChooseCourse }) {
 
   useEffect(() => {
     let here = true;
-    let url = "";
-    if (searchText) {
-      url = `/api/course/get_purchase_course?page=${page}&limit=20&search=${searchText}`;
-    } else {
-      url = `/api/course/get_purchase_course?page=${page}&limit=20`;
-    }
+    const url = `/api/course/get_purchase_course?page=${page}&limit=20&search=${searchText}`;
     if (cache.current[url]) {
       console.log(cache.current[url]);
       return setCourse(cache.current[url]);

@@ -59,8 +59,8 @@ function SaleVoucher() {
               <th className="v_voucher">Voucher</th>
               <th className="v_value">Value</th>
               <th className="v_type">Type</th>
-              <th className="v_time">From</th>
-              <th className="v_time">To</th>
+              <th className="v_time">Duration</th>
+              <th className="v_time">Apply</th>
               <th className="v_time"></th>
             </tr>
           </thead>
