@@ -13,11 +13,15 @@ function VoucherCard({ item, index, setUpdate, update }) {
   const handleEditVoucher = async () => {
     try {
       dispatch(isLoading());
-      const res = axios.post(`/api/voucher/change_status?id=${item?.id}`, {
-        headers: {
-          token: auth?.user?.token,
+      const res = axios.post(
+        `/api/voucher/change_status?id=${item?.id}`,
+        {
+          status: !item?.status,
         },
-      });
+        {
+          headers: { token: auth?.user?.token },
+        }
+      );
       dispatch(isSuccess());
       setUpdate(!update);
       setOption(false);
@@ -37,7 +41,7 @@ function VoucherCard({ item, index, setUpdate, update }) {
       </th>
       <th className="v_time fn">{item?.duraton}</th>
       <th className="v_time fn">{item?.StartApply}</th>
-      <th className="v_time fn">{item?.status}</th>
+      <th className="v_time fn">{item?.status ? "Active" : "Inactive"}</th>
 
       <th className="v_option">
         <i class="fa-solid fa-ellipsis" onClick={() => setOption(!option)}></i>
