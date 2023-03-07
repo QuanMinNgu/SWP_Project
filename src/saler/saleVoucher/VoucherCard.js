@@ -43,7 +43,14 @@ function VoucherCard({ item, index, setUpdate, update }) {
       <th className="v_value fn">{item?.amount}</th>
       <th className="v_time fn">{item?.duration}</th>
       <th className="v_time fn">{item?.startApply}</th>
-      <th className="v_time fn">{item?.status ? "Active" : "Inactive"}</th>
+      <th
+        className="v_time fn"
+        style={{
+          color: "red",
+        }}
+      >
+        {item?.status ? "Active" : "Inactive"}
+      </th>
 
       <th className="v_option">
         <i class="fa-solid fa-ellipsis" onClick={() => setOption(!option)}></i>
