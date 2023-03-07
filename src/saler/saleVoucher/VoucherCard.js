@@ -14,9 +14,10 @@ function VoucherCard({ item, index, setUpdate, update }) {
     try {
       dispatch(isLoading());
       const res = axios.post(
-        `/api/voucher/change_status?id=${item?.id}`,
+        `/api/voucher/change_status`,
         {
           status: !item?.status,
+          voucherID: item?.voucherID,
         },
         {
           headers: { token: auth?.user?.token },
@@ -39,7 +40,7 @@ function VoucherCard({ item, index, setUpdate, update }) {
       <th className="v_type fn">
         <div>{item?.courseTypeName || item?.courseName}</div>
       </th>
-      <th className="v_time fn">{item?.duraton}</th>
+      <th className="v_time fn">{item?.duration}</th>
       <th className="v_time fn">{item?.StartApply}</th>
       <th className="v_time fn">{item?.status ? "Active" : "Inactive"}</th>
 
