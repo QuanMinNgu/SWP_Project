@@ -144,7 +144,7 @@ const Header = () => {
 											</div>
 										</div>
 									</div>
-									{store?.rule === "[ROLE_ADMIN]" && (
+									{store?.rule === "ROLE_ADMIN" && (
 										<Link
 											style={{ textDecoration: "none" }}
 											to="/admin/dashboard"
@@ -159,7 +159,7 @@ const Header = () => {
 											</div>
 										</Link>
 									)}
-									{store?.rule === "[ROLE_SALE]" && (
+									{store?.rule === "ROLE_SALE" && (
 										<Link
 											style={{ textDecoration: "none" }}
 											to="/sale/vocher_manager"
@@ -174,7 +174,7 @@ const Header = () => {
 											</div>
 										</Link>
 									)}
-									{store?.rule === "[ROLE_COURSE_EXPERT]" && (
+									{store?.rule === "ROLE_COURSE_EXPERT" && (
 										<Link
 											style={{ textDecoration: "none" }}
 											to="/course_expert/dashboard"
@@ -189,16 +189,20 @@ const Header = () => {
 											</div>
 										</Link>
 									)}
-									<Link style={{ textDecoration: "none" }} to="/me/profile">
-										<div
-											onClick={() => {
-												setAccount(false);
-											}}
-											className="header_navbar_account_items"
-										>
-											Profile
-										</div>
-									</Link>
+									{store?.rule !== "ROLE_ADMIN" &&
+										store?.rule !== "ROLE_COURSE_EXPERT" &&
+										store?.rule !== "ROLE_SALE" && (
+											<Link style={{ textDecoration: "none" }} to="/me/profile">
+												<div
+													onClick={() => {
+														setAccount(false);
+													}}
+													className="header_navbar_account_items"
+												>
+													Profile
+												</div>
+											</Link>
+										)}
 									<div className="header_navbar_account_items">
 										<Link style={{ textDecoration: "none" }} to="/me/blog">
 											<div
