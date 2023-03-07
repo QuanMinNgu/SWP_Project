@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -32,6 +32,9 @@ function VoucherCard({ item, index, setUpdate, update }) {
       return toast.error(error?.response?.data?.msg);
     }
   };
+  useEffect(() => {
+    console.log(item);
+  }, [item]);
   return (
     <tr className="s_trow" key={index}>
       <th className="v_stt fn">{index + 1}</th>

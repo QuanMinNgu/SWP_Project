@@ -106,7 +106,8 @@ function SaleVoucher() {
             {vouchers?.vouchers?.map((item, index) => {
               return (
                 <VoucherCard
-                  item={(item, index)}
+                  item={item}
+                  index={index}
                   update={update}
                   setUpdate={setUpdate}
                 />
