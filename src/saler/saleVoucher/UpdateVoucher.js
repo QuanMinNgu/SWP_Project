@@ -2,71 +2,126 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import Select from "react-select";
 import CourseTypeVoucher from "./CourseTypeVoucher";
 import CourseVoucher from "./CourseVoucher";
-import { format } from "date-fns";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
 
-function UpdateVoucher() {
-  let { slug } = useParams();
-  console.log(slug);
+function CreateVoucher() {
   const valueRef = useRef();
-  const [image, setImage] = useState("");
-  const startRef = useRef();
-  const toRef = useRef();
-  const titleRef = useRef();
-  const desRef = useRef("");
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state?.auth);
+  const [title, setTitle] = useState("");
+  const [des, setDes] = useState("");
   const [value, setValue] = useState("");
   const [typeVoucher, setTypeVoucher] = useState("course");
-  const [chooseCourse, setChooseCourse] = useState([1, 2, 3]);
-  let startDate = format(new Date(), "yyyy-MM-dd");
+  const [chooseCourse, setChooseCourse] = useState([]);
+  const [duration, setDuration] = useState();
+  const [apply, setApply] = useState();
+  const { search } = useLocation();
   const type = [
     { value: "course", label: "Course" },
     { value: "typeCourse", label: "TypeOfCourse" },
   ];
-  useEffect(() => {
-    console.log(titleRef.current.value);
-  }, [titleRef]);
   const handleSelectType = (choice) => {
     console.log(typeVoucher);
     setChooseCourse([]);
     setTypeVoucher(choice.value);
   };
-  const handleChangeTime = (e) => {
-    if (startRef.current.value < startDate) {
-      startRef.current.value = startDate;
-      return toast.error("Only equal or more time current");
+  const handleCreateNewVoucher = async () => {
+    if (title === "") {
+      window.scrollTo({
+        top: 0,
+        left: 100,
+        behavior: "smooth",
+      });
+      return toast.error("Enter title before create a voucher");
     }
-    if (startRef.current.value > e.target.value) {
-      toRef.current.value = startRef.current.value;
-      return toast.error("Please enter to date more than start");
-    }
-  };
-  const handleCreateNewVoucher = () => {
     if (value === "") {
       valueRef.current.focus();
       return toast.error("Plese remeber enter value");
     }
-    const data = {
-      Name: titleRef.current.innerHTML,
-      Description: desRef.current.innerHTML,
-      Price: value,
-      StartDate: startRef.current.value,
-      ToDate: toRef.current.value,
-      type: chooseCourse,
-    };
-    console.log(data);
+    if (!duration || !apply) {
+      return toast.error("Please fill all");
+    }
+    if (!chooseCourse || chooseCourse.length === 0) {
+      return toast.error("Please fill all");
+    }
+    try {
+      let data;
+      if (typeVoucher === "course") {
+        data = {
+          name: title,
+          description: des,
+          amount: value,
+          duration: duration,
+          StartApply: apply,
+          type: typeVoucher,
+          courseID: chooseCourse[0]?.courseID,
+        };
+      }
+      if (typeVoucher === "typeCourse") {
+        data = {
+          name: title,
+          description: des,
+          amount: value,
+          duration: duration,
+          StartApply: apply,
+          type: typeVoucher,
+          courseTypeID: chooseCourse,
+        };
+      }
+      console.log({
+        name: title,
+        Description: des,
+        Price: value,
+        Duration: duration,
+        StartApply: apply,
+        type: typeVoucher,
+        courseID: chooseCourse[0]?.courseID,
+      });
+      dispatch(isLoading());
+      const res = await axios.post("/api/voucher/create", data, {
+        headers: {
+          token: auth?.user?.token,
+        },
+      });
+      dispatch(isSuccess());
+      setTitle("");
+      setDes("");
+      setValue("");
+      setChooseCourse([]);
+      setDuration("");
+      setApply("");
+      console.log(res?.data);
+      return toast.success(res?.data?.msg);
+    } catch (error) {
+      dispatch(isFailing());
+      return toast.error(error?.response?.data?.msg);
+    }
   };
+  useEffect(() => {
+    console.log(search);
+  }, [search]);
   return (
     <div className="create_voucher">
       <div className="voucher_left">
         <div className="voucher_left_header">
-          <h3 contentEditable ref={titleRef}>
-            Name of voucher (can edit)
-          </h3>
+          <div className="voucher_left_header_title">
+            <input
+              type="text"
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter Name of Voucher"
+            />
+          </div>
+
           <div className="voucher_left_header_des">
-            <p contentEditable ref={desRef}>
-              Description of voucher
-            </p>
+            <input
+              type="text"
+              onChange={(e) => setDes(e.target.value)}
+              placeholder="Enter description"
+            />
           </div>
         </div>
         <div className="voucher_left_body">
@@ -105,19 +160,17 @@ function UpdateVoucher() {
           </div>
         </div>
         <div className="voucher_left_bottom">
-          <label>Time Apply :</label>
+          <label>Duration :</label>
           <input
-            type="date"
-            ref={startRef}
-            defaultValue={startDate}
-            onChange={(e) => handleChangeTime(e)}
+            type="number"
+            onChange={(e) => setDuration(e.target.value)}
+            placeholder="Đơn vị : Ngày"
           />
-          <label>To :</label>
+          <label>Apply :</label>
           <input
-            type="date"
-            ref={toRef}
-            defaultValue={startDate}
-            onChange={(e) => handleChangeTime(e)}
+            type="number"
+            onChange={(e) => setApply(e.target.value)}
+            placeholder="Đơn vị : Ngày"
           />
         </div>
         <div className="voucher_bottom">
@@ -137,4 +190,4 @@ function UpdateVoucher() {
   );
 }
 
-export default UpdateVoucher;
+export default CreateVoucher;

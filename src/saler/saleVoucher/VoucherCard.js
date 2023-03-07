@@ -10,10 +10,13 @@ function VoucherCard({ item, index, setUpdate, update }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
+  const handleUpdate = () => {
+    navigate(`/sale/edit_voucher?id=${item?.voucherID}`);
+  };
   const handleEditVoucher = async () => {
     try {
       dispatch(isLoading());
-      const res = axios.post(
+      const res = await axios.post(
         `/api/voucher/change_status`,
         {
           status: !item?.status,
@@ -25,6 +28,7 @@ function VoucherCard({ item, index, setUpdate, update }) {
       );
       dispatch(isSuccess());
       setUpdate(!update);
+      console.log(res?.data);
       setOption(false);
       return toast.success(res.data?.msg);
     } catch (error) {
@@ -32,9 +36,6 @@ function VoucherCard({ item, index, setUpdate, update }) {
       return toast.error(error?.response?.data?.msg);
     }
   };
-  useEffect(() => {
-    console.log(item);
-  }, [item]);
   return (
     <tr className="s_trow" key={index}>
       <th className="v_stt fn">{index + 1}</th>
@@ -49,6 +50,7 @@ function VoucherCard({ item, index, setUpdate, update }) {
         {option && (
           <div className="v_option_select">
             <div onClick={handleEditVoucher}>Change Status</div>
+            <div onClick={handleUpdate}>Update</div>
           </div>
         )}
       </th>
