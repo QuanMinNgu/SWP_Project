@@ -11,6 +11,10 @@ function VoucherCard({ item, index, setUpdate, update }) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   const handleUpdate = () => {
+    if (item?.status) {
+      setOption(false);
+      return toast.error("Voucher are active can not edit !");
+    }
     navigate(`/sale/edit_voucher?id=${item?.voucherID}`);
   };
   const handleEditVoucher = async () => {
