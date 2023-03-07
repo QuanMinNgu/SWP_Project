@@ -37,11 +37,8 @@ function VoucherCard({ item, index, setUpdate, update }) {
       <th className="v_stt fn">{index + 1}</th>
       <th className="v_voucher fn">{item?.name}</th>
       <th className="v_value fn">{item?.amount}</th>
-      <th className="v_type fn">
-        <div>{item?.courseTypeName || item?.courseName}</div>
-      </th>
       <th className="v_time fn">{item?.duration}</th>
-      <th className="v_time fn">{item?.StartApply}</th>
+      <th className="v_time fn">{item?.startApply}</th>
       <th className="v_time fn">{item?.status ? "Active" : "Inactive"}</th>
 
       <th className="v_option">
