@@ -106,6 +106,7 @@ function CreateVoucher() {
           <div className="voucher_left_header_title">
             <input
               type="text"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter Name of Voucher"
             />
@@ -113,6 +114,7 @@ function CreateVoucher() {
 
           <div className="voucher_left_header_des">
             <input
+              value={des}
               type="text"
               onChange={(e) => setDes(e.target.value)}
               placeholder="Enter description"
@@ -158,12 +160,14 @@ function CreateVoucher() {
           <label>Duration :</label>
           <input
             type="number"
+            value={duration}
             onChange={(e) => setDuration(e.target.value)}
             placeholder="Đơn vị : Ngày"
           />
           <label>Apply :</label>
           <input
             type="number"
+            value={apply}
             onChange={(e) => setApply(e.target.value)}
             placeholder="Đơn vị : Ngày"
           />

@@ -21,8 +21,10 @@ function CourseTypeVoucher({ chooseCourse, setChooseCourse }) {
     }
   }, [types]);
   const handleChangeCourse = (choice) => {
-    console.log(choice.value);
-    setChooseCourse(choice.value);
+    setChooseCourse({
+      courseTypeID: choice.value,
+      courseTypeName: choice.label,
+    });
   };
   useEffect(() => {
     let here = true;
@@ -39,7 +41,6 @@ function CourseTypeVoucher({ chooseCourse, setChooseCourse }) {
           return;
         }
         setTypes(res?.data?.types);
-        console.log(res?.data);
         cache.current[url] = res?.data?.types;
         dispatch(isSuccess());
       })
@@ -50,12 +51,17 @@ function CourseTypeVoucher({ chooseCourse, setChooseCourse }) {
       here = false;
     };
   }, []);
+
   return (
     <div className="course_type_voucher">
       <label>Course Type :</label>
       <Select
         options={optionsKind}
         onChange={(choice) => handleChangeCourse(choice)}
+        value={{
+          value: chooseCourse?.courseTypeID,
+          label: chooseCourse?.courseTypeName,
+        }}
       />
     </div>
   );

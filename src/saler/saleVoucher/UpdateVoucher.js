@@ -19,6 +19,7 @@ function CreateVoucher() {
   const [chooseCourse, setChooseCourse] = useState([]);
   const [duration, setDuration] = useState();
   const [apply, setApply] = useState();
+  const [voucher, setVoucher] = useState();
   const { search } = useLocation();
   const type = [
     { value: "course", label: "Course" },
@@ -27,7 +28,7 @@ function CreateVoucher() {
   const handleSelectType = (choice) => {
     console.log(typeVoucher);
     setChooseCourse([]);
-    setTypeVoucher(choice.value);
+    setTypeVoucher(choice);
   };
   const handleCreateNewVoucher = async () => {
     if (title === "") {
@@ -43,15 +44,16 @@ function CreateVoucher() {
       return toast.error("Plese remeber enter value");
     }
     if (!duration || !apply) {
-      return toast.error("Please fill all");
+      return toast.error("Please fill duration and apply");
     }
     if (!chooseCourse || chooseCourse.length === 0) {
-      return toast.error("Please fill all");
+      return toast.error("Please choose type of voucher");
     }
     try {
       let data;
       if (typeVoucher === "course") {
         data = {
+          voucherID: voucher?.voucherID,
           name: title,
           description: des,
           amount: value,
@@ -102,8 +104,51 @@ function CreateVoucher() {
     }
   };
   useEffect(() => {
-    console.log(search);
-  }, [search]);
+    dispatch(isLoading());
+    axios
+      .get(`/api/voucher/update${search}`, {
+        headers: { token: auth?.user?.token },
+      })
+      .then((res) => {
+        console.log(res?.data);
+        setVoucher(res?.data);
+        setTitle(res?.data?.voucher?.name);
+        setDes(res?.data?.voucher?.description);
+        setValue(res?.data?.voucher?.amount);
+        setDuration(res?.data?.voucher?.duration);
+        setApply(res?.data?.voucher?.startApply);
+        if (res?.data?.voucher?.type === "course") {
+          setTypeVoucher({
+            value: res?.data?.voucher?.type,
+            label: "Course",
+          });
+          setChooseCourse([
+            {
+              courseID: res?.data?.voucher?.courseDTO?.courseID,
+              image: res?.data?.voucher?.courseDTO?.image,
+              courseName: res?.data?.voucher?.courseDTO?.courseName,
+            },
+          ]);
+        } else {
+          setTypeVoucher({
+            value: res?.data?.voucher?.type,
+            label: "TypeOfCourse",
+          });
+          setChooseCourse({
+            courseTypeID: res?.data?.voucher?.courseTypeDTO?.courseTypeID,
+            courseTypeName: res?.data?.voucher?.courseTypeDTO?.courseTypeName,
+          });
+        }
+        return dispatch(isSuccess());
+      })
+      .catch((error) => {
+        dispatch(isFailing());
+        return toast.error(error?.response?.data?.msg);
+      });
+  }, []);
+  useEffect(() => {
+    console.log(typeVoucher);
+  }, [typeVoucher]);
   return (
     <div className="create_voucher">
       <div className="voucher_left">
@@ -111,6 +156,7 @@ function CreateVoucher() {
           <div className="voucher_left_header_title">
             <input
               type="text"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter Name of Voucher"
             />
@@ -119,6 +165,7 @@ function CreateVoucher() {
           <div className="voucher_left_header_des">
             <input
               type="text"
+              value={des}
               onChange={(e) => setDes(e.target.value)}
               placeholder="Enter description"
             />
@@ -140,18 +187,18 @@ function CreateVoucher() {
               <label>Type:</label>
               <Select
                 options={type}
-                defaultValue={type[0]}
+                value={typeVoucher}
                 onChange={(choice) => handleSelectType(choice)}
                 className="select_option"
               />
             </div>
-            {typeVoucher === "course" && (
+            {typeVoucher?.value === "course" && (
               <CourseVoucher
                 chooseCourse={chooseCourse}
                 setChooseCourse={setChooseCourse}
               />
             )}
-            {typeVoucher === "typeCourse" && (
+            {typeVoucher?.value === "typeCourse" && (
               <CourseTypeVoucher
                 chooseCourse={chooseCourse}
                 setChooseCourse={setChooseCourse}
@@ -163,12 +210,14 @@ function CreateVoucher() {
           <label>Duration :</label>
           <input
             type="number"
+            value={duration}
             onChange={(e) => setDuration(e.target.value)}
             placeholder="Đơn vị : Ngày"
           />
           <label>Apply :</label>
           <input
             type="number"
+            value={apply}
             onChange={(e) => setApply(e.target.value)}
             placeholder="Đơn vị : Ngày"
           />

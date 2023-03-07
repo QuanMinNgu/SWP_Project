@@ -7,7 +7,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import Pagination from "../../paginating/Pagination";
 
-function CourseVoucher({ chooseCourse, setChooseCourse }) {
+function CourseVoucher({ chooseCourse, setChooseCourse, updateV, setUpdateV }) {
   const [choose, setChoose] = useState(false);
   const { cache } = useContext(UserContext);
   const [course, setCourse] = useState([]);
@@ -41,7 +41,7 @@ function CourseVoucher({ chooseCourse, setChooseCourse }) {
           return;
         }
         setCourse(res?.data);
-        console.log(res?.data);
+        console.log(chooseCourse);
         cache.current[url] = res?.data;
         dispatch(isSuccess());
       })
@@ -55,6 +55,9 @@ function CourseVoucher({ chooseCourse, setChooseCourse }) {
   const handleSearch = () => {
     setUpdate(!update);
   };
+  useEffect(() => {
+    console.log(chooseCourse);
+  }, [chooseCourse]);
   return (
     <div className="course_voucher">
       <label>Course:</label>
@@ -63,7 +66,7 @@ function CourseVoucher({ chooseCourse, setChooseCourse }) {
           Choose
         </button>
       </div>
-      {chooseCourse.map((item, index) => {
+      {chooseCourse?.map((item, index) => {
         return (
           <div
             style={{
