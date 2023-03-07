@@ -58,7 +58,7 @@ function CreateVoucher() {
           description: des,
           amount: value,
           duration: duration,
-          StartApply: apply,
+          startApply: apply,
           type: typeVoucher.value,
           courseID: chooseCourse[0]?.courseID,
         };
@@ -68,7 +68,7 @@ function CreateVoucher() {
           description: des,
           amount: value,
           duration: duration,
-          StartApply: apply,
+          startApply: apply,
           type: typeVoucher.value,
           courseID: chooseCourse[0]?.courseID,
         });
@@ -80,7 +80,7 @@ function CreateVoucher() {
           description: des,
           amount: value,
           duration: duration,
-          StartApply: apply,
+          startApply: apply,
           type: typeVoucher.value,
           courseTypeID: chooseCourse?.courseTypeID,
         };
@@ -90,7 +90,7 @@ function CreateVoucher() {
           description: des,
           amount: value,
           duration: duration,
-          StartApply: apply,
+          startApply: apply,
           type: typeVoucher.value,
           courseTypeID: chooseCourse?.courseTypeID,
         });
