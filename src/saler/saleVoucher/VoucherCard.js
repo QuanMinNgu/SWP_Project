@@ -13,7 +13,7 @@ function VoucherCard({ item, index, setUpdate, update }) {
   const handleUpdate = () => {
     if (item?.status) {
       setOption(false);
-      return toast.error("Voucher are active can not edit !");
+      return toast.error("Voucher is in active status not allow update !");
     }
     navigate(`/sale/edit_voucher?id=${item?.voucherID}`);
   };
