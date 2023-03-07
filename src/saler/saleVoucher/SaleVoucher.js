@@ -1,11 +1,22 @@
+import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { toast } from "react-toastify";
+import Pagination from "../../paginating/Pagination";
+import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import "./style.scss";
 import VoucherCard from "./VoucherCard";
 function SaleVoucher() {
+  const { search } = useLocation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [fillters, setFillters] = useState({});
+  const page = new URLSearchParams(search).get("page") || 1;
+  const [vouchers, setVouchers] = useState([]);
+  const auth = useSelector((state) => state?.auth);
+  const [update, setUpdate] = useState(false);
   const options = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
@@ -14,6 +25,33 @@ function SaleVoucher() {
   useEffect(() => {
     console.log(fillters);
   }, [fillters]);
+  useEffect(() => {
+    let here = true;
+    const url = `/api/voucher/sale_manager?page=${page}&limit=20`;
+    dispatch(isLoading());
+    axios
+      .get(url, {
+        headers: { token: auth?.user?.token },
+      })
+      .then((res) => {
+        if (!here) {
+          return dispatch(isSuccess());
+        }
+        setVouchers(res?.data);
+        console.log(res?.data);
+        dispatch(isSuccess());
+      })
+      .catch((err) => {
+        if (!here) {
+          return dispatch(isFailing());
+        }
+        dispatch(isFailing());
+        toast.error(err?.response?.data?.msg);
+      });
+    return () => {
+      here = false;
+    };
+  }, [page, update]);
   return (
     <div className="sale_voucher">
       <div className="sale_voucher_head">
@@ -61,16 +99,25 @@ function SaleVoucher() {
               <th className="v_type">Type</th>
               <th className="v_time">Duration</th>
               <th className="v_time">Apply</th>
+              <th className="v_time">Status</th>
               <th className="v_time"></th>
             </tr>
           </thead>
           <tbody>
-            <VoucherCard />
-            <VoucherCard />
-            <VoucherCard />
-            <VoucherCard />
+            {vouchers?.vourchers?.map((item, index) => {
+              return (
+                <VoucherCard
+                  item={(item, index)}
+                  update={update}
+                  setUpdate={setUpdate}
+                />
+              );
+            })}
           </tbody>
         </table>
+      </div>
+      <div className="pagination ">
+        <Pagination count={vouchers?.numPage} />
       </div>
     </div>
   );
