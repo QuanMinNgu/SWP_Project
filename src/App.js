@@ -59,7 +59,7 @@ function App() {
 								/>
 							);
 						})}
-						{store.rule === "[ROLE_ADMIN]" &&
+						{store.rule === "ROLE_ADMIN" &&
 							adminRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
@@ -80,7 +80,7 @@ function App() {
 									/>
 								);
 							})}
-						{store.rule === "[ROLE_SALE]" &&
+						{store.rule === "ROLE_SALE" &&
 							saleRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
@@ -101,7 +101,7 @@ function App() {
 									/>
 								);
 							})}
-						{store.rule === "[ROLE_COURSE_EXPERT]" &&
+						{store.rule === "ROLE_COURSE_EXPERT" &&
 							courseExpertRouter.map((item, index) => {
 								const Page = item.element;
 								return item.layout ? (
