@@ -51,7 +51,7 @@ function CreateVoucher() {
     }
     try {
       let data;
-      if (typeVoucher === "course") {
+      if (typeVoucher?.value === "course") {
         data = {
           voucherID: voucher?.voucherID,
           name: title,
@@ -59,30 +59,43 @@ function CreateVoucher() {
           amount: value,
           duration: duration,
           StartApply: apply,
-          type: typeVoucher,
+          type: typeVoucher.value,
           courseID: chooseCourse[0]?.courseID,
         };
-      }
-      if (typeVoucher === "typeCourse") {
-        data = {
+        console.log({
+          voucherID: voucher?.voucherID,
           name: title,
           description: des,
           amount: value,
           duration: duration,
           StartApply: apply,
-          type: typeVoucher,
-          courseTypeID: chooseCourse,
-        };
+          type: typeVoucher.value,
+          courseID: chooseCourse[0]?.courseID,
+        });
       }
-      console.log({
-        name: title,
-        Description: des,
-        Price: value,
-        Duration: duration,
-        StartApply: apply,
-        type: typeVoucher,
-        courseID: chooseCourse[0]?.courseID,
-      });
+      if (typeVoucher?.value === "typeCourse") {
+        data = {
+          voucherID: voucher?.voucherID,
+          name: title,
+          description: des,
+          amount: value,
+          duration: duration,
+          StartApply: apply,
+          type: typeVoucher.value,
+          courseTypeID: chooseCourse?.courseTypeID,
+        };
+        console.log({
+          voucherID: voucher?.voucherID,
+          name: title,
+          description: des,
+          amount: value,
+          duration: duration,
+          StartApply: apply,
+          type: typeVoucher.value,
+          courseTypeID: chooseCourse?.courseTypeID,
+        });
+      }
+
       dispatch(isLoading());
       const res = await axios.post("/api/voucher/create", data, {
         headers: {
@@ -111,7 +124,7 @@ function CreateVoucher() {
       })
       .then((res) => {
         console.log(res?.data);
-        setVoucher(res?.data);
+        setVoucher(res?.data?.voucher);
         setTitle(res?.data?.voucher?.name);
         setDes(res?.data?.voucher?.description);
         setValue(res?.data?.voucher?.amount);

@@ -25,7 +25,7 @@ function CreateVoucher() {
   const handleSelectType = (choice) => {
     console.log(typeVoucher);
     setChooseCourse([]);
-    setTypeVoucher(choice.value);
+    setTypeVoucher(choice);
   };
   const handleCreateNewVoucher = async () => {
     if (title === "") {
@@ -48,37 +48,46 @@ function CreateVoucher() {
     }
     try {
       let data;
-      if (typeVoucher === "course") {
+      if (typeVoucher?.value === "course") {
         data = {
           name: title,
           description: des,
           amount: value,
           duration: duration,
           StartApply: apply,
-          type: typeVoucher,
+          type: typeVoucher.value,
           courseID: chooseCourse[0]?.courseID,
         };
+        console.log({
+          name: title,
+          description: des,
+          amount: value,
+          duration: duration,
+          StartApply: apply,
+          type: typeVoucher.value,
+          courseID: chooseCourse[0]?.courseID,
+        });
       }
-      if (typeVoucher === "typeCourse") {
+      if (typeVoucher?.value === "typeCourse") {
         data = {
           name: title,
           description: des,
           amount: value,
           duration: duration,
           StartApply: apply,
-          type: typeVoucher,
-          courseTypeID: chooseCourse,
+          type: typeVoucher.value,
+          courseTypeID: chooseCourse?.courseTypeID,
         };
+        console.log({
+          name: title,
+          description: des,
+          amount: value,
+          duration: duration,
+          StartApply: apply,
+          type: typeVoucher.value,
+          courseTypeID: chooseCourse?.courseTypeID,
+        });
       }
-      console.log({
-        name: title,
-        Description: des,
-        Price: value,
-        Duration: duration,
-        StartApply: apply,
-        type: typeVoucher,
-        courseID: chooseCourse[0]?.courseID,
-      });
       dispatch(isLoading());
       const res = await axios.post("/api/voucher/create", data, {
         headers: {
@@ -137,18 +146,18 @@ function CreateVoucher() {
               <label>Type:</label>
               <Select
                 options={type}
-                defaultValue={type[0]}
+                value={typeVoucher}
                 onChange={(choice) => handleSelectType(choice)}
                 className="select_option"
               />
             </div>
-            {typeVoucher === "course" && (
+            {typeVoucher?.value === "course" && (
               <CourseVoucher
                 chooseCourse={chooseCourse}
                 setChooseCourse={setChooseCourse}
               />
             )}
-            {typeVoucher === "typeCourse" && (
+            {typeVoucher?.value === "typeCourse" && (
               <CourseTypeVoucher
                 chooseCourse={chooseCourse}
                 setChooseCourse={setChooseCourse}
