@@ -81,7 +81,7 @@ const BlogWrite = () => {
 	const handleCreateNewBlog = async () => {
 		const title = titleRef.current.value;
 		const meta = metaRef.current.value;
-		if (!title || !meta || !content || !selectedOption?.value) {
+		if (!title || !content || !selectedOption?.value) {
 			return toast.error("Please enter all information.");
 		}
 		if (!auth.user?.token) {
@@ -159,18 +159,14 @@ const BlogWrite = () => {
 					wrapperClassName="editor-wrapper"
 					editorClassName="message-editor"
 					toolbarClassName="message-toolbar"
-				/>
+				></Editor>
 				{!convertToRaw(editorState.getCurrentContent())?.blocks[0]?.text && (
-					<div className="newPost_content_title">Nội dung viết tại đây</div>
+					<div className="newPost_content_title">Content in here</div>
 				)}
 			</div>
 			<div className="newPost_update">
 				<button className="button_update_post" onClick={handleCreateNewBlog}>
-					<i
-						style={{ marginRight: "0.5rem", fontSize: "1.3rem" }}
-						className="fa-solid fa-upload"
-					></i>
-					Đăng
+					Create Blog
 				</button>
 			</div>
 		</div>
