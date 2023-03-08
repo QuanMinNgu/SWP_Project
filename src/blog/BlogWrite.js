@@ -1,7 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./style.scss";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, ContentState, convertToRaw, Modifier } from "draft-js";
+import {
+	EditorState,
+	ContentState,
+	convertToRaw,
+	Modifier,
+	convertFromHTML,
+} from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -39,50 +45,6 @@ const BlogWrite = () => {
 			setOptionKind([...arr]);
 		}
 	}, [types]);
-	const handleAddImage = (url) => {
-		const contentState = editorState.getCurrentContent();
-		const contentStateWithEntity = contentState.createEntity(
-			"IMAGE",
-			"IMMUTABLE",
-			{ src: url }
-		);
-		const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-		const newEditorState = EditorState.set(editorState, {
-			currentContent: contentStateWithEntity,
-		});
-		const currentSelection = editorState.getSelection();
-		const newContentState = Modifier.insertText(
-			contentStateWithEntity,
-			currentSelection,
-			" ",
-			null,
-			entityKey
-		);
-		const newEditorStateWithEntity = EditorState.push(
-			newEditorState,
-			newContentState,
-			"insert-characters"
-		);
-		const newEditorStateWithSelection = EditorState.forceSelection(
-			newEditorStateWithEntity,
-			currentSelection.merge({
-				anchorOffset: currentSelection.getFocusOffset() + 1,
-				focusOffset: currentSelection.getFocusOffset() + 1,
-			})
-		);
-		setEditorState(newEditorStateWithSelection);
-	};
-
-	const entityDecorator = (contentBlock, callback, contentState) => {
-		contentBlock.findEntityRanges((character) => {
-			const entityKey = character.getEntity();
-			return (
-				entityKey !== null &&
-				contentState.getEntity(entityKey).getType() === "IMAGE" &&
-				contentState.getEntity(entityKey).getData().src !== null
-			);
-		}, callback);
-	};
 
 	useEffect(() => {
 		if (auth.user) {
@@ -181,11 +143,73 @@ const BlogWrite = () => {
 			function (error, result) {
 				if (!error && result && result.event === "success") {
 					const newUrl = "https://" + result.info.url.split("://")[1];
-					handleAddImage(newUrl);
 				}
 			}
 		);
 	}, []);
+
+	const uploadCallback = (file) => {
+		return new Promise((resolve, reject) => {
+			const formData = new FormData();
+			formData.append("file", file);
+			formData.append("upload_preset", "sttruyenxyz");
+
+			axios
+				.post(
+					"https://api.cloudinary.com/v1_1/sttruyen/image/upload",
+					formData,
+					{
+						headers: { "X-Requested-With": "XMLHttpRequest" },
+						onUploadProgress: (progressEvent) => {
+							const percentCompleted = Math.round(
+								(progressEvent.loaded * 100) / progressEvent.total
+							);
+							console.log(percentCompleted);
+						},
+					}
+				)
+				.then((response) => {
+					resolve({ data: { link: response.data.secure_url } });
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	};
+
+	const handleImageUpload = (file) => {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				resolve({ data: { link: e.target.result } });
+			};
+			reader.onerror = reject;
+			reader.readAsDataURL(file);
+		});
+	};
+
+	const insertImage = (url) => {
+		const editorStateWithImage = EditorState.createWithContent(
+			ContentState.createFromBlockArray(
+				convertFromHTML(`<p><img src="${url}" /></p>`)
+			)
+		);
+		setEditorState(editorStateWithImage);
+	};
+
+	const onImageUpload = (file) => {
+		return new Promise((resolve, reject) => {
+			uploadCallback(file)
+				.then((response) => {
+					insertImage(response.data.link);
+					resolve({ data: { link: response.data.link } });
+				})
+				.catch((error) => {
+					console.error(error);
+					reject(error);
+				});
+		});
+	};
 
 	return (
 		<div className="newPost">
@@ -218,25 +242,37 @@ const BlogWrite = () => {
 			</div>
 			<div className="newPost_content">
 				<Editor
-					editorStyle={{
-						zIndex: "100",
-						position: "relative",
-					}}
 					editorState={editorState}
 					onEditorStateChange={handleChange}
 					wrapperClassName="editor-wrapper"
 					editorClassName="message-editor"
 					toolbarClassName="message-toolbar"
-					customDecorators={[{ strategy: entityDecorator, component: Image }]}
-				></Editor>
-				<div className="uploadImage_here">
-					<i
-						onClick={() => {
-							widgetRef.current.open();
-						}}
-						className="fa-solid fa-image"
-					></i>
-				</div>
+					toolbar={{
+						options: [
+							"inline",
+							"blockType",
+							"fontSize",
+							"list",
+							"textAlign",
+							"image",
+							"emoji",
+							"link",
+							"history",
+						],
+
+						image: {
+							uploadEnabled: true,
+							uploadCallback: onImageUpload,
+							previewImage: true,
+							inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
+							alt: { present: false, mandatory: false },
+							defaultSize: {
+								height: "200px",
+								width: "200px",
+							},
+						},
+					}}
+				/>
 				{!convertToRaw(editorState.getCurrentContent())?.blocks[0]?.text && (
 					<div className="newPost_content_title">Content in here</div>
 				)}
@@ -248,10 +284,6 @@ const BlogWrite = () => {
 			</div>
 		</div>
 	);
-};
-const Image = (props) => {
-	const { src } = props.contentState.getEntity(props.entityKey).getData();
-	return <img src={src} />;
 };
 
 export default BlogWrite;
