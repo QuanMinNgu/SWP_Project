@@ -51,7 +51,6 @@ function CourseTypeVoucher({ chooseCourse, setChooseCourse }) {
       here = false;
     };
   }, []);
-
   return (
     <div className="course_type_voucher">
       <label>Course Type :</label>

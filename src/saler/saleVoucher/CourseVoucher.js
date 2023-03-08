@@ -55,7 +55,6 @@ function CourseVoucher({ chooseCourse, setChooseCourse, updateV, setUpdateV }) {
   const handleSearch = () => {
     setUpdate(!update);
   };
-
   return (
     <div className="course_voucher">
       <label>Course:</label>

@@ -19,11 +19,11 @@ const BlogDetail = () => {
   const handleNavComment = () => {
     document.getElementById("commentContainer").scrollIntoView();
   };
-  const handleLove = () => {
+  const handleLove = async () => {
     if (!react) {
       try {
         dispatch(isLoading());
-        const res = axios.post(`/api/blog/save?id=${slug}`, {
+        const res = await axios.post(`/api/blog/save?id=${slug}`, {
           token: auth?.user?.token,
         });
         dispatch(isSuccess());
@@ -36,7 +36,7 @@ const BlogDetail = () => {
     } else {
       try {
         dispatch(isLoading());
-        const res = axios.post(`/api/blog/not_mark?id=${slug}`, {
+        const res = await axios.post(`/api/blog/not_mark?id=${slug}`, {
           token: auth?.user?.token,
         });
         dispatch(isSuccess());
@@ -85,7 +85,9 @@ const BlogDetail = () => {
       const url = `/api/blog/save_detail?blogID=${slug}`;
       dispatch(isLoading());
       axios
-        .get(url)
+        .get(url, {
+          headers: { token: auth?.user?.token },
+        })
         .then((res) => {
           if (!here) {
             return dispatch(isSuccess());
