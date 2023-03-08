@@ -4,7 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import "../style.scss";
-const UserManagerCard = ({ setUserInfor, item, userUpdate, setUserUpdate }) => {
+const UserManagerCard = ({
+	setUserInfor,
+	item,
+	userUpdate,
+	setUserUpdate,
+	index,
+}) => {
 	const [bars, setBars] = useState(false);
 
 	const dispatch = useDispatch();
@@ -41,7 +47,7 @@ const UserManagerCard = ({ setUserInfor, item, userUpdate, setUserUpdate }) => {
 	};
 	return (
 		<tr className="u_drow">
-			<th className="u_dstt">1</th>
+			<th className="u_dstt">{index + 1}</th>
 			<th className="u_duser">
 				<div className="user_maner_infor">
 					<div className="user_maner_infor_img">
