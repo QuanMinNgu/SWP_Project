@@ -147,8 +147,9 @@ const Blog = () => {
           {listBLog?.blogs?.map((item, index) => {
             return (
               <BlogCard
+                key={index + "blogCard"}
                 item={item}
-                key={index}
+                index={index + "blogCard"}
                 update={update}
                 setUpdate={setUpdate}
                 loveBlog={loveBlog}

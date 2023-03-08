@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
-const BlogCard = ({ item, key, update, setUpdate, loveBlog }) => {
+const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   const [love, setLove] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,9 +15,15 @@ const BlogCard = ({ item, key, update, setUpdate, loveBlog }) => {
     if (!love) {
       try {
         dispatch(isLoading());
-        const res = await axios.post(`/api/blog/save?id=${item?.blogID}`, {
-          token: auth?.user?.token,
-        });
+        const res = await axios.post(
+          `/api/blog/save`,
+          {
+            id: item?.blogID,
+          },
+          {
+            headers: { token: auth?.user?.token },
+          }
+        );
         dispatch(isSuccess());
         setLove(!love);
         setUpdate(!update);
@@ -29,9 +35,15 @@ const BlogCard = ({ item, key, update, setUpdate, loveBlog }) => {
     } else {
       try {
         dispatch(isLoading());
-        const res = await axios.post(`/api/blog/not_mark?id=${item?.blogID}`, {
-          token: auth?.user?.token,
-        });
+        const res = await axios.post(
+          `/api/blog/not_mark`,
+          {
+            id: item?.blogID,
+          },
+          {
+            headers: { token: auth?.user?.token },
+          }
+        );
         dispatch(isSuccess());
         setLove(!love);
         setUpdate(!update);
@@ -52,9 +64,10 @@ const BlogCard = ({ item, key, update, setUpdate, loveBlog }) => {
     } else {
       setLove(false);
     }
+    console.log(loveBlog);
   }, [loveBlog]);
   return (
-    <div className="blog_card" key={key}>
+    <div className="blog_card" key={index}>
       <div className="blog_card_body">
         <div className="blog_card_body_top">
           <div>
