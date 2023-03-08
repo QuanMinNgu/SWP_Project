@@ -185,8 +185,9 @@ const UserManager = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{users?.users?.map((item) => (
+						{users?.users?.map((item, index) => (
 							<UserManagerCard
+								index={index}
 								userUpdate={userUpdate}
 								setUserUpdate={setUserUpdate}
 								key={item?.gmail}

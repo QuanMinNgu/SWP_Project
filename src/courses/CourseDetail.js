@@ -187,7 +187,7 @@ const CourseDetail = () => {
 						{course?.course?.price === 0 ? "Free" : "$" + course?.course?.price}
 					</div>
 					<div className="course_detail_button">
-						{store?.rule === "[ROLE_ADMIN]" ? (
+						{store?.rule === "ROLE_ADMIN" ? (
 							<button
 								onClick={() => {
 									navigate("/admin/dashboard");
@@ -195,7 +195,7 @@ const CourseDetail = () => {
 							>
 								Dashboard
 							</button>
-						) : store?.rule === "[ROLE_COURSE_EXPERT]" ? (
+						) : store?.rule === "ROLE_COURSE_EXPERT" ? (
 							<button
 								onClick={() => {
 									navigate("/course_expert/dashboard");
@@ -203,7 +203,7 @@ const CourseDetail = () => {
 							>
 								Dashboard
 							</button>
-						) : store?.rule === "[ROLE_SALE]" ? (
+						) : store?.rule === "ROLE_SALE" ? (
 							<button
 								onClick={() => {
 									navigate("/course_expert/dashboard");
