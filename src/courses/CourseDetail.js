@@ -190,7 +190,7 @@ const CourseDetail = () => {
 						{store?.rule === "ROLE_ADMIN" ? (
 							<button
 								onClick={() => {
-									navigate("/admin/dashboard");
+									navigate("/admin/course_manager?page=1");
 								}}
 							>
 								Dashboard

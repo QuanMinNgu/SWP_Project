@@ -22,10 +22,11 @@
 			margin-left: 1rem;
 			flex-wrap: wrap;
 			& > li {
-				width: 48%;
+				width: 45%;
 				@include mobile {
 					width: 100%;
 				}
+				margin: 0 2.5%;
 				font-size: 1.6rem;
 				margin-bottom: 1rem;
 				color: rgba(0, 0, 0, 0.6);
