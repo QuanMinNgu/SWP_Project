@@ -11,11 +11,11 @@ const BlogCard = ({ item, key, update, setUpdate, loveBlog }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
-  const handleLove = () => {
+  const handleLove = async () => {
     if (!love) {
       try {
         dispatch(isLoading());
-        const res = axios.post(`/api/blog/save?id=${item?.blogID}`, {
+        const res = await axios.post(`/api/blog/save?id=${item?.blogID}`, {
           token: auth?.user?.token,
         });
         dispatch(isSuccess());
@@ -29,7 +29,7 @@ const BlogCard = ({ item, key, update, setUpdate, loveBlog }) => {
     } else {
       try {
         dispatch(isLoading());
-        const res = axios.post(`/api/blog/not_mark?id=${item?.blogID}`, {
+        const res = await axios.post(`/api/blog/not_mark?id=${item?.blogID}`, {
           token: auth?.user?.token,
         });
         dispatch(isSuccess());
