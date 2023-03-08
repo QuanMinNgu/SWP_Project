@@ -1,21 +1,27 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import "./style.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { isFailing, isLoading, isLogin, isSuccess } from "../redux/slice/auth";
 import HomeIcons from "../components/another/HomeIcons";
 import { toast } from "react-toastify";
+import { UserContext } from "../App";
 const Login = () => {
 	const dispatch = useDispatch();
 	const emailRef = useRef();
 	const passwordRef = useRef();
+
+	const location = useLocation();
+	const { setReType, retype } = useContext(UserContext);
+
 	const navigate = useNavigate();
 	const handleLogin = async () => {
 		const user = {
 			gmail: emailRef.current?.value,
 			password: passwordRef.current?.value,
 		};
+
 		if (!user.gmail || !user.password) {
 			return toast.error("Please enter all value.");
 		}
@@ -29,7 +35,13 @@ const Login = () => {
 			});
 			toast.success(data?.data?.msg);
 			dispatch(isLogin(data?.data));
-			navigate("/");
+			if (retype !== "register") {
+				navigate(-1);
+				setReType("login");
+			} else {
+				navigate("/");
+				setReType("login");
+			}
 		} catch (err) {
 			dispatch(isFailing());
 			toast.error(err?.response?.data?.msg);

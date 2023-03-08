@@ -9,6 +9,7 @@ import { isSuccess, isLoading, isFailing } from ".././redux/slice/auth";
 import axios from "axios";
 import Select from "react-select";
 import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 const BlogWrite = () => {
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const [selectedOption, setSelectedOption] = useState(null);
@@ -16,6 +17,17 @@ const BlogWrite = () => {
 	const [optionsKind, setOptionKind] = useState({});
 	const { cache } = useContext(UserContext);
 	const [types, setTypes] = useState([]);
+
+	const navigate = useNavigate();
+	const auth = useSelector((state) => state.auth);
+
+	useEffect(() => {
+		if (!auth.user) {
+			toast.error("Please login first.");
+			navigate("/login");
+		}
+		window.scrollTo(0, 0);
+	}, []);
 	useEffect(() => {
 		if (types) {
 			const arr = types?.map((item) => {
@@ -28,28 +40,31 @@ const BlogWrite = () => {
 		}
 	}, [types]);
 	useEffect(() => {
-		let here = true;
-		const url = "/api/type_course";
-		if (cache.current[url]) {
-			return setTypes(cache.current[url]);
+		if (auth.user) {
+			let here = true;
+			const url = "/api/type_course";
+			if (cache.current[url]) {
+				return setTypes(cache.current[url]);
+			}
+			dispatch(isLoading());
+			axios
+				.get(url)
+				.then((res) => {
+					if (!here) {
+						return;
+					}
+					setTypes(res?.data?.types);
+					cache.current[url] = res?.data?.types;
+
+					dispatch(isSuccess());
+				})
+				.catch((err) => {
+					dispatch(isFailing());
+				});
+			return () => {
+				here = false;
+			};
 		}
-		dispatch(isLoading());
-		axios
-			.get(url)
-			.then((res) => {
-				if (!here) {
-					return;
-				}
-				setTypes(res?.data?.types);
-				cache.current[url] = res?.data?.types;
-				dispatch(isSuccess());
-			})
-			.catch((err) => {
-				dispatch(isFailing());
-			});
-		return () => {
-			here = false;
-		};
 	}, []);
 	const titleRef = useRef();
 	const metaRef = useRef();
@@ -58,11 +73,6 @@ const BlogWrite = () => {
 		setEditorState(data);
 	};
 
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, []);
-
-	const auth = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import "./style.scss";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { isFailing, isLoading, isLogin, isSuccess } from "../redux/slice/auth";
 import HomeIcons from "../components/another/HomeIcons";
 import { toast } from "react-toastify";
+import { UserContext } from "../App";
 const Register = () => {
 	const dispatch = useDispatch();
 	const emailRef = useRef();
@@ -13,6 +14,12 @@ const Register = () => {
 	const rePasswordRef = useRef();
 	const nameRef = useRef();
 	const navigate = useNavigate();
+
+	const { setReType } = useContext(UserContext);
+
+	useEffect(() => {
+		setReType("register");
+	}, []);
 
 	const handleRegister = async () => {
 		const user = {

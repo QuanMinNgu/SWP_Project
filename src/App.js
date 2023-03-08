@@ -18,6 +18,13 @@ import { io } from "socket.io-client";
 export const UserContext = createContext();
 function App() {
 	const [store, setStore] = useState({ rule: "[ROLE_SALE]" });
+
+	const [retype, setReType] = useState("home");
+
+	useEffect(() => {
+		setReType("home");
+	}, []);
+
 	const [socket, setSocket] = useState("");
 
 	const dispatch = useDispatch();
@@ -45,7 +52,9 @@ function App() {
 	}, []);
 
 	return (
-		<UserContext.Provider value={{ store, setStore, cache: cacheRef, socket }}>
+		<UserContext.Provider
+			value={{ store, setStore, cache: cacheRef, socket, setReType, retype }}
+		>
 			<Router>
 				<div className="App">
 					<Routes>

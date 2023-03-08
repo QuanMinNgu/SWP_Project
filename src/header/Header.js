@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import "./style.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import CourseHeadCard from "../card/CourseHeadCard";
 import AnnouceCard from "../card/AnnouceCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,7 @@ const Header = () => {
 	const [account, setAccount] = useState(false);
 	const searchRef = useRef();
 
+	const location = useLocation();
 	const auth = useSelector((state) => state.auth);
 
 	const dispatch = useDispatch();
@@ -258,7 +259,10 @@ const Header = () => {
 				</div>
 			) : (
 				<div className="header_navbar">
-					<Link style={{ textDecoration: "none" }} to="/login">
+					<Link
+						style={{ textDecoration: "none" }}
+						to={{ pathname: "/login", state: { prevPath: location.pathname } }}
+					>
 						<div className="header_navbar_button">Login</div>
 					</Link>
 				</div>
