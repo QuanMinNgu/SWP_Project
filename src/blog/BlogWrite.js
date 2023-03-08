@@ -191,7 +191,7 @@ const BlogWrite = () => {
 	const insertImage = (url) => {
 		const editorStateWithImage = EditorState.createWithContent(
 			ContentState.createFromBlockArray(
-				convertFromHTML(`<p><img src="${url}" /></p>`)
+				convertFromHTML(`<p>${content}<img src="${url}" /></p>`)
 			)
 		);
 		setEditorState(editorStateWithImage);
