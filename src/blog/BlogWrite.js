@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./style.scss";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, ContentState, convertToRaw, Modifier } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -39,6 +39,51 @@ const BlogWrite = () => {
 			setOptionKind([...arr]);
 		}
 	}, [types]);
+	const handleAddImage = (url) => {
+		const contentState = editorState.getCurrentContent();
+		const contentStateWithEntity = contentState.createEntity(
+			"IMAGE",
+			"IMMUTABLE",
+			{ src: url }
+		);
+		const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+		const newEditorState = EditorState.set(editorState, {
+			currentContent: contentStateWithEntity,
+		});
+		const currentSelection = editorState.getSelection();
+		const newContentState = Modifier.insertText(
+			contentStateWithEntity,
+			currentSelection,
+			" ",
+			null,
+			entityKey
+		);
+		const newEditorStateWithEntity = EditorState.push(
+			newEditorState,
+			newContentState,
+			"insert-characters"
+		);
+		const newEditorStateWithSelection = EditorState.forceSelection(
+			newEditorStateWithEntity,
+			currentSelection.merge({
+				anchorOffset: currentSelection.getFocusOffset() + 1,
+				focusOffset: currentSelection.getFocusOffset() + 1,
+			})
+		);
+		setEditorState(newEditorStateWithSelection);
+	};
+
+	const entityDecorator = (contentBlock, callback, contentState) => {
+		contentBlock.findEntityRanges((character) => {
+			const entityKey = character.getEntity();
+			return (
+				entityKey !== null &&
+				contentState.getEntity(entityKey).getType() === "IMAGE" &&
+				contentState.getEntity(entityKey).getData().src !== null
+			);
+		}, callback);
+	};
+
 	useEffect(() => {
 		if (auth.user) {
 			let here = true;
@@ -116,6 +161,31 @@ const BlogWrite = () => {
 			dispatch(isFailing());
 		}
 	};
+	const cloudinaryRef = useRef();
+	const widgetRef = useRef();
+	useEffect(() => {
+		cloudinaryRef.current = window.cloudinary;
+		widgetRef.current = cloudinaryRef.current.createUploadWidget(
+			{
+				cloudName: "sttruyen",
+				uploadPreset: "xmqhuwyw",
+				showAdvancedOptions: true,
+				cropping: true,
+				multiple: false,
+				transformations: [
+					{
+						width: 100,
+					},
+				],
+			},
+			function (error, result) {
+				if (!error && result && result.event === "success") {
+					const newUrl = "https://" + result.info.url.split("://")[1];
+					handleAddImage(newUrl);
+				}
+			}
+		);
+	}, []);
 
 	return (
 		<div className="newPost">
@@ -148,12 +218,25 @@ const BlogWrite = () => {
 			</div>
 			<div className="newPost_content">
 				<Editor
+					editorStyle={{
+						zIndex: "100",
+						position: "relative",
+					}}
 					editorState={editorState}
 					onEditorStateChange={handleChange}
 					wrapperClassName="editor-wrapper"
 					editorClassName="message-editor"
 					toolbarClassName="message-toolbar"
+					customDecorators={[{ strategy: entityDecorator, component: Image }]}
 				></Editor>
+				<div className="uploadImage_here">
+					<i
+						onClick={() => {
+							widgetRef.current.open();
+						}}
+						className="fa-solid fa-image"
+					></i>
+				</div>
 				{!convertToRaw(editorState.getCurrentContent())?.blocks[0]?.text && (
 					<div className="newPost_content_title">Content in here</div>
 				)}
@@ -165,6 +248,10 @@ const BlogWrite = () => {
 			</div>
 		</div>
 	);
+};
+const Image = (props) => {
+	const { src } = props.contentState.getEntity(props.entityKey).getData();
+	return <img src={src} />;
 };
 
 export default BlogWrite;

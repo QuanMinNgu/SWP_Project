@@ -43,13 +43,13 @@ function App() {
 	}, []);
 	const cacheRef = useRef({});
 
-	useEffect(() => {
-		const socket = io("http://localhost:8080");
-		setSocket(socket);
-		return () => {
-			socket.close();
-		};
-	}, []);
+	// useEffect(() => {
+	// 	const socket = io("http://localhost:8080");
+	// 	setSocket(socket);
+	// 	return () => {
+	// 		socket.close();
+	// 	};
+	// }, []);
 
 	return (
 		<UserContext.Provider

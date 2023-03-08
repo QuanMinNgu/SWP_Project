@@ -115,7 +115,6 @@ const ListeningUpdate = ({
 			},
 			function (error, result) {
 				if (!error && result && result.event === "success") {
-					console.log(result.info);
 					const newUrl = "https://" + result.info.url.split("://")[1];
 					setUpdate({
 						link: newUrl,

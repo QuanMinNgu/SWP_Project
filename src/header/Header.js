@@ -39,6 +39,7 @@ const Header = () => {
 			style={{
 				position: "fixed",
 				top: 0,
+				zIndex: 200,
 			}}
 			className="header"
 		>

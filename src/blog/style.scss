@@ -404,3 +404,14 @@
 	z-index: 1000000;
 	background-color: red;
 }
+.uploadImage_here {
+	position: absolute;
+	z-index: 100;
+	top: 0.35rem;
+	right: 22rem;
+	height: 4rem;
+	display: flex;
+	align-items: center;
+	font-size: 1.8rem;
+	cursor: pointer;
+}
