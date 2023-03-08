@@ -68,13 +68,14 @@ const ListeningUpdate = ({
 		if (!urlRef.current.value) {
 			return toast.error("Please enter link!");
 		}
-		if (typeVideo === "no_youtube") {
+		if (urlRef.current.value.includes("youtube")) {
+			setTypeVideo("youtube");
+			setUrl(urlRef.current.value);
+		} else {
 			setUpdate({
 				link: data?.link,
 				duration: data?.duration,
 			});
-		} else {
-			setUrl(urlRef.current.value);
 		}
 	};
 	const handleChange = (data) => {
