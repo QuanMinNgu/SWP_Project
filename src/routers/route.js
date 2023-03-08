@@ -91,7 +91,6 @@ export const publicRouter = [
 		element: CourseDetail,
 		path: "/course/:slug",
 		layout: DefaultLayout,
-		type: "Learning",
 	},
 	,
 	{

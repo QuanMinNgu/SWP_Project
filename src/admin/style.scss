@@ -976,7 +976,7 @@
 	right: 0;
 	bottom: 0;
 	background-color: rgba(0, 0, 0, 0.3);
-	z-index: 20;
+	z-index: 100001;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -1188,6 +1188,9 @@
 	&:hover {
 		transform: scale(0.9);
 	}
+}
+.listeningCreate {
+	left: 27%;
 }
 .question {
 	margin-bottom: 2rem;

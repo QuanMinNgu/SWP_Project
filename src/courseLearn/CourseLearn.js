@@ -110,7 +110,7 @@ const CourseLearn = () => {
 						<Link to="/">
 							<img
 								className="CourseLearn_Head_Navbar_image"
-								src="https://res.cloudinary.com/sttruyen/image/upload/v1673249807/another/b6sudrpaizo80snhsq9m.png"
+								src="https://res.cloudinary.com/sttruyen/image/upload/v1678276800/another/wduj3dzkgsg5dmysll7j.jpg"
 								alt="Ảnh"
 							/>
 						</Link>

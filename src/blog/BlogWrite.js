@@ -88,13 +88,6 @@ const BlogWrite = () => {
 			return toast.error("Please login first");
 		}
 		dispatch(isLoading());
-		console.log({
-			token: auth.user?.token,
-			blogName: title,
-			blogMeta: meta,
-			content: content,
-			courseTypeId: selectedOption?.value,
-		});
 		try {
 			const data = await axios.post(
 				"/api/blog/create",
@@ -117,6 +110,7 @@ const BlogWrite = () => {
 			dispatch(isSuccess());
 			setEditorState(EditorState.createEmpty());
 			setContent("");
+			navigate("/blog");
 		} catch (err) {
 			toast.error(err?.response?.data?.msg);
 			dispatch(isFailing());

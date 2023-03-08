@@ -145,7 +145,7 @@ function App() {
 					</Routes>
 					<ToastContainer
 						autoClose={10000}
-						style={{ fontSize: "1.5rem", zIndex: "100001" }}
+						style={{ fontSize: "1.5rem", zIndex: "100002" }}
 					/>
 					{auth.loading && <Loading />}
 				</div>

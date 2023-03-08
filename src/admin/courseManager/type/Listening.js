@@ -12,7 +12,10 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
 
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
+	const [typeVideo, setTypeVideo] = useState("youtube");
+
 	const [create, setCreate] = useState(false);
+	const [update, setUpdate] = useState(false);
 	const titleRef = useRef();
 	const [content, setContent] = useState("");
 
@@ -31,7 +34,12 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
 	};
 
 	const handleCreateListening = () => {
-		if (!content || !url) {
+		if (!content) {
+			return toast.error("Please enter value.");
+		}
+		if (typeVideo === "youtube" && !url) {
+			return toast.error("Please enter value.");
+		} else if (typeVideo !== "youtube" && !update) {
 			return toast.error("Please enter value.");
 		}
 		const arr = lesson;
@@ -41,8 +49,11 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
 				title: titleRef.current.value,
 				type: "listening",
 				value: null,
-				link: url,
-				time: playerRef.current.getDuration(),
+				link: typeVideo === "youtube" ? url : update?.link,
+				time:
+					typeVideo === "youtube"
+						? playerRef.current.getDuration()
+						: update?.duration,
 				description: content,
 				lessonID: null,
 			});
@@ -63,6 +74,29 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
 		setType("listening");
 	};
 
+	const cloudinaryRef = useRef();
+	const widgetRef = useRef();
+	useEffect(() => {
+		cloudinaryRef.current = window.cloudinary;
+		widgetRef.current = cloudinaryRef.current.createUploadWidget(
+			{
+				cloudName: "sttruyen",
+				uploadPreset: "xmqhuwyw",
+			},
+			function (error, result) {
+				if (!error && result && result.event === "success") {
+					console.log(result.info);
+					const newUrl = "https://" + result.info.url.split("://")[1];
+					setUpdate({
+						link: newUrl,
+						duration: result.info.duration,
+					});
+					playerRef.current.value = "";
+				}
+			}
+		);
+	}, []);
+
 	return (
 		<div className="listening">
 			<div className="listening_link">
@@ -77,7 +111,18 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
 			</div>
 			<div className="youtube_check">
 				<div className="youtube_link">
-					<ReactPlayer ref={playerRef} width="100%" height="100%" url={url} />
+					{typeVideo === "youtube" ? (
+						<ReactPlayer ref={playerRef} width="100%" height="100%" url={url} />
+					) : (
+						<iframe
+							width="100%"
+							height="100%"
+							src={update?.link}
+							title="YouTube video player"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowFullScreen
+						></iframe>
+					)}
 				</div>
 			</div>
 			<div className="lesson_content_title">Content</div>
@@ -139,6 +184,16 @@ const Listening = ({ setLesson, lesson, setAddLesson, addLesson, setType }) => {
 				>
 					Create
 				</button>
+			</div>
+			<div
+				onClick={() => {
+					setTypeVideo("no_youtube");
+					widgetRef.current.open();
+				}}
+				style={{ padding: "0 2rem", width: "auto" }}
+				className="createQuesion listeningCreate"
+			>
+				Upload video from device
 			</div>
 		</div>
 	);

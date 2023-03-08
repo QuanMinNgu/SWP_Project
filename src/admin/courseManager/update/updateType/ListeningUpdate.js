@@ -21,6 +21,21 @@ const ListeningUpdate = ({
 	const [url, setUrl] = useState("");
 	const urlRef = useRef();
 
+	const [update, setUpdate] = useState({});
+	const [typeVideo, setTypeVideo] = useState("youtube");
+
+	useEffect(() => {
+		if (data) {
+			if (data?.link?.includes("cloudinary")) {
+				setTypeVideo("no_youtube");
+				setUpdate({
+					link: data?.link,
+					duration: data?.duration,
+				});
+			}
+		}
+	}, [data]);
+
 	const playerRef = useRef(null);
 
 	const [editorState, setEditorState] = useState(
@@ -53,7 +68,14 @@ const ListeningUpdate = ({
 		if (!urlRef.current.value) {
 			return toast.error("Please enter link!");
 		}
-		setUrl(urlRef.current.value);
+		if (typeVideo === "no_youtube") {
+			setUpdate({
+				link: data?.link,
+				duration: data?.duration,
+			});
+		} else {
+			setUrl(urlRef.current.value);
+		}
 	};
 	const handleChange = (data) => {
 		setEditorState(data);
@@ -69,14 +91,40 @@ const ListeningUpdate = ({
 			type: "listening",
 			value: null,
 			description: content,
-			link: url || data?.link,
-			time: playerRef.current.getDuration(),
+			link: typeVideo === "youtube" ? url || data?.link : update?.link,
+			time:
+				typeVideo === "youtube"
+					? playerRef.current.getDuration()
+					: update?.duration,
 			lessonID: arr[index].numLesson[addLesson]?.lessonID || null,
 		};
 		setLesson([...arr]);
 		setCreate(false);
 		setUpdateLesson(false);
 	};
+
+	const cloudinaryRef = useRef();
+	const widgetRef = useRef();
+	useEffect(() => {
+		cloudinaryRef.current = window.cloudinary;
+		widgetRef.current = cloudinaryRef.current.createUploadWidget(
+			{
+				cloudName: "sttruyen",
+				uploadPreset: "xmqhuwyw",
+			},
+			function (error, result) {
+				if (!error && result && result.event === "success") {
+					console.log(result.info);
+					const newUrl = "https://" + result.info.url.split("://")[1];
+					setUpdate({
+						link: newUrl,
+						duration: result.info.duration,
+					});
+					playerRef.current.value = "";
+				}
+			}
+		);
+	}, []);
 	return (
 		<div className="listening">
 			<div className="listening_link">
@@ -92,12 +140,18 @@ const ListeningUpdate = ({
 			</div>
 			<div className="youtube_check">
 				<div className="youtube_link">
-					<ReactPlayer
-						ref={playerRef}
-						width="100%"
-						height="100%"
-						url={url || data?.link}
-					/>
+					{typeVideo === "youtube" ? (
+						<ReactPlayer ref={playerRef} width="100%" height="100%" url={url} />
+					) : (
+						<iframe
+							width="100%"
+							height="100%"
+							src={update?.link}
+							title="YouTube video player"
+							allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowFullScreen
+						></iframe>
+					)}
 				</div>
 			</div>
 			<div className="lesson_content_title">Content</div>
@@ -163,6 +217,16 @@ const ListeningUpdate = ({
 				>
 					Update
 				</button>
+			</div>
+			<div
+				onClick={() => {
+					setTypeVideo("no_youtube");
+					widgetRef.current.open();
+				}}
+				style={{ padding: "0 2rem", width: "auto" }}
+				className="createQuesion listeningCreate"
+			>
+				Upload video from device
 			</div>
 		</div>
 	);
