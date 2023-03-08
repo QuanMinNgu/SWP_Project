@@ -76,6 +76,7 @@ const BlogWrite = () => {
 	const titleRef = useRef();
 	const metaRef = useRef();
 	const [content, setContent] = useState("");
+	const contentRef = useRef();
 	const handleChange = (data) => {
 		setEditorState(data);
 	};
@@ -84,6 +85,10 @@ const BlogWrite = () => {
 	useEffect(() => {
 		setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
 	}, [editorState]);
+
+	useEffect(() => {
+		contentRef.current = content;
+	}, [content]);
 
 	const handleCreateNewBlog = async () => {
 		const title = titleRef.current.value;
@@ -123,37 +128,12 @@ const BlogWrite = () => {
 			dispatch(isFailing());
 		}
 	};
-	const cloudinaryRef = useRef();
-	const widgetRef = useRef();
-	useEffect(() => {
-		cloudinaryRef.current = window.cloudinary;
-		widgetRef.current = cloudinaryRef.current.createUploadWidget(
-			{
-				cloudName: "sttruyen",
-				uploadPreset: "xmqhuwyw",
-				showAdvancedOptions: true,
-				cropping: true,
-				multiple: false,
-				transformations: [
-					{
-						width: 100,
-					},
-				],
-			},
-			function (error, result) {
-				if (!error && result && result.event === "success") {
-					const newUrl = "https://" + result.info.url.split("://")[1];
-				}
-			}
-		);
-	}, []);
 
 	const uploadCallback = (file) => {
 		return new Promise((resolve, reject) => {
 			const formData = new FormData();
 			formData.append("file", file);
 			formData.append("upload_preset", "sttruyenxyz");
-
 			axios
 				.post(
 					"https://api.cloudinary.com/v1_1/sttruyen/image/upload",
@@ -164,7 +144,6 @@ const BlogWrite = () => {
 							const percentCompleted = Math.round(
 								(progressEvent.loaded * 100) / progressEvent.total
 							);
-							console.log(percentCompleted);
 						},
 					}
 				)
@@ -177,23 +156,14 @@ const BlogWrite = () => {
 		});
 	};
 
-	const handleImageUpload = (file) => {
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.onload = (e) => {
-				resolve({ data: { link: e.target.result } });
-			};
-			reader.onerror = reject;
-			reader.readAsDataURL(file);
-		});
-	};
-
 	const insertImage = (url) => {
+		console.log(contentRef.current);
 		const editorStateWithImage = EditorState.createWithContent(
 			ContentState.createFromBlockArray(
-				convertFromHTML(`<p>${content}<img src="${url}" /></p>`)
+				convertFromHTML(`<p>${contentRef.current}<img src="${url}" /></p>`)
 			)
 		);
+		setContent(`<p>${contentRef.current}<img src="${url}" /></p>`);
 		setEditorState(editorStateWithImage);
 	};
 
@@ -273,7 +243,7 @@ const BlogWrite = () => {
 						},
 					}}
 				/>
-				{!convertToRaw(editorState.getCurrentContent())?.blocks[0]?.text && (
+				{!content && (
 					<div className="newPost_content_title">Content in here</div>
 				)}
 			</div>

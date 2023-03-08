@@ -109,46 +109,48 @@ const BlogDetail = () => {
 		}
 	}, []);
 	return (
-		<div>
-			<div className="blog_detail">
-				<div className="blog_detail_user">
-					<div className="blog_detail_user_info">
-						<h2>{blog?.name}</h2>
-						<div className="blog_detail_user_react">
-							<div className="blog_detail_user_react_love" onClick={handleLove}>
-								{react ? (
-									<i className="fa-solid fa-heart"></i>
-								) : (
-									<i className="fa-regular fa-heart"></i>
-								)}
-								<span></span>
-							</div>
-							<i
-								onClick={handleNavComment}
-								style={{
-									marginLeft: "40px",
-								}}
-								className="fa-regular fa-comment"
-							></i>
+		<div className="blog_detail" style={{ width: "100%" }}>
+			<div className="blog_detail_user">
+				<div className="blog_detail_user_info">
+					<h2>{blog?.name}</h2>
+					<div className="blog_detail_user_react">
+						<div className="blog_detail_user_react_love" onClick={handleLove}>
+							{react ? (
+								<i className="fa-solid fa-heart"></i>
+							) : (
+								<i className="fa-regular fa-heart"></i>
+							)}
+							<span></span>
 						</div>
-					</div>
-				</div>
-				<div className="blog_detail_center">
-					<div className="blog_detail_center_header">
-						<h2>{blog?.blogName}</h2>
-					</div>
-					<div className="blog_detail_center_info">
-						<img src={blog?.image} />
-						<div className="blog_detail_center_info_user">
-							<h2>{blog?.name}</h2>
-						</div>
-					</div>
-					<div className="blog_detail_center_content">
-						<div>{content ? parse(content) : ""}</div>
+						<i
+							onClick={handleNavComment}
+							style={{
+								marginLeft: "40px",
+							}}
+							className="fa-regular fa-comment"
+						></i>
 					</div>
 				</div>
 			</div>
-			<div id="commentContainer" className="comment_Container">
+			<div className="blog_detail_center">
+				<div className="blog_detail_center_header">
+					<h2>{blog?.blogName}</h2>
+				</div>
+				<div className="blog_detail_center_info">
+					<img src={blog?.image} />
+					<div className="blog_detail_center_info_user">
+						<h2>{blog?.name}</h2>
+					</div>
+				</div>
+				<div className="blog_detail_center_content">
+					<div>{content ? parse(content) : ""}</div>
+				</div>
+			</div>
+			<div
+				style={{ width: "100%" }}
+				id="commentContainer"
+				className="comment_Container"
+			>
 				<Comment type="blog" id={slug} />
 			</div>
 		</div>
