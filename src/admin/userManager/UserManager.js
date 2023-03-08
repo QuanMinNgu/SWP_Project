@@ -87,9 +87,9 @@ const UserManager = () => {
 
 	useEffect(() => {
 		let here = true;
-		const sort = new URLSearchParams(search).get("sort") || "";
-		const role = new URLSearchParams(search).get("role") || "";
-		const searchingU = new URLSearchParams(search).get("search") || "";
+		const sort = new URLSearchParams(search).get("sort") || null;
+		const role = new URLSearchParams(search).get("role") || null;
+		const searchingU = new URLSearchParams(search).get("search") || null;
 		const page = new URLSearchParams(search).get("page") || 1;
 		const sortSearch = {
 			sort: sort,
@@ -98,12 +98,7 @@ const UserManager = () => {
 			limit: 20,
 			search: searchingU,
 		};
-		const excludedFields = ["role", "sort", "search"];
-		excludedFields.forEach((item) => {
-			if (!sortSearch[item]) {
-				delete sortSearch[item];
-			}
-		});
+
 		const sortSearching = new URLSearchParams(sortSearch).toString();
 		const url = `/api/account?${sortSearching}`;
 		console.log(url);
@@ -134,19 +129,13 @@ const UserManager = () => {
 	}, [userUpdate, search]);
 
 	const handleSearching = () => {
-		const searchingU = new URLSearchParams(search).get("search") || "";
+		const searchingU = new URLSearchParams(search).get("search") || null;
 		const searching = {
 			role: selectedOptionRole?.value,
 			sort: selectedOptionSort?.value,
 			search: searchingU,
 		};
 
-		const excludedFields = ["sort", "role", "search"];
-		excludedFields.forEach((item) => {
-			if (!searching[item]) {
-				delete searching[item];
-			}
-		});
 		searching.page = 1;
 		const searchingUrl = new URLSearchParams(searching).toString();
 		navigate("?" + searchingUrl);
