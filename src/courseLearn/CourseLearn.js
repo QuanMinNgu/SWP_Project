@@ -162,7 +162,7 @@ const CourseLearn = () => {
 							)}
 							{course?.lesson?.type !== "quiz" && (
 								<div className="comment_container">
-									<Comment />
+									<Comment type="lesson" id={lessonid} />
 								</div>
 							)}
 						</div>

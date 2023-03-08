@@ -14,9 +14,11 @@ import Loading from "./loading/Loading";
 import { isSuccess } from "./redux/slice/auth";
 import jwt_decode from "jwt-decode";
 import NotFound from "./notfound/NotFound";
+import { io } from "socket.io-client";
 export const UserContext = createContext();
 function App() {
 	const [store, setStore] = useState({ rule: "[ROLE_SALE]" });
+	const [socket, setSocket] = useState("");
 
 	const dispatch = useDispatch();
 	const auth = useSelector((state) => state.auth);
@@ -34,8 +36,16 @@ function App() {
 	}, []);
 	const cacheRef = useRef({});
 
+	useEffect(() => {
+		const socket = io("http://localhost:8080");
+		setSocket(socket);
+		return () => {
+			socket.close();
+		};
+	}, []);
+
 	return (
-		<UserContext.Provider value={{ store, setStore, cache: cacheRef }}>
+		<UserContext.Provider value={{ store, setStore, cache: cacheRef, socket }}>
 			<Router>
 				<div className="App">
 					<Routes>
