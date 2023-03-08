@@ -1,414 +1,125 @@
-import React, { useState } from "react";
-import "../style.scss";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { toast } from "react-toastify";
 import Pagination from "../../paginating/Pagination";
-import VocherCard from "./VocherCard";
-import { Link } from "react-router-dom";
-const VocherManager = () => {
-    const options = [
-        { value: "free", label: "Free" },
-        { value: "no-free", label: "Not Free" },
-    ];
-
-    const optionsKind = [
-        { value: "ha-noi", label: "Software" },
-        { value: "strawberry", label: "Financial" },
-        { value: "vanilla", label: "Marketing" },
-    ];
-
-    const optionsSort = [
-        { value: "vanilla", label: "Stars Increased" },
-        { value: "asd", label: "Stars Decreased" },
-        { value: "vaniasdlla", label: "Newest" },
-        { value: "vanilsla", label: "Oldest" },
-    ];
-
-    const [vocher, setVocher] = useState("");
-
-    const [selectedOption, setSelectedOption] = useState(null);
-    return (
-        <div className="managerCourse">
-            <div className="managerCourse_navbar">
-                <Select
-                    className="search_wrap_select"
-                    defaultValue={selectedOption}
-                    onChange={setSelectedOption}
-                    options={options}
-                    placeholder="Price"
-                />
-                <Select
-                    className="search_wrap_select"
-                    defaultValue={selectedOption}
-                    onChange={setSelectedOption}
-                    options={optionsKind}
-                    placeholder="Kind"
-                />
-                <Select
-                    className="search_wrap_select"
-                    defaultValue={selectedOption}
-                    onChange={setSelectedOption}
-                    options={optionsSort}
-                    placeholder="Sort"
-                />
-                <button>Tìm Kiếm</button>
-            </div>
-            <div className="manageCourse_table">
-                <table className="s_table">
-                    <thead className="s_thead">
-                        <tr className="s_trow">
-                            <th className="s_tcourse">Saler</th>
-                            <th className="s_tsale">Sale</th>
-                            <th className="s_tto">To</th>
-                            <th className="s_tfromdate">fromDate</th>
-                            <th className="s_ttodate">toDate</th>
-                            <th className="s_tbars"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <VocherCard setVocher={setVocher} />
-                        <VocherCard setVocher={setVocher} />
-                        <VocherCard setVocher={setVocher} />
-                        <VocherCard setVocher={setVocher} />
-                        <VocherCard setVocher={setVocher} />
-                        <VocherCard setVocher={setVocher} />
-                        <VocherCard setVocher={setVocher} />
-                        <VocherCard setVocher={setVocher} />
-                        <VocherCard setVocher={setVocher} />
-                        <VocherCard setVocher={setVocher} />
-                        <VocherCard setVocher={setVocher} />
-                    </tbody>
-                </table>
-            </div>
-            <div className="pagination">
-                <Pagination />
-            </div>
-            {vocher && (
-                <div
-                    onClick={() => {
-                        setVocher("");
-                    }}
-                    className="user_manager_information"
-                ></div>
-            )}
-            {vocher && (
-                <div className="vocher_to">
-                    <div className="expertCourse_close">
-                        <div
-                            onClick={() => {
-                                setVocher("");
-                            }}
-                            className="expertCourse_close_icons"
-                        >
-                            &times;
-                        </div>
-                    </div>
-                    <div className="vocher_to_for">
-                        <div className="vocher_to_user">
-                            <div className="vocher_to_for_title">For User</div>
-                            <div className="vocher_to_form">
-                                <div className="vocher_to_user_card">
-                                    <div className="vocher_to_user_img">
-                                        <img
-                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="vocher_to_user_infor">
-                                        <div className="vocher_to_user_infor_name">
-                                            Minh Quang
-                                        </div>
-                                        <i className="vocher_to_user_infor_email">
-                                            quangminhnguyen265@gmail.com
-                                        </i>
-                                        <i className="vocher_to_user_infor_id">
-                                            ID:1231232
-                                        </i>
-                                    </div>
-                                </div>
-                                <div className="vocher_to_user_card">
-                                    <div className="vocher_to_user_img">
-                                        <img
-                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="vocher_to_user_infor">
-                                        <div className="vocher_to_user_infor_name">
-                                            Minh Quang
-                                        </div>
-                                        <i className="vocher_to_user_infor_email">
-                                            quangminhnguyen265@gmail.com
-                                        </i>
-                                        <i className="vocher_to_user_infor_id">
-                                            ID:1231232
-                                        </i>
-                                    </div>
-                                </div>
-                                <div className="vocher_to_user_card">
-                                    <div className="vocher_to_user_img">
-                                        <img
-                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="vocher_to_user_infor">
-                                        <div className="vocher_to_user_infor_name">
-                                            Minh Quang
-                                        </div>
-                                        <i className="vocher_to_user_infor_email">
-                                            quangminhnguyen265@gmail.com
-                                        </i>
-                                        <i className="vocher_to_user_infor_id">
-                                            ID:1231232
-                                        </i>
-                                    </div>
-                                </div>
-                                <div className="vocher_to_user_card">
-                                    <div className="vocher_to_user_img">
-                                        <img
-                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="vocher_to_user_infor">
-                                        <div className="vocher_to_user_infor_name">
-                                            Minh Quang
-                                        </div>
-                                        <i className="vocher_to_user_infor_email">
-                                            quangminhnguyen265@gmail.com
-                                        </i>
-                                        <i className="vocher_to_user_infor_id">
-                                            ID:1231232
-                                        </i>
-                                    </div>
-                                </div>
-                                <div className="vocher_to_user_card">
-                                    <div className="vocher_to_user_img">
-                                        <img
-                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="vocher_to_user_infor">
-                                        <div className="vocher_to_user_infor_name">
-                                            Minh Quang
-                                        </div>
-                                        <i className="vocher_to_user_infor_email">
-                                            quangminhnguyen265@gmail.com
-                                        </i>
-                                        <i className="vocher_to_user_infor_id">
-                                            ID:1231232
-                                        </i>
-                                    </div>
-                                </div>
-                                <div className="vocher_to_user_card">
-                                    <div className="vocher_to_user_img">
-                                        <img
-                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="vocher_to_user_infor">
-                                        <div className="vocher_to_user_infor_name">
-                                            Minh Quang
-                                        </div>
-                                        <i className="vocher_to_user_infor_email">
-                                            quangminhnguyen265@gmail.com
-                                        </i>
-                                        <i className="vocher_to_user_infor_id">
-                                            ID:1231232
-                                        </i>
-                                    </div>
-                                </div>
-                                <div className="vocher_to_user_card">
-                                    <div className="vocher_to_user_img">
-                                        <img
-                                            src="https://anhcuoiviet.vn/wp-content/uploads/2022/11/background-dep-0.jpg"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="vocher_to_user_infor">
-                                        <div className="vocher_to_user_infor_name">
-                                            Minh Quang
-                                        </div>
-                                        <i className="vocher_to_user_infor_email">
-                                            quangminhnguyen265@gmail.com
-                                        </i>
-                                        <i className="vocher_to_user_infor_id">
-                                            ID:1231232
-                                        </i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="vocher_to_course">
-                            <div className="vocher_to_for_title">
-                                For Courses
-                            </div>
-                            <div className="vocher_to_form">
-                                <div className="vocher_to_card">
-                                    <div className="thead_img">
-                                        <img
-                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="thead_card_name">
-                                        <div>
-                                            <Link
-                                                className="thead_card_name-link"
-                                                to="/"
-                                            >
-                                                Khóa học html,css for begginer
-                                            </Link>
-                                        </div>
-                                        <span className="thead_card_price">
-                                            <i className="thead_card_oldPrice">
-                                                $120
-                                            </i>
-                                            <i className="thead_card_newPrice">
-                                                $100
-                                            </i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="vocher_to_card">
-                                    <div className="thead_img">
-                                        <img
-                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="thead_card_name">
-                                        <div>
-                                            <Link
-                                                className="thead_card_name-link"
-                                                to="/"
-                                            >
-                                                Khóa học html,css for begginer
-                                            </Link>
-                                        </div>
-                                        <span className="thead_card_price">
-                                            <i className="thead_card_oldPrice">
-                                                $120
-                                            </i>
-                                            <i className="thead_card_newPrice">
-                                                $100
-                                            </i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="vocher_to_card">
-                                    <div className="thead_img">
-                                        <img
-                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="thead_card_name">
-                                        <div>
-                                            <Link
-                                                className="thead_card_name-link"
-                                                to="/"
-                                            >
-                                                Khóa học html,css for begginer
-                                            </Link>
-                                        </div>
-                                        <span className="thead_card_price">
-                                            <i className="thead_card_oldPrice">
-                                                $120
-                                            </i>
-                                            <i className="thead_card_newPrice">
-                                                $100
-                                            </i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="vocher_to_card">
-                                    <div className="thead_img">
-                                        <img
-                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="thead_card_name">
-                                        <div>
-                                            <Link
-                                                className="thead_card_name-link"
-                                                to="/"
-                                            >
-                                                Khóa học html,css for begginer
-                                            </Link>
-                                        </div>
-                                        <span className="thead_card_price">
-                                            <i className="thead_card_oldPrice">
-                                                $120
-                                            </i>
-                                            <i className="thead_card_newPrice">
-                                                $100
-                                            </i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="vocher_to_card">
-                                    <div className="thead_img">
-                                        <img
-                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="thead_card_name">
-                                        <div>
-                                            <Link
-                                                className="thead_card_name-link"
-                                                to="/"
-                                            >
-                                                Khóa học html,css for begginer
-                                            </Link>
-                                        </div>
-                                        <span className="thead_card_price">
-                                            <i className="thead_card_oldPrice">
-                                                $120
-                                            </i>
-                                            <i className="thead_card_newPrice">
-                                                $100
-                                            </i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="vocher_to_card">
-                                    <div className="thead_img">
-                                        <img
-                                            src="https://res.cloudinary.com/sttruyen/image/upload/v1673056232/another/nchc17ic3dqqlknupeqx.png"
-                                            alt="Ảnh"
-                                        />
-                                    </div>
-                                    <div className="thead_card_name">
-                                        <div>
-                                            <Link
-                                                className="thead_card_name-link"
-                                                to="/"
-                                            >
-                                                Khóa học html,css for begginer
-                                            </Link>
-                                        </div>
-                                        <span className="thead_card_price">
-                                            <i className="thead_card_oldPrice">
-                                                $120
-                                            </i>
-                                            <i className="thead_card_newPrice">
-                                                $100
-                                            </i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
+import VoucherCard from "./VoucherCard";
+function VocherManager() {
+  const { search } = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [fillters, setFillters] = useState({});
+  const page = new URLSearchParams(search).get("page") || 1;
+  const [vouchers, setVouchers] = useState([]);
+  const auth = useSelector((state) => state?.auth);
+  const [update, setUpdate] = useState(false);
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
+  useEffect(() => {
+    console.log(fillters);
+  }, [fillters]);
+  useEffect(() => {
+    let here = true;
+    const url = `/api/voucher/sale_manager?page=${page}&limit=20`;
+    dispatch(isLoading());
+    axios
+      .get(url, {
+        headers: { token: auth?.user?.token },
+      })
+      .then((res) => {
+        if (!here) {
+          return dispatch(isSuccess());
+        }
+        setVouchers(res?.data);
+        console.log(res?.data);
+        dispatch(isSuccess());
+      })
+      .catch((err) => {
+        if (!here) {
+          return dispatch(isFailing());
+        }
+        dispatch(isFailing());
+        toast.error(err?.response?.data?.msg);
+      });
+    return () => {
+      here = false;
+    };
+  }, [page, update]);
+  return (
+    <div className="sale_voucher">
+      <div className="sale_voucher_head">
+        <div className="sale_voucher_head_fillters">
+          <Select
+            className="option_select_sale"
+            options={options}
+            onChange={(choice) =>
+              setFillters({ ...fillters, ontions: choice.value })
+            }
+          />
+          <Select
+            className="option_select_sale"
+            options={options}
+            onChange={(choice) =>
+              setFillters({ ...fillters, option2: choice.value })
+            }
+          />
+          <button
+            className="button"
+            style={{
+              marginLeft: "2rem",
+              padding: "1rem 2rem",
+            }}
+          >
+            Search
+          </button>
         </div>
-    );
-};
+        <div className="sale_voucher_head_create">
+          <button
+            className="button"
+            onClick={() => navigate("/admin/create_voucher")}
+          >
+            Create New Voucher
+          </button>
+        </div>
+      </div>
+      <div className="manage_voucher">
+        <table className="s_table">
+          <thead className="s_thead">
+            <tr className="s_trow">
+              <th className="v_stt">STT</th>
+              <th className="v_voucher">Voucher</th>
+              <th className="v_value">Value</th>
+              <th className="v_time">Duration</th>
+              <th className="v_time">Apply</th>
+              <th className="v_time">Status</th>
+              <th className="v_time"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {vouchers?.vouchers?.map((item, index) => {
+              return (
+                <VoucherCard
+                  item={item}
+                  index={index}
+                  update={update}
+                  setUpdate={setUpdate}
+                />
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="pagination ">
+        <Pagination count={vouchers?.numPage} />
+      </div>
+    </div>
+  );
+}
 
 export default VocherManager;

@@ -6,9 +6,8 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 
-function UpdateVoucher() {
+function CreateVoucher() {
   const valueRef = useRef();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
@@ -19,8 +18,6 @@ function UpdateVoucher() {
   const [chooseCourse, setChooseCourse] = useState([]);
   const [duration, setDuration] = useState();
   const [apply, setApply] = useState();
-  const [voucher, setVoucher] = useState();
-  const { search } = useLocation();
   const type = [
     { value: "course", label: "Course" },
     { value: "typeCourse", label: "TypeOfCourse" },
@@ -44,16 +41,15 @@ function UpdateVoucher() {
       return toast.error("Plese remeber enter value");
     }
     if (!duration || !apply) {
-      return toast.error("Please fill duration and apply");
+      return toast.error("Please fill all");
     }
     if (!chooseCourse || chooseCourse.length === 0) {
-      return toast.error("Please choose type of voucher");
+      return toast.error("Please fill all");
     }
     try {
       let data;
       if (typeVoucher?.value === "course") {
         data = {
-          voucherID: voucher?.voucherID,
           name: title,
           description: des,
           amount: value,
@@ -63,7 +59,6 @@ function UpdateVoucher() {
           courseID: chooseCourse[0]?.courseID,
         };
         console.log({
-          voucherID: voucher?.voucherID,
           name: title,
           description: des,
           amount: value,
@@ -75,7 +70,6 @@ function UpdateVoucher() {
       }
       if (typeVoucher?.value === "typeCourse") {
         data = {
-          voucherID: voucher?.voucherID,
           name: title,
           description: des,
           amount: value,
@@ -85,7 +79,6 @@ function UpdateVoucher() {
           courseTypeID: chooseCourse?.courseTypeID,
         };
         console.log({
-          voucherID: voucher?.voucherID,
           name: title,
           description: des,
           amount: value,
@@ -95,7 +88,6 @@ function UpdateVoucher() {
           courseTypeID: chooseCourse?.courseTypeID,
         });
       }
-
       dispatch(isLoading());
       const res = await axios.post("/api/voucher/create", data, {
         headers: {
@@ -116,52 +108,6 @@ function UpdateVoucher() {
       return toast.error(error?.response?.data?.msg);
     }
   };
-  useEffect(() => {
-    dispatch(isLoading());
-    axios
-      .get(`/api/voucher/update${search}`, {
-        headers: { token: auth?.user?.token },
-      })
-      .then((res) => {
-        console.log(res?.data);
-        setVoucher(res?.data?.voucher);
-        setTitle(res?.data?.voucher?.name);
-        setDes(res?.data?.voucher?.description);
-        setValue(res?.data?.voucher?.amount);
-        setDuration(res?.data?.voucher?.duration);
-        setApply(res?.data?.voucher?.startApply);
-        if (res?.data?.voucher?.type === "course") {
-          setTypeVoucher({
-            value: res?.data?.voucher?.type,
-            label: "Course",
-          });
-          setChooseCourse([
-            {
-              courseID: res?.data?.voucher?.courseDTO?.courseID,
-              image: res?.data?.voucher?.courseDTO?.image,
-              courseName: res?.data?.voucher?.courseDTO?.courseName,
-            },
-          ]);
-        } else {
-          setTypeVoucher({
-            value: res?.data?.voucher?.type,
-            label: "TypeOfCourse",
-          });
-          setChooseCourse({
-            courseTypeID: res?.data?.voucher?.courseTypeDTO?.courseTypeID,
-            courseTypeName: res?.data?.voucher?.courseTypeDTO?.courseTypeName,
-          });
-        }
-        return dispatch(isSuccess());
-      })
-      .catch((error) => {
-        dispatch(isFailing());
-        return toast.error(error?.response?.data?.msg);
-      });
-  }, []);
-  useEffect(() => {
-    console.log(typeVoucher);
-  }, [typeVoucher]);
   return (
     <div className="create_voucher">
       <div className="voucher_left">
@@ -177,8 +123,8 @@ function UpdateVoucher() {
 
           <div className="voucher_left_header_des">
             <input
-              type="text"
               value={des}
+              type="text"
               onChange={(e) => setDes(e.target.value)}
               placeholder="Enter description"
             />
@@ -252,4 +198,4 @@ function UpdateVoucher() {
   );
 }
 
-export default UpdateVoucher;
+export default CreateVoucher;
