@@ -21,6 +21,8 @@ const BlogWrite = () => {
 	const [selectedOption, setSelectedOption] = useState(null);
 
 	const [optionsKind, setOptionKind] = useState({});
+
+	const [updateContent, setUpdateContent] = useState(false);
 	const { cache } = useContext(UserContext);
 	const [types, setTypes] = useState([]);
 
@@ -157,7 +159,6 @@ const BlogWrite = () => {
 	};
 
 	const insertImage = (url) => {
-		console.log(contentRef.current);
 		const editorStateWithImage = EditorState.createWithContent(
 			ContentState.createFromBlockArray(
 				convertFromHTML(`<p>${contentRef.current}<img src="${url}" /></p>`)
@@ -243,9 +244,10 @@ const BlogWrite = () => {
 						},
 					}}
 				/>
-				{!content && (
-					<div className="newPost_content_title">Content in here</div>
-				)}
+				{!convertToRaw(editorState.getCurrentContent())?.blocks[0]?.text &&
+					!updateContent && (
+						<div className="newPost_content_title">Content in here</div>
+					)}
 			</div>
 			<div className="newPost_update">
 				<button className="button_update_post" onClick={handleCreateNewBlog}>
