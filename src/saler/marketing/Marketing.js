@@ -17,7 +17,7 @@ import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import { UserContext } from "../../App";
 const Marketing = () => {
   const navigate = useNavigate();
-
+  const [update, setUpdate] = useState(false);
   const dispatch = useDispatch();
   const { cache } = useContext(UserContext);
   const auth = useSelector((state) => state.auth);
@@ -40,7 +40,7 @@ const Marketing = () => {
 
   const handleCreateMarketingImage = async () => {
     const formData = new FormData();
-    const urlImage = "";
+    let urlImage = "";
     formData.append("file", imageRef.current);
     formData.append("upload_preset", "sttruyenxyz");
     try {
@@ -49,7 +49,6 @@ const Marketing = () => {
         formData
       );
       urlImage = "https:" + res.data.url.split(":")[1];
-      console.log(res);
     } catch (err) {
       return;
     }
@@ -67,10 +66,6 @@ const Marketing = () => {
         }
       );
       toast.success(data?.data?.msg);
-      cache.current["/api/market"].push({
-        id: data?.data?.id,
-        image: urlImage,
-      });
       dispatch(isSuccess());
     } catch (err) {
       dispatch(isFailing());
@@ -99,7 +94,7 @@ const Marketing = () => {
           return dispatch(isSuccess());
         }
         setListMarketing(res?.data?.marketingImage);
-        cache.current[url] = res?.data?.marketingImage;
+        console.log(res?.data);
         dispatch(isSuccess());
       })
       .catch((err) => {
@@ -109,7 +104,7 @@ const Marketing = () => {
     return () => {
       here = false;
     };
-  }, []);
+  }, [update]);
   return (
     <div className="marketing">
       <div className="marketing_swiper">
@@ -132,8 +127,9 @@ const Marketing = () => {
             <MarketingCard
               item={item}
               index={index}
-              cache={cache}
               setListMarketing={setListMarketing}
+              update={update}
+              setUpdate={setUpdate}
             />
           );
         })}
