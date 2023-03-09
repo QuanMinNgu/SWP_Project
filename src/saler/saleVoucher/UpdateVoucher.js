@@ -140,6 +140,7 @@ function UpdateVoucher() {
               courseID: res?.data?.voucher?.courseDTO?.courseID,
               image: res?.data?.voucher?.courseDTO?.image,
               courseName: res?.data?.voucher?.courseDTO?.courseName,
+              price: res?.data?.voucher?.courseDTO?.price,
             },
           ]);
         } else {
