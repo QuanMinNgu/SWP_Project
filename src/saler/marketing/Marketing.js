@@ -80,14 +80,10 @@ const Marketing = () => {
 
   useEffect(() => {
     let here = true;
-    const url = "/api/marketing";
+    const url = "/api/common/marketing";
     dispatch(isLoading());
     axios
-      .get(url, {
-        headers: {
-          token: auth.user?.token,
-        },
-      })
+      .get(url)
       .then((res) => {
         if (!here) {
           return dispatch(isSuccess());
@@ -98,7 +94,7 @@ const Marketing = () => {
       })
       .catch((err) => {
         dispatch(isFailing());
-        toast.error("Sorry, We get something wrong in server.");
+        return toast.error(err?.response?.data?.msg);
       });
     return () => {
       here = false;
