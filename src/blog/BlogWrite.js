@@ -158,21 +158,10 @@ const BlogWrite = () => {
 		});
 	};
 
-	const insertImage = (url) => {
-		const editorStateWithImage = EditorState.createWithContent(
-			ContentState.createFromBlockArray(
-				convertFromHTML(`<p>${contentRef.current}<img src="${url}" /></p>`)
-			)
-		);
-		setContent(`<p>${contentRef.current}<img src="${url}" /></p>`);
-		setEditorState(editorStateWithImage);
-	};
-
 	const onImageUpload = (file) => {
 		return new Promise((resolve, reject) => {
 			uploadCallback(file)
 				.then((response) => {
-					insertImage(response.data.link);
 					resolve({ data: { link: response.data.link } });
 				})
 				.catch((error) => {
