@@ -54,7 +54,7 @@ const Marketing = () => {
       const data = await axios.post(
         "/api/marketing/create",
         {
-          image: urlImage,
+          link: urlImage,
         },
         {
           headers: {
@@ -62,6 +62,7 @@ const Marketing = () => {
           },
         }
       );
+      console.log(urlImage);
       setUpdate(!update);
       toast.success(data?.data?.msg);
       dispatch(isSuccess());
