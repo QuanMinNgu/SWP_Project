@@ -127,6 +127,11 @@ const BlogWrite = () => {
 			navigate("/blog");
 		} catch (err) {
 			toast.error(err?.response?.data?.msg);
+			if (err?.response?.data?.msgProgress) {
+				err?.response?.data?.msgProgress?.forEach((item) => {
+					toast.error(item);
+				});
+			}
 			dispatch(isFailing());
 		}
 	};
