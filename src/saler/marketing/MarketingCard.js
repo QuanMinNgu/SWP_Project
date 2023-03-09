@@ -20,7 +20,7 @@ const MarketingCard = ({ item, index, update, setUpdate }) => {
   };
   return (
     <div className="marketing_card_items" key={index}>
-      <img src={item?.image} alt="anh" />
+      <img src={item?.link} alt="anh" />
       <div className="marketing_card_abs">
         <div>
           <button
