@@ -19,11 +19,8 @@ const Marketing = () => {
   const navigate = useNavigate();
   const [update, setUpdate] = useState(false);
   const dispatch = useDispatch();
-  const { cache } = useContext(UserContext);
   const auth = useSelector((state) => state.auth);
-
-  const [listMarketing, setListMarketing] = useState([1]);
-
+  const [listMarketing, setListMarketing] = useState([]);
   const [image, setImage] = useState("");
   const imageRef = useRef();
   const onDrop = useCallback((acceptedFiles) => {
