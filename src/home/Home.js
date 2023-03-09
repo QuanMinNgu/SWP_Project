@@ -64,6 +64,9 @@ const Home = () => {
   useEffect(() => {
     let here = true;
     const url = "/api/common/marketing";
+    if (cache.current["/api/common/marketing/home"]) {
+      return setListMarketing(cache.current["/api/common/marketing/home"]);
+    }
     dispatch(isLoading());
     axios
       .get(url)
@@ -72,6 +75,7 @@ const Home = () => {
           return dispatch(isSuccess());
         }
         setListMarketing(res?.data?.marketingImage);
+        cache.current["/api/common/marketing/home"] = res?.data?.marketingImage;
         console.log(res?.data);
         dispatch(isSuccess());
       })

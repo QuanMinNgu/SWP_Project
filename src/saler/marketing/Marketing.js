@@ -66,6 +66,7 @@ const Marketing = () => {
       setUpdate(!update);
       setImage("");
       imageRef.current = {};
+      URL.revokeObjectURL(image);
       toast.success(data?.data?.msg);
       dispatch(isSuccess());
     } catch (err) {
