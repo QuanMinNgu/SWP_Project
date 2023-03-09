@@ -144,7 +144,7 @@ function App() {
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 					<ToastContainer
-						autoClose={10000}
+						autoClose={5000}
 						style={{ fontSize: "1.5rem", zIndex: "100002" }}
 					/>
 					{auth.loading && <Loading />}

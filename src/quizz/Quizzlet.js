@@ -24,9 +24,12 @@ const Quizzlet = ({ item, updateLesson, setUpdateLesson }) => {
 
 	useEffect(() => {
 		if (quiz) {
-			if (times < 1 || result) {
+			if (times < 1) {
 				handleSubmitButton();
 				toast.warn("Time up");
+				return;
+			}
+			if (result) {
 				return;
 			}
 			const timesInterval = setInterval(() => {
@@ -66,7 +69,6 @@ const Quizzlet = ({ item, updateLesson, setUpdateLesson }) => {
 		if (check && times > 1) {
 			return toast.error("Please enter all answer.");
 		}
-
 		try {
 			const data = await axios.post(
 				"/api/lesson/quiz/submit",
@@ -219,7 +221,7 @@ const Quizzlet = ({ item, updateLesson, setUpdateLesson }) => {
 				<div className="quiz_abs">
 					<div className="quiz_abs_container">
 						<div className="quizz_time">
-							<span>Thời gian còn lại </span>
+							<span>Time remains </span>
 							<i>
 								{Math.floor(times / 60) < 10 && "0"}
 								{Math.floor(times / 60)} :{" "}
