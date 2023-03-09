@@ -43,13 +43,13 @@ function App() {
 	}, []);
 	const cacheRef = useRef({});
 
-	// useEffect(() => {
-	// 	const socket = io("http://localhost:8080");
-	// 	setSocket(socket);
-	// 	return () => {
-	// 		socket.close();
-	// 	};
-	// }, []);
+	useEffect(() => {
+		const socket = io("http://localhost:8080");
+		setSocket(socket);
+		return () => {
+			socket.close();
+		};
+	}, []);
 
 	return (
 		<UserContext.Provider
@@ -144,7 +144,7 @@ function App() {
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 					<ToastContainer
-						autoClose={5000}
+						autoClose={10000}
 						style={{ fontSize: "1.5rem", zIndex: "100002" }}
 					/>
 					{auth.loading && <Loading />}
