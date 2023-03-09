@@ -64,6 +64,8 @@ const Marketing = () => {
       );
       console.log(urlImage);
       setUpdate(!update);
+      setImage("");
+      imageRef.current = {};
       toast.success(data?.data?.msg);
       dispatch(isSuccess());
     } catch (err) {
