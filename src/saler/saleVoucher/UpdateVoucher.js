@@ -43,7 +43,7 @@ function UpdateVoucher() {
       valueRef.current.focus();
       return toast.error("Plese remeber enter value");
     }
-    if (!duration || !apply) {
+    if (duration === "" || apply === "") {
       return toast.error("Please fill duration and apply");
     }
     if (!chooseCourse || chooseCourse.length === 0) {
