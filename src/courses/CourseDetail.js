@@ -11,6 +11,7 @@ import { UserContext } from "../App";
 import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
+import VoucherTemplate from "../voucher/VoucherTemplate";
 const CourseDetail = () => {
   const [payment, setPayment] = useState(false);
   const { slug } = useParams();
@@ -23,7 +24,7 @@ const CourseDetail = () => {
   const navigate = useNavigate();
   const [voucher, setVoucher] = useState([]);
   const [topics, setTopics] = useState({});
-
+  const [currentVoucher, setCurrentVoucher] = useState();
   const [benefit, setBenefit] = useState([]);
 
   const enrollCourseSuccess = async () => {
@@ -123,7 +124,7 @@ const CourseDetail = () => {
             return;
           }
           setVoucher(res?.data?.vouchers);
-          console.log("Here");
+          console.log(res?.data);
           dispatch(isSuccess());
         })
         .catch((err) => {
@@ -287,7 +288,18 @@ const CourseDetail = () => {
           </ul>
           <div className="course_vocher">
             <div className="course_vocher_list">
-              <VocherTemplate onClick={() => setOpen(true)} />
+              {voucher?.map((item, index) => {
+                return (
+                  <VoucherTemplate
+                    item={item}
+                    key={index + "voucher"}
+                    onClick={() => {
+                      setCurrentVoucher(item);
+                      return setOpen(true);
+                    }}
+                  />
+                );
+              })}
             </div>
           </div>
           {open && (
@@ -299,7 +311,7 @@ const CourseDetail = () => {
           )}
           {open && (
             <div className="voucher_details_container">
-              <VoucherTemplateDetail />
+              <VoucherTemplateDetail currentVoucher={currentVoucher} />
             </div>
           )}
         </div>
