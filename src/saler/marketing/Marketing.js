@@ -62,6 +62,7 @@ const Marketing = () => {
           },
         }
       );
+      setUpdate(!update);
       toast.success(data?.data?.msg);
       dispatch(isSuccess());
     } catch (err) {
