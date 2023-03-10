@@ -5,7 +5,7 @@ const SwiperCard = ({ item }) => {
   return (
     <Link to="/">
       <div className="swiper_card">
-        <img src={item?.image} alt="Ảnh" />
+        <img src={item?.link} alt="Ảnh" />
       </div>
     </Link>
   );

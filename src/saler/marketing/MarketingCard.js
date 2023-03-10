@@ -4,17 +4,13 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import "./style.scss";
-const MarketingCard = ({ item, index, cache, setListMartketing }) => {
+const MarketingCard = ({ item, index, update, setUpdate }) => {
   const dispatch = useDispatch();
   const handleDeleteMarket = async () => {
     try {
       dispatch(isLoading());
       const res = await axios.post(`/api/marketing/delete/${item?.id}`);
-      const newArr = cache.current["/api/marketing"].filter(
-        (ite) => ite.id !== item?.id
-      );
-      cache.current["/api/marketing"] = [...newArr];
-      setListMartketing([...newArr]);
+      setUpdate(!update);
       dispatch(isSuccess());
       return toast.success(res?.data?.msg);
     } catch (error) {
@@ -24,7 +20,7 @@ const MarketingCard = ({ item, index, cache, setListMartketing }) => {
   };
   return (
     <div className="marketing_card_items" key={index}>
-      <img src={item?.image} alt="anh" />
+      <img src={item?.link} alt="anh" />
       <div className="marketing_card_abs">
         <div>
           <button

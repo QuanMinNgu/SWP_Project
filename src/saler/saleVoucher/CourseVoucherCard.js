@@ -14,6 +14,7 @@ function CourseVoucherCard({
         courseName: item?.courseName,
         courseID: item?.courseID,
         image: item?.image,
+        price: item?.price,
       },
     ]);
   };
@@ -27,7 +28,7 @@ function CourseVoucherCard({
           <h3>{item?.courseName}</h3>
         </div>
         <div className="voucher_card_body_bottom">
-          <p>{item?.description}</p>
+          <p>Value : ${item?.price}</p>
         </div>
       </div>
     </div>

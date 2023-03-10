@@ -43,7 +43,7 @@ function UpdateVoucher() {
       valueRef.current.focus();
       return toast.error("Plese remeber enter value");
     }
-    if (!duration || !apply) {
+    if (duration === "" || apply === "") {
       return toast.error("Please fill duration and apply");
     }
     if (!chooseCourse || chooseCourse.length === 0) {
@@ -140,6 +140,7 @@ function UpdateVoucher() {
               courseID: res?.data?.voucher?.courseDTO?.courseID,
               image: res?.data?.voucher?.courseDTO?.image,
               courseName: res?.data?.voucher?.courseDTO?.courseName,
+              price: res?.data?.voucher?.courseDTO?.price,
             },
           ]);
         } else {
