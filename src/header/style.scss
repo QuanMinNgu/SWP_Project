@@ -407,3 +407,28 @@
 	border: 0.1rem solid rgba(0, 0, 0, 0.1);
 	border-radius: 0.5rem;
 }
+.user_infor_head {
+	display: flex;
+	align-items: center;
+}
+.user_infor_head_name {
+	margin-left: 0.5rem;
+	font-size: 1.5rem;
+	display: flex;
+	align-items: center;
+}
+.user_infor_head_name_clearly {
+	max-width: 12rem;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	word-break: break-all;
+}
+.user_infor_head_icons {
+	margin-left: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+.icons_change {
+	padding-top: 1.5rem;
+}

@@ -51,7 +51,9 @@ const Header = () => {
 						alt="brand"
 					/>
 				</Link>
-				<span className="header_brand_title">As much as you want, we have</span>
+				<span className="header_brand_title">
+					<i>Unlock your potential with us</i>
+				</span>
 			</div>
 			<div className="header_search">
 				<div className="header_search_container">
@@ -75,7 +77,7 @@ const Header = () => {
 			</div>
 			{auth.user?.token ? (
 				<div className="header_navbar">
-					<div className="header_navbar_items">
+					{/* <div className="header_navbar_items">
 						<span className="header_navbar_items_title">
 							<button
 								onClick={() => {
@@ -89,7 +91,7 @@ const Header = () => {
 							{course && (
 								<div className="header_navbar_items_course">
 									<div className="header_navbar_items_course_title">
-										<h5>My courses</h5>
+										<h6>My courses</h6>
 									</div>
 									<div className="header_navbar_items_course_card">
 										<CourseHeadCard />
@@ -97,19 +99,35 @@ const Header = () => {
 								</div>
 							)}
 						</span>
-					</div>
+					</div> */}
 					<div className="header_navbar_items">
-						<div className="header_navbar_items_img_wrap">
-							<img
-								onClick={() => {
-									setAccount(!account);
-									setAnnouce(false);
-									setCourse(false);
-								}}
-								className="header_navbar_items_img"
-								src={auth.user?.image}
-								alt="Ảnh"
-							/>
+						<div
+							onClick={() => {
+								setAccount(!account);
+								setAnnouce(false);
+								setCourse(false);
+							}}
+							className="header_navbar_items_img_wrap"
+						>
+							<div className="user_infor_head">
+								<img
+									className="header_navbar_items_img"
+									src={auth.user?.image}
+									alt="Ảnh"
+								/>
+								<div className="user_infor_head_name">
+									<div className="user_infor_head_name_clearly">
+										{auth.user?.name}
+									</div>
+									<div className="user_infor_head_icons">
+										{!account ? (
+											<i className="fa-solid fa-sort-down"></i>
+										) : (
+											<i className="fa-solid fa-sort-up icons_change"></i>
+										)}
+									</div>
+								</div>
+							</div>
 							{account && (
 								<div className="header_navbar_account">
 									<div className="header_navbar_account_infor">
