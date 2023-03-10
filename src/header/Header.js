@@ -98,29 +98,6 @@ const Header = () => {
 							)}
 						</span>
 					</div>
-					<div className="header_navbar_items header_navbar_items_bell">
-						<i
-							onClick={() => {
-								setAnnouce(!annouce);
-								setCourse(false);
-								setAccount(false);
-							}}
-							className="fa-solid fa-bell"
-						></i>
-						{annouce && (
-							<div className="header_navbar_items_bell_noti">
-								<div className="header_navbar_items_bell_noti_title">
-									<h6>Thông Báo</h6>
-									<div>
-										<i className="fa-solid fa-ellipsis"></i>
-									</div>
-								</div>
-								<div className="header_navbar_items_bell_noti_card">
-									<AnnouceCard />
-								</div>
-							</div>
-						)}
-					</div>
 					<div className="header_navbar_items">
 						<div className="header_navbar_items_img_wrap">
 							<img

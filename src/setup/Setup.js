@@ -13,7 +13,6 @@ const Setup = () => {
 	const navigate = useNavigate();
 
 	const [setup, setSetup] = useState(false);
-	const [avatar, setAvatar] = useState(false);
 
 	const [image, setImage] = useState("");
 	const imageRef = useRef("");
@@ -58,6 +57,7 @@ const Setup = () => {
 				}
 				setGmail(res?.data?.gmail);
 				setImage(auth.user?.image);
+				console.log(res?.data);
 				dispatch(isSuccess());
 			})
 			.catch((err) => {
@@ -99,6 +99,8 @@ const Setup = () => {
 				toast.error(err?.response?.data?.msg);
 			}
 		}
+
+		console.log(movie);
 		dispatch(isLoading());
 		try {
 			const data = await axios.post(
@@ -121,7 +123,6 @@ const Setup = () => {
 				})
 			);
 			setSetup(false);
-			setAvatar(false);
 		} catch (err) {
 			dispatch(isFailing());
 			toast.error(err?.response?.data?.msg);
@@ -190,9 +191,59 @@ const Setup = () => {
 								disabled
 							/>
 						</div>
+					</div>
+					<div className="setUp_name">
+						<div className="setUp_name_navbar">
+							<div className="setUp_name_navbar-title">
+								<span>Avatar</span>
+							</div>
+							<div className="setUp_name_recommend">
+								Should be a square image, accepting files: JPG, PNG or GIF.
+							</div>
+						</div>
+						<div style={{ cursor: "pointer" }} className="setUp_avatar">
+							<img
+								onClick={() => {
+									setSetup(true);
+								}}
+								src={image || auth.user?.image}
+								alt="Avatar"
+							/>
+							{setup && (
+								<div className="setUp_avatar_upload">
+									<label htmlFor="avatarImg">
+										<i className="fa-solid fa-image"></i>
+									</label>
+									<input
+										onChange={(e) => handleChangeImage(e)}
+										id="avatarImg"
+										type="file"
+										hidden
+									/>
+								</div>
+							)}
+						</div>
+					</div>
+					<div className="setUp_name">
+						<div className="setUp_name_navbar">
+							<div className="setUp_name_navbar-title">
+								<span>
+									Email <span style={{ color: "red" }}>*</span>
+								</span>
+							</div>
+							<input
+								className="setUp_name_input"
+								type="text"
+								defaultValue={gmail}
+								disabled
+							/>
+						</div>
+					</div>
+					<div className="setUp_button_container">
 						{!setup ? (
 							<div className="setUp_button">
 								<button
+									style={{ padding: "0 4rem", height: "4rem" }}
 									onClick={() => {
 										setSetup(true);
 									}}
@@ -221,95 +272,6 @@ const Setup = () => {
 								</button>
 							</div>
 						)}
-					</div>
-					<div className="setUp_name">
-						<div className="setUp_name_navbar">
-							<div className="setUp_name_navbar-title">
-								<span>Avatar</span>
-							</div>
-							<div className="setUp_name_recommend">
-								Should be a square image, accepting files: JPG, PNG or GIF.
-							</div>
-						</div>
-						<div style={{ cursor: "pointer" }} className="setUp_avatar">
-							<img
-								onClick={() => {
-									setAvatar(true);
-								}}
-								src={image || auth.user?.image}
-								alt="Avatar"
-							/>
-							{avatar && (
-								<div className="setUp_avatar_upload">
-									<label htmlFor="avatarImg">
-										<i className="fa-solid fa-image"></i>
-									</label>
-									<input
-										onChange={(e) => handleChangeImage(e)}
-										id="avatarImg"
-										type="file"
-										hidden
-									/>
-								</div>
-							)}
-						</div>
-						{!avatar ? (
-							<div className="setUp_button">
-								<button
-									onClick={() => {
-										setAvatar(true);
-									}}
-								>
-									Edit
-								</button>
-							</div>
-						) : (
-							<div className="setUp_button">
-								<button
-									onClick={handleSaveInfor}
-									style={{
-										marginRight: "1rem",
-										border: "0.1rem solid #FF751F",
-										color: "#FF751F",
-									}}
-								>
-									Save
-								</button>
-								<button
-									onClick={() => {
-										setAvatar(false);
-									}}
-								>
-									Cancel
-								</button>
-							</div>
-						)}
-					</div>
-					<div className="setUp_name">
-						<div className="setUp_name_navbar">
-							<div className="setUp_name_navbar-title">
-								<span>Email</span>
-							</div>
-							<input
-								className="setUp_name_input"
-								type="text"
-								defaultValue={gmail}
-								disabled
-							/>
-						</div>
-					</div>
-					<div className="setUp_name">
-						<div className="setUp_name_navbar">
-							<div className="setUp_name_navbar-title">
-								<span>UserID</span>
-							</div>
-							<input
-								className="setUp_name_input"
-								type="text"
-								defaultValue={`${auth.user?.id}`}
-								disabled
-							/>
-						</div>
 					</div>
 				</div>
 			)}
