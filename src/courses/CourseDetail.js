@@ -349,6 +349,7 @@ const CourseDetail = () => {
 			)}
 			{payment && (
 				<Pay
+					vocher={apply}
 					price={course?.course?.price || 0.1}
 					setPayment={setPayment}
 					setCanLearn={setCanLearn}

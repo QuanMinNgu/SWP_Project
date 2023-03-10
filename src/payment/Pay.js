@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isLoading, isSuccess, isFailing } from "../redux/slice/auth";
 import axios from "axios";
-const Pay = ({ setPayment, setCanLearn, price }) => {
+const Pay = ({ setPayment, setCanLearn, price, vocher }) => {
 	const initialOptions = {
 		"client-id":
 			"AQVdNJ2adELwM1B1LTHKG8rcc-MKrGUU9g4SLcy3SYuAyYukSyCU7BFEZz7ix0nIaFksX0AeZrWkR8-h",
@@ -33,6 +33,7 @@ const Pay = ({ setPayment, setCanLearn, price }) => {
 					courseID: slug,
 					price: price,
 					createdDate: new Date(),
+					voucherID: vocher?.voucherID ? vocher?.voucherID : null,
 				},
 				{
 					headers: {
@@ -67,7 +68,9 @@ const Pay = ({ setPayment, setCanLearn, price }) => {
 									{
 										description: `You are enrolling this course`,
 										amount: {
-											value: price,
+											value: vocher?.amount
+												? price - vocher?.amount * 1
+												: price,
 										},
 									},
 								],
