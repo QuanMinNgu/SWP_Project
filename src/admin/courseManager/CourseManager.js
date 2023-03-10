@@ -206,6 +206,11 @@ const CourseManager = () => {
 			setUpdateCourse(!updateCourse);
 		} catch (err) {
 			dispatch(isFailing());
+			if (err?.response?.data?.msgProgress) {
+				err?.response?.data?.msgProgress?.forEach((item) => {
+					toast.error(item);
+				});
+			}
 			return toast.error(err?.response?.data?.msg);
 		}
 	};

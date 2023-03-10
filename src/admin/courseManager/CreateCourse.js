@@ -259,10 +259,16 @@ const CreateCourse = () => {
 			);
 			dispatch(isSuccess());
 			toast.success(data?.data?.msg);
+
 			idRef.current = data?.data?.courseID;
 			imageRef.current = "";
 		} catch (err) {
 			toast.error(err?.response?.data?.msg);
+			if (err?.response?.data?.msgProgress) {
+				err?.response?.data?.msgProgress?.forEach((item) => {
+					toast.error(item);
+				});
+			}
 			dispatch(isFailing());
 		}
 	};
@@ -306,6 +312,11 @@ const CreateCourse = () => {
 				setLesson([]);
 			} catch (err) {
 				toast.error(err?.response?.data?.msg);
+				if (err?.response?.data?.msgProgress) {
+					err?.response?.data?.msgProgress?.forEach((item) => {
+						toast.error(item);
+					});
+				}
 				dispatch(isFailing());
 			}
 		} else {

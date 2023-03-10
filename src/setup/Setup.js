@@ -125,6 +125,11 @@ const Setup = () => {
 		} catch (err) {
 			dispatch(isFailing());
 			toast.error(err?.response?.data?.msg);
+			if (err?.response?.data?.msgProgress) {
+				err?.response?.data?.msgProgress?.forEach((item) => {
+					toast.error(item);
+				});
+			}
 		}
 	};
 
