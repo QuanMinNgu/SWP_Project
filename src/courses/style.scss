@@ -240,3 +240,23 @@
 .course_detail_name {
 	word-break: break-all;
 }
+.course_detail_price2 {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: end;
+	margin-top: 1rem;
+	font-size: 1.6rem;
+}
+.course_detail_oldPrice {
+	font-size: 2.7rem;
+	text-decoration: line-through;
+	margin-bottom: 0.2rem;
+	font-weight: 500;
+	color: rgba(0, 0, 0, 0.6);
+}
+.course_detail_newPrice {
+	font-size: 3.5rem;
+	color: #f0564d;
+	margin-left: 1rem;
+}

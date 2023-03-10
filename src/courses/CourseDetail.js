@@ -25,6 +25,7 @@ const CourseDetail = () => {
 	const [voucher, setVoucher] = useState([]);
 	const [topics, setTopics] = useState({});
 	const [currentVoucher, setCurrentVoucher] = useState();
+	const [apply, setApply] = useState({});
 	const [benefit, setBenefit] = useState([]);
 
 	const enrollCourseSuccess = async () => {
@@ -51,6 +52,10 @@ const CourseDetail = () => {
 			toast.error(err?.response?.data?.msg);
 		}
 	};
+
+	useEffect(() => {
+		console.log(currentVoucher);
+	}, [currentVoucher]);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -124,7 +129,6 @@ const CourseDetail = () => {
 						return;
 					}
 					setVoucher(res?.data?.vouchers);
-					console.log(res?.data);
 					dispatch(isSuccess());
 				})
 				.catch((err) => {
@@ -211,9 +215,23 @@ const CourseDetail = () => {
 					<div className="course_detail_img">
 						<img src={course?.course?.image} alt="Ảnh" />
 					</div>
-					<div className="course_detail_price">
-						{course?.course?.price === 0 ? "Free" : "$" + course?.course?.price}
-					</div>
+					{!apply?.amount ? (
+						<div className="course_detail_price">
+							{course?.course?.price === 0
+								? "Free"
+								: "$" + course?.course?.price}
+						</div>
+					) : (
+						<div className="course_detail_price2">
+							<div className="course_detail_oldPrice">
+								${course?.course?.price}
+							</div>
+							<div className="course_detail_newPrice">
+								<b>${course?.course?.price - apply?.amount * 1}</b>
+							</div>
+						</div>
+					)}
+
 					<div className="course_detail_button">
 						{store?.rule === "ROLE_ADMIN" ? (
 							<button
@@ -293,6 +311,8 @@ const CourseDetail = () => {
 									<VoucherTemplate
 										item={item}
 										key={index + "voucher"}
+										setApply={setApply}
+										apply={apply}
 										onClick={() => {
 											setCurrentVoucher(item);
 											return setOpen(true);
