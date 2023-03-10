@@ -3,6 +3,7 @@ import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
 import { toast } from "react-toastify";
 import draftToHtml from "draftjs-to-html";
+import axios from "axios";
 const Reading = ({
 	setUrlArray,
 	urlArray,
@@ -82,6 +83,48 @@ const Reading = ({
 		setAddLesson("");
 		setType("listening");
 	};
+	const uploadCallback = (file) => {
+		return new Promise((resolve, reject) => {
+			const formData = new FormData();
+			formData.append("file", file);
+			formData.append("upload_preset", "sttruyenxyz");
+			axios
+				.post(
+					"https://api.cloudinary.com/v1_1/sttruyen/image/upload",
+					formData,
+					{
+						headers: { "X-Requested-With": "XMLHttpRequest" },
+						onUploadProgress: (progressEvent) => {
+							const percentCompleted = Math.round(
+								(progressEvent.loaded * 100) / progressEvent.total
+							);
+						},
+					}
+				)
+				.then((response) => {
+					resolve({ data: { link: response.data.secure_url } });
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	};
+
+	const [uploadImage, setUploadImage] = useState(false);
+
+	const onImageUpload = (file) => {
+		return new Promise((resolve, reject) => {
+			uploadCallback(file)
+				.then((response) => {
+					setUploadImage(true);
+					resolve({ data: { link: response.data.link } });
+				})
+				.catch((error) => {
+					console.error(error);
+					reject(error);
+				});
+		});
+	};
 
 	return (
 		<div className="content_edit">
@@ -91,10 +134,36 @@ const Reading = ({
 				wrapperClassName="editor-wrapper"
 				editorClassName="message-editor"
 				toolbarClassName="message-toolbar"
+				toolbar={{
+					options: [
+						"inline",
+						"blockType",
+						"fontSize",
+						"list",
+						"textAlign",
+						"image",
+						"emoji",
+						"link",
+						"history",
+					],
+
+					image: {
+						uploadEnabled: true,
+						uploadCallback: onImageUpload,
+						previewImage: true,
+						inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
+						alt: { present: false, mandatory: false },
+						defaultSize: {
+							height: "200px",
+							width: "200px",
+						},
+					},
+				}}
 			/>
-			{!convertToRaw(editorState.getCurrentContent())?.blocks[0]?.text && (
-				<div className="newPost_content_title">Content in here</div>
-			)}
+			{!convertToRaw(editorState.getCurrentContent())?.blocks[0]?.text &&
+				!uploadImage && (
+					<div className="newPost_content_title">Content in here</div>
+				)}
 			<div
 				onClick={() => {
 					setUploadFile(true);

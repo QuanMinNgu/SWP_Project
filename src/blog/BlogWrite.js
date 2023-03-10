@@ -22,7 +22,6 @@ const BlogWrite = () => {
 
 	const [optionsKind, setOptionKind] = useState({});
 
-	const [updateContent, setUpdateContent] = useState(false);
 	const { cache } = useContext(UserContext);
 	const [types, setTypes] = useState([]);
 
@@ -163,10 +162,13 @@ const BlogWrite = () => {
 		});
 	};
 
+	const [uploadImage, setUploadImage] = useState(false);
+
 	const onImageUpload = (file) => {
 		return new Promise((resolve, reject) => {
 			uploadCallback(file)
 				.then((response) => {
+					setUploadImage(true);
 					resolve({ data: { link: response.data.link } });
 				})
 				.catch((error) => {
@@ -239,7 +241,7 @@ const BlogWrite = () => {
 					}}
 				/>
 				{!convertToRaw(editorState.getCurrentContent())?.blocks[0]?.text &&
-					!updateContent && (
+					!uploadImage && (
 						<div className="newPost_content_title">Content in here</div>
 					)}
 			</div>
