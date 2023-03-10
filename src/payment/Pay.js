@@ -31,7 +31,7 @@ const Pay = ({ setPayment, setCanLearn, price, vocher }) => {
 				"/api/course/enroll",
 				{
 					courseID: slug,
-					price: price,
+					price: vocher?.amount ? price - vocher?.amount * 1 : price,
 					createdDate: new Date(),
 					voucherID: vocher?.voucherID ? vocher?.voucherID : null,
 				},
