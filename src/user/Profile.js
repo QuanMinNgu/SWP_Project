@@ -54,7 +54,7 @@ const Profile = () => {
   }, []);
   useEffect(() => {
     let here = true;
-    const url = `/api/account/profile?id=${slug}`;
+    const url = `/api/common/get_user?id=${slug}`;
     if (cache.current[url]) {
       return setAccount(cache.current[url]);
     }
@@ -65,8 +65,8 @@ const Profile = () => {
         if (!here) {
           return;
         }
-        setAccount(res?.data);
-        cache.current[url] = res?.data;
+        setAccount(res?.data?.user);
+        cache.current[url] = res?.data?.user;
         dispatch(isSuccess());
         console.log(res?.data);
       })
@@ -88,7 +88,7 @@ const Profile = () => {
         <div className="profile_header_user">
           <img src={account?.image} />
           <div>
-            <h2>{account?.accountName}</h2>
+            <h2>{account?.name}</h2>
           </div>
         </div>
       </div>
