@@ -43,7 +43,7 @@ const Setup = () => {
 
   useEffect(() => {
     let here = true;
-    const url = `/api/account/get_user?id=${auth?.user?.id}`;
+    const url = "/api/account/get_user";
     dispatch(isLoading());
     axios
       .get(url, {
@@ -66,6 +66,38 @@ const Setup = () => {
         }
         toast.error(err?.response?.data?.msg);
         setImage(auth.user?.image);
+        dispatch(isFailing());
+      });
+    return () => {
+      here = false;
+    };
+  }, []);
+
+  const [payments, setPayments] = useState([]);
+
+  useEffect(() => {
+    let here = true;
+    const url = "/api/account/getpayment";
+    dispatch(isLoading());
+    axios
+      .get(url, {
+        headers: {
+          token: auth.user?.token,
+        },
+      })
+      .then((res) => {
+        if (!here) {
+          return dispatch(isSuccess());
+        }
+        setPayments(res?.data?.payments);
+        console.log(res?.data);
+        dispatch(isSuccess());
+      })
+      .catch((err) => {
+        if (!here) {
+          return dispatch(isFailing());
+        }
+        toast.error(err?.response?.data?.msg);
         dispatch(isFailing());
       });
     return () => {
@@ -287,23 +319,29 @@ const Setup = () => {
               <div className="setUp_payment_head_3">Amount</div>
               <div className="setUp_payment_head_4">Description</div>
             </div>
-            <div className="setUp_payment_body">
-              <div className="setUp_payment_body_1">
-                <Link
-                  style={{
-                    textDecoration: "none",
-                  }}
-                  to="/"
-                >
-                  1990
-                </Link>
+            {payments?.map((item, index) => (
+              <div className="setUp_payment_body">
+                <div className="setUp_payment_body_1">
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                    }}
+                    to={`/`}
+                  >
+                    {item?.paymentID}
+                  </Link>
+                </div>
+                <div className="setUp_payment_body_2">12/09/2002</div>
+                <div className="setUp_payment_body_3">${item?.amount}</div>
+                <div className="setUp_payment_body_4">
+                  Pay for{" "}
+                  <Link to={`/course/${item?.courseID}`}>
+                    {" "}
+                    {item?.courseName}{" "}
+                  </Link>
+                </div>
               </div>
-              <div className="setUp_payment_body_2">12/09/2002</div>
-              <div className="setUp_payment_body_3">$120</div>
-              <div className="setUp_payment_body_4">
-                Pay for <Link to="/"> Css, Html </Link>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       )}
