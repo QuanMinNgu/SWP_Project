@@ -66,13 +66,18 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
     }
     console.log(loveBlog);
   }, [loveBlog]);
+  const handleWatchProfile = () => {
+    navigate(`/profile/${item?.accountID}`);
+  };
   return (
     <div className="blog_card" key={index}>
       <div className="blog_card_body">
         <div className="blog_card_body_top">
           <div>
             <img src={item?.image} />
-            <h2>{item?.name}</h2>
+            <h2 onClick={handleWatchProfile} style={{ cursor: "pointer" }}>
+              {item?.name}
+            </h2>
           </div>
           <div>
             <span>{item?.courseType?.courseTypeName}</span>

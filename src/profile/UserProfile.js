@@ -2,22 +2,20 @@ import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import ProfileCard from "./ProfileCard";
+import ProfileCard from "../user/ProfileCard";
 import "./style.scss";
-const Profile = () => {
+const UserProfile = () => {
   const [backGround, setBackground] = useState(
     "https://fullstack.edu.vn/static/media/cover-profile.3fb9fed576da4b28386a.png"
   );
   const navigate = useNavigate();
+  const [openNav, setOpenNav] = useState(false);
   const auth = useSelector((state) => state?.auth);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  useEffect(() => {
-    if (!auth?.user?.token) {
-      navigate("/");
-    }
-  }, []);
+
   return (
     <div className="profile">
       <div
@@ -62,4 +60,4 @@ const Profile = () => {
     </div>
   );
 };
-export default Profile;
+export default UserProfile;
