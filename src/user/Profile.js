@@ -1,7 +1,10 @@
-import { useEffect, useRef } from "react";
+import axios from "axios";
+import { useContext, useEffect, useRef } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router";
+import { UserContext } from "../App";
+import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import ProfileCard from "./ProfileCard";
 import "./style.scss";
 const Profile = () => {
@@ -10,6 +13,11 @@ const Profile = () => {
   );
   const navigate = useNavigate();
   const auth = useSelector((state) => state?.auth);
+  const { cache } = useContext(UserContext);
+  const dispatch = useDispatch();
+  const [list, setList] = useState([]);
+  const [account, setAccount] = useState({});
+  const { slug } = useParams();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -17,6 +25,57 @@ const Profile = () => {
     if (!auth?.user?.token) {
       navigate("/");
     }
+  }, []);
+
+  useEffect(() => {
+    let here = true;
+    const url = `/api/account/user_course?id=${slug}`;
+    if (cache.current[url]) {
+      return setList(cache.current[url]);
+    }
+    dispatch(isLoading());
+    axios
+      .get(url)
+      .then((res) => {
+        if (!here) {
+          return;
+        }
+        setList(res?.data);
+        cache.current[url] = res?.data;
+        console.log(res?.data);
+        dispatch(isSuccess());
+      })
+      .catch((err) => {
+        dispatch(isFailing());
+      });
+    return () => {
+      here = false;
+    };
+  }, []);
+  useEffect(() => {
+    let here = true;
+    const url = `/api/account/profile?id=${slug}`;
+    if (cache.current[url]) {
+      return setAccount(cache.current[url]);
+    }
+    dispatch(isLoading());
+    axios
+      .get(url)
+      .then((res) => {
+        if (!here) {
+          return;
+        }
+        setAccount(res?.data);
+        cache.current[url] = res?.data;
+        dispatch(isSuccess());
+        console.log(res?.data);
+      })
+      .catch((err) => {
+        dispatch(isFailing());
+      });
+    return () => {
+      here = false;
+    };
   }, []);
   return (
     <div className="profile">
@@ -27,9 +86,9 @@ const Profile = () => {
         }}
       >
         <div className="profile_header_user">
-          <img src={auth?.user?.image} />
+          <img src={account?.image} />
           <div>
-            <h2>{auth?.user?.name}</h2>
+            <h2>{account?.accountName}</h2>
           </div>
         </div>
       </div>
@@ -39,11 +98,15 @@ const Profile = () => {
             <h3>Các khóa học đã hoàn thành</h3>
           </div>
           <div className="profile_container_courses_card">
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
+            {list?.completed?.map((item, index) => {
+              return (
+                <ProfileCard
+                  item={item}
+                  index={index}
+                  key={index + "profile"}
+                />
+              );
+            })}
           </div>
         </div>
         <div className="profile_container_courses_done">
@@ -51,10 +114,15 @@ const Profile = () => {
             <h3>Các khóa học đang học</h3>
           </div>
           <div className="profile_container_courses_card">
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
+            {list?.onProcess?.map((item, index) => {
+              return (
+                <ProfileCard
+                  item={item}
+                  index={index}
+                  key={index + "profile"}
+                />
+              );
+            })}
             <ProfileCard />
           </div>
         </div>

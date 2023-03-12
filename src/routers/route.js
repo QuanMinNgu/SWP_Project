@@ -22,7 +22,6 @@ import ViewPdf from "../viewPdf/ViewPdf";
 import ActiveAccount from "../auth/ActiveAccount";
 import Voucher from "../voucher/Voucher";
 import UpdateBlog from "../user/userblog/UpdateBlog";
-import UserProfile from "../profile/UserProfile";
 export const publicRouter = [
   {
     element: Home,
@@ -33,12 +32,6 @@ export const publicRouter = [
   {
     element: Login,
     path: "/login",
-  },
-  {
-    element: Profile,
-    path: "/me/profile",
-    layout: DefaultLayout,
-    type: "Home",
   },
   {
     element: Searching,
@@ -116,7 +109,7 @@ export const publicRouter = [
     layout: DefaultLayout,
   },
   {
-    element: UserProfile,
+    element: Profile,
     path: "/profile/:slug",
     layout: DefaultLayout,
   },
