@@ -43,7 +43,7 @@ const Setup = () => {
 
   useEffect(() => {
     let here = true;
-    const url = `/api/account/get_user${auth?.user?.id}`;
+    const url = `/api/account/get_user?id=${auth?.user?.id}`;
     dispatch(isLoading());
     axios
       .get(url, {
