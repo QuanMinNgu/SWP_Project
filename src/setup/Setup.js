@@ -23,6 +23,8 @@ const Setup = () => {
 
 	const dispatch = useDispatch();
 
+	const [msg, setMsg] = useState({});
+
 	useEffect(() => {
 		if (!auth.user) {
 			return toast.error("Please login first.");
@@ -97,7 +99,11 @@ const Setup = () => {
 				if (!here) {
 					return dispatch(isFailing());
 				}
-				toast.error(err?.response?.data?.msg);
+				let ms = {};
+				err?.response?.data?.msgProgress?.forEach((item) => {
+					ms[item?.errorName] = item?.message;
+				});
+				setMsg({ ...ms });
 				dispatch(isFailing());
 			});
 		return () => {
@@ -107,7 +113,7 @@ const Setup = () => {
 
 	const handleSaveInfor = async () => {
 		if (!nameRef.current.value) {
-			return toast.error("Please enter name.");
+			return setMsg({ name: "Name can not be empty!" });
 		}
 		const movie = {
 			name: nameRef.current.value,
@@ -132,7 +138,6 @@ const Setup = () => {
 			}
 		}
 
-		console.log(movie);
 		dispatch(isLoading());
 		try {
 			const data = await axios.post(
@@ -213,7 +218,20 @@ const Setup = () => {
 					<div className="setUp_name">
 						<div className="setUp_name_navbar">
 							<div className="setUp_name_navbar-title">
-								<span>Name</span>
+								<span>
+									Name{" "}
+									{msg["name"] && (
+										<div
+											style={{
+												color: "red",
+												margin: "0.5rem 0",
+												fontSize: "1.2rem",
+											}}
+										>
+											* <i>{msg["name"]}</i>
+										</div>
+									)}
+								</span>
 							</div>
 							<input
 								ref={nameRef}
@@ -229,6 +247,17 @@ const Setup = () => {
 							<div className="setUp_name_navbar-title">
 								<span>Avatar</span>
 							</div>
+							{msg["avatar"] && (
+								<div
+									style={{
+										color: "red",
+										margin: "0.5rem 0",
+										fontSize: "1.2rem",
+									}}
+								>
+									* <i>{msg["avatar"]}</i>
+								</div>
+							)}
 							<div className="setUp_name_recommend">
 								Should be a square image, accepting files: JPG, PNG or GIF.
 							</div>
