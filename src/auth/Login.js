@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./style.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -12,8 +12,9 @@ const Login = () => {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 
-	const location = useLocation();
 	const { setReType, retype } = useContext(UserContext);
+
+	const [msg, setMsg] = useState({});
 
 	const navigate = useNavigate();
 	const handleLogin = async () => {
@@ -21,12 +22,20 @@ const Login = () => {
 			gmail: emailRef.current?.value,
 			password: passwordRef.current?.value,
 		};
-
-		if (!user.gmail || !user.password) {
-			return toast.error("Please enter all value.");
+		let msgr = {};
+		if (!user?.gmail) {
+			msgr["gmail"] = "Gmail cannot be empty!";
 		}
-		if (user.password.length < 8) {
-			return toast.error("Password or email are not correct.");
+		if (!user.password) {
+			msgr["password"] = "Password cannot be empty!";
+		}
+
+		if (user.password.length < 8 && !msgr["password"]) {
+			msgr["password"] = "Password need more than 8 characters!";
+		}
+		if (msgr["gmail"] || msgr["password"]) {
+			setMsg({ ...msgr });
+			return;
 		}
 		dispatch(isLoading());
 		try {
@@ -35,7 +44,7 @@ const Login = () => {
 			});
 			toast.success(data?.data?.msg);
 			dispatch(isLogin(data?.data));
-			if (retype !== "register") {
+			if (retype != "register") {
 				navigate(-1);
 				setReType("login");
 			} else {
@@ -44,7 +53,12 @@ const Login = () => {
 			}
 		} catch (err) {
 			dispatch(isFailing());
-			toast.error(err?.response?.data?.msg);
+			let ms = {
+				gmail: "Gmail or password are incorrect!",
+				password: "Gmail or password are incorrect!",
+			};
+
+			setMsg({ ...ms });
 		}
 	};
 	useEffect(() => {
@@ -269,8 +283,26 @@ const Login = () => {
 				<div class="login">
 					<h2>Login</h2>
 					<div class="inputBox">
-						<input type="text" ref={emailRef} placeholder="username" name="" />
+						{msg["gmail"] && (
+							<div
+								style={{ color: "red", margin: "0.5rem 0", fontSize: "1.2rem" }}
+							>
+								* <i>{msg["gmail"]}</i>
+							</div>
+						)}
+						<input type="text" ref={emailRef} placeholder="gmail" name="" />
 					</div>
+					{msg["password"] && (
+						<div
+							style={{
+								color: "red",
+								marginBottom: "-2.5rem",
+								fontSize: "1.2rem",
+							}}
+						>
+							* <i>{msg["password"]}</i>
+						</div>
+					)}
 					<div class="inputBox">
 						<input
 							type="password"

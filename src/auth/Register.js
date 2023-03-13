@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./style.scss";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -15,6 +15,8 @@ const Register = () => {
 	const nameRef = useRef();
 	const navigate = useNavigate();
 
+	const [msg, setMsg] = useState({});
+
 	const { setReType } = useContext(UserContext);
 
 	useEffect(() => {
@@ -28,25 +30,42 @@ const Register = () => {
 			name: nameRef.current?.value,
 			rePassword: rePasswordRef.current?.value,
 		};
-		if (!user.gmail || !user.password || !user.name || !user.rePassword) {
-			return toast.error("Please enter all value.");
+		let msgr = {};
+		if (!user?.gmail) {
+			msgr["gmail"] = "Gmail cannot be empty!";
 		}
+		if (!user.name) {
+			msgr["name"] = "Name cannot be empty!";
+		}
+		if (!user.password) {
+			msgr["password"] = "Password cannot be empty!";
+		}
+		if (!user.rePassword) {
+			msgr["repassword"] = "Re-Password cannot be empty!";
+		}
+
 		if (user.name.length > 100) {
-			return toast.error("Length of name can not over 100 characters.");
+			msgr["name"] = "Length of name can not over 100 chacracters!";
 		}
 		if (user.password.length < 8) {
-			return toast.error("Password need more than 8 characters.");
+			msgr["password"] = "Password need more than 8 characters!";
 		}
-		if (user.password !== user.rePassword) {
-			return toast.error("Password and Re-Password are not the same.");
+		if (user.password !== user.rePassword && !msgr["password"]) {
+			msgr["password"] = "Password and Re-Password are not the same!";
+			msgr["repassword"] = "Password and Re-Password are not the same!";
+		}
+
+		if (
+			msgr["gmail"] ||
+			msgr["password"] ||
+			msgr["repassword"] ||
+			msgr["name"]
+		) {
+			setMsg({ ...msgr });
+			return;
 		}
 		dispatch(isLoading());
-		console.log({
-			...user,
-			type: "normal",
-			image:
-				"https://res.cloudinary.com/sttruyen/image/upload/v1675845680/stphim/wmo0be0li80asrfw4uhw.jpg",
-		});
+
 		try {
 			const data = await axios.post("/api/auth/register", {
 				...user,
@@ -60,11 +79,11 @@ const Register = () => {
 		} catch (err) {
 			dispatch(isFailing());
 			toast.error(err?.response?.data?.msg);
-			if (err?.response?.data?.msgProgress) {
-				err?.response?.data?.msgProgress?.forEach((item) => {
-					toast.error(item);
-				});
-			}
+			let ms = {};
+			err?.response?.data?.msgProgress?.forEach((item) => {
+				ms[item?.errorName] = item?.message;
+			});
+			setMsg({ ...ms });
 		}
 	};
 
@@ -290,11 +309,36 @@ const Register = () => {
 				<div className="login">
 					<h2>Register</h2>
 					<div className="inputBox">
+						{msg["name"] && (
+							<div
+								style={{ color: "red", margin: "0.5rem 0", fontSize: "1.2rem" }}
+							>
+								* <i>{msg["name"]}</i>
+							</div>
+						)}
 						<input type="text" ref={nameRef} placeholder="username" name="" />
 					</div>
 					<div className="inputBox">
+						{msg["gmail"] && (
+							<div
+								style={{ color: "red", margin: "0.5rem 0", fontSize: "1.2rem" }}
+							>
+								* <i>{msg["gmail"]}</i>
+							</div>
+						)}
 						<input type="text" ref={emailRef} placeholder="email" name="" />
 					</div>
+					{msg["password"] && (
+						<div
+							style={{
+								color: "red",
+								marginBottom: "-2.5rem",
+								fontSize: "1.2rem",
+							}}
+						>
+							* <i>{msg["password"]}</i>
+						</div>
+					)}
 					<div className="inputBox">
 						<input
 							type="password"
@@ -317,6 +361,17 @@ const Register = () => {
 							<i className="fa-solid fa-eye"></i>
 						</div>
 					</div>
+					{msg["repassword"] && (
+						<div
+							style={{
+								color: "red",
+								marginBottom: "-2.5rem",
+								fontSize: "1.2rem",
+							}}
+						>
+							* <i>{msg["repassword"]}</i>
+						</div>
+					)}
 					<div className="inputBox">
 						<input
 							type="password"
