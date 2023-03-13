@@ -46,7 +46,7 @@ const Comment = ({ type, id }) => {
     try {
       console.log({ comment, accountID: auth?.user?.id, blogID: id });
       dispatch(isLoading());
-      const res = axios.post(
+      const res = await axios.post(
         "/api/comment/blog/create",
         {
           comment,
