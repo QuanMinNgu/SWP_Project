@@ -57,6 +57,7 @@ const Comment = ({ type, id }) => {
           headers: { token: auth?.user?.token },
         }
       );
+      console.log(res?.data);
       dispatch(isSuccess());
     } catch (error) {
       dispatch(isFailing());
