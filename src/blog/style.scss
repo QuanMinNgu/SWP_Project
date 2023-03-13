@@ -384,6 +384,7 @@
 }
 .newPost_title_input {
 	flex: 1;
+	position: relative;
 }
 .newPost_input_title_meta {
 	width: 100%;
@@ -414,4 +415,25 @@
 	align-items: center;
 	font-size: 1.8rem;
 	cursor: pointer;
+}
+.errorManage {
+	position: absolute;
+	top: -2.5rem;
+	left: 1rem;
+	padding: 0.25rem 2rem;
+	background-color: red;
+	border: 0.1rem solid rgba(0, 0, 0, 0.1);
+	color: white;
+	font-size: 1.2rem;
+	font-weight: 700;
+	transform: skew(-0.05turn, -0.5deg);
+	&::after {
+		content: "";
+		position: absolute;
+		top: 100%;
+		left: 0;
+		border-right: 1rem solid transparent;
+		border-left: 1rem solid red;
+		border-bottom: 1rem solid transparent;
+	}
 }

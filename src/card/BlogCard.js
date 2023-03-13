@@ -12,7 +12,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   const handleLove = async () => {
-    if (!love) {
+    if (love === false) {
       try {
         dispatch(isLoading());
         const res = await axios.post(

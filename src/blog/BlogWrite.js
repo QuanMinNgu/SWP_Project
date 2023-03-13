@@ -27,6 +27,7 @@ const BlogWrite = () => {
 
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
+  const [msg, setMsg] = useState({});
 
   useEffect(() => {
     if (!auth.user) {
@@ -77,7 +78,6 @@ const BlogWrite = () => {
   const titleRef = useRef();
   const metaRef = useRef();
   const [content, setContent] = useState("");
-  const contentRef = useRef();
   const handleChange = (data) => {
     setEditorState(data);
   };
@@ -85,17 +85,26 @@ const BlogWrite = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     setContent(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    setMsg({});
   }, [editorState]);
-
-  useEffect(() => {
-    contentRef.current = content;
-  }, [content]);
 
   const handleCreateNewBlog = async () => {
     const title = titleRef.current.value;
     const meta = metaRef.current.value;
-    if (!title || !content || !selectedOption?.value) {
-      return toast.error("Please enter all information.");
+    let m = {};
+    if (!title) {
+      m["blogName"] = "Please enter title of blog!";
+    }
+    console.log(editorState);
+    if (!convertToRaw(editorState.getCurrentContent())?.blocks[0]?.text) {
+      m["content"] = "Please enter content of blog!";
+    }
+    if (!selectedOption) {
+      m["kind"] = "Please choose type of blog!";
+    }
+    if (m["blogName"] || m["content"] || m["kind"]) {
+      setMsg({ ...m });
+      return;
     }
     if (!auth.user?.token) {
       return toast.error("Please login first");
@@ -125,13 +134,13 @@ const BlogWrite = () => {
       setContent("");
       navigate("/blog");
     } catch (err) {
-      toast.error(err?.response?.data?.msg);
-      if (err?.response?.data?.msgProgress) {
-        err?.response?.data?.msgProgress?.forEach((item) => {
-          toast.error(item);
-        });
-      }
+      let ms = {};
+      err?.response?.data?.msgProgress?.forEach((item) => {
+        ms[item?.errorName] = item?.message;
+      });
+      setMsg({ ...ms });
       dispatch(isFailing());
+      window.scrollTo(0, 0);
     }
   };
 
@@ -172,24 +181,76 @@ const BlogWrite = () => {
           resolve({ data: { link: response.data.link } });
         })
         .catch((error) => {
-          console.error(error);
           reject(error);
         });
     });
   };
 
+  useEffect(() => {
+    setMsg({});
+  }, [selectedOption]);
+
   return (
     <div className="newPost">
+      {/* {msg["blogName"] && (
+				<div
+					style={{
+						color: "red",
+						margin: "0.5rem 0",
+						fontSize: "1.5rem",
+						textAlign: "center",
+					}}
+				>
+					* <i>{msg["blogName"]}</i>
+				</div>
+			)}
+			{msg["blogMeta"] && (
+				<div
+					style={{
+						color: "red",
+						margin: "0.5rem 0",
+						fontSize: "1.5rem",
+						textAlign: "center",
+					}}
+				>
+					* <i>{msg["blogMeta"]}</i>
+				</div>
+			)}
+			{msg["content"] && (
+				<div
+					style={{
+						color: "red",
+						margin: "0.5rem 0",
+						fontSize: "1.5rem",
+						textAlign: "center",
+					}}
+				>
+					* <i>{msg["content"]}</i>
+				</div>
+			)} */}
       <div className="newPost_title">
         <textarea
+          onChange={() => {
+            setMsg({});
+          }}
           ref={titleRef}
           className="newPost_input_title"
           type="text"
           placeholder="Enter title"
         />
+        {msg["blogName"] && (
+          <div className="errorManage">
+            * <i>{msg["blogName"]}</i>
+          </div>
+        )}
       </div>
       <div className="newPost_title">
-        <div>
+        <div style={{ position: "relative" }}>
+          {msg["kind"] && (
+            <div style={{ top: "-5.3rem" }} className="errorManage">
+              * <i>{msg["kind"]}</i>
+            </div>
+          )}
           <Select
             className="search_wrap_select"
             defaultValue={selectedOption}
@@ -199,7 +260,15 @@ const BlogWrite = () => {
           />
         </div>
         <div className="newPost_title_input">
+          {msg["blogMeta"] && (
+            <div className="errorManage">
+              * <i>{msg["blogMeta"]}</i>
+            </div>
+          )}
           <textarea
+            onChange={() => {
+              setMsg({});
+            }}
             ref={metaRef}
             className="newPost_input_title_meta"
             type="text"
@@ -208,6 +277,11 @@ const BlogWrite = () => {
         </div>
       </div>
       <div className="newPost_content">
+        {msg["content"] && (
+          <div style={{ top: "4.5rem" }} className="errorManage">
+            * <i>{msg["content"]}</i>
+          </div>
+        )}
         <Editor
           editorState={editorState}
           onEditorStateChange={handleChange}
