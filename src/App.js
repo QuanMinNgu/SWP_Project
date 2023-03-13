@@ -1,10 +1,10 @@
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
-	adminRouter,
-	courseExpertRouter,
-	publicRouter,
-	saleRouter,
+  adminRouter,
+  courseExpertRouter,
+  publicRouter,
+  saleRouter,
 } from "./routers/route";
 import "./style.css";
 import { ToastContainer } from "react-toastify";
@@ -17,141 +17,141 @@ import NotFound from "./notfound/NotFound";
 import { io } from "socket.io-client";
 export const UserContext = createContext();
 function App() {
-	const [store, setStore] = useState({ rule: "[ROLE_SALE]" });
+  const [store, setStore] = useState({ rule: "[ROLE_SALE]" });
 
-	const [retype, setReType] = useState("home");
+  const [retype, setReType] = useState("home");
 
-	useEffect(() => {
-		setReType("home");
-	}, []);
+  useEffect(() => {
+    setReType("home");
+  }, []);
 
-	const [socket, setSocket] = useState("");
+  const [socket, setSocket] = useState("");
 
-	const dispatch = useDispatch();
-	const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
 
-	useEffect(() => {
-		if (auth.user?.token) {
-			const decoded = jwt_decode(auth.user?.token);
-			setStore({ rule: decoded.sub });
-		} else {
-			setStore({ rule: "user" });
-		}
-	}, [auth.user?.token]);
-	useEffect(() => {
-		dispatch(isSuccess());
-	}, []);
-	const cacheRef = useRef({});
+  useEffect(() => {
+    if (auth.user?.token) {
+      const decoded = jwt_decode(auth.user?.token);
+      setStore({ rule: decoded.sub });
+    } else {
+      setStore({ rule: "user" });
+    }
+  }, [auth.user?.token]);
+  useEffect(() => {
+    dispatch(isSuccess());
+  }, []);
+  const cacheRef = useRef({});
 
-	useEffect(() => {
-		const socket = io("http://localhost:8080");
-		setSocket(socket);
-		return () => {
-			socket.close();
-		};
-	}, []);
+  useEffect(() => {
+    const socket = io("ws://localhost:8080/websocket");
+    setSocket(socket);
+    return () => {
+      socket.close();
+    };
+  }, []);
 
-	return (
-		<UserContext.Provider
-			value={{ store, setStore, cache: cacheRef, socket, setReType, retype }}
-		>
-			<Router>
-				<div className="App">
-					<Routes>
-						{publicRouter.map((item, index) => {
-							const Page = item.element;
-							return item.layout ? (
-								<Route
-									key={index + "routerpriva"}
-									path={item.path}
-									element={
-										<item.layout type={item?.type}>
-											<Page />
-										</item.layout>
-									}
-								/>
-							) : (
-								<Route
-									key={item?.path + index}
-									path={item?.path}
-									element={<Page />}
-								/>
-							);
-						})}
-						{store.rule === "ROLE_ADMIN" &&
-							adminRouter.map((item, index) => {
-								const Page = item.element;
-								return item.layout ? (
-									<Route
-										key={index + "adminrouter"}
-										path={item.path}
-										element={
-											<item.layout type={item?.type}>
-												<Page />
-											</item.layout>
-										}
-									/>
-								) : (
-									<Route
-										key={item?.path + index}
-										path={item?.path}
-										element={<Page />}
-									/>
-								);
-							})}
-						{store.rule === "ROLE_SALE" &&
-							saleRouter.map((item, index) => {
-								const Page = item.element;
-								return item.layout ? (
-									<Route
-										key={index + "saleRouter"}
-										path={item.path}
-										element={
-											<item.layout type={item?.type}>
-												<Page />
-											</item.layout>
-										}
-									/>
-								) : (
-									<Route
-										key={item?.path + index}
-										path={item?.path}
-										element={<Page />}
-									/>
-								);
-							})}
-						{store.rule === "ROLE_COURSE_EXPERT" &&
-							courseExpertRouter.map((item, index) => {
-								const Page = item.element;
-								return item.layout ? (
-									<Route
-										key={index + "courseExpert"}
-										path={item.path}
-										element={
-											<item.layout type={item?.type}>
-												<Page />
-											</item.layout>
-										}
-									/>
-								) : (
-									<Route
-										key={item?.path + index}
-										path={item?.path}
-										element={<Page />}
-									/>
-								);
-							})}
-						<Route path="*" element={<NotFound />} />
-					</Routes>
-					<ToastContainer
-						autoClose={10000}
-						style={{ fontSize: "1.5rem", zIndex: "100002" }}
-					/>
-					{auth.loading && <Loading />}
-				</div>
-			</Router>
-		</UserContext.Provider>
-	);
+  return (
+    <UserContext.Provider
+      value={{ store, setStore, cache: cacheRef, socket, setReType, retype }}
+    >
+      <Router>
+        <div className="App">
+          <Routes>
+            {publicRouter.map((item, index) => {
+              const Page = item.element;
+              return item.layout ? (
+                <Route
+                  key={index + "routerpriva"}
+                  path={item.path}
+                  element={
+                    <item.layout type={item?.type}>
+                      <Page />
+                    </item.layout>
+                  }
+                />
+              ) : (
+                <Route
+                  key={item?.path + index}
+                  path={item?.path}
+                  element={<Page />}
+                />
+              );
+            })}
+            {store.rule === "ROLE_ADMIN" &&
+              adminRouter.map((item, index) => {
+                const Page = item.element;
+                return item.layout ? (
+                  <Route
+                    key={index + "adminrouter"}
+                    path={item.path}
+                    element={
+                      <item.layout type={item?.type}>
+                        <Page />
+                      </item.layout>
+                    }
+                  />
+                ) : (
+                  <Route
+                    key={item?.path + index}
+                    path={item?.path}
+                    element={<Page />}
+                  />
+                );
+              })}
+            {store.rule === "ROLE_SALE" &&
+              saleRouter.map((item, index) => {
+                const Page = item.element;
+                return item.layout ? (
+                  <Route
+                    key={index + "saleRouter"}
+                    path={item.path}
+                    element={
+                      <item.layout type={item?.type}>
+                        <Page />
+                      </item.layout>
+                    }
+                  />
+                ) : (
+                  <Route
+                    key={item?.path + index}
+                    path={item?.path}
+                    element={<Page />}
+                  />
+                );
+              })}
+            {store.rule === "ROLE_COURSE_EXPERT" &&
+              courseExpertRouter.map((item, index) => {
+                const Page = item.element;
+                return item.layout ? (
+                  <Route
+                    key={index + "courseExpert"}
+                    path={item.path}
+                    element={
+                      <item.layout type={item?.type}>
+                        <Page />
+                      </item.layout>
+                    }
+                  />
+                ) : (
+                  <Route
+                    key={item?.path + index}
+                    path={item?.path}
+                    element={<Page />}
+                  />
+                );
+              })}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <ToastContainer
+            autoClose={10000}
+            style={{ fontSize: "1.5rem", zIndex: "100002" }}
+          />
+          {auth.loading && <Loading />}
+        </div>
+      </Router>
+    </UserContext.Provider>
+  );
 }
 
 export default App;
