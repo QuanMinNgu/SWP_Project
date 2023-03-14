@@ -49,6 +49,7 @@ function App() {
       console.log("WebSocket connection opened");
       socket.send("Hello, WebSocket server!");
     };
+    
   }, []);
   return (
     <UserContext.Provider
