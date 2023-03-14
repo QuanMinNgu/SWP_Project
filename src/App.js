@@ -43,7 +43,7 @@ function App() {
   }, []);
   const cacheRef = useRef({});
   useEffect(() => {
-    const socket = new w3cwebsocket("ws://localhost:8080/comment");
+    const socket = new w3cwebsocket("ws://localhost:8080/webSocket");
     setSocket(socket);
     socket.onopen = () => {
       console.log("WebSocket connection opened");
