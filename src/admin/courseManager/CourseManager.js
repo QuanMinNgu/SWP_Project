@@ -38,13 +38,13 @@ const CourseManager = () => {
 	const [optionsKind, setOptionKind] = useState({});
 
 	const options = [
-		{ value: "", label: "All" },
+		{ value: null, label: "All" },
 		{ value: "free", label: "Free" },
 		{ value: "no-free", label: "Not Free" },
 	];
 
 	const optionsSort = [
-		{ value: "", label: "All" },
+		{ value: null, label: "All" },
 		{ value: "astar", label: "Stars Increased" },
 		{ value: "dstar", label: "Stars Decreased" },
 		{ value: "dcreatedAt", label: "Newest" },
@@ -68,7 +68,7 @@ const CourseManager = () => {
 				};
 			});
 			arr.unshift({
-				value: "",
+				value: null,
 				label: "No sort",
 			});
 			setOptionKind([...arr]);
@@ -95,6 +95,9 @@ const CourseManager = () => {
 			limit: 20,
 			search: searching,
 		};
+		if (sort || type || kind) {
+			sortSearch.search = null;
+		}
 		const sortSearching = new URLSearchParams(sortSearch).toString();
 		const url = `/api/common/course/getAllCourse?${sortSearching}`;
 		console.log(url);
@@ -116,7 +119,7 @@ const CourseManager = () => {
 			})
 			.catch((err) => {
 				dispatch(isFailing());
-				toast.error("Sorry, We get something wrong in server.");
+				toast.error(err?.response?.data?.msg);
 			});
 		return () => {
 			here = false;
@@ -145,8 +148,6 @@ const CourseManager = () => {
 		};
 	}, [update]);
 
-	const [courseExperts, setCourseExperts] = useState([]);
-
 	useEffect(() => {
 		let here = true;
 		const url = "/api/account/course_expert";
@@ -157,7 +158,6 @@ const CourseManager = () => {
 				if (!here) {
 					return dispatch(isSuccess());
 				}
-				setCourseExperts(res?.data?.users);
 				cache.current[url] = res?.data?.users;
 				dispatch(isSuccess());
 			})
@@ -218,20 +218,18 @@ const CourseManager = () => {
 	const [updatePagePart, setUpdatePagePart] = useState(false);
 
 	const handleSearching = () => {
-		const searchingU = new URLSearchParams(search).get("search") || "";
 		const searching = {
-			kind: selectedOptionKind?.value,
-			type: selectedOptionType?.value,
-			sort: selectedOptionSort?.value,
-			search: searchingU,
+			kind: selectedOptionKind?.value || null,
+			type: selectedOptionType?.value || null,
+			sort: selectedOptionSort?.value || null,
+			search: null,
 		};
+		if (searching?.kind === "free") {
+			searching.kind = true;
+		} else if (searching.kind === "no-free") {
+			searching.kind = false;
+		}
 
-		const excludedFields = ["kind", "type", "sort", "search"];
-		excludedFields.forEach((item) => {
-			if (!searching[item]) {
-				delete searching[item];
-			}
-		});
 		searching.page = 1;
 		const searchingUrl = new URLSearchParams(searching).toString();
 		navigate("?" + searchingUrl);

@@ -261,14 +261,6 @@ const CreateCourse = () => {
 			return;
 		}
 
-		console.log({
-			courseName: title,
-			description: contentArr,
-			accountID: courseExpert?.accountID,
-			courseTypeID: selectedOption?.value,
-			price: newPrice * 1,
-			token: auth.user?.token,
-		});
 		dispatch(isLoading());
 		try {
 			const data = await axios.post(
@@ -307,12 +299,6 @@ const CreateCourse = () => {
 	const handleCreatePakageForACourse = async () => {
 		if (idRef.current) {
 			dispatch(isLoading());
-			console.log({
-				lessonPakages: lesson,
-				deletePackage: null,
-				deleteLesson: null,
-				deleteQuestion: null,
-			});
 			try {
 				const data = await axios.post(
 					`/api/course/update_pakage/id=${idRef.current}`,
@@ -343,11 +329,11 @@ const CreateCourse = () => {
 				setLesson([]);
 			} catch (err) {
 				toast.error(err?.response?.data?.msg);
-				if (err?.response?.data?.msgProgress) {
-					err?.response?.data?.msgProgress?.forEach((item) => {
-						toast.error(item);
-					});
-				}
+				let ms = {};
+				err?.response?.data?.msgProgress?.forEach((item) => {
+					ms[item?.errorName] = item?.message;
+				});
+				setMsg({ ...ms });
 				dispatch(isFailing());
 			}
 		} else {
@@ -358,10 +344,6 @@ const CreateCourse = () => {
 	const { getRootProps, getInputProps } = useDropzone({
 		onDrop,
 	});
-
-	useEffect(() => {
-		console.log(msg);
-	}, [msg]);
 
 	return (
 		<div className="managerCourse">
