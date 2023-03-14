@@ -50,7 +50,7 @@ function App() {
       socket.send("Hello, WebSocket server!");
     };
     socket.onerror = (e) => {
-      console.log(e.message);
+      console.log(e);
     };
   }, []);
   return (
