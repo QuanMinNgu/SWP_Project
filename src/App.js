@@ -14,7 +14,7 @@ import Loading from "./loading/Loading";
 import { isSuccess } from "./redux/slice/auth";
 import jwt_decode from "jwt-decode";
 import NotFound from "./notfound/NotFound";
-import { io } from "socket.io-client";
+import { w3cwebsocket } from "websocket";
 export const UserContext = createContext();
 function App() {
   const [store, setStore] = useState({ rule: "[ROLE_SALE]" });
@@ -42,15 +42,14 @@ function App() {
     dispatch(isSuccess());
   }, []);
   const cacheRef = useRef({});
-
   useEffect(() => {
-    const socket = io("http://localhost:8080");
+    const socket = new w3cwebsocket("ws://localhost:8080/comment");
     setSocket(socket);
-    return () => {
-      socket.close();
+    socket.onopen = () => {
+      console.log("WebSocket connection opened");
+      socket.send("Hello, WebSocket server!");
     };
   }, []);
-
   return (
     <UserContext.Provider
       value={{ store, setStore, cache: cacheRef, socket, setReType, retype }}
