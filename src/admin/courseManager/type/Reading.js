@@ -120,7 +120,6 @@ const Reading = ({
 					resolve({ data: { link: response.data.link } });
 				})
 				.catch((error) => {
-					console.error(error);
 					reject(error);
 				});
 		});
