@@ -299,12 +299,6 @@ const CreateCourse = () => {
 	const handleCreatePakageForACourse = async () => {
 		if (idRef.current) {
 			dispatch(isLoading());
-			console.log({
-				lessonPakages: lesson,
-				deletePackage: null,
-				deleteLesson: null,
-				deleteQuestion: null,
-			});
 			try {
 				const data = await axios.post(
 					`/api/course/update_pakage/id=${idRef.current}`,
@@ -346,10 +340,6 @@ const CreateCourse = () => {
 			return toast.error("Please Save course first.");
 		}
 	};
-
-	useEffect(() => {
-		console.log(msg);
-	}, [msg]);
 
 	const { getRootProps, getInputProps } = useDropzone({
 		onDrop,

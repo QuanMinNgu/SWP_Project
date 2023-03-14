@@ -250,17 +250,44 @@ const CreateCourse = () => {
 
 	const idRef = useRef(null);
 
+	const [msg, setMsg] = useState({});
+
 	const handleCreateNewCourse = async () => {
 		const title = titleRef.current.value;
+		let m = {};
+		if (!title) {
+			m["courseName"] = "Please enter title of this course!";
+		}
+		if (!contentRef.current.value) {
+			m["description"] = "Please enter description for this course!";
+		}
+		if (!newPrice) {
+			m["price"] = "Please enter price for this course!";
+		}
+		if (!selectedOption) {
+			m["kind"] = "Please choose kind for this course!";
+		}
+		if (isNaN(newPrice)) {
+			m["price"] = "Price is a number!";
+		} else {
+			if (newPrice * 1 < 0) {
+				m["price"] = "Price must be greater than 0!";
+			}
+		}
+		if (!courseExpert) {
+			m["courseExpert"] = "Please choose course expert!";
+		}
 		if (
 			!title ||
 			!contentRef.current.value ||
 			!newPrice ||
 			!selectedOption?.value ||
-			isNaN(newPrice)
+			isNaN(newPrice) ||
+			!courseExpert
 		) {
-			return toast.error("Please enter all value.");
+			return setMsg({ ...m });
 		}
+		setMsg({});
 		let contentArr = contentRef.current.value + "--?--";
 		benefit.forEach((item, index) => {
 			if (index !== benefit.length - 1) {
@@ -367,6 +394,11 @@ const CreateCourse = () => {
 			<div className="row">
 				<div className="col c-12 m-8 l-8">
 					<div className="newPost_title">
+						{msg["courseName"] && (
+							<div style={{ top: "-3rem" }} className="errorManage">
+								* <i>{msg["courseName"]}</i>
+							</div>
+						)}
 						<textarea
 							ref={titleRef}
 							className="create_input_title"
@@ -376,6 +408,11 @@ const CreateCourse = () => {
 						/>
 					</div>
 					<div className="newPost_title">
+						{msg["description"] && (
+							<div style={{ top: "-3.3rem" }} className="errorManage">
+								* <i>{msg["description"]}</i>
+							</div>
+						)}
 						<textarea
 							ref={contentRef}
 							className="create_input_Content"
@@ -533,6 +570,14 @@ const CreateCourse = () => {
 						</div>
 					</div>
 					<div style={{ marginLeft: "6rem" }} className="newPost_title">
+						{msg["price"] && (
+							<div
+								style={{ top: "-3.3rem", wordBreak: "break-all" }}
+								className="errorManage"
+							>
+								* <i>{msg["price"]}</i>
+							</div>
+						)}
 						<div
 							style={{
 								color: "#F05123",
