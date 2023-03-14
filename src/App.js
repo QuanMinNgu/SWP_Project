@@ -49,6 +49,9 @@ function App() {
       console.log("WebSocket connection opened");
       socket.send("Hello, WebSocket server!");
     };
+    socket.onerror = (e) => {
+      console.log(e);
+    };
   }, []);
   return (
     <UserContext.Provider
