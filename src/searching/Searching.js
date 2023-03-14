@@ -17,13 +17,13 @@ const Searching = () => {
 	const [updatePagePart, setUpdatePagePart] = useState(false);
 
 	const options = [
-		{ value: "", label: "All" },
+		{ value: null, label: "All" },
 		{ value: "free", label: "Free" },
 		{ value: "no-free", label: "Not Free" },
 	];
 
 	const optionsSort = [
-		{ value: "", label: "All" },
+		{ value: null, label: "All" },
 		{ value: "astar", label: "Stars Increased" },
 		{ value: "dstar", label: "Stars Decreased" },
 		{ value: "dcreatedAt", label: "Newest" },
@@ -55,8 +55,6 @@ const Searching = () => {
 		};
 	}, []);
 
-	const auth = useSelector((state) => state.auth);
-
 	const dispatch = useDispatch();
 	const { search } = useLocation();
 
@@ -75,6 +73,14 @@ const Searching = () => {
 			limit: 20,
 			search: searching,
 		};
+		if (sort || type || kind) {
+			sortSearch.search = null;
+		}
+		if (sortSearch?.kind === "free") {
+			sortSearch.kind = true;
+		} else if (sortSearch.kind === "no-free") {
+			sortSearch.kind = false;
+		}
 
 		const sortSearching = new URLSearchParams(sortSearch).toString();
 		const url = `/api/common/course/getAllCourse?${sortSearching}`;
@@ -104,7 +110,7 @@ const Searching = () => {
 				};
 			});
 			arr.unshift({
-				value: "",
+				value: null,
 				label: "No sort",
 			});
 			setOptionKind([...arr]);
@@ -114,20 +120,17 @@ const Searching = () => {
 	const navigate = useNavigate();
 
 	const handleSearching = () => {
-		const searchingU = new URLSearchParams(search).get("search") || "";
 		const searching = {
-			kind: selectedOptionKind?.value,
-			type: selectedOptionType?.value,
-			sort: selectedOptionSort?.value,
-			search: searchingU,
+			kind: selectedOptionKind?.value || null,
+			type: selectedOptionType?.value || null,
+			sort: selectedOptionSort?.value || null,
+			search: null,
 		};
-
-		const excludedFields = ["kind", "type", "sort", "search"];
-		excludedFields.forEach((item) => {
-			if (!searching[item]) {
-				delete searching[item];
-			}
-		});
+		if (searching?.kind === "free") {
+			searching.kind = true;
+		} else if (searching.kind === "no-free") {
+			searching.kind = false;
+		}
 		searching.page = 1;
 		const searchingUrl = new URLSearchParams(searching).toString();
 		navigate("?" + searchingUrl);

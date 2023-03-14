@@ -134,7 +134,7 @@ const Dashboard = () => {
 					</div>{" "}
 					Vocher Manager
 				</div>
-				<div
+				{/* <div
 					onClick={() => {
 						navigate(`/admin/send_mail`);
 					}}
@@ -150,7 +150,7 @@ const Dashboard = () => {
 						<i className="fa-solid fa-envelope"></i>
 					</div>{" "}
 					Send Mail
-				</div>
+				</div> */}
 			</div>
 			<div className="dashboard_head">
 				<div className="dashboard_input">

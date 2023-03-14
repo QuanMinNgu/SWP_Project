@@ -14,7 +14,7 @@ const UserManager = () => {
 
 	const optionsKind = [
 		{
-			value: "",
+			value: null,
 			label: "All",
 		},
 		{
@@ -36,7 +36,7 @@ const UserManager = () => {
 	];
 
 	const optionsSort = [
-		{ value: "", label: "All" },
+		{ value: null, label: "All" },
 		{ value: "astar", label: "Stars Increased" },
 		{ value: "dstar", label: "Stars Decreased" },
 		{ value: "dcreatedAt", label: "Newest" },
@@ -48,7 +48,6 @@ const UserManager = () => {
 
 	const [users, setUsers] = useState([]);
 	const dispatch = useDispatch();
-	const [types, setTypes] = useState([]);
 
 	const navigate = useNavigate();
 
@@ -59,9 +58,7 @@ const UserManager = () => {
 	useEffect(() => {
 		let here = true;
 		const url = "/api/type_course";
-		if (cache.current[url]) {
-			return setTypes(cache.current[url]);
-		}
+
 		dispatch(isLoading());
 		axios
 			.get(url, {
@@ -73,7 +70,6 @@ const UserManager = () => {
 				if (!here) {
 					return;
 				}
-				setTypes(res?.data?.types);
 				cache.current[url] = res?.data?.types;
 				dispatch(isSuccess());
 			})
@@ -98,6 +94,9 @@ const UserManager = () => {
 			limit: 20,
 			search: searchingU,
 		};
+		if (sortSearch?.sort || sortSearch?.role) {
+			sortSearch.search = null;
+		}
 
 		const sortSearching = new URLSearchParams(sortSearch).toString();
 		const url = `/api/account?${sortSearching}`;
@@ -129,11 +128,10 @@ const UserManager = () => {
 	}, [userUpdate, search]);
 
 	const handleSearching = () => {
-		const searchingU = new URLSearchParams(search).get("search") || null;
 		const searching = {
-			role: selectedOptionRole?.value,
-			sort: selectedOptionSort?.value,
-			search: searchingU,
+			role: selectedOptionRole?.value || null,
+			sort: selectedOptionSort?.value || null,
+			search: null,
 		};
 
 		searching.page = 1;
