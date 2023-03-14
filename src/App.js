@@ -44,7 +44,7 @@ function App() {
   const cacheRef = useRef({});
 
   useEffect(() => {
-    const socket = io("ws://localhost:8080/websocket");
+    const socket = io("http://localhost:8080");
     setSocket(socket);
     return () => {
       socket.close();
