@@ -14,19 +14,16 @@ import Loading from "./loading/Loading";
 import { isSuccess } from "./redux/slice/auth";
 import jwt_decode from "jwt-decode";
 import NotFound from "./notfound/NotFound";
-import { w3cwebsocket } from "websocket";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
 export const UserContext = createContext();
 function App() {
   const [store, setStore] = useState({ rule: "[ROLE_SALE]" });
-
   const [retype, setReType] = useState("home");
-
   useEffect(() => {
     setReType("home");
   }, []);
-
-  const [socket, setSocket] = useState("");
-
+  const [socket, setSocket] = useState({});
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
@@ -43,15 +40,14 @@ function App() {
   }, []);
   const cacheRef = useRef({});
   useEffect(() => {
-    const socket = new w3cwebsocket("wss://localhost:8080/websocket");
-    setSocket(socket);
+    const socket = new SockJS("http://localhost:8080/websocket");
+    let stomp = Stomp.over(socket);
     socket.onopen = () => {
-      console.log("WebSocket connection opened");
-      socket.send("Hello, WebSocket server!");
+      console.log("open");
     };
-    socket.onerror = (e) => {
-      console.log(e);
-    };
+    stomp.connect({}, (frame) => {
+      console.log("Connected: " + frame);
+    });
   }, []);
   return (
     <UserContext.Provider
