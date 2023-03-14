@@ -14,8 +14,7 @@ import Loading from "./loading/Loading";
 import { isSuccess } from "./redux/slice/auth";
 import jwt_decode from "jwt-decode";
 import NotFound from "./notfound/NotFound";
-import SockJS from "sockjs-client";
-import { Stomp } from "@stomp/stompjs";
+import { io } from "socket.io-client";
 export const UserContext = createContext();
 function App() {
   const [store, setStore] = useState({ rule: "[ROLE_SALE]" });
@@ -40,18 +39,23 @@ function App() {
   }, []);
   const cacheRef = useRef({});
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8080/websocket");
-    let stomp = Stomp.over(socket);
-    socket.onopen = () => {
-      console.log("open");
+    const socket = io("http://localhost:7000/");
+    setSocket(socket);
+    return () => {
+      socket.disconnect();
     };
-    stomp.connect({}, (frame) => {
-      console.log("Connected: " + frame);
-    });
   }, []);
   return (
     <UserContext.Provider
-      value={{ store, setStore, cache: cacheRef, socket, setReType, retype }}
+      value={{
+        store,
+        setStore,
+        cache: cacheRef,
+        socket,
+        setReType,
+        retype,
+        socket,
+      }}
     >
       <Router>
         <div className="App">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.scss";
 import "./main.scss";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,11 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { UserContext } from "../App";
 const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   const [love, setLove] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
+  const { socket } = useContext(UserContext);
   const handleLove = async () => {
     if (love === false) {
       try {
@@ -55,6 +57,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
     }
   };
   const handleBlogDetail = () => {
+    socket.emit("join_room", item?.blogID);
     navigate(`/blog/${item?.blogID}`);
   };
   useEffect(() => {

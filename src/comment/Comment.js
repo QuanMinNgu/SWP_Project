@@ -1,42 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.scss";
 import CommentCard from "./CommentCard";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { UserContext } from "../App";
 const Comment = ({ type, id }) => {
   const [comment, setComment] = useState("");
-
   const [commentArray, setCommentArray] = useState([]);
+  const { socket } = useContext(UserContext);
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   useEffect(() => {
     if (id) {
-      if (type === "blog") {
-        let here = true;
-        const url = `/api/blog/comment?id=${id}`;
-        dispatch(isLoading());
-        axios
-          .get(url)
-          .then((res) => {
-            if (!here) {
-              return dispatch(isSuccess());
-            }
-            dispatch(isSuccess());
-            setCommentArray(res?.data?.comments);
-          })
-          .catch((err) => {
-            if (!here) {
-              return dispatch(isFailing());
-            }
-            toast.error(err?.response?.data?.msg);
-            dispatch(isFailing());
-          });
-        return () => {
-          here = false;
-        };
-      }
+      let here = true;
+      const url = `/api/comment/get?id=${id}&type=${type}`;
+      dispatch(isLoading());
+      axios
+        .get(url)
+        .then((res) => {
+          if (!here) {
+            return dispatch(isSuccess());
+          }
+          dispatch(isSuccess());
+          setCommentArray(res?.data?.comments);
+        })
+        .catch((err) => {
+          if (!here) {
+            return dispatch(isFailing());
+          }
+          toast.error(err?.response?.data?.msg);
+          dispatch(isFailing());
+        });
+      return () => {
+        here = false;
+      };
     }
   }, [id]);
   const handleComment = async () => {
@@ -44,26 +43,51 @@ const Comment = ({ type, id }) => {
       return toast.error("Please enter content in comment");
     }
     try {
-      console.log({ comment, accountID: auth?.user?.id, blogID: id });
+      await socket.emit("send_mess", {
+        id,
+        comment,
+      });
       dispatch(isLoading());
-      const res = await axios.post(
-        "/api/comment/blog/create",
-        {
-          comment,
-          accountID: auth?.user?.id,
-          blogID: id,
-        },
-        {
-          headers: { token: auth?.user?.token },
-        }
-      );
+      const data =
+        type === "blog"
+          ? {
+              comment,
+              accountID: auth?.user?.id,
+              blogID: id,
+              type,
+            }
+          : {
+              comment,
+              accountID: auth?.user?.id,
+              lessonID: id,
+              type,
+            };
+      console.log(data);
+      const res = await axios.post("/api/comment/create", data, {
+        headers: { token: auth?.user?.token },
+      });
       console.log(res?.data);
       dispatch(isSuccess());
+      // socket.emit("send_mess", { commentID: res?.data?.commentID, comment });
+      // commentArray.push({
+      //   commentID: res?.data?.commentID,
+      //   comment,
+      // });
+      commentArray.push({
+        commentID: res?.data?.commentID,
+        comment,
+      });
+      setCommentArray([...commentArray]);
     } catch (error) {
       dispatch(isFailing());
       return toast.error(error?.response?.data?.msg);
     }
   };
+  useEffect(() => {
+    socket.on("recieve", (data) => {
+      console.log(data);
+    });
+  }, [socket]);
   return (
     <div className="comment">
       <div className="comment_navbar">
