@@ -3,6 +3,9 @@ import "./style.scss";
 const ProfileCard = () => {
   return (
     <div className="course_card">
+      <div className="course_card_img">
+        <img src="https://files.fullstack.edu.vn/f8-prod/courses/6.png" />
+      </div>
       <div className="course_card_info">
         <h3>F11 vua của web learning</h3>
         <p>
