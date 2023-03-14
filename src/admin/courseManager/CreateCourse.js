@@ -152,7 +152,6 @@ const CreateCourse = () => {
 		lessonRef.current.value = "";
 	};
 
-	const handleEditList = (e) => {};
 	const handleDeleteList = (e) => {
 		benefit.splice(e, 1);
 		setBenefit([...benefit]);
@@ -188,19 +187,53 @@ const CreateCourse = () => {
 	const numOfLessonRef = useRef();
 	const timeOfLessonRef = useRef();
 
+	const [msg, setMsg] = useState({});
+
 	const idRef = useRef(null);
 
 	const handleCreateNewCourse = async () => {
 		const title = titleRef.current.value;
+		if (idRef.current) {
+			toast.error("Please save pakage first");
+			return setMsg({});
+		}
+		let m = {};
+		if (!title) {
+			m["courseName"] = "Please enter title of this course!";
+		}
+		if (!contentRef.current.value) {
+			m["description"] = "Please enter description for this course!";
+		}
+		if (!newPrice) {
+			m["price"] = "Please enter price for this course!";
+		}
+		if (!selectedOption) {
+			m["kind"] = "Please choose kind for this course!";
+		}
+		if (isNaN(newPrice)) {
+			m["price"] = "Price is a number!";
+		} else {
+			if (newPrice * 1 < 0) {
+				m["price"] = "Price must be greater than 0!";
+			}
+		}
+		if (!imageRef.current) {
+			m["image"] = "Please enter image for this course!";
+		}
+		if (!courseExpert) {
+			m["courseExpert"] = "Please choose course expert!";
+		}
 		if (
 			!title ||
 			!contentRef.current.value ||
 			!newPrice ||
 			!selectedOption?.value ||
-			isNaN(newPrice)
+			isNaN(newPrice) ||
+			!courseExpert
 		) {
-			return toast.error("Please enter all value.");
+			return setMsg({ ...m });
 		}
+		setMsg({});
 		let contentArr = contentRef.current.value + "--?--";
 		benefit.forEach((item, index) => {
 			if (index !== benefit.length - 1) {
@@ -225,9 +258,7 @@ const CreateCourse = () => {
 				return;
 			}
 		} else {
-			return idRef.current
-				? toast.error("Please save Pakage First.")
-				: toast.error("Please enter a image.");
+			return;
 		}
 
 		console.log({
@@ -264,11 +295,11 @@ const CreateCourse = () => {
 			imageRef.current = "";
 		} catch (err) {
 			toast.error(err?.response?.data?.msg);
-			if (err?.response?.data?.msgProgress) {
-				err?.response?.data?.msgProgress?.forEach((item) => {
-					toast.error(item);
-				});
-			}
+			let ms = {};
+			err?.response?.data?.msgProgress?.forEach((item) => {
+				ms[item?.errorName] = item?.message;
+			});
+			setMsg({ ...ms });
 			dispatch(isFailing());
 		}
 	};
@@ -329,14 +360,19 @@ const CreateCourse = () => {
 	});
 
 	useEffect(() => {
-		console.log(lesson);
-	}, [lesson]);
+		console.log(msg);
+	}, [msg]);
 
 	return (
 		<div className="managerCourse">
 			<div className="row">
 				<div className="col c-12 m-8 l-8">
 					<div className="newPost_title">
+						{msg["courseName"] && (
+							<div style={{ top: "-3rem" }} className="errorManage">
+								* <i>{msg["courseName"]}</i>
+							</div>
+						)}
 						<textarea
 							ref={titleRef}
 							className="create_input_title"
@@ -345,6 +381,11 @@ const CreateCourse = () => {
 						/>
 					</div>
 					<div className="newPost_title">
+						{msg["description"] && (
+							<div style={{ top: "-3.3rem" }} className="errorManage">
+								* <i>{msg["description"]}</i>
+							</div>
+						)}
 						<textarea
 							ref={contentRef}
 							className="create_input_Content"
@@ -483,7 +524,15 @@ const CreateCourse = () => {
 					</div>
 				</div>
 				<div className="col c-12 m-4 l-4">
-					<div className="course_create_detail_img">
+					<div
+						style={{ position: "relative" }}
+						className="course_create_detail_img"
+					>
+						{msg["image"] && (
+							<div style={{ top: "-3.3rem" }} className="errorManage">
+								* <i>{msg["image"]}</i>
+							</div>
+						)}
 						<div className="movie_drop_zone">
 							<div className="movie_drop_zone_wrap" {...getRootProps()}>
 								<input {...getInputProps()} />
@@ -495,6 +544,14 @@ const CreateCourse = () => {
 						</div>
 					</div>
 					<div style={{ marginLeft: "6rem" }} className="newPost_title">
+						{msg["price"] && (
+							<div
+								style={{ top: "-3.3rem", wordBreak: "break-all" }}
+								className="errorManage"
+							>
+								* <i>{msg["price"]}</i>
+							</div>
+						)}
 						<div
 							style={{
 								color: "#F05123",
@@ -526,7 +583,15 @@ const CreateCourse = () => {
 							Save
 						</button>
 					</div>
-					<div className="type_select">
+					<div style={{ position: "relative" }} className="type_select">
+						{msg["kind"] && (
+							<div
+								style={{ top: "-5rem", right: "-8rem", left: "70%" }}
+								className="errorManage"
+							>
+								* <i>{msg["kind"]}</i>
+							</div>
+						)}
 						<Select
 							className="search_wrap_select"
 							defaultValue={selectedOption}
@@ -535,7 +600,15 @@ const CreateCourse = () => {
 							placeholder="Kind"
 						/>
 					</div>
-					<ul className="course_detail_list">
+					<ul style={{ position: "relative" }} className="course_detail_list">
+						{msg["courseExpert"] && (
+							<div
+								style={{ top: "-4rem", right: "-8rem", left: "80%" }}
+								className="errorManage"
+							>
+								* <i>{msg["courseExpert"]}</i>
+							</div>
+						)}
 						<li>
 							<i>
 								Course Expert:
