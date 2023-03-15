@@ -35,6 +35,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
         }
       );
       dispatch(isSuccess());
+      console.log(res?.data);
       setLove(!love);
       setUpdate(!update);
       return toast.success(res?.data?.msg);
