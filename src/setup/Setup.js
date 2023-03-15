@@ -56,13 +56,10 @@ const Setup = () => {
 			.then((res) => {
 				setGmail(res?.data?.user?.gmail);
 				setImage(auth.user?.image);
-				console.log(res?.data?.user);
 				dispatch(isSuccess());
 			})
 			.catch((err) => {
 				toast.error(err?.response?.data?.msg);
-				console.log(err?.data);
-				console.log("Here");
 				setImage(auth.user?.image);
 				dispatch(isFailing());
 			});
@@ -70,10 +67,6 @@ const Setup = () => {
 			here = false;
 		};
 	}, []);
-
-	useEffect(() => {
-		console.log(gmail);
-	}, [gmail]);
 
 	const [payments, setPayments] = useState([]);
 
