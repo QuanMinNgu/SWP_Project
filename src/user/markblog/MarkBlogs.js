@@ -29,6 +29,7 @@ const MarkBlog = () => {
           return;
         }
         setListBlog(res?.data?.blogs);
+        console.log(res?.data?.blogs);
         cache.current[url] = res?.data?.blogs;
         dispatch(isSuccess());
       })
