@@ -15,6 +15,7 @@ import { isSuccess } from "./redux/slice/auth";
 import jwt_decode from "jwt-decode";
 import NotFound from "./notfound/NotFound";
 import { io } from "socket.io-client";
+export const socket = io("http://localhost:7000/");
 export const UserContext = createContext();
 function App() {
 	const [store, setStore] = useState({ rule: "[ROLE_SALE]" });
@@ -22,7 +23,6 @@ function App() {
 	useEffect(() => {
 		setReType("home");
 	}, []);
-	const [socket, setSocket] = useState({});
 	const dispatch = useDispatch();
 	const auth = useSelector((state) => state.auth);
 
@@ -38,13 +38,7 @@ function App() {
 		dispatch(isSuccess());
 	}, []);
 	const cacheRef = useRef({});
-	useEffect(() => {
-		const socket = io("http://localhost:7000/");
-		setSocket(socket);
-		return () => {
-			socket.disconnect();
-		};
-	}, []);
+
 	return (
 		<UserContext.Provider
 			value={{

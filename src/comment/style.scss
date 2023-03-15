@@ -1,172 +1,183 @@
-@import '../style.module.scss';
+@import "../style.module.scss";
 
-.comment{
-    width: 100%;
-    min-height: 10rem;
-    border-top:0.5rem solid rgba(0,0,0,0.2);
-    padding:1rem;
-    border-radius: 4rem;
-    &_navbar{
-        display: flex;
-        justify-content: space-between;
-        margin-top: 2rem;
-        @include desktopHigh{
-            padding:0 17rem;
-        }
-        &_title{
-            display: flex;
-            align-items: center;
-            font-size: 1.5rem;
-            font-family: Playfair Display,serif;
-            color:#FF8A08;
-        }
-        &_button{
-            & > button{
-                width: 8rem;
-                height: 3.5rem;
-                background-color: #56CCF2;
-                border: none;
-                outline: none;
-                color:white;
-                border-radius: 1rem;
-                font-size: 1.4rem;
-                cursor: pointer;
-                &:active{
-                    transform: scale(.9);
-                }
-            }
-        }
-    }
-    &_input{
-        position: relative;
-        @include desktopHigh{
-            padding:0 15rem;
-        }
-        &_detail{
-            width: 100%;
-            min-height: 10rem;
-            margin-top: 2rem;
-            border:0.5rem solid rgba(0,0,0,0.2);
-            padding:0.7rem;
-            border-radius: 0.5rem;
-            outline: none;
-            font-size: 1.7rem;
-            font-weight: 430;
-            &_abs{
-                position: absolute;
-                top:1.5rem;
-                left:1.5rem;
-                font-size: 1.7rem;
-                @include desktopHigh{
-                    top:1rem;
-                    left:16rem;
-                }
-                z-index: 10;
-                color:rgba(0,0,0,0.5);
-            }
-        }
-    }
-    &_cards{
-        margin-top: 4rem;
-    }
+.comment {
+	width: 100%;
+	min-height: 10rem;
+	border-top: 0.5rem solid rgba(0, 0, 0, 0.2);
+	padding: 1rem;
+	border-radius: 4rem;
+	&_navbar {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 2rem;
+		@include desktopHigh {
+			padding: 0 17rem;
+		}
+		&_title {
+			display: flex;
+			align-items: center;
+			font-size: 1.5rem;
+			font-family: Playfair Display, serif;
+			color: #ff8a08;
+		}
+		&_button {
+			& > button {
+				width: 8rem;
+				height: 3.5rem;
+				background-color: #56ccf2;
+				border: none;
+				outline: none;
+				color: white;
+				border-radius: 1rem;
+				font-size: 1.4rem;
+				cursor: pointer;
+				&:active {
+					transform: scale(0.9);
+				}
+			}
+		}
+	}
+	&_input {
+		position: relative;
+		@include desktopHigh {
+			padding: 0 15rem;
+		}
+		&_detail {
+			width: 100%;
+			min-height: 10rem;
+			margin-top: 2rem;
+			border: 0.5rem solid rgba(0, 0, 0, 0.2);
+			padding: 0.7rem;
+			border-radius: 0.5rem;
+			outline: none;
+			font-size: 1.7rem;
+			font-weight: 430;
+			&_abs {
+				position: absolute;
+				top: 1.5rem;
+				left: 1.5rem;
+				font-size: 1.7rem;
+				@include desktopHigh {
+					top: 1rem;
+					left: 16rem;
+				}
+				z-index: 10;
+				color: rgba(0, 0, 0, 0.5);
+			}
+		}
+	}
+	&_cards {
+		margin-top: 4rem;
+	}
 }
-.commentCard{
-    width: 100%;
-    display: flex;
-    margin-bottom: 1rem;
-    &_img{
-        margin-top: 0.2rem;
-        & > img{
-            width: 6rem;
-            height: 6rem;
-            border-radius: 50%;
-        }
-    }
-    &_infor{
-       flex:1;
-       min-height: 10rem;
-       background-color: rgba(0,0,0,0.1);
-       border-radius: 1rem;
-       margin-left: 1rem;
-        &_title{
-                padding:1rem;
-                border-bottom: 0.1rem solid rgba(0,0,0,0.1);
-                font-size: 1.7rem;
-                font-family: "Noto Sans", sans-serif;
-                font-weight: 800;
-        }
-        &_content{
-                padding:1rem;
-                font-size: 1.7rem;
-                line-height: 2.7rem;
-        }
-    }
-    &_navbar{
-        margin-left: 2rem;
-        margin-top: 0.4rem;
-        display: flex;
-        &_items{
-            margin-right: 1rem;
-            font-size: 1.3rem;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        &_items:first-child{
-            color:#56CCF2;
-            &:active{
-                transform: scale(.8);
-            }
-        }
-        &_items:last-child{
-            cursor: text;
-            font-weight: 500;
-            color:rgba(0,0,0,0.6);
-        }
-    }
+.commentCard {
+	width: 100%;
+	display: flex;
+	margin-bottom: 1rem;
+	&_img {
+		margin-top: 0.2rem;
+		& > img {
+			width: 6rem;
+			height: 6rem;
+			border-radius: 50%;
+		}
+	}
+	&_infor {
+		flex: 1;
+		min-height: 10rem;
+		background-color: rgba(0, 0, 0, 0.1);
+		border-radius: 1rem;
+		margin-left: 1rem;
+		&_title {
+			padding: 1rem;
+			border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+			font-size: 1.7rem;
+			font-family: "Noto Sans", sans-serif;
+			font-weight: 800;
+		}
+		&_content {
+			padding: 1rem;
+			font-size: 1.7rem;
+			line-height: 2.7rem;
+		}
+	}
+	&_navbar {
+		margin-left: 2rem;
+		margin-top: 0.4rem;
+		display: flex;
+		&_items {
+			margin-right: 1rem;
+			font-size: 1.3rem;
+			cursor: pointer;
+			font-weight: 600;
+		}
+		&_items:first-child {
+			color: #56ccf2;
+			&:active {
+				transform: scale(0.8);
+			}
+		}
+		&_items:last-child {
+			cursor: text;
+			font-weight: 500;
+			color: rgba(0, 0, 0, 0.6);
+		}
+	}
 }
-.reply{
-    margin-top: 1.5rem;
+.reply {
+	margin-top: 1.5rem;
 }
-.commentCard_replyInput{
-    margin-top: 1rem;
-    margin-left: 1rem;
+.commentCard_replyInput {
+	margin-top: 1rem;
+	margin-left: 1rem;
 }
-.replyInput_input{
-    width: 100%;
-    min-height: 10rem;
-    border:0.5rem solid rgba(0,0,0,0.2);
-    padding:0.8rem;
-    font-size: 1.5rem;
-    outline: none;
-    border-radius: 1rem;
-    position: relative;
+.replyInput_input {
+	width: 100%;
+	min-height: 10rem;
+	border: 0.5rem solid rgba(0, 0, 0, 0.2);
+	padding: 0.8rem;
+	font-size: 1.5rem;
+	outline: none;
+	border-radius: 1rem;
+	position: relative;
 }
-.replyInput_button{
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1.5rem;
-    & > button{
-        width: 8rem;
-        height: 3.5rem;
-        background-color: #56CCF2;
-        border: none;
-        outline: none;
-        color:white;
-        border-radius: 1rem;
-        font-size: 1.4rem;
-        cursor: pointer;
-        &:active{
-            transform: scale(.9);
-        }
-    }
+.replyInput_button {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 1.5rem;
+	& > button {
+		width: 8rem;
+		height: 3.5rem;
+		background-color: #56ccf2;
+		border: none;
+		outline: none;
+		color: white;
+		border-radius: 1rem;
+		font-size: 1.4rem;
+		cursor: pointer;
+		&:active {
+			transform: scale(0.9);
+		}
+	}
 }
-.replyInput{
-    position: relative;
+.replyInput {
+	position: relative;
 }
-.replyInput_abs{
-    position: absolute;
-    top:1.3rem;
-    left:1.3rem;
-    font-size: 1.4rem;
-    color:rgba(0,0,0,0.4);
+.replyInput_abs {
+	position: absolute;
+	top: 1.3rem;
+	left: 1.3rem;
+	font-size: 1.4rem;
+	color: rgba(0, 0, 0, 0.4);
+}
+.comment_cards {
+	width: 100%;
+}
+
+.commentCard_body {
+	flex: 1;
+}
+.comment {
+	width: 80%;
+	margin: 0 auto;
 }

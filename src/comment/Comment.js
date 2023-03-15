@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./style.scss";
 import CommentCard from "./CommentCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,14 +11,8 @@ const Comment = ({ type, id }) => {
 	const [commentArray, setCommentArray] = useState([]);
 	const { socket } = useContext(UserContext);
 	const dispatch = useDispatch();
+	const commentRef = useRef();
 	const auth = useSelector((state) => state?.auth);
-	useEffect(() => {
-		if (socket) {
-			socket?.on("recieve", (data) => {
-				console.log(data);
-			});
-		}
-	}, [socket]);
 	useEffect(() => {
 		if (id) {
 			let here = true;
@@ -31,12 +25,14 @@ const Comment = ({ type, id }) => {
 						return dispatch(isSuccess());
 					}
 					dispatch(isSuccess());
+					console.log(res?.data);
 					setCommentArray(res?.data?.comments);
 				})
 				.catch((err) => {
 					if (!here) {
 						return dispatch(isFailing());
 					}
+					console.log(err?.response);
 					toast.error(err?.response?.data?.msg);
 					dispatch(isFailing());
 				});
@@ -54,36 +50,57 @@ const Comment = ({ type, id }) => {
 			const data =
 				type === "blog"
 					? {
-							comment,
+							content: comment,
 							accountID: auth?.user?.id,
 							blogID: id,
 							type,
+							lessonID: null,
 					  }
 					: {
-							comment,
+							content: comment,
 							accountID: auth?.user?.id,
 							lessonID: id,
 							type,
+							blogID: null,
 					  };
-			console.log(data);
 			const res = await axios.post("/api/comment/create", data, {
 				headers: { token: auth?.user?.token },
 			});
-			console.log(res?.data);
+			if (commentRef.current) {
+				commentRef.current.innerHTML = "";
+				setComment("");
+			}
+			toast.success(res?.data?.msg);
 			dispatch(isSuccess());
-			socket.emit("send_mess", {
+			await socket.emit("send_mess", {
 				commentID: res?.data?.commentID,
-				comment,
+				content: comment,
 				id,
 				accountID: auth?.user?.id,
 				image: auth?.user?.image,
 				userName: auth?.user?.name,
 			});
+			setCommentArray([
+				{
+					commentID: res?.data?.commentID,
+					content: comment,
+					id,
+					accountID: auth?.user?.id,
+					image: auth?.user?.image,
+					userName: auth?.user?.name,
+				},
+				...commentArray,
+			]);
 		} catch (error) {
 			dispatch(isFailing());
 			return toast.error(error?.response?.data?.msg);
 		}
 	};
+	useEffect(() => {
+		socket.on("recieve", (data) => {
+			setCommentArray((pre) => [data, ...pre]);
+		});
+	}, [socket]);
 	return (
 		<div className="comment">
 			<div className="comment_navbar">
@@ -106,6 +123,7 @@ const Comment = ({ type, id }) => {
 					onInput={(e) => {
 						setComment(e.target.innerHTML);
 					}}
+					ref={commentRef}
 					contentEditable="true"
 					className="comment_input_detail"
 				></div>
