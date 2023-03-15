@@ -13,6 +13,13 @@ const Comment = ({ type, id }) => {
 	const dispatch = useDispatch();
 	const auth = useSelector((state) => state?.auth);
 	useEffect(() => {
+		if (socket) {
+			socket?.on("recieve", (data) => {
+				console.log(data);
+			});
+		}
+	}, [socket]);
+	useEffect(() => {
 		if (id) {
 			let here = true;
 			const url = `/api/comment/get?id=${id}&type=${type}`;
@@ -64,7 +71,7 @@ const Comment = ({ type, id }) => {
 			});
 			console.log(res?.data);
 			dispatch(isSuccess());
-			await socket.emit("send_mess", {
+			socket.emit("send_mess", {
 				commentID: res?.data?.commentID,
 				comment,
 				id,
@@ -72,28 +79,11 @@ const Comment = ({ type, id }) => {
 				image: auth?.user?.image,
 				userName: auth?.user?.name,
 			});
-
-			setCommentArray([
-				{
-					commentID: res?.data?.commentID,
-					comment,
-					id,
-					accountID: auth?.user?.id,
-					image: auth?.user?.image,
-					userName: auth?.user?.name,
-				},
-				...commentArray,
-			]);
 		} catch (error) {
 			dispatch(isFailing());
 			return toast.error(error?.response?.data?.msg);
 		}
 	};
-	useEffect(() => {
-		socket.on("recieve", (data) => {
-			console.log(data);
-		});
-	}, [socket]);
 	return (
 		<div className="comment">
 			<div className="comment_navbar">

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReplyCard from "./ReplyCard";
 import ReplyInput from "./ReplyInput";
 import "./style.scss";
 const CommentCard = ({ item }) => {
