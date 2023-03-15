@@ -21,7 +21,7 @@ const Comment = ({ type, id }) => {
   useEffect(() => {
     if (id) {
       let here = true;
-      const url = `/api/comment/get?id=${id}&type=${type}`;
+      const url = `/api/comment/get?id=${id}&type=${type}&page=1`;
       dispatch(isLoading());
       axios
         .get(url)
