@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../userblog/style.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
@@ -24,6 +24,9 @@ function MarkBlogCard({ item, index, listBlog, setListBlog, cache }) {
       return toast.error(error?.response?.data?.msg);
     }
   };
+  useEffect(() => {
+    console.log(item);
+  }, [listBlog]);
   return (
     <div className="user_card" key={index}>
       <div className="user_card_body">
@@ -35,7 +38,7 @@ function MarkBlogCard({ item, index, listBlog, setListBlog, cache }) {
           </div>
         </div>
         <div className="user_card_body_content">
-          <p>{item?.meta}</p>
+          <p>{item?.blogMeta}</p>
         </div>
       </div>
     </div>
