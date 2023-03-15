@@ -43,10 +43,6 @@ const Comment = ({ type, id }) => {
       return toast.error("Please enter content in comment");
     }
     try {
-      await socket.emit("send_mess", {
-        id,
-        comment,
-      });
       dispatch(isLoading());
       const data =
         type === "blog"
@@ -68,11 +64,22 @@ const Comment = ({ type, id }) => {
       });
       console.log(res?.data);
       dispatch(isSuccess());
-      // socket.emit("send_mess", { commentID: res?.data?.commentID, comment });
-      // commentArray.push({
-      //   commentID: res?.data?.commentID,
-      //   comment,
-      // });
+      await socket.emit("send_mess", {
+        commentID: res?.data?.commentID,
+        comment,
+        id,
+        accountID: auth?.user?.id,
+        image: auth?.user?.image,
+        userName: auth?.user?.name,
+      });
+      commentArray.push({
+        commentID: res?.data?.commentID,
+        comment,
+        id,
+        accountID: auth?.user?.id,
+        image: auth?.user?.image,
+        userName: auth?.user?.name,
+      });
       setCommentArray([...commentArray]);
     } catch (error) {
       dispatch(isFailing());

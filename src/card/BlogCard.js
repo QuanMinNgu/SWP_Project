@@ -7,12 +7,14 @@ import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../App";
+import { format } from "date-fns";
 const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   const [love, setLove] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   const { socket } = useContext(UserContext);
+
   const handleLove = async () => {
     if (love === false) {
       try {
@@ -114,6 +116,21 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
           </div>
           <div className="blog_card_body_content_mid">
             <p className="blog_meta_card_contanert">{item?.blogMeta}</p>
+          </div>
+          <div
+            className="date"
+            style={{
+              marginTop: "1rem",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "1rem",
+                fontWeight: "800",
+              }}
+            >
+              Create At : {format(new Date(item?.createDate), "dd-MM-yyyy")}
+            </span>
           </div>
         </div>
       </div>
