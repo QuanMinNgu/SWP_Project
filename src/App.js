@@ -48,7 +48,6 @@ function App() {
         socket,
         setReType,
         retype,
-        socket,
       }}
     >
       <Router>

@@ -12,7 +12,7 @@ const CommentCard = ({ item }) => {
 			<div className="commentCard_body">
 				<div className="commentCard_infor">
 					<div className="commentCard_infor_title">{item?.userName}</div>
-					<div className="commentCard_infor_content">{item?.comment}</div>
+					<div className="commentCard_infor_content">{item?.content}</div>
 				</div>
 				<div className="commentCard_navbar">
 					<div className="commentCard_navbar_items">0 Thích</div>
