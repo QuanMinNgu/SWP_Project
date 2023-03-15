@@ -24,6 +24,7 @@ const Comment = ({ type, id }) => {
             return dispatch(isSuccess());
           }
           dispatch(isSuccess());
+          console.log(res?.data);
           setCommentArray(res?.data?.comments);
         })
         .catch((err) => {
