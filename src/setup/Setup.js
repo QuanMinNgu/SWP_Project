@@ -56,7 +56,7 @@ const Setup = () => {
 			.then((res) => {
 				setGmail(res?.data?.user?.gmail);
 				setImage(auth.user?.image);
-				console.log(res?.data);
+				console.log(res?.data?.user);
 				dispatch(isSuccess());
 			})
 			.catch((err) => {
@@ -70,6 +70,10 @@ const Setup = () => {
 			here = false;
 		};
 	}, []);
+
+	useEffect(() => {
+		console.log(gmail);
+	}, [gmail]);
 
 	const [payments, setPayments] = useState([]);
 
