@@ -24,7 +24,6 @@ const Comment = ({ type, id }) => {
             return dispatch(isSuccess());
           }
           dispatch(isSuccess());
-          console.log(res?.data);
           setCommentArray(res?.data?.comments);
         })
         .catch((err) => {
@@ -89,7 +88,6 @@ const Comment = ({ type, id }) => {
   };
   useEffect(() => {
     socket.on("recieve", (data) => {
-      setCommentArray((pre) => [data, ...pre]);
       console.log(data);
     });
   }, [socket]);
