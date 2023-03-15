@@ -54,20 +54,15 @@ const Setup = () => {
 				},
 			})
 			.then((res) => {
-				if (!here) {
-					return dispatch(isSuccess());
-				}
 				setGmail(res?.data?.user?.gmail);
 				setImage(auth.user?.image);
 				console.log(res?.data);
 				dispatch(isSuccess());
 			})
 			.catch((err) => {
-				if (!here) {
-					return dispatch(isFailing());
-				}
 				toast.error(err?.response?.data?.msg);
 				console.log(err?.data);
+				console.log("Here");
 				setImage(auth.user?.image);
 				dispatch(isFailing());
 			});
