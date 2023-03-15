@@ -88,6 +88,7 @@ const Comment = ({ type, id }) => {
   };
   useEffect(() => {
     socket.on("recieve", (data) => {
+      setCommentArray((pre) => [data, ...pre]);
       console.log(data);
     });
   }, [socket]);
