@@ -14,6 +14,11 @@ const Comment = ({ type, id }) => {
 	const commentRef = useRef();
 	const auth = useSelector((state) => state?.auth);
 	useEffect(() => {
+		if (socket) {
+			socket.emit("join_room", id + type);
+		}
+	}, [socket]);
+	useEffect(() => {
 		if (id) {
 			let here = true;
 			const url = `/api/comment/get?id=${id}&type=${type}`;
