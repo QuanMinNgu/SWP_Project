@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
+import "./style.scss";
+import { useNavigate } from "react-router";
 
 function MarkBlogCard({ item, index, listBlog, setListBlog, cache }) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
+  const navigate = useNavigate();
   const handleNotMark = async () => {
     try {
       dispatch(isLoading());
@@ -27,18 +30,44 @@ function MarkBlogCard({ item, index, listBlog, setListBlog, cache }) {
   useEffect(() => {
     console.log(item);
   }, [listBlog]);
+  const handleWatchProfile = () => {
+    navigate(`/profile/${item?.accountID}`);
+  };
   return (
     <div className="user_card" key={index}>
       <div className="user_card_body">
-        <div className="user_card_body_top">
-          <h3>{item?.blogName}</h3>
-          <div className="user_card_body_top_option">
-            <span>{item?.courseType}</span>
-            <i class="fa-solid fa-heart" onClick={handleNotMark}></i>
+        <div className="blog_card_body_top">
+          <div>
+            <img src={item?.image} />
+            <h2 onClick={handleWatchProfile} style={{ cursor: "pointer" }}>
+              {item?.name}Nguyen DInh Hoan
+            </h2>
+          </div>
+          <div>
+            <span>{item?.courseType?.courseTypeName}</span>
+            <div
+              style={{
+                fontSize: "1rem",
+                padding: "6px",
+                backgroundColor: "#f2f2f2",
+                borderRadius: "5px",
+                fontWeight: "600",
+              }}
+            >
+              {item?.courseType}
+            </div>
+            <div>
+              <i class="fa-solid fa-heart"></i>
+            </div>
           </div>
         </div>
-        <div className="user_card_body_content">
-          <p>{item?.blogMeta}</p>
+        <div style={{ padding: "10px 6px" }}>
+          <div>
+            <h3 className="title_blog">{item?.blog?.blogName} Hehe</h3>
+          </div>
+          <div className="user_card_body_content">
+            <p className="text_blog">{item?.blog?.blogMeta} Heeee</p>
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,22 @@
+.title_blog {
+  font-size: 1.6rem;
+  word-break: break-all;
+  margin-top: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.text_blog {
+  font-size: 1.2rem;
+  word-break: break-all;
+  margin-top: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
