@@ -67,6 +67,7 @@ const Setup = () => {
 					return dispatch(isFailing());
 				}
 				toast.error(err?.response?.data?.msg);
+				console.log(res?.data);
 				setImage(auth.user?.image);
 				dispatch(isFailing());
 			});
