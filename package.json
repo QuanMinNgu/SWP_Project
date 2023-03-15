@@ -37,7 +37,6 @@
     "redux-persist": "^6.0.0",
     "sass": "^1.57.1",
     "socket.io-client": "^4.6.1",
-    "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
     "swiper": "^8.4.5",
     "web-vitals": "^2.1.4",

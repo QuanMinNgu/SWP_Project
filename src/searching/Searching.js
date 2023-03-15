@@ -84,7 +84,6 @@ const Searching = () => {
 
 		const sortSearching = new URLSearchParams(sortSearch).toString();
 		const url = `/api/common/course/getAllCourse?${sortSearching}`;
-		console.log(url);
 		dispatch(isLoading());
 		axios
 			.get(url)
