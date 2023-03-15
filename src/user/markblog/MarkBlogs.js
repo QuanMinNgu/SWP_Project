@@ -50,7 +50,7 @@ const MarkBlog = () => {
         {listBlog?.map((item, index) => {
           return (
             <MarkBlogCard
-              item={item}
+              item={item?.blog}
               index={index}
               cache={cache}
               setListBlog={setListBlog}
