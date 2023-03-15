@@ -4,10 +4,16 @@ import "./style.scss";
 const CommentCard = ({ item }) => {
 	const [reply, setReply] = useState(false);
 
+	const [bars, setBars] = useState(false);
+
 	return (
 		<div className="commentCard">
 			<div className="commentCard_img">
-				<img src={item?.image} alt="Ảnh" />
+				<img
+					style={{ border: "0.1rem solid rgba(0,0,0,0.1)" }}
+					src={item?.image}
+					alt="Ảnh"
+				/>
 			</div>
 			<div className="commentCard_body">
 				<div className="commentCard_infor">
@@ -42,6 +48,24 @@ const CommentCard = ({ item }) => {
 					))}
 				</div>
 			</div>
+			<div
+				onClick={() => {
+					setBars(!bars);
+				}}
+				className="comment_bars"
+			>
+				<i className="fa-solid fa-ellipsis"></i>
+			</div>
+			{bars && (
+				<div className="comment_bars_items">
+					<div title="Update" className="comment_bars_item">
+						Update
+					</div>
+					<div title="Delete" className="comment_bars_item">
+						Delete
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
