@@ -57,6 +57,9 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
 			}
 		}
 	};
+	const handleBlogDetail = () => {
+		navigate(`/blog/${item?.blogID}`);
+	};
 	useEffect(() => {
 		const check = loveBlog?.find((ite) => ite?.blogID === item?.blogID);
 		if (check) {
@@ -104,6 +107,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
 				<div className="blog_card_body_content">
 					<div
 						className="blog_card_body_content_header"
+						onClick={handleBlogDetail}
 						style={{ cursor: "pointer" }}
 					>
 						<h3 className="blog_card_name_content_name">{item?.blogName}</h3>
