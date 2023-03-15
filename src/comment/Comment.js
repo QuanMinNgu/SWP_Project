@@ -73,10 +73,6 @@ const Comment = ({ type, id }) => {
       //   commentID: res?.data?.commentID,
       //   comment,
       // });
-      commentArray.push({
-        commentID: res?.data?.commentID,
-        comment,
-      });
       setCommentArray([...commentArray]);
     } catch (error) {
       dispatch(isFailing());
