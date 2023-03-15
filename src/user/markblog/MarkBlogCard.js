@@ -40,7 +40,7 @@ function MarkBlogCard({ item, index, listBlog, setListBlog, cache }) {
           <div>
             <img src={item?.image} />
             <h2 onClick={handleWatchProfile} style={{ cursor: "pointer" }}>
-              {item?.name}Nguyen DInh Hoan
+              {item?.name}
             </h2>
           </div>
           <div>
@@ -63,10 +63,10 @@ function MarkBlogCard({ item, index, listBlog, setListBlog, cache }) {
         </div>
         <div style={{ padding: "10px 6px" }}>
           <div>
-            <h3 className="title_blog">{item?.blog?.blogName} Hehe</h3>
+            <h3 className="title_blog">{item?.blog?.blogName} </h3>
           </div>
           <div className="user_card_body_content">
-            <p className="text_blog">{item?.blog?.blogMeta} Heeee</p>
+            <p className="text_blog">{item?.blog?.blogMeta} </p>
           </div>
         </div>
       </div>
