@@ -55,7 +55,14 @@ const Comment = ({ type, id }) => {
 		if (socket) {
 			socket.on("recieve", (data) => {
 				if (!data?.parentID) {
-					const ar = commentArray;
+					const ar = commentArray || [];
+					const some = ar?.some(
+						(item) =>
+							item?.commentID?.toString() === data?.commentID?.toString()
+					);
+					if (some) {
+						return;
+					}
 					setCommentArray([
 						{
 							...data,
@@ -63,22 +70,23 @@ const Comment = ({ type, id }) => {
 						...ar,
 					]);
 				} else {
-					const ar = commentArray?.map((item) => {
+					const ar = commentArray || [];
+					const newArr = ar?.map((item) => {
 						if (item?.commentID?.toString() === data?.parentID?.toString()) {
-							return {
-								...item,
-								childComment: [
-									{
-										...data,
-									},
-									...item?.childComment,
-								],
-							};
-						} else {
-							return item;
+							const some = item?.childComment?.some(
+								(item) =>
+									item?.commentID?.toString() === data?.commentID?.toString()
+							);
+							if (some) {
+								return item;
+							}
+							item?.childComment?.unshift({
+								...data,
+							});
 						}
+						return item;
 					});
-					setCommentArray([...ar]);
+					setCommentArray([...newArr]);
 				}
 			});
 		}
@@ -122,6 +130,7 @@ const Comment = ({ type, id }) => {
 				image: auth?.user?.image,
 				userName: auth?.user?.name,
 				parentID: null,
+				childComment: [],
 			});
 		} catch (error) {
 			dispatch(isFailing());

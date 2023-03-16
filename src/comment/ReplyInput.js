@@ -47,6 +47,7 @@ const ReplyInput = ({ name, type, id, parentID, setReply }) => {
 				image: auth?.user?.image,
 				userName: auth?.user?.name,
 				parentID: parentID,
+				childComment: [],
 			});
 			commentRef.current.innerHTML = "";
 			toast.success(res?.data?.msg);
