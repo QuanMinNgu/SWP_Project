@@ -37,7 +37,11 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
       dispatch(isSuccess());
       console.log(res?.data);
       setLove(!love);
-      setCurrentID(res?.data?.id);
+      if (currentID) {
+        setCurrentID(null);
+      } else {
+        setCurrentID(res?.data?.id);
+      }
       return toast.success(res?.data?.msg);
     } catch (error) {
       dispatch(isFailing());
