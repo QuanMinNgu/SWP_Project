@@ -1,4 +1,5 @@
 import axios from "axios";
+import { async } from "q";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -40,6 +41,29 @@ function VoucherCard({ item, index, setUpdate, update }) {
       return toast.error(error?.response?.data?.msg);
     }
   };
+  const handleDelete = async () => {
+    let check = window.confirm("Do you wnat to delete this voucher");
+    if (check) {
+      try {
+        dispatch(isLoading());
+        const res = await axios.post(
+          "/api/voucher/delete",
+          {
+            voucherID: item?.voucherID,
+          },
+          {
+            headers: { token: auth?.user?.token },
+          }
+        );
+        dispatch(isSuccess());
+        setOption(false);
+        return toast.success(res?.data?.msg);
+      } catch (error) {
+        dispatch(isFailing());
+        return toast.error(error?.response?.data?.msg);
+      }
+    }
+  };
   return (
     <tr className="s_trow" key={index}>
       <th className="v_stt fn">{index + 1}</th>
@@ -57,6 +81,7 @@ function VoucherCard({ item, index, setUpdate, update }) {
           <div className="v_option_select">
             <div onClick={handleEditVoucher}>Change Status</div>
             <div onClick={handleUpdate}>Update</div>
+            <div onClick={handleDelete}>Delete</div>
           </div>
         )}
       </th>
