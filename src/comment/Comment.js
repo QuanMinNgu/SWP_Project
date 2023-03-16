@@ -56,7 +56,6 @@ const Comment = ({ type, id }) => {
 				type === "blog"
 					? {
 							content: comment,
-							accountID: auth?.user?.id,
 							blogID: id,
 							type,
 							lessonID: null,
@@ -64,7 +63,6 @@ const Comment = ({ type, id }) => {
 					  }
 					: {
 							content: comment,
-							accountID: auth?.user?.id,
 							lessonID: id,
 							type,
 							blogID: null,
