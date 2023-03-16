@@ -183,7 +183,7 @@ const CommentCard = ({ item, type, id }) => {
 					<div className="commentCard_replyInput">
 						<ReplyInput
 							type={type}
-							parentID={item?.commentID}
+							parentID={item?.parentID ?? item?.commentID}
 							name={item?.userName}
 							id={id}
 							setReply={setReply}
@@ -191,10 +191,14 @@ const CommentCard = ({ item, type, id }) => {
 					</div>
 				)}
 				<div className="commentCard_reply">
-					{item?.childComment?.map((item, index) => (
+					{item?.childComment?.map((infor, index) => (
 						<CommentCard
-							key={index + "lesson for more" + item?.commentID}
-							item={item}
+							type={type}
+							id={id}
+							setReply={setReply}
+							name={infor?.userName}
+							key={index + "lesson for more" + infor?.commentID}
+							item={infor}
 						/>
 					))}
 				</div>

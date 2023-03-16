@@ -15,9 +15,12 @@ const Comment = ({ type, id }) => {
 	const auth = useSelector((state) => state?.auth);
 	useEffect(() => {
 		if (socket) {
-			socket.emit("join_room", id + type);
+			socket.emit("join_room", {
+				id: id,
+			});
 		}
 	}, [socket]);
+
 	useEffect(() => {
 		if (id) {
 			let here = true;
@@ -44,6 +47,39 @@ const Comment = ({ type, id }) => {
 			};
 		}
 	}, [id]);
+
+	useEffect(() => {
+		if (socket) {
+			socket.on("recieve", (data) => {
+				if (!data?.parentID) {
+					const ar = commentArray;
+					setCommentArray([
+						{
+							...data,
+						},
+						...ar,
+					]);
+				} else {
+					const ar = commentArray?.map((item) => {
+						if (item?.commentID?.toString() === data?.parentID?.toString()) {
+							return {
+								...item,
+								childComment: [
+									{
+										...data,
+									},
+									...item?.childComment,
+								],
+							};
+						} else {
+							return item;
+						}
+					});
+					setCommentArray([...ar]);
+				}
+			});
+		}
+	}, [socket, commentArray]);
 	const handleComment = async () => {
 		if (!comment) {
 			return toast.error("Please enter content in comment");
@@ -75,25 +111,15 @@ const Comment = ({ type, id }) => {
 			}
 			toast.success(res?.data?.msg);
 			dispatch(isSuccess());
-			await socket.emit("send_mess", {
+			socket.emit("send_mess", {
 				commentID: res?.data?.commentID,
 				content: comment,
 				id,
 				accountID: auth?.user?.id,
 				image: auth?.user?.image,
 				userName: auth?.user?.name,
+				parentID: null,
 			});
-			setCommentArray([
-				{
-					commentID: res?.data?.commentID,
-					content: comment,
-					id,
-					accountID: auth?.user?.id,
-					image: auth?.user?.image,
-					userName: auth?.user?.name,
-				},
-				...commentArray,
-			]);
 		} catch (error) {
 			dispatch(isFailing());
 			return toast.error(error?.response?.data?.msg);

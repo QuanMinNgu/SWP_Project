@@ -12,6 +12,7 @@ const ReplyInput = ({ name, type, id, parentID, setReply }) => {
 	const commentRef = useRef();
 	const dispatch = useDispatch();
 	const auth = useSelector((state) => state.auth);
+
 	const handleComment = async () => {
 		if (!content) {
 			return toast.error("Please enter content in comment");
@@ -34,8 +35,18 @@ const ReplyInput = ({ name, type, id, parentID, setReply }) => {
 							type,
 							blogID: null,
 					  };
+
 			const res = await axios.post("/api/comment/create", data, {
 				headers: { token: auth?.user?.token },
+			});
+			socket.emit("send_mess", {
+				commentID: res?.data?.commentID,
+				content: `<span>${name}</span>` + content,
+				id,
+				accountID: auth?.user?.id,
+				image: auth?.user?.image,
+				userName: auth?.user?.name,
+				parentID: parentID,
 			});
 			commentRef.current.innerHTML = "";
 			toast.success(res?.data?.msg);
