@@ -80,7 +80,7 @@ const Comment = ({ type, id }) => {
 							if (some) {
 								return item;
 							}
-							item?.childComment?.unshift({
+							item?.childComment?.push({
 								...data,
 							});
 						}
