@@ -30,14 +30,12 @@ const Comment = ({ type, id }) => {
             return dispatch(isSuccess());
           }
           dispatch(isSuccess());
-          console.log(res?.data);
           setCommentArray(res?.data?.comments);
         })
         .catch((err) => {
           if (!here) {
             return dispatch(isFailing());
           }
-          console.log(err?.response);
           toast.error(err?.response?.data?.msg);
           dispatch(isFailing());
         });
@@ -56,17 +54,17 @@ const Comment = ({ type, id }) => {
         type === "blog"
           ? {
               content: comment,
-              accountID: auth?.user?.id,
               blogID: id,
               type,
               lessonID: null,
+              parentID: null,
             }
           : {
               content: comment,
-              accountID: auth?.user?.id,
               lessonID: id,
               type,
               blogID: null,
+              parentID: null,
             };
       const res = await axios.post("/api/comment/create", data, {
         headers: { token: auth?.user?.token },
@@ -141,7 +139,7 @@ const Comment = ({ type, id }) => {
       </div>
       <div className="comment_cards">
         {commentArray?.map((item, index) => (
-          <CommentCard key={index + id} item={item} />
+          <CommentCard id={id} type={type} key={index + id} item={item} />
         ))}
       </div>
     </div>
