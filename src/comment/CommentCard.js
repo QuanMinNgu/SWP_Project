@@ -56,6 +56,7 @@ const CommentCard = ({ item, type, id }) => {
 			dispatch(isSuccess());
 		} catch (err) {
 			dispatch(isFailing());
+			console.log(err?.response?.data);
 			return toast.error(err?.response?.data?.msg);
 		}
 	};
@@ -124,8 +125,14 @@ const CommentCard = ({ item, type, id }) => {
 		}
 	}, [edit, commentRef]);
 
+	useEffect(() => {
+		if (item) {
+			commentRef.current.innerHTML = item?.content;
+		}
+	}, [item]);
+
 	return (
-		<div className="commentCard">
+		<div style={{ marginTop: "1rem" }} className="commentCard">
 			<div className="commentCard_img">
 				<img
 					style={{ border: "0.1rem solid rgba(0,0,0,0.1)" }}
@@ -157,12 +164,9 @@ const CommentCard = ({ item, type, id }) => {
 							</div>
 						)}
 					</div>
-					<div ref={commentRef} className="commentCard_infor_content">
-						{item?.content}
-					</div>
+					<div ref={commentRef} className="commentCard_infor_content"></div>
 				</div>
 				<div className="commentCard_navbar">
-					<div className="commentCard_navbar_items">0 Likes</div>
 					<div
 						onClick={() => {
 							setReply(!reply);
@@ -187,7 +191,7 @@ const CommentCard = ({ item, type, id }) => {
 					</div>
 				)}
 				<div className="commentCard_reply">
-					{item?.replies?.map((item, index) => (
+					{item?.childComment?.map((item, index) => (
 						<CommentCard
 							key={index + "lesson for more" + item?.commentID}
 							item={item}

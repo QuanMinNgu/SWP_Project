@@ -21,14 +21,14 @@ const ReplyInput = ({ name, type, id, parentID, setReply }) => {
 			const data =
 				type === "blog"
 					? {
-							content: content,
+							content: `<span>${name}</span>` + content,
 							parentID: parentID,
 							blogID: id,
 							type,
 							lessonID: null,
 					  }
 					: {
-							content: content,
+							content: `<span>${name}</span>` + content,
 							parentID: parentID,
 							lessonID: id,
 							type,

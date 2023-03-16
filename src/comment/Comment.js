@@ -30,14 +30,12 @@ const Comment = ({ type, id }) => {
 						return dispatch(isSuccess());
 					}
 					dispatch(isSuccess());
-					console.log(res?.data);
 					setCommentArray(res?.data?.comments);
 				})
 				.catch((err) => {
 					if (!here) {
 						return dispatch(isFailing());
 					}
-					console.log(err?.response);
 					toast.error(err?.response?.data?.msg);
 					dispatch(isFailing());
 				});
