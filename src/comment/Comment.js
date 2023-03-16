@@ -9,15 +9,21 @@ import { UserContext } from "../App";
 const Comment = ({ type, id }) => {
   const [comment, setComment] = useState("");
   const [commentArray, setCommentArray] = useState([]);
+
+  const [update, setUpdate] = useState(false);
+
   const { socket } = useContext(UserContext);
   const dispatch = useDispatch();
   const commentRef = useRef();
   const auth = useSelector((state) => state?.auth);
   useEffect(() => {
     if (socket) {
-      socket.emit("join_room", id + type);
+      socket.emit("join_room", {
+        id: id,
+      });
     }
   }, [socket]);
+
   useEffect(() => {
     if (id) {
       let here = true;
@@ -43,7 +49,48 @@ const Comment = ({ type, id }) => {
         here = false;
       };
     }
-  }, [id]);
+  }, [id, update]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("recieve", (data) => {
+        if (!data?.parentID) {
+          const ar = commentArray || [];
+          const some = ar?.some(
+            (item) =>
+              item?.commentID?.toString() === data?.commentID?.toString()
+          );
+          if (some) {
+            return;
+          }
+          setCommentArray([
+            {
+              ...data,
+            },
+            ...ar,
+          ]);
+        } else {
+          const ar = commentArray || [];
+          const newArr = ar?.map((item) => {
+            if (item?.commentID?.toString() === data?.parentID?.toString()) {
+              const some = item?.childComment?.some(
+                (item) =>
+                  item?.commentID?.toString() === data?.commentID?.toString()
+              );
+              if (some) {
+                return item;
+              }
+              item?.childComment?.push({
+                ...data,
+              });
+            }
+            return item;
+          });
+          setCommentArray([...newArr]);
+        }
+      });
+    }
+  }, [socket, commentArray]);
   const handleComment = async () => {
     if (!comment) {
       return toast.error("Please enter content in comment");
@@ -75,25 +122,16 @@ const Comment = ({ type, id }) => {
       }
       toast.success(res?.data?.msg);
       dispatch(isSuccess());
-      await socket.emit("send_mess", {
+      socket.emit("send_mess", {
         commentID: res?.data?.commentID,
         content: comment,
         id,
         accountID: auth?.user?.id,
         image: auth?.user?.image,
         userName: auth?.user?.name,
+        parentID: null,
+        childComment: [],
       });
-      setCommentArray([
-        {
-          commentID: res?.data?.commentID,
-          content: comment,
-          id,
-          accountID: auth?.user?.id,
-          image: auth?.user?.image,
-          userName: auth?.user?.name,
-        },
-        ...commentArray,
-      ]);
     } catch (error) {
       dispatch(isFailing());
       return toast.error(error?.response?.data?.msg);
@@ -139,7 +177,14 @@ const Comment = ({ type, id }) => {
       </div>
       <div className="comment_cards">
         {commentArray?.map((item, index) => (
-          <CommentCard id={id} type={type} key={index + id} item={item} />
+          <CommentCard
+            update={update}
+            setUpdate={setUpdate}
+            id={id}
+            type={type}
+            key={index + id}
+            item={item}
+          />
         ))}
       </div>
     </div>

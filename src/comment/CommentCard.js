@@ -6,7 +6,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import axios from "axios";
-const CommentCard = ({ item, type, id }) => {
+const CommentCard = ({ item, type, id, update, setUpdate }) => {
 	const [time, setTime] = useState(0);
 
 	useEffect(() => {
@@ -53,6 +53,8 @@ const CommentCard = ({ item, type, id }) => {
 				}
 			);
 			toast.success(data?.data?.msg);
+			setBars(false);
+			setUpdate(!update);
 			dispatch(isSuccess());
 		} catch (err) {
 			dispatch(isFailing());
@@ -183,7 +185,7 @@ const CommentCard = ({ item, type, id }) => {
 					<div className="commentCard_replyInput">
 						<ReplyInput
 							type={type}
-							parentID={item?.commentID}
+							parentID={item?.parentID ?? item?.commentID}
 							name={item?.userName}
 							id={id}
 							setReply={setReply}
@@ -191,10 +193,16 @@ const CommentCard = ({ item, type, id }) => {
 					</div>
 				)}
 				<div className="commentCard_reply">
-					{item?.childComment?.map((item, index) => (
+					{item?.childComment?.map((infor, index) => (
 						<CommentCard
-							key={index + "lesson for more" + item?.commentID}
-							item={item}
+							type={type}
+							id={id}
+							setReply={setReply}
+							name={infor?.userName}
+							key={index + "lesson for more" + infor?.commentID}
+							item={infor}
+							update={update}
+							setUpdate={setUpdate}
 						/>
 					))}
 				</div>
