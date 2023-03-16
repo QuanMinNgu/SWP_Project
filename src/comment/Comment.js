@@ -9,6 +9,9 @@ import { UserContext } from "../App";
 const Comment = ({ type, id }) => {
 	const [comment, setComment] = useState("");
 	const [commentArray, setCommentArray] = useState([]);
+
+	const [update, setUpdate] = useState(false);
+
 	const { socket } = useContext(UserContext);
 	const dispatch = useDispatch();
 	const commentRef = useRef();
@@ -46,7 +49,7 @@ const Comment = ({ type, id }) => {
 				here = false;
 			};
 		}
-	}, [id]);
+	}, [id, update]);
 
 	useEffect(() => {
 		if (socket) {
@@ -165,7 +168,14 @@ const Comment = ({ type, id }) => {
 			</div>
 			<div className="comment_cards">
 				{commentArray?.map((item, index) => (
-					<CommentCard id={id} type={type} key={index + id} item={item} />
+					<CommentCard
+						update={update}
+						setUpdate={setUpdate}
+						id={id}
+						type={type}
+						key={index + id}
+						item={item}
+					/>
 				))}
 			</div>
 		</div>
