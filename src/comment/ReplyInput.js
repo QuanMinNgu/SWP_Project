@@ -43,7 +43,7 @@ const ReplyInput = ({ name, type, id, parentID, setReply }) => {
 				commentID: res?.data?.commentID,
 				content: `<span>${name}</span>` + content,
 				id,
-				accountID: auth?.user?.id,
+				userID: auth?.user?.id,
 				image: auth?.user?.image,
 				userName: auth?.user?.name,
 				parentID: parentID,

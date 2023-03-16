@@ -131,6 +131,7 @@ const Comment = ({ type, id }) => {
 				userName: auth?.user?.name,
 				parentID: null,
 				childComment: [],
+				userID: auth?.user?.id,
 			});
 		} catch (error) {
 			dispatch(isFailing());
