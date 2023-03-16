@@ -141,7 +141,7 @@ const Comment = ({ type, id }) => {
 			</div>
 			<div className="comment_cards">
 				{commentArray?.map((item, index) => (
-					<CommentCard key={index + id} item={item} />
+					<CommentCard id={id} type={type} key={index + id} item={item} />
 				))}
 			</div>
 		</div>

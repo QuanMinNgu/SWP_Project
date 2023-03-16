@@ -1,10 +1,128 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReplyInput from "./ReplyInput";
 import "./style.scss";
-const CommentCard = ({ item }) => {
-	const [reply, setReply] = useState(false);
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+import { toast } from "react-toastify";
+import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
+import axios from "axios";
+const CommentCard = ({ item, type, id }) => {
+	const [time, setTime] = useState(0);
 
+	useEffect(() => {
+		if (time === 0) {
+			return;
+		}
+		const timesInterval = setInterval(() => {
+			setTime((prev) => {
+				if (prev < 1) {
+					return prev;
+				}
+				return prev - 1;
+			});
+		}, 1000);
+		return () => {
+			clearInterval(timesInterval);
+		};
+	}, [time]);
+
+	const [reply, setReply] = useState(false);
 	const [bars, setBars] = useState(false);
+	const [edit, setEdit] = useState(false);
+	const auth = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
+	const commentRef = useRef(null);
+
+	const handleDeleteComment = async () => {
+		const check = window.confirm("Do you wanna delete this comment?");
+		if (!check) {
+			setBars(!bars);
+			return;
+		}
+		dispatch(isLoading());
+		try {
+			const data = await axios.post(
+				`/api/comment/delete/${item?.commentID}`,
+				{
+					token: auth.user?.token,
+				},
+				{
+					headers: {
+						token: auth.user?.token,
+					},
+				}
+			);
+			toast.success(data?.data?.msg);
+			dispatch(isSuccess());
+		} catch (err) {
+			dispatch(isFailing());
+			return toast.error(err?.response?.data?.msg);
+		}
+	};
+
+	const handleUpdateComment = async () => {
+		setEdit(false);
+		if (commentRef.current.innerHTML == item?.content) {
+			return;
+		}
+		try {
+			const data = await axios.post(
+				`/api/comment/update`,
+				{
+					commentID: item?.commentID,
+					content: commentRef.current.innerHTML,
+				},
+				{
+					headers: {
+						token: auth.user?.token,
+					},
+				}
+			);
+			toast.success(data?.data?.msg);
+			dispatch(isSuccess());
+		} catch (err) {
+			dispatch(isFailing());
+			return toast.error(err?.response?.data?.msg);
+		}
+	};
+
+	const handleReport = async () => {
+		if (time > 0) {
+			return toast.error(`Please wating ${time} second to repord again.`);
+		}
+		dispatch(isLoading());
+		try {
+			const data = await axios.post(
+				`/api/comment/report/${item?.commentID}`,
+				{
+					token: auth.user?.token,
+				},
+				{
+					headers: {
+						token: auth.user?.token,
+					},
+				}
+			);
+			toast.success(data?.data?.msg);
+			dispatch(isSuccess());
+			setBars(false);
+			setTime(300);
+		} catch (err) {
+			dispatch(isFailing());
+			return toast.error(err?.response?.data?.msg);
+		}
+	};
+
+	useEffect(() => {
+		if (commentRef) {
+			if (edit) {
+				commentRef.current.contentEditable = true;
+				commentRef.current.focus();
+			} else {
+				commentRef.current.contentEditable = false;
+			}
+		}
+	}, [edit, commentRef]);
 
 	return (
 		<div className="commentCard">
@@ -17,11 +135,34 @@ const CommentCard = ({ item }) => {
 			</div>
 			<div className="commentCard_body">
 				<div className="commentCard_infor">
-					<div className="commentCard_infor_title">{item?.userName}</div>
-					<div className="commentCard_infor_content">{item?.content}</div>
+					<div className="commentCard_infor_title">
+						{item?.userName}
+						{edit && (
+							<div className="comment_button_update">
+								<button onClick={handleUpdateComment} className="button">
+									Update
+								</button>
+								<button
+									onClick={() => {
+										setEdit(false);
+									}}
+									style={{
+										backgroundColor: "rgb(141,141,141)",
+										color: "white",
+									}}
+									className="button button_cancel"
+								>
+									Cancel
+								</button>
+							</div>
+						)}
+					</div>
+					<div ref={commentRef} className="commentCard_infor_content">
+						{item?.content}
+					</div>
 				</div>
 				<div className="commentCard_navbar">
-					<div className="commentCard_navbar_items">0 Thích</div>
+					<div className="commentCard_navbar_items">0 Likes</div>
 					<div
 						onClick={() => {
 							setReply(!reply);
@@ -31,12 +172,18 @@ const CommentCard = ({ item }) => {
 						Reply
 					</div>
 					<div className="commentCard_navbar_items">
-						<i>{item?.createdDate}</i>
+						<i>{item?.commentID && moment(item?.commentID).fromNow()}</i>
 					</div>
 				</div>
 				{reply && (
 					<div className="commentCard_replyInput">
-						<ReplyInput name={item?.userName} />
+						<ReplyInput
+							type={type}
+							parentID={item?.commentID}
+							name={item?.userName}
+							id={id}
+							setReply={setReply}
+						/>
 					</div>
 				)}
 				<div className="commentCard_reply">
@@ -56,13 +203,35 @@ const CommentCard = ({ item }) => {
 			>
 				<i className="fa-solid fa-ellipsis"></i>
 			</div>
-			{bars && (
+			{bars && auth.user?.id?.toString() == item?.userID?.toString() && (
 				<div className="comment_bars_items">
-					<div title="Update" className="comment_bars_item">
+					<div
+						onClick={() => {
+							setBars(false);
+							setEdit(true);
+						}}
+						title="Update"
+						className="comment_bars_item"
+					>
 						Update
 					</div>
-					<div title="Delete" className="comment_bars_item">
+					<div
+						onClick={handleDeleteComment}
+						title="Delete"
+						className="comment_bars_item"
+					>
 						Delete
+					</div>
+				</div>
+			)}
+			{bars && auth.user?.id?.toString() != item?.userID?.toString() && (
+				<div className="comment_bars_items">
+					<div
+						onClick={handleReport}
+						title="Update"
+						className="comment_bars_item"
+					>
+						Report
 					</div>
 				</div>
 			)}
