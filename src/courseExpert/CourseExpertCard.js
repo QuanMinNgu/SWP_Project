@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CourseExpertCard = ({ item }) => {
 	const [bars, setBars] = useState(false);
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		console.log(item);
-	}, [item]);
 	return (
 		<tr className="thead_wrap_items">
 			<th className="thead_title">
@@ -62,7 +60,11 @@ const CourseExpertCard = ({ item }) => {
 						<div className="vc_bars_detail">
 							<div
 								onClick={() => {
-									navigate(`/course_expert/update?id=${item?.courseID}`);
+									if (item?.status) {
+										toast.error("Course is active that cannot be updated now");
+									} else {
+										navigate(`/course_expert/update?id=${item?.courseID}`);
+									}
 								}}
 								className="vc_bars_detail_items"
 							>

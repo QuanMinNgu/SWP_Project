@@ -50,8 +50,6 @@ const CreateCourse = () => {
 
 	const [optionsKind, setOptionKind] = useState({});
 
-	const [reload, setReload] = useState(false);
-
 	useEffect(() => {
 		if (types) {
 			const arr = types?.map((item) => {
@@ -63,7 +61,6 @@ const CreateCourse = () => {
 			setOptionKind([...arr]);
 		}
 	}, [types]);
-	const [courseExperts, setCourseExperts] = useState([]);
 
 	const { search } = useLocation();
 	const idCourse = new URLSearchParams(search).get("id");
@@ -133,7 +130,6 @@ const CreateCourse = () => {
 					if (!here) {
 						return dispatch(isSuccess());
 					}
-					setCourseExperts(res?.data?.users);
 					cache.current[url] = res?.data?.users;
 					dispatch(isSuccess());
 				})

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./style.scss";
 import Select from "react-select";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import "../admin/style.scss";
 import Pagination from "../paginating/Pagination";
 import CourseExpertCard from "./CourseExpertCard";
@@ -26,8 +26,17 @@ const CourseExpertDashboard = () => {
 	const dispatch = useDispatch();
 
 	const options = [
+		{ value: null, label: "All" },
 		{ value: "free", label: "Free" },
 		{ value: "no-free", label: "Not Free" },
+	];
+
+	const optionsSort = [
+		{ value: null, label: "All" },
+		{ value: "astar", label: "Stars Increased" },
+		{ value: "dstar", label: "Stars Decreased" },
+		{ value: "dcreatedAt", label: "Newest" },
+		{ value: "acreatedAt", label: "Oldest" },
 	];
 
 	const [optionsKind, setOptionKind] = useState({});
@@ -41,16 +50,14 @@ const CourseExpertDashboard = () => {
 					label: item?.courseTypeName,
 				};
 			});
+			arr.unshift({
+				value: null,
+				label: "No sort",
+			});
 			setOptionKind([...arr]);
 		}
 	}, [types]);
 
-	const optionsSort = [
-		{ value: "vanilla", label: "Stars Increased" },
-		{ value: "asd", label: "Stars Decreased" },
-		{ value: "vaniasdlla", label: "Newest" },
-		{ value: "vanilsla", label: "Oldest" },
-	];
 	useEffect(() => {
 		let here = true;
 		const url = "/api/type_course";
@@ -77,10 +84,30 @@ const CourseExpertDashboard = () => {
 	}, []);
 
 	const [updateCourse, setUpdateCourse] = useState(false);
+	const [numPage, setNumPage] = useState(1);
+	const { search } = useLocation();
 
 	useEffect(() => {
 		let here = true;
-		const url = "/api/common/course/getAllCourse?limit=20&page=1";
+		const sort = new URLSearchParams(search).get("sort") || null;
+		const type = new URLSearchParams(search).get("type") || null;
+		const kind = new URLSearchParams(search).get("kind") || null;
+		const page = new URLSearchParams(search).get("page") || 1;
+		const searching = new URLSearchParams(search).get("search") || null;
+		const sortSearch = {
+			sort: sort,
+			type: type,
+			kind: kind,
+			page: page,
+			limit: 20,
+			search: searching,
+		};
+		if (sort || type || kind) {
+			sortSearch.search = null;
+		}
+		const sortSearching = new URLSearchParams(sortSearch).toString();
+		const url = `/api/common/course/getAllCourse?${sortSearching}`;
+		console.log(url);
 		dispatch(isLoading());
 		axios
 			.get(url, {
@@ -92,18 +119,19 @@ const CourseExpertDashboard = () => {
 				if (!here) {
 					return dispatch(isSuccess());
 				}
-				setCourse(res?.data);
-				cache.current[url] = res?.data;
+				setCourse(res?.data?.courses);
+				setNumPage(res?.data?.numPage);
+				cache.current[url] = res?.data?.courses;
 				dispatch(isSuccess());
 			})
 			.catch((err) => {
 				dispatch(isFailing());
-				toast.error("Sorry, We get something wrong in server.");
+				toast.error(err?.response?.data?.msg);
 			});
 		return () => {
 			here = false;
 		};
-	}, [updateCourse]);
+	}, [updateCourse, search]);
 
 	const handleLogOut = () => {
 		toast.success("Logout successfully.");
@@ -111,7 +139,29 @@ const CourseExpertDashboard = () => {
 		navigate("/");
 	};
 
-	const [selectedOption, setSelectedOption] = useState(null);
+	const [updatePagePart, setUpdatePagePart] = useState(false);
+
+	const handleSearching = () => {
+		const searching = {
+			kind: selectedOptionKind?.value || null,
+			type: selectedOptionType?.value || null,
+			sort: selectedOptionSort?.value || null,
+			search: null,
+		};
+		if (searching?.kind === "free") {
+			searching.kind = true;
+		} else if (searching.kind === "no-free") {
+			searching.kind = false;
+		}
+
+		searching.page = 1;
+		const searchingUrl = new URLSearchParams(searching).toString();
+		navigate("?" + searchingUrl);
+		setUpdatePagePart(!updatePagePart);
+	};
+	const [selectedOptionKind, setSelectedOptionKind] = useState(null);
+	const [selectedOptionType, setSelectedOptionType] = useState(null);
+	const [selectedOptionSort, setSelectedOptionSort] = useState(null);
 	return (
 		<div className="dashboard">
 			<div className="dashboard_navbar">
@@ -200,26 +250,26 @@ const CourseExpertDashboard = () => {
 						<div className="managerCourse_navbar">
 							<Select
 								className="search_wrap_select"
-								defaultValue={selectedOption}
-								onChange={setSelectedOption}
+								defaultValue={selectedOptionType}
+								onChange={setSelectedOptionType}
 								options={options}
 								placeholder="Price"
 							/>
 							<Select
 								className="search_wrap_select"
-								defaultValue={selectedOption}
-								onChange={setSelectedOption}
+								defaultValue={selectedOptionKind}
+								onChange={setSelectedOptionKind}
 								options={optionsKind}
 								placeholder="Kind"
 							/>
 							<Select
 								className="search_wrap_select"
-								defaultValue={selectedOption}
-								onChange={setSelectedOption}
+								defaultValue={selectedOptionSort}
+								onChange={setSelectedOptionSort}
 								options={optionsSort}
 								placeholder="Sort"
 							/>
-							<button>Tìm Kiếm</button>
+							<button onClick={handleSearching}>Search</button>
 						</div>
 						<div className="manageCourse_table">
 							<table className="table">
@@ -244,7 +294,7 @@ const CourseExpertDashboard = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{course?.courses?.map((item, index) => (
+									{course?.map((item, index) => (
 										<CourseExpertCard
 											item={item}
 											key={index + "courseExpert"}
@@ -254,7 +304,7 @@ const CourseExpertDashboard = () => {
 							</table>
 						</div>
 						<div className="pagination">
-							<Pagination count={course?.numPage} />
+							<Pagination count={numPage} />
 						</div>
 					</div>
 				)}
