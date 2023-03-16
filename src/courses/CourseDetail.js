@@ -250,13 +250,7 @@ const CourseDetail = () => {
 								Dashboard
 							</button>
 						) : store?.rule === "ROLE_SALE" ? (
-							<button
-								onClick={() => {
-									navigate("/course_expert/dashboard");
-								}}
-							>
-								Dashboard
-							</button>
+							<div></div>
 						) : canLearn ? (
 							<button
 								onClick={() => {
