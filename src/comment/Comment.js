@@ -60,6 +60,7 @@ const Comment = ({ type, id }) => {
 							blogID: id,
 							type,
 							lessonID: null,
+							parentID: null,
 					  }
 					: {
 							content: comment,
@@ -67,6 +68,7 @@ const Comment = ({ type, id }) => {
 							lessonID: id,
 							type,
 							blogID: null,
+							parentID: null,
 					  };
 			const res = await axios.post("/api/comment/create", data, {
 				headers: { token: auth?.user?.token },
