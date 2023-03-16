@@ -117,6 +117,18 @@ const Quiz = ({ setLesson, lesson, addLesson, setAddLesson, setType }) => {
 		) {
 			return toast.error("Please enter value.");
 		}
+		if (quesions?.length == 0) {
+			return toast.error("Please enter question.");
+		}
+		let here = false;
+		quesions?.forEach((item) => {
+			if (item?.answers?.length == 0) {
+				here = true;
+			}
+		});
+		if (here) {
+			return toast.error("Question need to have at least one answer.");
+		}
 		const arr = lesson;
 		const inde = addLesson.index;
 		if (addLesson.type === "create") {
