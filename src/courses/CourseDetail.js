@@ -231,7 +231,6 @@ const CourseDetail = () => {
 							</div>
 						</div>
 					)}
-
 					<div className="course_detail_button">
 						{store?.rule === "ROLE_ADMIN" ? (
 							<button

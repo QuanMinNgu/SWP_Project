@@ -143,8 +143,8 @@ const CourseExpertDashboard = () => {
 
 	const handleSearching = () => {
 		const searching = {
-			kind: selectedOptionKind?.value || null,
-			type: selectedOptionType?.value || null,
+			type: selectedOptionKind?.value || null,
+			kind: selectedOptionType?.value || null,
 			sort: selectedOptionSort?.value || null,
 			search: null,
 		};

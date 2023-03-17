@@ -36,7 +36,6 @@ const Rating = ({ course }) => {
 					return;
 				}
 				setRatings(res?.data);
-				console.log(res?.data);
 			})
 			.catch((err) => {
 				toast.error(err?.response?.data?.msg);
