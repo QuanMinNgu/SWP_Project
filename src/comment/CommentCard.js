@@ -112,7 +112,7 @@ const CommentCard = ({ item, type, id }) => {
 			const data = await axios.post(
 				`/api/comment/report/${item?.commentID}`,
 				{
-					token: auth.user?.token,
+					type: "lesson",
 				},
 				{
 					headers: {
