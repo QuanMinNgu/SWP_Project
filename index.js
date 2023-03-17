@@ -20,8 +20,16 @@ io.on("connection", (socket) => {
 		socket.join(data?.id);
 	});
 	socket.on("send_mess", (data) => {
-		console.log(data);
 		io.to(data?.id).emit("recieve", data);
+	});
+	socket.on("update_comment", (data) => {
+		io.to(data?.id).emit("update_back", data);
+	});
+	socket.on("delete_comment", (data) => {
+		io.to(data?.id).emit("delete_back", data);
+	});
+	socket.on("report_comment", (data) => {
+		socket.emit("report_back", data);
 	});
 });
 httpServer.listen(7000, () => {
