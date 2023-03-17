@@ -19,6 +19,7 @@ const BlogDetail = () => {
   const handleNavComment = () => {
     document.getElementById("commentContainer").scrollIntoView();
   };
+  const [time, setTime] = useState(0);
   const handleLove = async () => {};
   useEffect(() => {
     let here = true;
@@ -79,7 +80,45 @@ const BlogDetail = () => {
       };
     }
   }, []);
-
+  useEffect(() => {
+    if (time === 0) {
+      return;
+    }
+    const timeInter = setInterval(() => {
+      setTime((pre) => {
+        if (pre < 1) {
+          return pre;
+        }
+        return pre - 1;
+      });
+    }, [1000]);
+    return () => {
+      clearInterval(timeInter);
+    };
+  }, [time]);
+  const handleReport = async () => {
+    if (time) {
+      return toast.error(`Please wating ${time} second to repord again.`);
+    }
+    try {
+      dispatch(isLoading());
+      const res = await axios.post(
+        `/api/blog/report?id=${slug}`,
+        {
+          token: auth?.user?.token,
+        },
+        {
+          headers: { token: auth?.user?.token },
+        }
+      );
+      dispatch(isSuccess());
+      setTime(300);
+      return toast.success(res?.data?.msg);
+    } catch (error) {
+      dispatch(isFailing());
+      return toast.error(error?.response?.data?.msg);
+    }
+  };
   return (
     <div className="blog_detail" style={{ width: "100%" }}>
       <div className="blog_detail_user">
@@ -92,7 +131,6 @@ const BlogDetail = () => {
               ) : (
                 <i className="fa-regular fa-heart"></i>
               )}
-              <span></span>
             </div>
             <i
               onClick={handleNavComment}
@@ -100,6 +138,13 @@ const BlogDetail = () => {
                 marginLeft: "40px",
               }}
               className="fa-regular fa-comment"
+            ></i>
+            <i
+              class="fa-regular fa-flag"
+              onClick={handleReport}
+              style={{
+                marginLeft: "40px",
+              }}
             ></i>
           </div>
         </div>
