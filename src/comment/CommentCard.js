@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ReplyInput from "./ReplyInput";
 import "./style.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,8 +6,11 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import axios from "axios";
-const CommentCard = ({ item, type, id, update, setUpdate }) => {
+import { UserContext } from "../App";
+const CommentCard = ({ item, type, id }) => {
 	const [time, setTime] = useState(0);
+
+	const { socket } = useContext(UserContext);
 
 	useEffect(() => {
 		if (time === 0) {
@@ -39,7 +42,6 @@ const CommentCard = ({ item, type, id, update, setUpdate }) => {
 			setBars(!bars);
 			return;
 		}
-		dispatch(isLoading());
 		try {
 			const data = await axios.post(
 				`/api/comment/delete/${item?.commentID}`,
@@ -52,14 +54,19 @@ const CommentCard = ({ item, type, id, update, setUpdate }) => {
 					},
 				}
 			);
-			toast.success(data?.data?.msg);
-			setBars(false);
-			setUpdate(!update);
-			dispatch(isSuccess());
+			toast.success(data?.data?.msg, {
+				autoClose: 2000,
+			});
+			socket.emit("delete_comment", {
+				id: id,
+				parentID: item?.parentID,
+				commentID: item?.commentID,
+				content: commentRef.current.innerHTML,
+			});
 		} catch (err) {
-			dispatch(isFailing());
-			console.log(err?.response?.data);
-			return toast.error(err?.response?.data?.msg);
+			return toast.error(err?.response?.data?.msg, {
+				autoClose: 2000,
+			});
 		}
 	};
 
@@ -81,10 +88,17 @@ const CommentCard = ({ item, type, id, update, setUpdate }) => {
 					},
 				}
 			);
-			toast.success(data?.data?.msg);
-			dispatch(isSuccess());
+			toast.success(data?.data?.msg, {
+				autoClose: 2000,
+			});
+			socket.emit("update_comment", {
+				id: id,
+				parentID: item?.parentID,
+				commentID: item?.commentID,
+				content: commentRef.current.innerHTML,
+			});
 		} catch (err) {
-			dispatch(isFailing());
+			commentRef.current.innerHTML = item?.content;
 			return toast.error(err?.response?.data?.msg);
 		}
 	};
@@ -106,13 +120,22 @@ const CommentCard = ({ item, type, id, update, setUpdate }) => {
 					},
 				}
 			);
-			toast.success(data?.data?.msg);
+			toast.success(data?.data?.msg, {
+				autoClose: 2000,
+			});
 			dispatch(isSuccess());
-			setBars(false);
 			setTime(300);
+			socket.emit("report_comment", {
+				id: id,
+				parentID: item?.parentID,
+				commentID: item?.commentID,
+				content: commentRef.current.innerHTML,
+			});
 		} catch (err) {
 			dispatch(isFailing());
-			return toast.error(err?.response?.data?.msg);
+			return toast.error(err?.response?.data?.msg, {
+				autoClose: 2000,
+			});
 		}
 	};
 
@@ -201,8 +224,6 @@ const CommentCard = ({ item, type, id, update, setUpdate }) => {
 							name={infor?.userName}
 							key={index + "lesson for more" + infor?.commentID}
 							item={infor}
-							update={update}
-							setUpdate={setUpdate}
 						/>
 					))}
 				</div>
