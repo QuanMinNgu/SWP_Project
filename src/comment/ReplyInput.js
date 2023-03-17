@@ -1,16 +1,14 @@
 import axios from "axios";
 import React, { useContext, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { UserContext } from "../App";
-import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import "./style.scss";
 const ReplyInput = ({ name, type, id, parentID, setReply }) => {
 	const [content, setContent] = useState("");
 
 	const { socket } = useContext(UserContext);
 	const commentRef = useRef();
-	const dispatch = useDispatch();
 	const auth = useSelector((state) => state.auth);
 
 	const handleComment = async () => {
@@ -18,7 +16,6 @@ const ReplyInput = ({ name, type, id, parentID, setReply }) => {
 			return toast.error("Please enter content in comment");
 		}
 		try {
-			dispatch(isLoading());
 			const data =
 				type === "blog"
 					? {
@@ -39,6 +36,9 @@ const ReplyInput = ({ name, type, id, parentID, setReply }) => {
 			const res = await axios.post("/api/comment/create", data, {
 				headers: { token: auth?.user?.token },
 			});
+			toast.success(res?.data?.msg, {
+				autoClose: 2000,
+			});
 			socket.emit("send_mess", {
 				commentID: res?.data?.commentID,
 				content: `<span>${name}</span>` + content,
@@ -50,13 +50,11 @@ const ReplyInput = ({ name, type, id, parentID, setReply }) => {
 				childComment: [],
 			});
 			commentRef.current.innerHTML = "";
-			toast.success(res?.data?.msg);
-			dispatch(isSuccess());
 			setReply(false);
 		} catch (error) {
-			dispatch(isFailing());
-			console.log(error?.response?.data);
-			return toast.error(error?.response?.data?.msg);
+			return toast.error(error?.response?.data?.msg, {
+				autoClose: 2000,
+			});
 		}
 	};
 
