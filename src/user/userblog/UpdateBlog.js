@@ -17,7 +17,6 @@ import { UserContext } from "../../App";
 import { useParams } from "react-router-dom";
 const UpdateBlog = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [selectedOption, setSelectedOption] = useState(null);
   const [optionsKind, setOptionKind] = useState({});
   const { cache } = useContext(UserContext);
   const [types, setTypes] = useState([]);
@@ -88,7 +87,7 @@ const UpdateBlog = () => {
       blogName: title,
       blogMeta: meta,
       content: content,
-      courseTypeId: selectedOption?.value,
+      courseTypeId: currentType?.value,
     });
     try {
       const data = await axios.post(
@@ -97,7 +96,7 @@ const UpdateBlog = () => {
           blogName: title,
           blogMeta: meta,
           content: content,
-          courseTypeId: selectedOption.value,
+          courseTypeId: currentType.value,
         },
         {
           headers: {
@@ -163,7 +162,7 @@ const UpdateBlog = () => {
         <div>
           <Select
             className="search_wrap_select"
-            onChange={setSelectedOption}
+            onChange={setCurrentType}
             options={optionsKind}
             value={currentType}
             placeholder="Kind"
