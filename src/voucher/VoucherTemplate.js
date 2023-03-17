@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./style.scss";
 function VoucherTemplate({ onClick, item, index, setApply, apply }) {
 	return (
@@ -34,7 +34,9 @@ function VoucherTemplate({ onClick, item, index, setApply, apply }) {
 						className="button"
 						style={{ height: "30px" }}
 					>
-						{apply?.amount ? "UnApply" : "Apply"}
+						{apply?.voucherID?.toString() === item?.voucherID?.toString()
+							? "UnApply"
+							: "Apply"}
 					</button>
 				</div>
 			</div>
