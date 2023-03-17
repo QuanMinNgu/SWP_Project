@@ -1,6 +1,7 @@
 @import "../style.module.scss";
 .blog_card {
   width: calc((100% / 3) - 24px);
+  position: relative;
   @include middleSmall {
     width: calc(100% - 24px);
   }
@@ -108,5 +109,24 @@
   }
   100% {
     transform: scale(1.2);
+  }
+}
+.option_blog {
+  margin-left: 6px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: -19%;
+  background-color: #ccc;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  border-radius: 16px;
+  & > span {
+    padding: 20px;
+    &:hover {
+      background-color: #b4adad;
+      border-radius: 16px;
+    }
   }
 }

@@ -170,6 +170,7 @@ const UpdateBlog = () => {
             className="search_wrap_select"
             onChange={setSelectedOption}
             options={optionsKind}
+            value={currentType}
             placeholder="Kind"
           />
         </div>

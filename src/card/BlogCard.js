@@ -11,10 +11,11 @@ import { format } from "date-fns";
 const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   const [love, setLove] = useState(false);
   const [currentID, setCurrentID] = useState(null);
+  const [bars, setBars] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
-
+  const [time, setTime] = useState(0);
   const handleLove = async () => {
     try {
       dispatch(isLoading());
@@ -64,6 +65,48 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   const handleWatchProfile = () => {
     navigate(`/profile/${item?.accountID}`);
   };
+  const handleOption = () => {
+    setBars(!bars);
+  };
+  const handleReport = async () => {
+    if (time === 0) {
+      return;
+    }
+    try {
+      dispatch(isLoading());
+      const res = await axios.post(
+        `/api/blog/report?id=${item?.blogID}`,
+        {
+          token: auth?.user?.token,
+        },
+        {
+          headers: { token: auth?.user?.token },
+        }
+      );
+      dispatch(isSuccess());
+      setTime(300);
+      return toast.success(res?.data?.msg);
+    } catch (error) {
+      dispatch(isFailing());
+      return toast.error(error?.response?.data?.msg);
+    }
+  };
+  useEffect(() => {
+    const timeInter = setInterval(() => {
+      setTime((pre) => {
+        if (pre < 1) {
+          return pre;
+        }
+        return pre - 1;
+      });
+    }, [1000]);
+    return () => {
+      clearInterval(timeInter);
+    };
+  }, [time]);
+  const handleUpdating = () => {
+    navigate(`/me/blog/${item?.blogID}`);
+  };
   return (
     <div className="blog_card" key={index}>
       <div className="blog_card_body">
@@ -75,7 +118,6 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
             </h2>
           </div>
           <div>
-            <span>{item?.courseType?.courseTypeName}</span>
             <div
               style={{
                 fontSize: "1rem",
@@ -94,7 +136,22 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
                 <i className="fa-regular fa-heart"></i>
               )}
             </div>
+            {auth?.user && (
+              <div>
+                {auth?.user?.id === item?.accountID ? (
+                  <i class="fa-solid fa-ellipsis" onClick={handleOption}></i>
+                ) : (
+                  <i class="fa-regular fa-flag" onClick={handleReport}></i>
+                )}
+              </div>
+            )}
           </div>
+          {bars && (
+            <div className="option_blog">
+              <span onClick={handleUpdating}>Update</span>
+              <span>Delete</span>
+            </div>
+          )}
         </div>
         <div className="blog_card_body_content">
           <div
