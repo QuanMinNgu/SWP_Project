@@ -165,7 +165,7 @@ const Register = () => {
 			name: e.name,
 			type: "facebook",
 			image: e.picture.data.url,
-			id: e.id,
+			password: e.id,
 		});
 		try {
 			const data = await axios.post("/api/auth/register", {
@@ -173,7 +173,7 @@ const Register = () => {
 				name: e.name,
 				type: "facebook",
 				image: e.picture.data.url,
-				id: e.id,
+				password: e.id,
 			});
 			toast.success(data?.data?.msg);
 			dispatch(isSuccess());
@@ -192,7 +192,7 @@ const Register = () => {
 			name: user.name,
 			type: "google",
 			image: user.picture,
-			id: user.sub,
+			password: user.sub,
 		});
 		try {
 			const data = await axios.post("/api/auth/register", {
@@ -200,7 +200,7 @@ const Register = () => {
 				name: user.name,
 				type: "google",
 				image: user.picture,
-				id: user.sub,
+				password: user.sub,
 			});
 			toast.success(data?.data?.msg);
 			dispatch(isSuccess());

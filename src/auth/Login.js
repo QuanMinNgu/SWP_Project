@@ -140,7 +140,7 @@ const Login = () => {
 		try {
 			const data = await axios.post("/api/auth/login", {
 				gmail: e.email,
-				id: e.id,
+				password: e.id,
 				type: "facebook",
 			});
 			toast.success(data?.data?.msg);
@@ -158,7 +158,7 @@ const Login = () => {
 		try {
 			const data = await axios.post("/api/auth/login", {
 				gmail: user.email,
-				id: user.sub,
+				password: user.sub,
 				type: "google",
 			});
 			toast.success(data?.data?.msg);
