@@ -79,7 +79,7 @@ const UpdateBlog = () => {
   const handleUpdate = async () => {
     const title = titleRef.current.value;
     const meta = metaRef.current.value;
-    if (!title || !meta || !content || !selectedOption?.value) {
+    if (title === "" || meta === "" || content === "") {
       return toast.error("Please enter all information.");
     }
     dispatch(isLoading());
@@ -115,10 +115,6 @@ const UpdateBlog = () => {
   useEffect(() => {
     let here = true;
     const url = `/api/common/blog/blog_details?id=${slug}`;
-    if (cache.current[url]) {
-      setContent(cache.current[url].content);
-      return setBlog(cache.current[url]);
-    }
     dispatch(isLoading());
     axios
       .get(url)
@@ -127,7 +123,6 @@ const UpdateBlog = () => {
           return dispatch(isSuccess());
         }
         setBlog(res?.data?.blogDetail);
-        cache.current[url] = res?.data?.blogDetail;
         setCurrentType({
           label: res?.data?.blogDetail?.courseTypeName,
           value: res?.data?.blogDetail?.courseTypeId,
@@ -202,7 +197,7 @@ const UpdateBlog = () => {
             style={{ marginRight: "0.5rem", fontSize: "1.3rem" }}
             className="fa-solid fa-upload"
           ></i>
-          Đăng
+          Update Blog
         </button>
       </div>
     </div>
