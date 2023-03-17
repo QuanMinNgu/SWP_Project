@@ -10,6 +10,10 @@ const Comment = ({ type, id }) => {
 	const [comment, setComment] = useState("");
 	const [commentArray, setCommentArray] = useState([]);
 
+	const [out, setOut] = useState(false);
+
+	const [page, setPage] = useState(1);
+
 	const { socket } = useContext(UserContext);
 	const dispatch = useDispatch();
 	const commentRef = useRef();
@@ -25,7 +29,7 @@ const Comment = ({ type, id }) => {
 	useEffect(() => {
 		if (id) {
 			let here = true;
-			const url = `/api/comment/get?id=${id}&type=${type}&page=1`;
+			const url = `/api/comment/get?id=${id}&type=${type}&page=${page}`;
 			dispatch(isLoading());
 			axios
 				.get(url)
@@ -34,7 +38,8 @@ const Comment = ({ type, id }) => {
 						return dispatch(isSuccess());
 					}
 					dispatch(isSuccess());
-					setCommentArray(res?.data?.comments);
+					setOut(res?.data?.out);
+					setCommentArray([...commentArray, ...res?.data?.comments]);
 				})
 				.catch((err) => {
 					if (!here) {
@@ -47,7 +52,7 @@ const Comment = ({ type, id }) => {
 				here = false;
 			};
 		}
-	}, [id]);
+	}, [id, page]);
 
 	useEffect(() => {
 		if (socket) {
@@ -272,6 +277,19 @@ const Comment = ({ type, id }) => {
 					<CommentCard id={id} type={type} key={index + id} item={item} />
 				))}
 			</div>
+			{!out && (
+				<div className="comment_loadMore">
+					<button
+						onClick={() => {
+							setPage((prev) => prev + 1);
+						}}
+						style={{ height: "4rem" }}
+						className="button"
+					>
+						Load More Comment
+					</button>
+				</div>
+			)}
 		</div>
 	);
 };
