@@ -38,7 +38,7 @@ const UserBlog = () => {
     <div className="user_blog">
       <div className="user_blog_header">
         <h1>My Blog</h1>
-        <p>Nơi lưu trữ blog của bạn</p>
+        <p>Where to host your blog</p>
       </div>
       <div className="user_blog_body">
         {listBlog?.map((item, index) => {

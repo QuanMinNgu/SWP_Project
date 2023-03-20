@@ -12,17 +12,20 @@ const UserBlogCard = ({ item, index, setUpdate, update }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleDelete = async () => {
-    try {
-      dispatch(isLoading());
-      const res = await axios.post(`/api/blog/delete?id=${item?.blogID}`, {
-        token: auth?.user?.token,
-      });
-      dispatch(isSuccess());
-      setUpdate(!update);
-      return toast.success(res?.data?.msg);
-    } catch (error) {
-      dispatch(isFailing());
-      return toast.error(error?.response?.data?.msg);
+    let check = window.confirm("Do you want to delete ?");
+    if (check) {
+      try {
+        dispatch(isLoading());
+        const res = await axios.post(`/api/blog/delete?id=${item?.blogID}`, {
+          token: auth?.user?.token,
+        });
+        dispatch(isSuccess());
+        setUpdate(!update);
+        return toast.success(res?.data?.msg);
+      } catch (error) {
+        dispatch(isFailing());
+        return toast.error(error?.response?.data?.msg);
+      }
     }
   };
   useEffect(() => {

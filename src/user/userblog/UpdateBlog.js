@@ -123,7 +123,8 @@ const UpdateBlog = () => {
         }
       );
       dispatch(isSuccess());
-      toast.success(data?.data?.msg);
+      navigate("/me/blog");
+      return toast.success(data?.data?.msg);
     } catch (err) {
       let ms = {};
       err?.response?.data?.msgProgress?.forEach((item) => {
