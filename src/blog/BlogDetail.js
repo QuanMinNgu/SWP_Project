@@ -103,12 +103,14 @@ const BlogDetail = () => {
     try {
       dispatch(isLoading());
       const res = await axios.post(
-        `/api/blog/report?id=${slug}`,
+        `/api/comment/report?${slug}?type=blog`,
         {
-          token: auth?.user?.token,
+          type: "blog",
         },
         {
-          headers: { token: auth?.user?.token },
+          headers: {
+            token: auth.user?.token,
+          },
         }
       );
       dispatch(isSuccess());
@@ -139,13 +141,17 @@ const BlogDetail = () => {
               }}
               className="fa-regular fa-comment"
             ></i>
-            <i
-              class="fa-regular fa-flag"
-              onClick={handleReport}
-              style={{
-                marginLeft: "40px",
-              }}
-            ></i>
+            {auth?.user?.id === blog?.accountID ? (
+              ""
+            ) : (
+              <i
+                class="fa-regular fa-flag"
+                onClick={handleReport}
+                style={{
+                  marginLeft: "40px",
+                }}
+              ></i>
+            )}
           </div>
         </div>
       </div>

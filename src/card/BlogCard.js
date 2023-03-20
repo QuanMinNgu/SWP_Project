@@ -109,6 +109,21 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   const handleUpdating = () => {
     navigate(`/me/blog/${item?.blogID}`);
   };
+  const handleDelete = async () => {
+    let check = window.confirm("Do you want to delete ?");
+    if (check) {
+      try {
+        dispatch(isLoading());
+        const res = await axios.post(`/api/blog/delete?id=${item?.blogID}`);
+        dispatch(isSuccess());
+        setUpdate(!update);
+        return toast.success(res?.data?.msg);
+      } catch (error) {
+        dispatch(isFailing());
+        return toast.error(error?.response?.data?.msg);
+      }
+    }
+  };
   return (
     <div className="blog_card" key={index}>
       <div className="blog_card_body">
@@ -151,7 +166,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
           {bars && (
             <div className="option_blog">
               <span onClick={handleUpdating}>Update</span>
-              <span>Delete</span>
+              <span onClick={handleDelete}>Delete</span>
             </div>
           )}
         </div>

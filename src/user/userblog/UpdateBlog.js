@@ -115,6 +115,7 @@ const UpdateBlog = () => {
           },
         }
       );
+      dispatch(isSuccess());
       toast.success(data?.data?.msg);
     } catch (err) {
       let ms = {};
