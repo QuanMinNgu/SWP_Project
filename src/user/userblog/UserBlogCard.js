@@ -88,7 +88,9 @@ const UserBlogCard = ({ item, index, setUpdate, update }) => {
           <h3
             style={{
               fontSize: "1.6rem",
+              cursor: "pointer",
             }}
+            onClick={() => navigate(`/blog/${item?.blogID}`)}
             className="header_blog"
           >
             {item?.blogName}
