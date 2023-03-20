@@ -194,6 +194,8 @@ const CourseManager = () => {
 		}
 	};
 
+	const [msg, setMsg] = useState({});
+
 	const handleChangeStatus = async (e) => {
 		dispatch(isLoading());
 		try {
@@ -201,17 +203,18 @@ const CourseManager = () => {
 				status: e,
 				courseID: courseSelected,
 			});
-			toast.success(data?.data?.msg);
 			dispatch(isSuccess());
 			setUpdateCourse(!updateCourse);
+			let ms = {};
+			if (data?.data?.msg) {
+				toast.success(data?.data?.msg);
+			}
+			data?.data?.msgProgress?.forEach((item) => {
+				ms[item?.errorName] = item?.message;
+			});
+			setMsg({ ...ms });
 		} catch (err) {
 			dispatch(isFailing());
-			if (err?.response?.data?.msgProgress) {
-				err?.response?.data?.msgProgress?.forEach((item) => {
-					toast.error(item);
-				});
-			}
-			return toast.error(err?.response?.data?.msg);
 		}
 	};
 

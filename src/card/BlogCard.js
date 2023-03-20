@@ -60,7 +60,6 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
     } else {
       setLove(false);
     }
-    console.log(loveBlog);
   }, [loveBlog]);
   const handleWatchProfile = () => {
     navigate(`/profile/${item?.accountID}`);
@@ -70,12 +69,14 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   };
   const handleReport = async () => {
     if (time > 0) {
-      return toast.error(`Please wating ${time} second to repord again.`);
+      return toast.error(`Please wating ${time} second to repord again.`, {
+        autoClose: 2000,
+      });
     }
     try {
       dispatch(isLoading());
       const res = await axios.post(
-        `/api/comment/report?${item?.blogID}?type=blog`,
+        `/api/comment/report?id=${item?.blogID}&type=blog`,
         {
           type: "blog",
         },
@@ -87,10 +88,14 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
       );
       dispatch(isSuccess());
       setTime(300);
-      return toast.success(res?.data?.msg);
+      return toast.success(res?.data?.msg, {
+        autoClose: 3000,
+      });
     } catch (error) {
       dispatch(isFailing());
-      return toast.error(error?.response?.data?.msg);
+      return toast.error(error?.response?.data?.msg, {
+        autoClose: 3000,
+      });
     }
   };
   useEffect(() => {
@@ -114,13 +119,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
     if (check) {
       try {
         dispatch(isLoading());
-        const res = await axios.post(
-          `/api/blog/delete?id=${item?.blogID}`,
-          {},
-          {
-            headers: { token: auth?.user?.token },
-          }
-        );
+        const res = await axios.post(`/api/blog/delete?id=${item?.blogID}`);
         dispatch(isSuccess());
         setUpdate(!update);
         return toast.success(res?.data?.msg);
@@ -154,7 +153,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
             </div>
             <div onClick={handleLove}>
               {love ? (
-                <i class="fa-solid fa-heart"></i>
+                <i className="fa-solid fa-heart"></i>
               ) : (
                 <i className="fa-regular fa-heart"></i>
               )}
@@ -162,9 +161,12 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
             {auth?.user && (
               <div>
                 {auth?.user?.id === item?.accountID ? (
-                  <i class="fa-solid fa-ellipsis" onClick={handleOption}></i>
+                  <i
+                    className="fa-solid fa-ellipsis"
+                    onClick={handleOption}
+                  ></i>
                 ) : (
-                  <i class="fa-regular fa-flag" onClick={handleReport}></i>
+                  <i className="fa-regular fa-flag" onClick={handleReport}></i>
                 )}
               </div>
             )}
