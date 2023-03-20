@@ -70,18 +70,19 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   };
   const handleReport = async () => {
     if (time > 0) {
-      return;
+      return toast.error(`Please wating ${time} second to repord again.`);
     }
     try {
       dispatch(isLoading());
       const res = await axios.post(
-        `/api/blog/report?id=${item?.blogID}`,
+        `/api/comment/report/${item?.blogID}`,
         {
-          token: auth?.user?.token,
           type: "blog",
         },
         {
-          headers: { token: auth?.user?.token },
+          headers: {
+            token: auth.user?.token,
+          },
         }
       );
       dispatch(isSuccess());
