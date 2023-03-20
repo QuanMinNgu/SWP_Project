@@ -16,9 +16,13 @@ const UserBlogCard = ({ item, index, setUpdate, update }) => {
     if (check) {
       try {
         dispatch(isLoading());
-        const res = await axios.post(`/api/blog/delete?id=${item?.blogID}`, {
-          token: auth?.user?.token,
-        });
+        const res = await axios.post(
+          `/api/blog/delete?id=${item?.blogID}`,
+          {},
+          {
+            headers: { token: auth?.user?.token },
+          }
+        );
         dispatch(isSuccess());
         setUpdate(!update);
         return toast.success(res?.data?.msg);
