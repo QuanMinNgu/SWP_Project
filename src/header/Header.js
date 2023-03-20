@@ -203,7 +203,7 @@ const Header = () => {
                         </div>
                       </Link>
                     )}
-                  {store?.rule !== "ROlE_ADMIN" &&
+                  {store?.rule !== "ROLE_ADMIN" &&
                     store?.rule !== "ROLE_SALE" && (
                       <div className="header_navbar_account_items">
                         <Link style={{ textDecoration: "none" }} to="/me/blog">
@@ -218,7 +218,7 @@ const Header = () => {
                         </Link>
                       </div>
                     )}
-                  {store?.rule !== "ROlE_ADMIN" &&
+                  {store?.rule !== "ROLE_ADMIN" &&
                     store?.rule !== "ROLE_SALE" && (
                       <div className="header_navbar_account_items">
                         <Link
