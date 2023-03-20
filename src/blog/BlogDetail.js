@@ -103,7 +103,7 @@ const BlogDetail = () => {
     try {
       dispatch(isLoading());
       const res = await axios.post(
-        `/api/comment/report?${slug}?type=blog`,
+        `/api/comment/report?id=${slug}&type=blog`,
         {
           type: "blog",
         },

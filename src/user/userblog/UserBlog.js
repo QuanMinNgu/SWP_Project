@@ -46,8 +46,6 @@ const UserBlog = () => {
             <UserBlogCard
               item={item}
               index={index}
-              setListBlog={setListBlog}
-              listBlog={listBlog}
               update={update}
               setUpdate={setUpdate}
             />
