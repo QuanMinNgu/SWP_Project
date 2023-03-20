@@ -95,7 +95,7 @@ const Profile = () => {
       <div className="profile_container">
         <div className="profile_container_courses_done">
           <div className="profile_container_courses_title">
-            <h3>Các khóa học đã hoàn thành</h3>
+            <h3>Finished Courses</h3>
           </div>
           <div className="profile_container_courses_card">
             {list?.completed?.map((item, index) => {
@@ -107,11 +107,14 @@ const Profile = () => {
                 />
               );
             })}
+            <h3 style={{ fontSize: "2rem" }}>
+              {!list?.completed ? "No Courses Found" : ""}
+            </h3>
           </div>
         </div>
         <div className="profile_container_courses_done">
           <div className="profile_container_courses_title">
-            <h3>Các khóa học đang học</h3>
+            <h3>On Progress Courses</h3>
           </div>
           <div className="profile_container_courses_card">
             {list?.onProcess?.map((item, index) => {
@@ -123,6 +126,9 @@ const Profile = () => {
                 />
               );
             })}
+            <h3 style={{ fontSize: "2rem" }}>
+              {!list?.onProcess ? "No Courses Found" : ""}
+            </h3>
           </div>
         </div>
       </div>

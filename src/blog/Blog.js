@@ -84,6 +84,7 @@ const Blog = () => {
       dispatch(isSuccess());
       return toast.success("All below is blog search");
     } catch (error) {
+      setSearchText("");
       dispatch(isFailing());
       return toast.error(error?.response?.data?.msg);
     }
