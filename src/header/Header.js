@@ -220,21 +220,19 @@ const Header = () => {
                     )}
                   {store?.rule !== "ROLE_ADMIN" &&
                     store?.rule !== "ROLE_SALE" && (
-                      <div className="header_navbar_account_items">
-                        <Link
-                          style={{ textDecoration: "none" }}
-                          to="/me/markblog"
+                      <Link
+                        style={{ textDecoration: "none" }}
+                        to="/me/markblog"
+                      >
+                        <div
+                          onClick={() => {
+                            setAccount(false);
+                          }}
+                          className="header_navbar_account_items"
                         >
-                          <div
-                            onClick={() => {
-                              setAccount(false);
-                            }}
-                            className="header_navbar_account_items"
-                          >
-                            Favorite Blogs
-                          </div>
-                        </Link>
-                      </div>
+                          Favorite Blogs
+                        </div>
+                      </Link>
                     )}
 
                   <div className="header_navbar_account_items">
