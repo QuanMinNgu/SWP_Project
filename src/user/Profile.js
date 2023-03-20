@@ -29,7 +29,7 @@ const Profile = () => {
 
   useEffect(() => {
     let here = true;
-    const url = `/api/account/user_course?id=${slug}`;
+    const url = `/api/common/user_course?id=${slug}`;
     if (cache.current[url]) {
       return setList(cache.current[url]);
     }
