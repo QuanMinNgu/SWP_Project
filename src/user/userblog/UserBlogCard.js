@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-const UserBlogCard = ({ item, index, cache, setListBlog, listBlog }) => {
+const UserBlogCard = ({ item, index, setUpdate, update }) => {
   const [option, setOption] = useState(false);
   const auth = useSelector((state) => state?.auth);
   const contentRef = useRef();
@@ -18,9 +18,7 @@ const UserBlogCard = ({ item, index, cache, setListBlog, listBlog }) => {
         token: auth?.user?.token,
       });
       dispatch(isSuccess());
-      const newArr = listBlog?.filter((ite) => ite?.blogID !== item?.blogID);
-      cache.current["/api/blog/my_blog"] = [...newArr];
-      setListBlog([...newArr]);
+      setUpdate(!update);
       return toast.success(res?.data?.msg);
     } catch (error) {
       dispatch(isFailing());

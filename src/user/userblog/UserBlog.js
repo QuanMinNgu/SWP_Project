@@ -4,18 +4,14 @@ import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
-import { UserContext } from "../../App";
 const UserBlog = () => {
   const [listBlog, setListBlog] = useState([]);
   const dispatch = useDispatch();
-  const { cache } = useContext(UserContext);
+  const [update, setUpdate] = useState(false);
   const auth = useSelector((state) => state?.auth);
   useEffect(() => {
     let here = true;
     const url = `/api/blog/my_blog`;
-    if (cache.current[url]) {
-      return setListBlog(cache.current[url]);
-    }
     dispatch(isLoading());
     axios
       .get(url, {
@@ -29,7 +25,6 @@ const UserBlog = () => {
         }
         console.log(res?.data);
         setListBlog(res?.data?.blogs);
-        cache.current[url] = res?.data?.blogs;
         dispatch(isSuccess());
       })
       .catch((err) => {
@@ -38,7 +33,7 @@ const UserBlog = () => {
     return () => {
       here = false;
     };
-  }, [listBlog]);
+  }, [update]);
   return (
     <div className="user_blog">
       <div className="user_blog_header">
@@ -51,9 +46,10 @@ const UserBlog = () => {
             <UserBlogCard
               item={item}
               index={index}
-              cache={cache}
               setListBlog={setListBlog}
               listBlog={listBlog}
+              update={update}
+              setUpdate={setUpdate}
             />
           );
         })}

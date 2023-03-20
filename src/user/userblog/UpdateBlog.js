@@ -100,6 +100,13 @@ const UpdateBlog = () => {
       return toast.error("Please login first");
     }
     dispatch(isLoading());
+    console.log({
+      blogName: title,
+      blogMeta: meta,
+      content: content,
+      courseTypeId: currentType.value,
+      blogID: slug,
+    });
     try {
       const data = await axios.post(
         `/api/blog/update/id=${slug}`,
