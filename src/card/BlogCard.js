@@ -69,7 +69,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
     setBars(!bars);
   };
   const handleReport = async () => {
-    if (time === 0) {
+    if (time > 0) {
       return;
     }
     try {
