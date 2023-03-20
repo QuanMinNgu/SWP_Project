@@ -1,5 +1,5 @@
 import "./style.scss";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../../redux/slice/auth";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const UserBlogCard = ({ item, index, cache, setListBlog, listBlog }) => {
   const [option, setOption] = useState(false);
   const auth = useSelector((state) => state?.auth);
+  const contentRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleDelete = async () => {
@@ -26,6 +27,11 @@ const UserBlogCard = ({ item, index, cache, setListBlog, listBlog }) => {
       return toast.error(error?.response?.data?.msg);
     }
   };
+  useEffect(() => {
+    if (!item?.blogMeta) {
+      contentRef.current.innerHTML = item?.content;
+    }
+  }, [item]);
 
   return (
     <div className="user_card" key={index}>
@@ -47,7 +53,7 @@ const UserBlogCard = ({ item, index, cache, setListBlog, listBlog }) => {
           )}
         </div>
         <div className="user_card_body_content">
-          <p>{item?.meta}</p>
+          <p ref={contentRef}>{item?.blogMeta}</p>
         </div>
       </div>
     </div>

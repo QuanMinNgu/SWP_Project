@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./style.scss";
+import "./main.scss";
 import { Editor } from "react-draft-wysiwyg";
 import {
   EditorState,
@@ -14,7 +15,7 @@ import { isSuccess, isLoading, isFailing } from "../../redux/slice/auth";
 import axios from "axios";
 import Select from "react-select";
 import { UserContext } from "../../App";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const UpdateBlog = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [optionsKind, setOptionKind] = useState({});
@@ -22,6 +23,8 @@ const UpdateBlog = () => {
   const [types, setTypes] = useState([]);
   const { slug } = useParams();
   const [blog, setBlog] = useState();
+  const [msg, setMsg] = useState({});
+  const navigate = useNavigate();
   const [currentType, setCurrentType] = useState({});
   useEffect(() => {
     if (types) {
@@ -78,20 +81,28 @@ const UpdateBlog = () => {
   const handleUpdate = async () => {
     const title = titleRef.current.value;
     const meta = metaRef.current.value;
-    if (title === "" || meta === "" || content === "") {
-      return toast.error("Please enter all information.");
+    let m = {};
+    if (!title) {
+      m["blogName"] = "Please enter title of blog!";
+    }
+    console.log(editorState);
+    if (!convertToRaw(editorState.getCurrentContent())?.blocks[0]?.text) {
+      m["content"] = "Please enter content of blog!";
+    }
+    if (!currentType) {
+      m["kind"] = "Please choose type of blog!";
+    }
+    if (m["blogName"] || m["content"] || m["kind"]) {
+      setMsg({ ...m });
+      return;
+    }
+    if (!auth.user?.token) {
+      return toast.error("Please login first");
     }
     dispatch(isLoading());
-    console.log({
-      token: auth.user?.token,
-      blogName: title,
-      blogMeta: meta,
-      content: content,
-      courseTypeId: currentType?.value,
-    });
     try {
       const data = await axios.post(
-        `/api/blog/update?id=${slug}`,
+        `/api/blog/update/id=${slug}`,
         {
           blogName: title,
           blogMeta: meta,
@@ -105,10 +116,14 @@ const UpdateBlog = () => {
         }
       );
       toast.success(data?.data?.msg);
-      dispatch(isSuccess());
     } catch (err) {
-      toast.error(err?.response?.data?.msg);
+      let ms = {};
+      err?.response?.data?.msgProgress?.forEach((item) => {
+        ms[item?.errorName] = item?.message;
+      });
+      setMsg({ ...ms });
       dispatch(isFailing());
+      window.scrollTo(0, 0);
     }
   };
   useEffect(() => {
@@ -147,6 +162,7 @@ const UpdateBlog = () => {
       here = false;
     };
   }, []);
+
   return (
     <div className="newPost">
       <div className="newPost_title">
@@ -156,10 +172,21 @@ const UpdateBlog = () => {
           type="text"
           placeholder="Enter title"
           defaultValue={blog?.blogName}
+          onChange={() => setMsg({})}
         />
+        {msg["blogName"] && (
+          <div className="errorManage">
+            * <i>{msg["blogName"]}</i>
+          </div>
+        )}
       </div>
       <div className="newPost_title">
-        <div>
+        <div style={{ position: "relative" }}>
+          {msg["kind"] && (
+            <div style={{ top: "-5.3rem" }} className="errorManage">
+              * <i>{msg["kind"]}</i>
+            </div>
+          )}
           <Select
             className="search_wrap_select"
             onChange={setCurrentType}
@@ -169,6 +196,11 @@ const UpdateBlog = () => {
           />
         </div>
         <div className="newPost_title_input">
+          {msg["blogMeta"] && (
+            <div className="errorManage">
+              * <i>{msg["blogMeta"]}</i>
+            </div>
+          )}
           <textarea
             ref={metaRef}
             className="newPost_input_title_meta"
@@ -179,12 +211,18 @@ const UpdateBlog = () => {
         </div>
       </div>
       <div className="newPost_content">
+        {msg["content"] && (
+          <div style={{ top: "4.5rem" }} className="errorManage">
+            * <i>{msg["content"]}</i>
+          </div>
+        )}
         <Editor
           editorState={editorState}
           onEditorStateChange={handleChange}
           wrapperClassName="editor-wrapper"
           editorClassName="message-editor"
           toolbarClassName="message-toolbar"
+          onChange={() => setMsg({})}
         />
         {!convertToRaw(editorState.getCurrentContent())?.blocks[0]?.text && (
           <div className="newPost_content_title">Nội dung viết tại đây</div>
