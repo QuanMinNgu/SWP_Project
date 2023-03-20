@@ -78,6 +78,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
         `/api/blog/report?id=${item?.blogID}`,
         {
           token: auth?.user?.token,
+          type: "blog",
         },
         {
           headers: { token: auth?.user?.token },
