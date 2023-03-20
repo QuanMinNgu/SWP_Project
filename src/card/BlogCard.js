@@ -119,7 +119,13 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
     if (check) {
       try {
         dispatch(isLoading());
-        const res = await axios.post(`/api/blog/delete?id=${item?.blogID}`);
+        const res = await axios.post(
+          `/api/blog/delete?id=${item?.blogID}`,
+          {},
+          {
+            headers: { token: auth?.user?.token },
+          }
+        );
         dispatch(isSuccess());
         setUpdate(!update);
         return toast.success(res?.data?.msg);
