@@ -123,7 +123,6 @@ const Profile = () => {
                 />
               );
             })}
-            <ProfileCard />
           </div>
         </div>
       </div>

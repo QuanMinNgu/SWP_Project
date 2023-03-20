@@ -1,18 +1,19 @@
+import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
-const ProfileCard = () => {
+const ProfileCard = ({ item }) => {
+  const navigate = useNavigate();
   return (
-    <div className="course_card">
+    <div
+      className="course_card"
+      onClick={() => navigate(`/course/${item?.courseID}`)}
+    >
       <div className="course_card_img">
-        <img src="https://files.fullstack.edu.vn/f8-prod/courses/6.png" />
+        <img src={item?.image} />
       </div>
       <div className="course_card_info">
-        <h3>F11 vua của web learning</h3>
-        <p>
-          Học ở đâu để trở thành web developer lương 10k $ vậy ạ, hãy đến với
-          F11 nơi lưu trữ mọi kiến thức giúp bạn trở thành lập trình viên giỏi
-          nhất
-        </p>
+        <h3>{item?.courseName}</h3>
+        <p>{item?.description}</p>
       </div>
     </div>
   );
