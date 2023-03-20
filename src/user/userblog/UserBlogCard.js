@@ -42,9 +42,36 @@ const UserBlogCard = ({ item, index, setUpdate, update }) => {
     <div className="user_card" key={index}>
       <div className="user_card_body">
         <div className="user_card_body_top">
-          <h3>{item?.blogName}</h3>
+          <div
+            className="user_card_body_top_left"
+            style={{
+              display: "flex",
+            }}
+          >
+            <img
+              src={item?.image}
+              style={{
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+            <h3
+              style={{
+                display: "flex",
+                alignItems: "center",
+                fontWeight: "700",
+                fontSize: "1.6rem",
+                color: "#292929",
+                marginLeft: "10px",
+              }}
+            >
+              {item?.name}
+            </h3>
+          </div>
           <div className="user_card_body_top_option">
-            <span>{item?.courseType}</span>
+            <span>{item?.courseTypeName}</span>
             <i
               class="fa-solid fa-ellipsis"
               onClick={() => setOption(!option)}
@@ -58,6 +85,14 @@ const UserBlogCard = ({ item, index, setUpdate, update }) => {
           )}
         </div>
         <div className="user_card_body_content">
+          <h3
+            style={{
+              fontSize: "1.6rem",
+            }}
+            className="header_blog"
+          >
+            {item?.blogName}
+          </h3>
           <p ref={contentRef}>{item?.blogMeta}</p>
         </div>
       </div>
