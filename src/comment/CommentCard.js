@@ -110,7 +110,7 @@ const CommentCard = ({ item, type, id }) => {
 		dispatch(isLoading());
 		try {
 			const data = await axios.post(
-				`/api/comment/report/${item?.commentID}`,
+				`/api/comment/report?id=${item?.commentID}&type=comment`,
 				{
 					type: "lesson",
 				},
