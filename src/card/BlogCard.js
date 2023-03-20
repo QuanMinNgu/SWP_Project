@@ -75,7 +75,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
     try {
       dispatch(isLoading());
       const res = await axios.post(
-        `/api/comment/report/${item?.blogID}`,
+        `/api/comment/report?${item?.blogID}?type=blog`,
         {
           type: "blog",
         },
