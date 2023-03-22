@@ -42,7 +42,7 @@ function VoucherCard({ item, index, setUpdate, update }) {
     }
   };
   const handleDelete = async () => {
-    let check = window.confirm("Do you wnat to delete this voucher");
+    let check = window.confirm("Do you want to delete this voucher");
     if (check) {
       try {
         dispatch(isLoading());

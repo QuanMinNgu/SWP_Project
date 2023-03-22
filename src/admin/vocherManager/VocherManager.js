@@ -21,9 +21,7 @@ function VocherManager() {
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
   ];
-  useEffect(() => {
-    console.log(fillters);
-  }, [fillters]);
+
   useEffect(() => {
     let here = true;
     const url = `/api/voucher/sale_manager?page=${page}&limit=20`;

@@ -27,7 +27,7 @@ const Blog = () => {
       const url = `/api/common/blog?page=${page}&limit=20`;
       dispatch(isLoading());
       axios
-        .get(url)
+        .get(url, { headers: { token: auth?.user ? auth?.user?.token : null } })
         .then((res) => {
           if (!here) {
             return dispatch(isSuccess());
@@ -52,7 +52,7 @@ const Blog = () => {
     const url = `/api/common/blog/blog_search?page=${page}&limit=20&search=${searchText}`;
     dispatch(isLoading());
     axios
-      .get(url)
+      .get(url, { headers: { token: auth?.user ? auth?.user?.token : null } })
       .then((res) => {
         if (!here) {
           return dispatch(isSuccess());
@@ -77,7 +77,8 @@ const Blog = () => {
     try {
       dispatch(isLoading());
       const res = await axios.get(
-        `/api/common/blog/blog_search?page=${page}&limit=20&search=${searchText}`
+        `/api/common/blog/blog_search?page=${page}&limit=20&search=${searchText}`,
+        { headers: { token: auth?.user ? auth?.user?.token : null } }
       );
       console.log(searchText, page);
       setListBlog(res?.data);
@@ -90,34 +91,6 @@ const Blog = () => {
       return toast.error(error?.response?.data?.msg);
     }
   };
-  useEffect(() => {
-    if (auth?.user?.token) {
-      let here = true;
-      const url = `/api/blog/mark_blog`;
-      dispatch(isLoading());
-      axios
-        .get(url, {
-          headers: {
-            token: auth.user?.token,
-          },
-        })
-        .then((res) => {
-          if (!here) {
-            return;
-          }
-          console.log(res?.data);
-          setLoveBlog(res?.data?.blogs);
-          cache.current[url] = res?.data?.blogs;
-          dispatch(isSuccess());
-        })
-        .catch((err) => {
-          dispatch(isFailing());
-        });
-      return () => {
-        here = false;
-      };
-    }
-  }, [update]);
   return (
     <div className="blog_container">
       <div className="blog_container_header">

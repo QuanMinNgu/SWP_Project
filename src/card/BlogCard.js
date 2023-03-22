@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { UserContext } from "../App";
 import { format } from "date-fns";
 const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   const [love, setLove] = useState(false);
@@ -23,14 +22,13 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
       console.log({
         blogID: item?.blogID,
         accountID: auth?.user?.id,
-        id: currentID,
+        blogReactID: currentID,
       });
       const res = await axios.post(
-        `/api/blog/save`,
+        `/api/blog/mark_blog`,
         {
           blogID: item?.blogID,
-          accountID: auth?.user?.id,
-          id: currentID,
+          blogReactID: currentID,
         },
         {
           headers: { token: auth?.user?.token },
@@ -54,14 +52,11 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
     navigate(`/blog/${item?.blogID}`);
   };
   useEffect(() => {
-    const check = loveBlog?.find((ite) => ite?.blogID === item?.blogID);
-    if (check) {
+    if (item?.blogReactID) {
+      setCurrentID(item?.blogReactID);
       setLove(true);
-      setCurrentID(check?.id);
-    } else {
-      setLove(false);
     }
-  }, [loveBlog]);
+  }, [item]);
   const handleWatchProfile = () => {
     navigate(`/profile/${item?.accountID}`);
   };
