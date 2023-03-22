@@ -107,12 +107,14 @@ function CreateVoucher() {
       return toast.success(res?.data?.msg);
     } catch (err) {
       dispatch(isFailing());
-      console.log(err?.response?.data);
       let msg = {};
       if (err?.response?.data?.msgProgress) {
         err?.response?.data?.msgProgress?.forEach((item) => {
           msg[item?.errorName] = item?.message;
         });
+      }
+      if (err?.response?.data?.msg) {
+        return toast.error(err?.response?.data?.msg);
       }
       setMsg({ ...msg });
       return;

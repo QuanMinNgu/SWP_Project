@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./style.scss";
 import "./main.scss";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,6 +16,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   const [time, setTime] = useState(0);
+  const contentRef = useRef("");
   const handleLove = async () => {
     try {
       dispatch(isLoading());
@@ -135,6 +136,11 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
       }
     }
   };
+  useEffect(() => {
+    if (!item?.blogMeta) {
+      contentRef.current.innerHTML = item?.content;
+    }
+  }, [item]);
   return (
     <div className="blog_card" key={index}>
       <div className="blog_card_body">
@@ -193,7 +199,9 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
             <h3 className="blog_card_name_content_name">{item?.blogName}</h3>
           </div>
           <div className="blog_card_body_content_mid">
-            <p className="blog_meta_card_contanert">{item?.blogMeta}</p>
+            <p className="blog_meta_card_contanert" ref={contentRef}>
+              {item?.blogMeta}
+            </p>
           </div>
           <div
             className="date"

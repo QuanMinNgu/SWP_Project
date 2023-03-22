@@ -38,6 +38,7 @@ const BlogDetail = () => {
         setBlog(res?.data?.blogDetail);
         cache.current[url] = res?.data?.blogDetail;
         setContent(res?.data?.blogDetail?.content);
+        console.log(res?.data);
         dispatch(isSuccess());
       })
       .catch((err) => {

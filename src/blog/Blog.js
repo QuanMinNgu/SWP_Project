@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -84,6 +84,8 @@ const Blog = () => {
       dispatch(isSuccess());
       return toast.success("All below is blog search");
     } catch (error) {
+      setSearchText("");
+      setListBlog([]);
       dispatch(isFailing());
       return toast.error(error?.response?.data?.msg);
     }
@@ -128,6 +130,7 @@ const Blog = () => {
             <input
               type="text"
               placeholder="Tìm kiếm blog"
+              value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
             <button onClick={handleSearch}>
