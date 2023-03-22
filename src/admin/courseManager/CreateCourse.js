@@ -31,6 +31,8 @@ const CreateCourse = () => {
 	const lessonRef = useRef();
 	const [addLesson, setAddLesson] = useState(false);
 
+	const [courseSearch, setCourseSearch] = useState("");
+
 	const contentRef = useRef();
 
 	const { cache } = useContext(UserContext);
@@ -89,7 +91,8 @@ const CreateCourse = () => {
 	useEffect(() => {
 		let here = true;
 		if (slug === "create_course") {
-			const url = "/api/account/course_expert?search=null";
+			const url = `/api/account/course_expert?search=${courseSearch || null}`;
+			console.log(url);
 			dispatch(isLoading());
 			axios
 				.get(url)
@@ -103,12 +106,13 @@ const CreateCourse = () => {
 				})
 				.catch((err) => {
 					dispatch(isFailing());
+					console.log(err);
 				});
 		}
 		return () => {
 			here = false;
 		};
-	}, [slug]);
+	}, [slug, courseSearch]);
 
 	const [urlArray, setUrlArray] = useState([]);
 
@@ -642,7 +646,13 @@ const CreateCourse = () => {
 						</div>
 					</div>
 					<div className="expertCourse_searching">
-						<input type="text" placeholder="Searching by id, name or email" />
+						<input
+							onChange={(e) => {
+								setCourseSearch(e.target.value);
+							}}
+							type="text"
+							placeholder="Searching by id, name or email"
+						/>
 						<button className="button">Search</button>
 					</div>
 					<div className="expertCourse_form">

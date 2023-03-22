@@ -31,6 +31,7 @@ const ChangePassword = () => {
 				"/api/auth/change_password",
 				{
 					password: user.password,
+					username: auth.user?.name,
 				},
 				{
 					headers: {
