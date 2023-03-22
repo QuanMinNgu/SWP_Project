@@ -89,7 +89,7 @@ const CreateCourse = () => {
 	useEffect(() => {
 		let here = true;
 		if (slug === "create_course") {
-			const url = "/api/account/course_expert";
+			const url = "/api/account/course_expert?search=null";
 			dispatch(isLoading());
 			axios
 				.get(url)
