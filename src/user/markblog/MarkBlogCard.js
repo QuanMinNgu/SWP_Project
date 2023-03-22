@@ -7,26 +7,10 @@ import { toast } from "react-toastify";
 import "./style.scss";
 import { useNavigate } from "react-router";
 
-function MarkBlogCard({ item, index, listBlog, setListBlog, cache }) {
+function MarkBlogCard({ item, index, listBlog }) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   const navigate = useNavigate();
-  const handleNotMark = async () => {
-    try {
-      dispatch(isLoading());
-      const res = await axios.post(`/api/blog/not_mark?id=${item?.blogID}`, {
-        token: auth?.user?.token,
-      });
-      dispatch(isSuccess());
-      const newArr = listBlog?.filter((ite) => ite?.blogID !== item?.blogID);
-      cache.current["/api/blog/mark_blog"] = [...newArr];
-      setListBlog([...newArr]);
-      return toast.success(res?.data?.msg);
-    } catch (error) {
-      dispatch(isFailing());
-      return toast.error(error?.response?.data?.msg);
-    }
-  };
   useEffect(() => {
     console.log(item);
   }, [listBlog]);
@@ -44,7 +28,6 @@ function MarkBlogCard({ item, index, listBlog, setListBlog, cache }) {
             </h2>
           </div>
           <div>
-            <span>{item?.courseType?.courseTypeName}</span>
             <div
               style={{
                 fontSize: "1rem",
@@ -54,19 +37,22 @@ function MarkBlogCard({ item, index, listBlog, setListBlog, cache }) {
                 fontWeight: "600",
               }}
             >
-              {item?.courseType}
+              {item?.courseTypeName}
             </div>
             <div>
               <i class="fa-solid fa-heart"></i>
             </div>
           </div>
         </div>
-        <div style={{ padding: "10px 6px" }}>
+        <div
+          style={{ padding: "10px 6px", cursor: "pointer" }}
+          onClick={() => navigate(`/blog/${item?.blogID}`)}
+        >
           <div>
-            <h3 className="title_blog">{item?.blog?.blogName} </h3>
+            <h3 className="title_blog">{item?.blogName} </h3>
           </div>
           <div className="user_card_body_content">
-            <p className="text_blog">{item?.blog?.blogMeta} </p>
+            <p className="text_blog">{item.blogMeta} </p>
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { isFailing, isLoading, isSuccess } from "../redux/slice/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
+import { UserContext } from "../App";
 const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   const [love, setLove] = useState(false);
   const [currentID, setCurrentID] = useState(null);
@@ -16,6 +17,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
   const auth = useSelector((state) => state?.auth);
   const [time, setTime] = useState(0);
   const contentRef = useRef("");
+  const { store } = useContext(UserContext);
   const handleLove = async () => {
     try {
       dispatch(isLoading());
@@ -123,6 +125,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
         );
         dispatch(isSuccess());
         setUpdate(!update);
+        setBars(false);
         return toast.success(res?.data?.msg);
       } catch (error) {
         dispatch(isFailing());
@@ -157,15 +160,17 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
             >
               {item?.courseType}
             </div>
-            {auth?.user?.id !== item?.accountID && (
-              <div onClick={handleLove}>
-                {love ? (
-                  <i className="fa-solid fa-heart"></i>
-                ) : (
-                  <i className="fa-regular fa-heart"></i>
-                )}
-              </div>
-            )}
+            {auth?.user?.id !== item?.accountID &&
+              (store?.rule === "ROLE_USER" ||
+                store?.rule === "ROLE_COURSE_EXPERT") && (
+                <div onClick={handleLove}>
+                  {love ? (
+                    <i className="fa-solid fa-heart"></i>
+                  ) : (
+                    <i className="fa-regular fa-heart"></i>
+                  )}
+                </div>
+              )}
             {auth?.user && (
               <div>
                 {auth?.user?.id === item?.accountID ? (

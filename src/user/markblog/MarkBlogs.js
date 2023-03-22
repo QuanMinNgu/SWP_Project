@@ -10,13 +10,10 @@ const MarkBlog = () => {
   const [listBlog, setListBlog] = useState([]);
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
-  const { cache } = useContext(UserContext);
   useEffect(() => {
     let here = true;
     const url = `/api/blog/get_favorite`;
-    if (cache.current[url]) {
-      return setListBlog(cache.current[url]);
-    }
+
     dispatch(isLoading());
     axios
       .get(url, {
@@ -29,7 +26,11 @@ const MarkBlog = () => {
           return;
         }
         console.log(res?.data);
-        cache.current[url] = res?.data?.blogs;
+        if (res?.data?.blogs) {
+          setListBlog(res?.data?.blogs);
+        } else {
+          setListBlog([]);
+        }
         dispatch(isSuccess());
       })
       .catch((err) => {
@@ -50,7 +51,6 @@ const MarkBlog = () => {
             <MarkBlogCard
               item={item}
               index={index}
-              cache={cache}
               setListBlog={setListBlog}
               listBlog={listBlog}
             />
