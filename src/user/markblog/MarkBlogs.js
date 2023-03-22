@@ -8,6 +8,7 @@ import "../userblog/style.scss";
 import MarkBlogCard from "./MarkBlogCard";
 const MarkBlog = () => {
   const [listBlog, setListBlog] = useState([]);
+  const [update, setUpdate] = useState(false);
   const dispatch = useDispatch();
   const auth = useSelector((state) => state?.auth);
   useEffect(() => {
@@ -39,7 +40,7 @@ const MarkBlog = () => {
     return () => {
       here = false;
     };
-  }, []);
+  }, [update]);
   return (
     <div className="user_blog">
       <div className="user_blog_header">
@@ -51,8 +52,8 @@ const MarkBlog = () => {
             <MarkBlogCard
               item={item}
               index={index}
-              setListBlog={setListBlog}
-              listBlog={listBlog}
+              update={update}
+              setUpdate={setUpdate}
             />
           );
         })}

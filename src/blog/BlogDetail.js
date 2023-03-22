@@ -10,34 +10,65 @@ import parse from "html-react-parser";
 
 const BlogDetail = () => {
   const auth = useSelector((state) => state?.auth);
-  const [react, setReact] = useState(false);
+  const [love, setLove] = useState(false);
   const [blog, setBlog] = useState();
-  const { cache } = useContext(UserContext);
   const { slug } = useParams();
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
+  const [currentID, setCurrentID] = useState(null);
+
   const handleNavComment = () => {
     document.getElementById("commentContainer").scrollIntoView();
   };
   const [time, setTime] = useState(0);
-  const handleLove = async () => {};
+  const handleLove = async () => {
+    try {
+      dispatch(isLoading());
+      console.log({
+        blogID: slug.toString(),
+        blogReactID: currentID,
+      });
+      const res = await axios.post(
+        `/api/blog/mark_blog`,
+        {
+          blogID: slug,
+          blogReactID: currentID,
+        },
+        {
+          headers: { token: auth?.user?.token },
+        }
+      );
+      dispatch(isSuccess());
+      console.log(res?.data);
+      setLove(!love);
+      if (currentID) {
+        setCurrentID(null);
+      } else {
+        setCurrentID(res?.data?.blogReactID);
+      }
+      return toast.success(res?.data?.msg);
+    } catch (error) {
+      dispatch(isFailing());
+      return toast.error(error?.response?.data?.msg);
+    }
+  };
   useEffect(() => {
     let here = true;
     const url = `/api/common/blog/blog_details?id=${slug}`;
-    if (cache.current[url]) {
-      setContent(cache.current[url].content);
-      return setBlog(cache.current[url]);
-    }
+
     dispatch(isLoading());
     axios
-      .get(url)
+      .get(url, { headers: { token: auth?.user ? auth?.user?.token : null } })
       .then((res) => {
         if (!here) {
           return dispatch(isSuccess());
         }
         setBlog(res?.data?.blogDetail);
-        cache.current[url] = res?.data?.blogDetail;
         setContent(res?.data?.blogDetail?.content);
+        if (res?.data.blogDetail?.blogReactID) {
+          setCurrentID(res?.data?.blogDetail?.blogReactID);
+          setLove(true);
+        }
         console.log(res?.data);
         dispatch(isSuccess());
       })
@@ -52,35 +83,7 @@ const BlogDetail = () => {
       here = false;
     };
   }, []);
-  useEffect(() => {
-    if (auth?.user?.token) {
-      let here = true;
-      const url = `/api/blog/save_detail?blogID=${slug}`;
-      dispatch(isLoading());
-      axios
-        .get(url, {
-          headers: { token: auth?.user?.token },
-        })
-        .then((res) => {
-          if (!here) {
-            return dispatch(isSuccess());
-          }
-          setReact(res?.data?.isLove);
-          console.log(res?.data);
-          dispatch(isSuccess());
-        })
-        .catch((err) => {
-          if (!here) {
-            return dispatch(isFailing());
-          }
-          dispatch(isFailing());
-          toast.error(err?.response?.data?.msg);
-        });
-      return () => {
-        here = false;
-      };
-    }
-  }, []);
+
   useEffect(() => {
     if (time === 0) {
       return;
@@ -129,7 +132,7 @@ const BlogDetail = () => {
           <h2>{blog?.name}</h2>
           <div className="blog_detail_user_react">
             <div className="blog_detail_user_react_love" onClick={handleLove}>
-              {react ? (
+              {love ? (
                 <i className="fa-solid fa-heart"></i>
               ) : (
                 <i className="fa-regular fa-heart"></i>
