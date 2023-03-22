@@ -16,7 +16,7 @@ const ActiveAccount = () => {
 		dispatch(isLoading());
 		axios
 			.post(
-				"/api/account/active",
+				"/api/auth/active",
 				{
 					token: slug,
 				},
@@ -37,6 +37,7 @@ const ActiveAccount = () => {
 			.catch((err) => {
 				dispatch(isFailing());
 				toast.error(err?.response?.data?.msg);
+				navigate("/login");
 			});
 
 		return () => {
@@ -44,7 +45,7 @@ const ActiveAccount = () => {
 		};
 	}, [slug]);
 
-	return <div>Kích hoạt tài khoản thành công.</div>;
+	return <div></div>;
 };
 
 export default ActiveAccount;

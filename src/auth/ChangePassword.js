@@ -1,13 +1,49 @@
+import axios from "axios";
 import React from "react";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import HomeIcons from "../components/another/HomeIcons";
 import "./style.scss";
 const ChangePassword = () => {
 	const passwordRef = useRef();
 	const rePasswordRef = useRef();
 
-	const handleChangePassword = () => {};
+	const navigate = useNavigate();
+
+	const auth = useSelector((state) => state.auth);
+
+	const handleChangePassword = async () => {
+		const user = {
+			password: passwordRef.current.value,
+			rePassword: rePasswordRef.current.value,
+		};
+		if (!user.password || !user.rePassword) {
+			return toast.error("Please enter all input.");
+		}
+
+		if (user.password !== user.rePassword) {
+			return toast.error("Passwords are not the same");
+		}
+		try {
+			const data = await axios.post(
+				"/api/auth/change_password",
+				{
+					password: user.password,
+				},
+				{
+					headers: {
+						token: auth.user?.token,
+					},
+				}
+			);
+			toast.success(data?.data?.msg);
+			navigate("/");
+		} catch (err) {
+			return toast.error(err?.response?.data?.msg);
+		}
+	};
 	return (
 		<div className="auth">
 			<section>
