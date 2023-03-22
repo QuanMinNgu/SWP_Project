@@ -39,6 +39,7 @@ const Comment = ({ type, id }) => {
 					}
 					dispatch(isSuccess());
 					setOut(res?.data?.out);
+
 					setCommentArray([...commentArray, ...res?.data?.comments]);
 				})
 				.catch((err) => {
@@ -54,11 +55,13 @@ const Comment = ({ type, id }) => {
 		}
 	}, [id, page]);
 
+	let countRef = useRef(0);
+
 	useEffect(() => {
 		if (socket) {
 			socket.on("recieve", (data) => {
 				if (!data?.parentID) {
-					const ar = commentArray || [];
+					const ar = commentArray;
 					const some = ar?.some(
 						(item) =>
 							item?.commentID?.toString() === data?.commentID?.toString()
@@ -66,14 +69,11 @@ const Comment = ({ type, id }) => {
 					if (some) {
 						return;
 					}
-					setCommentArray([
-						{
-							...data,
-						},
-						...ar,
-					]);
+					countRef.current++;
+					ar.unshift({ ...data });
+					setCommentArray([...ar]);
 				} else {
-					const ar = commentArray || [];
+					const ar = commentArray;
 					const newArr = ar?.map((item) => {
 						if (item?.commentID?.toString() === data?.parentID?.toString()) {
 							const some = item?.childComment?.some(
@@ -183,6 +183,23 @@ const Comment = ({ type, id }) => {
 			});
 		}
 	}, [socket, commentArray]);
+
+	useEffect(() => {
+		if (countRef.current === 1) {
+			const ar = commentArray;
+			let newAr = [];
+			ar.forEach((item) => {
+				const check = newAr?.some(
+					(infor) =>
+						infor?.commentID?.toString() === item?.commentID?.toString()
+				);
+				if (!check) {
+					newAr.push(item);
+				}
+			});
+			setCommentArray([...ar]);
+		}
+	}, [countRef.current]);
 
 	const handleComment = async () => {
 		if (!comment) {
