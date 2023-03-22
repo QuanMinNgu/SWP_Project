@@ -21,7 +21,6 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
       dispatch(isLoading());
       console.log({
         blogID: item?.blogID,
-        accountID: auth?.user?.id,
         blogReactID: currentID,
       });
       const res = await axios.post(
@@ -40,7 +39,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
       if (currentID) {
         setCurrentID(null);
       } else {
-        setCurrentID(res?.data?.id);
+        setCurrentID(res?.data?.blogReactID);
       }
       return toast.success(res?.data?.msg);
     } catch (error) {
@@ -158,7 +157,7 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
             >
               {item?.courseType}
             </div>
-            {auth?.user && (
+            {auth?.user?.id !== item?.accountID && (
               <div onClick={handleLove}>
                 {love ? (
                   <i className="fa-solid fa-heart"></i>

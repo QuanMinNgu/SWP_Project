@@ -13,7 +13,7 @@ const MarkBlog = () => {
   const { cache } = useContext(UserContext);
   useEffect(() => {
     let here = true;
-    const url = `/api/blog/mark_blog`;
+    const url = `/api/blog/get_favorite`;
     if (cache.current[url]) {
       return setListBlog(cache.current[url]);
     }
@@ -28,8 +28,7 @@ const MarkBlog = () => {
         if (!here) {
           return;
         }
-        setListBlog(res?.data?.blogs);
-        console.log(res?.data?.blogs);
+        console.log(res?.data);
         cache.current[url] = res?.data?.blogs;
         dispatch(isSuccess());
       })
