@@ -106,6 +106,7 @@ const CreateCourse = () => {
 				})
 				.catch((err) => {
 					dispatch(isFailing());
+					console.log(err);
 				});
 		}
 		return () => {
