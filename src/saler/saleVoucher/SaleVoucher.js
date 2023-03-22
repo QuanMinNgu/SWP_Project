@@ -23,9 +23,6 @@ function SaleVoucher() {
     { value: "vanilla", label: "Vanilla" },
   ];
   useEffect(() => {
-    console.log(fillters);
-  }, [fillters]);
-  useEffect(() => {
     let here = true;
     const url = `/api/voucher/sale_manager?page=${page}&limit=20`;
     dispatch(isLoading());
@@ -46,7 +43,7 @@ function SaleVoucher() {
           return dispatch(isFailing());
         }
         dispatch(isFailing());
-        toast.error(err?.response?.data?.msg);
+        return toast.error(err?.response?.data?.msg);
       });
     return () => {
       here = false;

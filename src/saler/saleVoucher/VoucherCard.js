@@ -47,7 +47,7 @@ function VoucherCard({ item, index, setUpdate, update }) {
       try {
         dispatch(isLoading());
         const res = await axios.post(
-          "/api/voucher/delete",
+          `/api/voucher/delete?id=${item?.voucherID}`,
           {
             voucherID: item?.voucherID,
           },
@@ -57,6 +57,7 @@ function VoucherCard({ item, index, setUpdate, update }) {
         );
         dispatch(isSuccess());
         setOption(false);
+        setUpdate(!update);
         return toast.success(res?.data?.msg);
       } catch (error) {
         dispatch(isFailing());
