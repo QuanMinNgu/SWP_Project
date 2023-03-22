@@ -37,6 +37,7 @@ const ActiveAccount = () => {
 			.catch((err) => {
 				dispatch(isFailing());
 				toast.error(err?.response?.data?.msg);
+				navigate("/login");
 			});
 
 		return () => {

@@ -1,10 +1,30 @@
+import axios from "axios";
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import HomeIcons from "../components/another/HomeIcons";
 import "./style.scss";
 const ForgotPassword = () => {
 	const emailRef = useRef();
-	const handleForgotPassword = () => {};
+	const navigate = useNavigate();
+	const handleForgotPassword = async () => {
+		if (!emailRef.current.value) {
+			return toast.error("Please enter email");
+		}
+		try {
+			const data = await axios.post(
+				`/api/auth/forgot_password/${emailRef.current.value}`,
+				{
+					email: emailRef.current.value,
+				}
+			);
+			toast.success(data?.data?.msg);
+			navigate("/login");
+		} catch (err) {
+			navigate("/login");
+			return toast.error(err?.response?.data?.msg);
+		}
+	};
 	return (
 		<div className="auth">
 			<section>
