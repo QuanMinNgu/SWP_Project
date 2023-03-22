@@ -22,12 +22,6 @@ const Profile = () => {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
-    if (!auth?.user?.token) {
-      navigate("/");
-    }
-  }, []);
-
-  useEffect(() => {
     let here = true;
     const url = `/api/common/user_course?id=${slug}`;
     if (cache.current[url]) {

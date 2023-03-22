@@ -163,13 +163,15 @@ const BlogCard = ({ item, index, update, setUpdate, loveBlog }) => {
             >
               {item?.courseType}
             </div>
-            <div onClick={handleLove}>
-              {love ? (
-                <i className="fa-solid fa-heart"></i>
-              ) : (
-                <i className="fa-regular fa-heart"></i>
-              )}
-            </div>
+            {auth?.user && (
+              <div onClick={handleLove}>
+                {love ? (
+                  <i className="fa-solid fa-heart"></i>
+                ) : (
+                  <i className="fa-regular fa-heart"></i>
+                )}
+              </div>
+            )}
             {auth?.user && (
               <div>
                 {auth?.user?.id === item?.accountID ? (
