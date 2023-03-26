@@ -89,8 +89,7 @@ const Register = () => {
 
 	useEffect(() => {
 		window.google?.accounts?.id?.initialize({
-			client_id:
-				"348299817023-08tbro4o6guo2csu2lv16mai16m4a8ce.apps.googleusercontent.com",
+			client_id: "client_id###",
 			callback: handleCallbackGoogle,
 		});
 		window.google?.accounts?.id?.renderButton(
@@ -107,7 +106,7 @@ const Register = () => {
 	useEffect(() => {
 		window.fbAsyncInit = function () {
 			window.FB.init({
-				appId: "630395928843735",
+				appId: "appID###",
 				cookie: true,
 				xfbml: true,
 				version: "v14.0",

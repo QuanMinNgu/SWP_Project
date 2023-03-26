@@ -8,8 +8,7 @@ import { isLoading, isSuccess, isFailing } from "../redux/slice/auth";
 import axios from "axios";
 const Pay = ({ setPayment, setCanLearn, price, vocher }) => {
 	const initialOptions = {
-		"client-id":
-			"AQVdNJ2adELwM1B1LTHKG8rcc-MKrGUU9g4SLcy3SYuAyYukSyCU7BFEZz7ix0nIaFksX0AeZrWkR8-h",
+		"client-id": "cliend_ud",
 		currency: "USD",
 		intent: "capture",
 	};
